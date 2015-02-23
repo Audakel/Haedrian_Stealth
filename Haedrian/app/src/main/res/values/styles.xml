@@ -16,7 +16,7 @@
     <!-- ActionBar text -->
     <style name="ActionBarText"
             parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/checker_1</item>
+        <item name="android:textColor">@color/text_color</item>
     </style>
 
 </resources>

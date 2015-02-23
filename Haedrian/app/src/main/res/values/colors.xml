@@ -7,8 +7,9 @@
     <!--<color name="action_bar">#CAFFB9</color>-->
 
     <!-- White ActionBar -->
-    <color name="checker_1">#2E4057</color>
-    <color name="checker_2">#66A182</color>
+    <color name="main_color">#2E4057</color>
+    <color name="offset_color">#66A182</color>
+    <color name="text_color">#2E4057</color>
     <color name="action_bar">#FFFFFF</color>
 
 

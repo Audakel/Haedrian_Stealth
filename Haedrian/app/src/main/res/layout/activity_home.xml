@@ -16,7 +16,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@color/checker_1"
+            android:background="@color/main_color"
             android:gravity="center"
             android:clickable="true"
             android:onClick="onClick">
@@ -33,7 +33,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@color/checker_2"
+            android:background="@color/offset_color"
             android:gravity="center"
             android:clickable="true"
             android:onClick="onClick">
@@ -59,7 +59,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@color/checker_2"
+            android:background="@color/offset_color"
             android:gravity="center"
             android:clickable="true"
             android:onClick="onClick">
@@ -76,7 +76,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@color/checker_1"
+            android:background="@color/main_color"
             android:gravity="center"
             android:clickable="true"
             android:onClick="onClick">
