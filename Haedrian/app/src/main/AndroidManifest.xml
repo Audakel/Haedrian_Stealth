@@ -32,6 +32,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SendRequestActivity"
+            android:label="@string/title_activity_send_request" >
+        </activity>
+        <activity
+            android:name=".AddActivity"
+            android:label="@string/title_activity_add" >
+        </activity>
+        <activity
+            android:name=".ProjectsActivity"
+            android:label="@string/title_activity_projects" >
+        </activity>
+        <activity
+            android:name=".InvestActivity"
+            android:label="@string/title_activity_invest" >
+        </activity>
     </application>
 
 </manifest>

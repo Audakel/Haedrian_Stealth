@@ -1,5 +1,6 @@
 package com.haedrian.haedrian;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,23 +38,24 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     public void onClick(View view) {
+        Intent intent;
 
         switch(view.getId()) {
             case R.id.send_request:
-                // TODO: Call send request activity from here
-                Log.v("Haedrian", "Send Request");
+                intent = new Intent(this, SendRequestActivity.class);
+                startActivity(intent);
                 return;
             case R.id.add:
-                // TODO: Call add activity from here
-                Log.v("Haedrian", "Add");
+                intent = new Intent(this, AddActivity.class);
+                startActivity(intent);
                 return;
             case R.id.projects:
-                // TODO: Call projects activity from here
-                Log.v("Haedrian", "Projects");
+                intent = new Intent(this, ProjectsActivity.class);
+                startActivity(intent);
                 return;
             case R.id.invest:
-                // TODO: Call invest activity from here
-                Log.v("Haedrian", "Invest");
+                intent = new Intent(this, InvestActivity.class);
+                startActivity(intent);
                 return;
             default:
                 return;
