@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Green ActionBar -->
+    <!--<color name="checker_1">#2E4057</color>-->
+    <!--<color name="checker_2">#66A182</color>-->
+    <!--<color name="action_bar">#CAFFB9</color>-->
+
+    <!-- White ActionBar -->
+    <color name="checker_1">#2E4057</color>
+    <color name="checker_2">#66A182</color>
+    <color name="action_bar">#FFFFFF</color>
+
+
+</resources>
