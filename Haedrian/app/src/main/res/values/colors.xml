@@ -11,6 +11,8 @@
     <color name="offset_color">#66A182</color>
     <color name="text_color">#2E4057</color>
     <color name="action_bar">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#7E7E7E</color>
 
 
 </resources>
