@@ -74,9 +74,11 @@ public abstract class PlusBaseActivity extends Activity
 
         // Initialize the PlusClient connection.
         // Scopes indicate the information about the user your application will be able to access.
-        mPlusClient =
-                new PlusClient.Builder(this, this, this).setScopes(Scopes.PLUS_LOGIN,
-                        Scopes.PLUS_ME).build();
+
+        // Couldnt find class builder.... prob didn't get goole play set up.. just took it out for testing
+//        mPlusClient =
+//                new PlusClient.Builder(this, this, this).setScopes(Scopes.PLUS_LOGIN,
+//                        Scopes.PLUS_ME).build();
     }
 
     /**

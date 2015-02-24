@@ -3,7 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="actionBarStyle">@style/DefaultActionBar</item>
+
+        <!--Testing to see what just the dark menu bar looks like-->
+             <!--<item name="actionBarStyle">@style/DefaultActionBar</item>-->
     </style>
 
     <!-- ActionBar style -->

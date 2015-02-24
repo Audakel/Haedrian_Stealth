@@ -1,17 +1,166 @@
 package com.haedrian.haedrian;
 
+import android.content.Context;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 
 public class SendRequestActivity extends ActionBarActivity {
+
+    Button button0;
+    Button button1;
+    Button button2;
+    Button button3;
+    Button button4;
+    Button button5;
+    Button button6;
+    Button button7;
+    Button button8;
+    Button button9;
+    Button buttonDot;
+    Button buttonBack;
+    Button buttonSend;
+    Button buttonRequest;
+    TextView displayNumber;
+    TextView dolarSignView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
+
+        button0 = (Button) findViewById(R.id.button0);
+        button1 = (Button) findViewById(R.id.button1);
+        button2 = (Button) findViewById(R.id.button2);
+        button3 = (Button) findViewById(R.id.button3);
+        button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
+        button6 = (Button) findViewById(R.id.button6);
+        button7 = (Button) findViewById(R.id.button7);
+        button8 = (Button) findViewById(R.id.button8);
+        button9 = (Button) findViewById(R.id.button9);
+        buttonDot = (Button) findViewById(R.id.buttonDot);
+        buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonSend = (Button) findViewById(R.id.buttonSend);
+        buttonRequest = (Button) findViewById(R.id.buttonRequest);
+        displayNumber = (TextView) findViewById(R.id.displayNumberView);
+        dolarSignView = (TextView) findViewById(R.id.dollarSignView);
+
+        button0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        button9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        buttonDot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNumberToDisplay(v);
+            }
+        });
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backspace();
+            }
+        });
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clear();
+            }
+        });
+        buttonRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clear();
+            }
+        });
+
+        displayNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateFontSize();
+            }
+        });
+
     }
 
 
@@ -35,5 +184,120 @@ public class SendRequestActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addNumberToDisplay(View selectedButton ){
+
+        switch(selectedButton.getId()) {
+            case R.id.button0:
+                updateText("0");
+                return;
+            case R.id.button1:
+                updateText("1");
+                return;
+            case R.id.button2:
+                updateText("2");
+                return;
+            case R.id.button3:
+                updateText("3");
+                return;
+            case R.id.button4:
+                updateText("4");
+                return;
+            case R.id.button5:
+                updateText("5");
+                return;
+            case R.id.button6:
+                updateText("6");
+                return;
+            case R.id.button7:
+                updateText("7");
+                return;
+            case R.id.button8:
+                updateText("8");
+                return;
+            case R.id.button9:
+                updateText("9");
+                return;
+            case R.id.buttonDot:
+                updateText(".");
+                return;
+            case R.id.buttonBack:
+                backspace();
+                return;
+            case R.id.buttonSend:
+                clear();
+                return;
+            case R.id.buttonRequest:
+                clear();
+                return;
+        }
+    }
+
+    private void clear() {
+        displayNumber.setText("0");
+    }
+
+    private void backspace() {
+        String string = displayNumber.getText().toString();
+        if (string.length() > 1) {
+            displayNumber.setText(string.substring(0, string.length() - 1));
+        }
+        else{
+            displayNumber.setText("0");
+        }
+    }
+
+    private void updateText(String number){
+        if(displayNumber.getText().toString().equals("0")){
+            displayNumber.setText(number);
+        }
+
+        else if (displayNumber.getText().length() < 6){
+            String newNumber = displayNumber.getText() + number;
+            newNumber = removeCommas(newNumber);
+            DecimalFormat formatter = new DecimalFormat("#,###,###");
+            String yourFormattedString = formatter.format(Double.parseDouble(newNumber));
+
+            displayNumber.setText(yourFormattedString);
+        }
+
+        if(displayNumber.getText().length() == 6){
+            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+            Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(100);
+
+            displayNumber.startAnimation(shake);
+        }
+
+    }
+
+    // Number formatter has issues with the commas.... needs just the numbers
+    private String removeCommas(String number){
+        String newNumber = number.replaceAll(",", "");
+        return newNumber;
+    }
+
+    private void updateFontSize(){
+
+        switch(displayNumber.length()) {
+            case 1:
+                displayNumber.setTextSize(140);
+                dolarSignView.setTextSize(70);
+
+                return;
+            case 2:
+                displayNumber.setTextSize(100);
+                dolarSignView.setTextSize(50);
+                return;
+            case 3:
+                displayNumber.setTextSize(80);
+                dolarSignView.setTextSize(50);
+                return;
+            case 4:
+                displayNumber.setTextSize(70);
+                dolarSignView.setTextSize(40);
+                return;
+        }
     }
 }
