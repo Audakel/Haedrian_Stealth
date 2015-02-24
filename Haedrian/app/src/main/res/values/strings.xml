@@ -10,5 +10,9 @@
     <string name="title_activity_invest">InvestActivity</string>
     <string name="save">Save</string>
     <string name="project_name">Project Name</string>
-    <string name="title_activity_grid_test">GridTest</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 </resources>

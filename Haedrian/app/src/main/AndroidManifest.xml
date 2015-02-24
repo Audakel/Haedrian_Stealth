@@ -49,10 +49,6 @@
             android:name=".InvestActivity"
             android:label="@string/title_activity_invest" >
         </activity>
-        <activity
-            android:name=".GridTest"
-            android:label="@string/title_activity_grid_test" >
-        </activity>
     </application>
 
 </manifest>
