@@ -1,6 +1,7 @@
 package com.haedrian.haedrian;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -157,7 +158,7 @@ public class SendRequestActivity extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                updateFontSize();
+                updateFontAttributes();
             }
         });
 
@@ -278,8 +279,14 @@ public class SendRequestActivity extends ActionBarActivity {
         return newNumber;
     }
 
-    private void updateFontSize(){
-
+    private void updateFontAttributes(){
+//
+        if(displayNumber.getText().toString().equals("0")){
+            displayNumber.setTextColor(Color.parseColor("#6466A182"));
+        }
+        else {
+            displayNumber.setTextColor(Color.parseColor("#66A182"));
+        }
         switch(displayNumber.length()) {
             case 1:
                 displayNumber.setTextSize(140);

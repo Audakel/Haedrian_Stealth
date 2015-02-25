@@ -4,7 +4,8 @@
                 android:layout_height="match_parent"
 
                 tools:context="com.haedrian.haedrian.SendRequestActivity"
-                android:background="@color/main_color">
+                android:background="@color/main_color"
+    >
 
                 android:background="@color/main_color">
 
@@ -22,7 +23,7 @@
             android:text="0"
             android:id="@+id/displayNumberView"
             android:textSize="140sp"
-            android:textColor="@color/offset_color"
+            android:textColor="#6466A182"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
 
