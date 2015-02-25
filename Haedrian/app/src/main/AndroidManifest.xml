@@ -43,7 +43,7 @@
         <activity
             android:name=".ProjectsActivity"
             android:label="@string/title_activity_projects"
-            android:windowSoftInputMode="adjustPan|stateVisible" >
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".InvestActivity"

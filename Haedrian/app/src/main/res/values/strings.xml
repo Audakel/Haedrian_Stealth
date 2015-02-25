@@ -9,7 +9,14 @@
     <string name="title_activity_projects">Projects</string>
     <string name="title_activity_invest">InvestActivity</string>
     <string name="save">Save</string>
-    <string name="project_name">Project Name</string>
+    <string name="project_title">Project Title</string>
+    <string name="project_title_hint">My project</string>
+    <string name="project_about">Tell us about your idea</string>
+    <string name="project_about_hint">This project will change the world!</string>
+    <string name="project_category">Category</string>
+    <string name="project_location">Location</string>
+    <string name="project_duration">Duration</string>
+    <string name="project_goal">Project Goal</string>
 
 
     <string name="title_section1">Section 1</string>
