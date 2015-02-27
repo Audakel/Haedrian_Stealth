@@ -1,17 +1,32 @@
 package com.haedrian.haedrian;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.haedrian.haedrian.Adapters.InvestListAdapter;
 
 
 public class InvestActivity extends ActionBarActivity {
+    RecyclerView mRecyclerView;
+    InvestListAdapter mInvestListAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invest);
+
+        mInvestListAdapter = new InvestListAdapter(this);
+        mRecyclerView = (RecyclerView) findViewById(R.id.investListView);
+        mRecyclerView.setAdapter(mInvestListAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
     }
 
 

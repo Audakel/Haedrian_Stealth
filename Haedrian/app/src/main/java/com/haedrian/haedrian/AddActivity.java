@@ -1,12 +1,20 @@
 package com.haedrian.haedrian;
 
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+        import android.content.Intent;
+        import android.support.v7.app.ActionBarActivity;
+        import android.os.Bundle;
+        import android.view.Menu;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.Toast;
+
+        import com.google.zxing.integration.android.IntentIntegrator;
+        import com.google.zxing.integration.android.IntentResult;
 
 
 public class AddActivity extends ActionBarActivity {
+    String upcCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,11 +22,19 @@ public class AddActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_add, menu);
+
+        Button startScanButton = (Button) findViewById(R.id.scanButton);
+        startScanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startScanning();
+            }
+        });
+
         return true;
     }
 
@@ -35,5 +51,30 @@ public class AddActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (result != null) {
+            String contents = result.getContents();
+
+            if (contents != null) {
+                Toast.makeText(this, "UPC code is : " + result.toString(), Toast.LENGTH_LONG).show();
+                upcCode = contents.toString();
+            } else {
+                Toast.makeText(this,"Fail!!",Toast.LENGTH_LONG ).show();
+            }
+        }
+    }
+
+    public void startScanning() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.addExtra("SCAN_WIDTH", 640);
+        integrator.addExtra("SCAN_HEIGHT", 480);
+        integrator.addExtra("SCAN_MODE", "QR_CODE_MODE,PRODUCT_MODE");
+        //customize the prompt message before scanning
+        integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
+        integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
     }
 }
