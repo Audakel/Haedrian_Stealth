@@ -22,4 +22,38 @@
         android:textSize="22sp"
         android:textColor="@color/white"/>
 
+    <Spinner
+        android:id="@+id/category_spinner"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_edittext"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round_button_offset"
+            android:text="@string/back"
+            android:layout_marginRight="5dp"/>
+
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round_button_offset"
+            android:text="@string/next"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+
 </LinearLayout>

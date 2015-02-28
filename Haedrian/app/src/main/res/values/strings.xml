@@ -14,12 +14,22 @@
     <string name="project_about">Tell us about your idea</string>
     <string name="project_about_hint">This project will change the world!</string>
     <string name="project_category">Category</string>
-    <string name="project_location">Location</string>
-    <string name="project_duration">Duration</string>
-    <string name="project_goal">Project Goal</string>
+    <string name="project_location">Project Location</string>
+    <string name="project_duration">Funding Duration</string>
+    <string name="project_goal">Funding Goal</string>
 
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+    <string name="category_prompt">Select Category</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="get_location">Get Location</string>
+    <string name="num_of_days">Number of Days</string>
+    <string name="num_of_days_hint">1-60 days</string>
+    <string name="end_date_time">End on date and time</string>
+    <string name="pick_date">Pick date</string>
+    <string name="price">$300</string>
+    <string name="submit">Submit</string>
 </resources>

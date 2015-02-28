@@ -1,7 +1,16 @@
 package com.haedrian.haedrian;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,36 +19,64 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
 public class ProjectsActivity extends ActionBarActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
+
+    private static String addressString;
+    private final LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            updateWithNewLocation(location);
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        @Override
+        public void onProviderEnabled(String provider) {}
+        @Override
+        public void onProviderDisabled(String provider) {}
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
+
+        // Location stuff
+        LocationManager locationManager;
+        String svcName = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager) getSystemService(svcName);
+
+
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setSpeedRequired(false);
+        criteria.setCostAllowed(true);
+
+        String provider = locationManager.getBestProvider(criteria, true);
+
+        Location l = locationManager.getLastKnownLocation(provider);
+        updateWithNewLocation(l);
+
+        locationManager.requestLocationUpdates(provider, 200, 10, locationListener);
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -73,6 +110,40 @@ public class ProjectsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void switchFragment(int id) {
+        mViewPager.setCurrentItem(id);
+    }
+
+    private void updateWithNewLocation(Location location) {
+        if(location != null) {
+            double latitude = location.getLatitude();
+            double lng = location.getLongitude();
+
+            Geocoder gc = new Geocoder(this, Locale.getDefault());
+
+            try {
+                List<Address> addresses = gc.getFromLocation(latitude, lng, 1);
+                StringBuilder sb = new StringBuilder();
+                if(addresses.size() > 0) {
+                    Address address = addresses.get(0);
+//
+//                    for(int i = 0; i < address.getMaxAddressLineIndex(); i++){
+//                        sb.append(address.getAddressLine(i)).append("\n");
+//                    }
+
+                    sb.append(address.getLocality()).append(", ");
+                    sb.append(address.getCountryName());
+                }
+
+                addressString = sb.toString();
+
+            } catch(IOException e) {
+                Log.v("Test-Error", String.valueOf(e));
+            }
+
+        }
     }
 
 
@@ -130,6 +201,8 @@ public class ProjectsActivity extends ActionBarActivity {
 
 
     public static class ProjectTitleFragment extends Fragment {
+
+        Button nextButton;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -155,11 +228,24 @@ public class ProjectsActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_project_title, container, false);
+
+            nextButton = (Button) rootView.findViewById(R.id.next_button);
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(1);
+                }
+            });
+
             return rootView;
         }
     }
 
     public static class ProjectAboutFragment extends Fragment {
+
+        Button backButton, nextButton;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -185,11 +271,33 @@ public class ProjectsActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_project_about, container, false);
+
+            backButton = (Button) rootView.findViewById(R.id.back_button);
+            nextButton = (Button) rootView.findViewById(R.id.next_button);
+
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(0);
+                }
+            });
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(2);
+                }
+            });
+
             return rootView;
         }
     }
 
     public static class ProjectCategoryFragment extends Fragment {
+
+        Spinner categorySpinner;
+        Button backButton, nextButton;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -215,11 +323,41 @@ public class ProjectsActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_project_category, container, false);
+
+            categorySpinner = (Spinner) rootView.findViewById(R.id.category_spinner);
+            backButton = (Button) rootView.findViewById(R.id.back_button);
+            nextButton = (Button) rootView.findViewById(R.id.next_button);
+
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(1);
+                }
+            });
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(3);
+                }
+            });
+
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(),
+                    R.array.categories_array, android.R.layout.simple_spinner_dropdown_item);
+
+            categorySpinner.setAdapter(adapter);
+
             return rootView;
         }
     }
 
     public static class ProjectLocationFragment extends Fragment {
+
+        private Button locationButton, backButton, nextButton;
+        private TextView locationText;
+
+        Context context;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -245,11 +383,45 @@ public class ProjectsActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_project_location, container, false);
+
+            context = rootView.getContext();
+
+            locationButton = (Button) rootView.findViewById(R.id.location_button);
+            locationText = (TextView) rootView.findViewById(R.id.location_text);
+            backButton = (Button) rootView.findViewById(R.id.back_button);
+            nextButton = (Button) rootView.findViewById(R.id.next_button);
+
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(2);
+                }
+            });
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(4);
+                }
+            });
+
+            locationButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    locationButton.setVisibility(View.GONE);
+                    locationText.setVisibility(View.VISIBLE);
+                    locationText.setText(addressString);
+                }
+            });
+
             return rootView;
         }
     }
 
     public static class ProjectDurationFragment extends Fragment {
+
+        Button backButton, nextButton;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -275,11 +447,31 @@ public class ProjectsActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_project_duration, container, false);
+
+            backButton = (Button) rootView.findViewById(R.id.back_button);
+            nextButton = (Button) rootView.findViewById(R.id.next_button);
+
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(3);
+                }
+            });
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(5);
+                }
+            });
             return rootView;
         }
     }
 
     public static class ProjectGoalFragment extends Fragment {
+
+        Button backButton;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -305,6 +497,16 @@ public class ProjectsActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_project_goal, container, false);
+
+            backButton = (Button)rootView.findViewById(R.id.back_button);
+
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ProjectsActivity)getActivity()).switchFragment(4);
+                }
+            });
+
             return rootView;
         }
     }
