@@ -32,4 +32,11 @@
     <string name="pick_date">Pick date</string>
     <string name="price">$300</string>
     <string name="submit">Submit</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="create_new_project">Create New Project</string>
+    <string name="created_projects">Created projects</string>
+    <string name="my_name">John Doe</string>
+    <string name="location">Santo Domingo, Domincan Republic</string>
+    <string name="amount_funded">25% funded</string>
+    <string name="amount_pledged">$33.54 pledged</string>
 </resources>

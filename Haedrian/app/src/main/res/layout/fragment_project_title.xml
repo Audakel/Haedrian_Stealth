@@ -29,14 +29,15 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:background="@drawable/round_edittext"
-        android:hint="@string/project_title_hint"/>
+        android:hint="@string/project_title_hint"
+        android:inputType="textCapSentences"/>
 
     <Button
         android:id="@+id/next_button"
         android:layout_marginTop="30dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_button_offset"
+        android:background="@drawable/button_offset"
         android:text="@string/next"/>
 
 

@@ -28,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/price"
-        android:background="@drawable/round_edittext"/>
+        android:background="@drawable/round_edittext"
+        android:inputType="numberDecimal"/>
 
 
     <LinearLayout
@@ -42,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/round_button_offset"
+            android:background="@drawable/button_offset"
             android:text="@string/back"
             android:layout_marginRight="5dp"/>
 
@@ -51,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/round_button_offset"
+            android:background="@drawable/button_offset"
             android:text="@string/submit"/>
     </LinearLayout>
 

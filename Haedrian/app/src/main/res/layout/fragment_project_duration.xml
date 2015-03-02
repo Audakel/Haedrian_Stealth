@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/round_button_offset"
+            android:background="@drawable/button_offset"
             android:text="@string/back"
             android:layout_marginRight="5dp"/>
 
@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/round_button_offset"
+            android:background="@drawable/button_offset"
             android:text="@string/next"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
