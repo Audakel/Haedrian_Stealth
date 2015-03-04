@@ -13,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/tableLayout">
+        android:id="@+id/tableLayout"
+        android:layout_marginBottom="20dp">
 
         <TableRow
             android:layout_width="fill_parent"
@@ -102,22 +103,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/investListView"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true">
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="5dp"
-        android:id="@+id/textView"
-        android:layout_below="@+id/tableLayout"
         android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:background="#ffffffff"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_below="@+id/tableLayout">
+    </android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>

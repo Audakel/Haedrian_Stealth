@@ -1,5 +1,6 @@
 package com.haedrian.haedrian;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -57,19 +58,27 @@ public class HomeActivity extends ActionBarActivity {
         switch(view.getId()) {
             case R.id.send_request:
                 intent = new Intent(this, SendRequestActivity.class);
-                startActivity(intent);
+                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent, options.toBundle());
                 return;
             case R.id.add:
                 intent = new Intent(this, AddActivity.class);
-                startActivity(intent);
+                ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent,options1.toBundle());
                 return;
             case R.id.projects:
                 intent = new Intent(this, ProjectsActivity.class);
-                startActivity(intent);
+                ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent,options2.toBundle());
                 return;
             case R.id.invest:
                 intent = new Intent(this, InvestActivity.class);
-                startActivity(intent);
+                ActivityOptions options3 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent,options3.toBundle());
                 return;
             default:
                 return;
