@@ -3,16 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/main_color">
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="75dp"
-        android:background="@drawable/progresstwo"/>
 
 
     <TextView
@@ -32,33 +23,6 @@
         android:hint="@string/project_about_hint"
         android:inputType="textCapSentences"/>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_offset"
-            android:text="@string/back"
-            android:layout_marginRight="5dp"/>
-
-
-        <Button
-            android:id="@+id/next_button"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_offset"
-            android:text="@string/next"
-            android:layout_marginLeft="5dp"/>
-    </LinearLayout>
 
 
 

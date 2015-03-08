@@ -4,17 +4,21 @@ package com.haedrian.haedrian;
 import java.io.IOException;
         import java.util.List;
         import java.util.Locale;
+import android.app.FragmentManager;
 
-        import android.content.Context;
-        import android.location.Address;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Address;
         import android.location.Criteria;
         import android.location.Geocoder;
         import android.location.Location;
         import android.location.LocationListener;
         import android.location.LocationManager;
-        import android.support.v7.app.ActionBarActivity;
+import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
-        import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
         import android.os.Bundle;
         import android.support.v4.view.ViewPager;
@@ -26,65 +30,47 @@ import android.view.LayoutInflater;
         import android.view.ViewGroup;
         import android.widget.ArrayAdapter;
         import android.widget.Button;
-        import android.widget.Spinner;
+import android.widget.ImageView;
+import android.widget.Spinner;
         import android.widget.TextView;
 
 
-public class CreateProjectActivity extends ActionBarActivity {
+public class CreateProjectActivity extends ActionBarActivity
+        implements ProjectTitleFragment.OnFragmentInteractionListener,
+        ProjectAboutFragment.OnFragmentInteractionListener,
+        ProjectCategoryFragment.OnFragmentInteractionListener,
+        ProjectLocationFragment.OnFragmentInteractionListener,
+        ProjectDurationFragment.OnFragmentInteractionListener,
+        ProjectGoalFragment.OnFragmentInteractionListener {
 
 
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    ViewPager mViewPager;
+    private Button nextButton, backButton, submitButton;
+    private ImageView progressBar;
+    private int currentFragment;
 
-    private static String addressString;
-    private final LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            updateWithNewLocation(location);
-        }
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
-        @Override
-        public void onProviderEnabled(String provider) {}
-        @Override
-        public void onProviderDisabled(String provider) {}
-    };
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
-        // Location stuff
-        LocationManager locationManager;
-        String svcName = Context.LOCATION_SERVICE;
-        locationManager = (LocationManager) getSystemService(svcName);
+        nextButton = (Button) findViewById(R.id.next_button);
+        backButton = (Button) findViewById(R.id.back_button);
+        submitButton = (Button) findViewById(R.id.submit_button);
+
+        progressBar = (ImageView) findViewById(R.id.progress_bar);
 
 
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
-        criteria.setAltitudeRequired(false);
-        criteria.setBearingRequired(false);
-        criteria.setSpeedRequired(false);
-        criteria.setCostAllowed(true);
-
-        String provider = locationManager.getBestProvider(criteria, true);
-
-        Location l = locationManager.getLastKnownLocation(provider);
-        updateWithNewLocation(l);
-
-        locationManager.requestLocationUpdates(provider, 200, 10, locationListener);
-
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        // Fragment stuff
+        currentFragment = 1;
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        ProjectTitleFragment projectTitleFragment = new ProjectTitleFragment();
+        fragmentTransaction.add(R.id.fragment_container, projectTitleFragment);
+        fragmentTransaction.commit();
     }
 
 
@@ -110,405 +96,144 @@ public class CreateProjectActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void switchFragment(int id) {
-        mViewPager.setCurrentItem(id);
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.next_button:
+                nextButtonHandler();
+                break;
+            case R.id.back_button:
+                backButtonHandler();
+                break;
+            case R.id.submit_button:
+                submitButtonHandler();
+                break;
+            default:
+                break;
+        }
+
     }
 
-    private void updateWithNewLocation(Location location) {
-        if(location != null) {
-            double latitude = location.getLatitude();
-            double lng = location.getLongitude();
+    private void nextButtonHandler() {
+        if (currentFragment == 1) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
+            ProjectAboutFragment projectAboutFragment = new ProjectAboutFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectAboutFragment);
+            fragmentTransaction.commit();
+            currentFragment = 2;
 
-            Geocoder gc = new Geocoder(this, Locale.getDefault());
-
-            try {
-                List<Address> addresses = gc.getFromLocation(latitude, lng, 1);
-                StringBuilder sb = new StringBuilder();
-                if(addresses.size() > 0) {
-                    Address address = addresses.get(0);
-//
-//                    for(int i = 0; i < address.getMaxAddressLineIndex(); i++){
-//                        sb.append(address.getAddressLine(i)).append("\n");
-//                    }
-
-                    sb.append(address.getLocality()).append(", ");
-                    sb.append(address.getCountryName());
-                }
-
-                addressString = sb.toString();
-
-            } catch(IOException e) {
-                Log.v("Test-Error", String.valueOf(e));
-            }
-
+            progressBar.setBackgroundResource(R.drawable.progresstwo);
+            backButton.setVisibility(View.VISIBLE);
         }
-    }
+        else if (currentFragment == 2) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
+            ProjectCategoryFragment projectCategoryFragment = new ProjectCategoryFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectCategoryFragment);
+            fragmentTransaction.commit();
+            currentFragment = 3;
 
-
-    /**
-     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+            progressBar.setBackgroundResource(R.drawable.progressthree);
         }
+        else if (currentFragment == 3) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
+            ProjectLocationFragment projectLocationFragment = new ProjectLocationFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectLocationFragment);
+            fragmentTransaction.commit();
+            currentFragment = 4;
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-
-            switch (position) {
-                case 0:
-                    return ProjectTitleFragment.newInstance(position + 1);
-                case 1:
-                    return ProjectAboutFragment.newInstance(position + 1);
-                case 2:
-                    return ProjectCategoryFragment.newInstance(position + 1);
-                case 3:
-                    return ProjectLocationFragment.newInstance(position + 1);
-                case 4:
-                    return ProjectDurationFragment.newInstance(position + 1);
-                case 5:
-                    return ProjectGoalFragment.newInstance(position + 1);
-                default:
-                    return null;
-            }
+            progressBar.setBackgroundResource(R.drawable.progressfour);
         }
+        else if (currentFragment == 4) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
+            ProjectDurationFragment projectDurationFragment = new ProjectDurationFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectDurationFragment);
+            fragmentTransaction.commit();
+            currentFragment = 5;
 
-        @Override
-        public int getCount() {
-            return 6;
+            progressBar.setBackgroundResource(R.drawable.progressfive);
         }
+        else if (currentFragment == 5) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
+            ProjectGoalFragment projectGoalFragment = new ProjectGoalFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectGoalFragment);
+            fragmentTransaction.commit();
+            currentFragment = 6;
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
+            progressBar.setBackgroundResource(R.drawable.progresssix);
+            nextButton.setVisibility(View.GONE);
+            submitButton.setVisibility(View.VISIBLE);
         }
     }
 
+    private void backButtonHandler() {
+        if (currentFragment == 2) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
+            ProjectTitleFragment projectTitleFragment = new ProjectTitleFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectTitleFragment);
+            fragmentTransaction.commit();
+            currentFragment = 1;
 
-    public static class ProjectTitleFragment extends Fragment {
-
-        Button nextButton;
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ProjectTitleFragment newInstance(int sectionNumber) {
-            ProjectTitleFragment fragment = new ProjectTitleFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+            progressBar.setBackgroundResource(R.drawable.progressone);
+            backButton.setVisibility(View.GONE);
         }
+        else if (currentFragment == 3) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
+            ProjectAboutFragment projectAboutFragment = new ProjectAboutFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectAboutFragment);
+            fragmentTransaction.commit();
+            currentFragment = 2;
 
-        public ProjectTitleFragment() {
+            progressBar.setBackgroundResource(R.drawable.progresstwo);
         }
+        else if (currentFragment == 4) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
+            ProjectCategoryFragment projectCategoryFragment = new ProjectCategoryFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectCategoryFragment);
+            fragmentTransaction.commit();
+            currentFragment = 3;
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_project_title, container, false);
+            progressBar.setBackgroundResource(R.drawable.progressthree);
 
-            nextButton = (Button) rootView.findViewById(R.id.next_button);
-
-            nextButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(1);
-                }
-            });
-
-            return rootView;
         }
-    }
+        else if (currentFragment == 5) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
+            ProjectLocationFragment projectLocationFragment = new ProjectLocationFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectLocationFragment);
+            fragmentTransaction.commit();
+            currentFragment = 4;
 
-    public static class ProjectAboutFragment extends Fragment {
-
-        Button backButton, nextButton;
-
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ProjectAboutFragment newInstance(int sectionNumber) {
-            ProjectAboutFragment fragment = new ProjectAboutFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+            progressBar.setBackgroundResource(R.drawable.progressfour);
         }
+        else if (currentFragment == 6) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
+            ProjectDurationFragment projectDurationFragment = new ProjectDurationFragment();
+            fragmentTransaction.replace(R.id.fragment_container, projectDurationFragment);
+            fragmentTransaction.commit();
+            currentFragment = 5;
 
-        public ProjectAboutFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_project_about, container, false);
-
-            backButton = (Button) rootView.findViewById(R.id.back_button);
-            nextButton = (Button) rootView.findViewById(R.id.next_button);
-
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(0);
-                }
-            });
-
-            nextButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(2);
-                }
-            });
-
-            return rootView;
+            progressBar.setBackgroundResource(R.drawable.progressfive);
+            nextButton.setVisibility(View.VISIBLE);
+            submitButton.setVisibility(View.GONE);
         }
     }
 
-    public static class ProjectCategoryFragment extends Fragment {
-
-        Spinner categorySpinner;
-        Button backButton, nextButton;
-
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ProjectCategoryFragment newInstance(int sectionNumber) {
-            ProjectCategoryFragment fragment = new ProjectCategoryFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public ProjectCategoryFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_project_category, container, false);
-
-            categorySpinner = (Spinner) rootView.findViewById(R.id.category_spinner);
-            backButton = (Button) rootView.findViewById(R.id.back_button);
-            nextButton = (Button) rootView.findViewById(R.id.next_button);
-
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(1);
-                }
-            });
-
-            nextButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(3);
-                }
-            });
-
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(rootView.getContext(),
-                    R.array.categories_array, android.R.layout.simple_spinner_dropdown_item);
-
-            categorySpinner.setAdapter(adapter);
-
-            return rootView;
-        }
+    private void submitButtonHandler() {
+        Intent intent = new Intent(this, ProjectsActivity.class);
+        startActivity(intent);
     }
 
-    public static class ProjectLocationFragment extends Fragment {
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-        private Button locationButton, backButton, nextButton;
-        private TextView locationText;
-
-        Context context;
-
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ProjectLocationFragment newInstance(int sectionNumber) {
-            ProjectLocationFragment fragment = new ProjectLocationFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public ProjectLocationFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_project_location, container, false);
-
-            context = rootView.getContext();
-
-            locationButton = (Button) rootView.findViewById(R.id.location_button);
-            locationText = (TextView) rootView.findViewById(R.id.location_text);
-            backButton = (Button) rootView.findViewById(R.id.back_button);
-            nextButton = (Button) rootView.findViewById(R.id.next_button);
-
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(2);
-                }
-            });
-
-            nextButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(4);
-                }
-            });
-
-            locationButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    locationButton.setVisibility(View.GONE);
-                    locationText.setVisibility(View.VISIBLE);
-                    locationText.setText(addressString);
-                }
-            });
-
-            return rootView;
-        }
     }
-
-    public static class ProjectDurationFragment extends Fragment {
-
-        Button backButton, nextButton;
-
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ProjectDurationFragment newInstance(int sectionNumber) {
-            ProjectDurationFragment fragment = new ProjectDurationFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public ProjectDurationFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_project_duration, container, false);
-
-            backButton = (Button) rootView.findViewById(R.id.back_button);
-            nextButton = (Button) rootView.findViewById(R.id.next_button);
-
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(3);
-                }
-            });
-
-            nextButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(5);
-                }
-            });
-            return rootView;
-        }
-    }
-
-    public static class ProjectGoalFragment extends Fragment {
-
-        Button backButton;
-
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ProjectGoalFragment newInstance(int sectionNumber) {
-            ProjectGoalFragment fragment = new ProjectGoalFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public ProjectGoalFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_project_goal, container, false);
-
-            backButton = (Button)rootView.findViewById(R.id.back_button);
-
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((CreateProjectActivity)getActivity()).switchFragment(4);
-                }
-            });
-
-            return rootView;
-        }
-    }
-
-
-
 }
