@@ -17,7 +17,7 @@
         android:title="Currency"
         android:defaultValue="USD"
         android:entries="@array/currency_values"
-        android:entryValues="@array/pref_example_list_values"
+        android:entryValues="@array/currency_values"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
 
@@ -27,7 +27,7 @@
         android:title="Language"
         android:defaultValue="English"
         android:entries="@array/language_values"
-        android:entryValues="@array/pref_example_list_values"
+        android:entryValues="@array/language_values"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
 
