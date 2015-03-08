@@ -8,13 +8,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     // Nav Drawer stuff
-    private String[] mHomeButtons = {"Home", "Add", "Projects", "Invest"};
+    private String[] mHomeButtons = {"Home", "Add", "Projects", "Invest", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
@@ -29,7 +31,7 @@ public class HomeActivity extends ActionBarActivity {
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_nav_item, mHomeButtons));
         // Set the list's click listener
-       // mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+       mDrawerList.setOnItemClickListener(this);
     }
 
 
@@ -84,5 +86,21 @@ public class HomeActivity extends ActionBarActivity {
                 return;
         }
 
+    }
+
+    // Handle all clicks for the left nav Drawer
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent;
+        //Grab all view/position/id info
+        //Toast.makeText(this, "View: " + view + " \nPosition: " + position + " \nid: " + id, Toast.LENGTH_LONG).show();
+
+        if (position == 4){
+            intent = new Intent(this, SettingsActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+
+            startActivity(intent,options1.toBundle());
+        }
     }
 }
