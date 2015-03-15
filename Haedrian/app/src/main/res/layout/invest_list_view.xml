@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_color"
+        android:background="@color/lightgrey"
         android:paddingBottom="15dp">
 
         <TextView
@@ -20,9 +20,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textSize="22sp"
-            android:textColor="#ffffffff"
+            android:textColor="@color/white"
             android:textStyle="italic"
-            android:background="@color/offset_color"/>
+            android:background="@color/blue"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -52,7 +52,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="$125"
                     android:id="@+id/raisedView"
-                    android:textColor="@color/offset_color"
+                    android:textColor="@color/blue"
                     android:textStyle="italic"/>
 
                 <TextView
@@ -70,7 +70,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="$450"
                     android:id="@+id/goalRaisView"
-                    android:textColor="@color/offset_color"
+                    android:textColor="@color/blue"
                     android:textStyle="italic"/>
 
                 <TextView
@@ -88,7 +88,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="23"
                     android:id="@+id/daysLeftGoal"
-                    android:textColor="@color/offset_color"
+                    android:textColor="@color/blue"
                     android:textStyle="italic"/>
 
                 <TextView
@@ -106,7 +106,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Ghana"
                     android:id="@+id/locationView"
-                    android:textColor="@color/offset_color"
+                    android:textColor="@color/blue"
                     android:textStyle="italic"/>
 
                 <TextView

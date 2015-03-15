@@ -3,6 +3,7 @@ package com.haedrian.haedrian;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Vibrator;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -42,6 +43,9 @@ public class SendRequestActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
+
+        // Set up ActionBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         button0 = (Button) findViewById(R.id.button0);
         button1 = (Button) findViewById(R.id.button1);
@@ -181,6 +185,10 @@ public class SendRequestActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 

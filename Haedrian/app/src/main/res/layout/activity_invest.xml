@@ -2,9 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="com.haedrian.haedrian.InvestActivity"
-    android:background="@color/main_color"
+    android:background="@color/lightgrey"
     android:padding="4dp">
 
     <TableLayout
@@ -27,7 +26,7 @@
                 android:id="@+id/button"
                 android:layout_column="0"
                 android:layout_weight="1"
-                android:background="@color/offset_color"
+                android:background="@drawable/round_blue"
                 android:layout_margin="4dp"
                 android:textColor="#ffffffff"/>
 
@@ -38,7 +37,7 @@
                 android:id="@+id/button10"
                 android:layout_column="1"
                 android:layout_weight="1"
-                android:background="@color/offset_color"
+                android:background="@drawable/round_blue"
                 android:layout_margin="4dp"
                 android:textColor="#ffffffff"/>
         </TableRow>
@@ -54,7 +53,7 @@
                 android:id="@+id/button11"
                 android:layout_column="0"
                 android:layout_weight="1"
-                android:background="@color/offset_color"
+                android:background="@drawable/round_blue"
                 android:layout_margin="4dp"
                 android:textColor="#ffffffff"/>
 
@@ -65,7 +64,7 @@
                 android:id="@+id/button12"
                 android:layout_column="1"
                 android:layout_weight="1"
-                android:background="@color/offset_color"
+                android:background="@drawable/round_blue"
                 android:layout_margin="4dp"
                 android:textColor="#ffffffff"/>
         </TableRow>
@@ -81,7 +80,7 @@
                 android:id="@+id/button13"
                 android:layout_column="0"
                 android:layout_weight="1"
-                android:background="@color/offset_color"
+                android:background="@drawable/round_blue"
                 android:layout_margin="4dp"
                 android:textColor="#ffffffff"/>
 
@@ -92,7 +91,7 @@
                 android:id="@+id/button14"
                 android:layout_column="1"
                 android:layout_weight="1"
-                android:background="@color/offset_color"
+                android:background="@drawable/round_blue"
                 android:layout_margin="4dp"
                 android:textColor="#ffffffff"/>
 

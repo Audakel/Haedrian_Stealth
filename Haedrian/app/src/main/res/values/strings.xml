@@ -4,10 +4,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_send_request">SendRequestActivity</string>
-    <string name="title_activity_add">AddActivity</string>
+    <string name="title_activity_send_request">Send/Request</string>
+    <string name="title_activity_add">People</string>
     <string name="title_activity_projects">Projects</string>
-    <string name="title_activity_invest">InvestActivity</string>
+    <string name="title_activity_invest">Invest</string>
     <string name="save">Save</string>
     <string name="project_title">Project Title</string>
     <string name="project_title_hint">My project</string>
@@ -19,9 +19,8 @@
     <string name="project_goal">Funding Goal</string>
 
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Balance</string>
+    <string name="title_section2">Transaction History</string>
     <string name="category_prompt">Select Category</string>
     <string name="next">Next</string>
     <string name="back">Back</string>
@@ -34,7 +33,7 @@
     <string name="submit">Submit</string>
     <string name="title_activity_create">CreateActivity</string>
     <string name="create_new_project">Create New Project</string>
-    <string name="created_projects">Created projects</string>
+    <string name="created_projects">My projects</string>
     <string name="my_name">John Doe</string>
     <string name="location">Santo Domingo, Domincan Republic</string>
     <string name="amount_funded">25% funded</string>
@@ -42,4 +41,13 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">Open.</string>
+    <string name="drawer_close">Close</string>
+    <string name="title_activity_wallet">WalletActivity</string>
+    <string name="bitcoin_address">Wallet Address:</string>
+    <string name="dummy_address">1Jk34ZCPO6Uu790ZxxSW63qA</string>
+    <string name="bitcoin_fake_amount">5.21</string>
+    <string name="btc">BTC</string>
+    <string name="currency_code">USD</string>
+    <string name="fake_converted_amount">4,496.57</string>
 </resources>

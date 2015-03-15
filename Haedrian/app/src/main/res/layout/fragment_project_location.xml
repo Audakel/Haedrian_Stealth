@@ -4,23 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/main_color">
+    android:background="@color/lightgrey">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/project_location"
         android:textSize="22sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/blue"/>
 
     <Button
         android:id="@+id/location_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/get_location"
-        android:textColor="@color/main_color"
+        android:textColor="@color/white"
         android:layout_marginTop="30dp"
-        android:background="@drawable/round_button_white"/>
+        android:background="@drawable/round_purple"/>
 
     <TextView
         android:id="@+id/location_text"

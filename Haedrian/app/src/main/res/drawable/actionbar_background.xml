@@ -3,6 +3,6 @@
     android:shape="rectangle"
     android:useLevel="false">
 
-    <solid android:color="@color/action_bar" />
+    <solid android:color="@color/turquoise" />
 
 </shape>

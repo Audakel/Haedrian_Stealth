@@ -7,14 +7,32 @@
     <!--<color name="action_bar">#CAFFB9</color>-->
 
     <!-- White ActionBar -->
-    <color name="main_color">#2E4057</color>
+    <!--<color name="main_color">#2E4057</color>-->
+    <!--<color name="offset_color">#66A182</color>-->
+    <!--<color name="offset_color_pressed">#3E614F</color>-->
+    <!--<color name="text_color">#2E4057</color>-->
+    <!--<color name="action_bar">#FFFFFF</color>-->
+    <!--<color name="white">#FFFFFF</color>-->
+    <!--<color name="myGrey">#7E7E7E</color>-->
+    <!--<color name="grey">#7E7E7E</color>-->
+
+
+    <color name="main_color">#FFFFFF</color>
     <color name="offset_color">#66A182</color>
     <color name="offset_color_pressed">#3E614F</color>
     <color name="text_color">#2E4057</color>
-    <color name="action_bar">#FFFFFF</color>
+    <color name="action_bar">#66A182</color>
     <color name="white">#FFFFFF</color>
     <color name="myGrey">#7E7E7E</color>
     <color name="grey">#7E7E7E</color>
+
+    <color name="turquoise">#00BE90</color>
+    <color name="pink">#F05282</color>
+    <color name="lightgrey">#E5E6E1</color>
+    <color name="yellow">#FEBA4D</color>
+    <color name="blue">#4183D1</color>
+    <color name="purple">#7759B3</color>
+    <color name="black">#000000</color>
 
 
 </resources>
