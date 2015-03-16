@@ -104,6 +104,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.haedrian.haedrian.HomeActivity" />
         </activity>
+        <activity
+            android:name=".BuyActivity"
+            android:label="@string/title_activity_buy" >
+        </activity>
     </application>
 
 </manifest>

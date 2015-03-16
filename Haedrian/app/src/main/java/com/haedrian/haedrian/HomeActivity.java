@@ -139,6 +139,12 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options4.toBundle());
                 return;
+            case R.id.buy:
+                intent = new Intent(this, BuyActivity.class);
+                ActivityOptions options5 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent, options5.toBundle());
+                return;
             default:
                 return;
         }
