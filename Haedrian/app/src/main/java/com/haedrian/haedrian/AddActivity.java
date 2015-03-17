@@ -8,6 +8,8 @@ package com.haedrian.haedrian;
         import android.view.MenuItem;
         import android.view.View;
         import android.widget.Button;
+        import android.widget.ImageButton;
+        import android.widget.LinearLayout;
         import android.widget.Toast;
 
         import com.google.zxing.integration.android.IntentIntegrator;
@@ -25,7 +27,7 @@ public class AddActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button startScanButton = (Button) findViewById(R.id.scanButton);
+        LinearLayout startScanButton = (LinearLayout) findViewById(R.id.scan_button);
         startScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
