@@ -50,4 +50,15 @@
     <string name="btc">BTC</string>
     <string name="currency_code">USD</string>
     <string name="fake_converted_amount">4,496.57</string>
+    <string name="my_people">My People:</string>
+    <string name="personal">Personal</string>
+    <string name="business">Business</string>
+    <string name="add_new">Add New:</string>
+    <string name="facebook">Facebook</string>
+    <string name="contacts">Contacts</string>
+    <string name="google_plus">Google+</string>
+    <string name="Email">Email</string>
+    <string name="email">Email</string>
+    <string name="search">Search</string>
+    <string name="scan">Scan</string>
 </resources>
