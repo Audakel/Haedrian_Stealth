@@ -68,16 +68,16 @@ public class SendRequestActivity extends ActionBarActivity {
         buttonRequest = (Button) findViewById(R.id.buttonRequest);
         displayNumber = (TextView) findViewById(R.id.displayNumberView);
         dolarSignView = (TextView) findViewById(R.id.dollarSignView);
-        sendButton = (Button) findViewById(R.id.buttonSend);
+        buttonSend = (Button) findViewById(R.id.buttonSend);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, SendActivity.class);
-                intent.putExtra("sendAmountView", displayNumber.getText().toString());
-                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
-                        0, view.getWidth(), view.getHeight());
-                startActivity(intent, options.toBundle());
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(SendRequestActivity.this, SendActivity.class);
+                intent.putExtra("send_amount", displayNumber.getText().toString());
+                startActivity(intent);
+                //clear();
             }
         });
 

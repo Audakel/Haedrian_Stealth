@@ -1,56 +1,77 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.haedrian.haedrian.SendActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Send"
-        android:id="@+id/sendTextButton"
-        android:layout_marginTop="27dp"
-        android:layout_below="@+id/sendAmountText"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="@color/turquoise"
-        android:textColor="#ffffffff" />
+                tools:context="com.haedrian.haedrian.SendRequestActivity"
+                android:background="@color/main_color"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="0.00"
-        android:id="@+id/sendAmountText"
-        android:textSize="30sp"
-        android:layout_below="@+id/phoneNumbeEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
-        android:id="@+id/phoneNumbeEditText"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="phone number"
-        android:selectAllOnFocus="false" />
+        android:id="@+id/linearLayout4">
 
-    <TextView
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffd4ffeb"
+            android:layout_marginBottom="5dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="55"
+                android:id="@+id/send_amount"
+                android:textSize="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$"
+                android:id="@+id/dollarSignView2"
+                android:textSize="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/send_amount"
+                android:layout_toStartOf="@+id/send_amount" />
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="send"
+            android:id="@+id/send_button"
+
+            android:background="@color/offset_color"
+            android:layout_marginBottom="5dp"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:textColor="#ffffffff" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="cancel"
+            android:id="@+id/cancel_button"
+
+            android:background="@color/offset_color"
+            android:textSize="20sp"
+            android:textColor="#ffffffff" />
+    </LinearLayout>
+
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$"
-        android:id="@+id/textView21"
-        android:layout_alignTop="@+id/sendAmountText"
-        android:layout_toLeftOf="@+id/sendAmountText"
-        android:layout_toStartOf="@+id/sendAmountText"
-        android:textSize="18dp"
-        android:layout_marginRight="5dp" />
+        android:id="@+id/selection_list"
+        android:layout_centerHorizontal="true"
+        android:background="#ffd4ffeb"
+        android:layout_above="@+id/linearLayout4" />
 
 </RelativeLayout>
