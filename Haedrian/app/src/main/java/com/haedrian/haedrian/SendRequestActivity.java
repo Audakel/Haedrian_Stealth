@@ -1,6 +1,8 @@
 package com.haedrian.haedrian;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Vibrator;
 import android.support.v4.app.NavUtils;
@@ -8,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,12 +40,15 @@ public class SendRequestActivity extends ActionBarActivity {
     Button buttonRequest;
     TextView displayNumber;
     TextView dolarSignView;
+    Button sendButton;
+    Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
+        context = getApplication();
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,10 +65,21 @@ public class SendRequestActivity extends ActionBarActivity {
         button9 = (Button) findViewById(R.id.button9);
         buttonDot = (Button) findViewById(R.id.buttonDot);
         buttonBack = (Button) findViewById(R.id.buttonBack);
-        buttonSend = (Button) findViewById(R.id.buttonSend);
         buttonRequest = (Button) findViewById(R.id.buttonRequest);
         displayNumber = (TextView) findViewById(R.id.displayNumberView);
         dolarSignView = (TextView) findViewById(R.id.dollarSignView);
+        sendButton = (Button) findViewById(R.id.buttonSend);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SendActivity.class);
+                intent.putExtra("sendAmountView", displayNumber.getText().toString());
+                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent, options.toBundle());
+            }
+        });
 
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,12 +153,7 @@ public class SendRequestActivity extends ActionBarActivity {
                 backspace();
             }
         });
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clear();
-            }
-        });
+
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

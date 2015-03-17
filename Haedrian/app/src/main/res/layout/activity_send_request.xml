@@ -302,7 +302,8 @@
             android:layout_weight="1"
             android:background="@color/offset_color"
             android:textColor="#ffffffff"
-            style="?android:attr/borderlessButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"
+            android:clickable="false" />
     </LinearLayout>
 
 
