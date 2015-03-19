@@ -2,6 +2,7 @@ package com.haedrian.haedrian;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,6 +35,9 @@ public class SendActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
+
+        // Set up ActionBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         sendButton = (Button) findViewById(R.id.send_button);
@@ -140,7 +144,7 @@ public class SendActivity extends ActionBarActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_request, menu);
+//        getMenuInflater().inflate(R.menu.menu_send_request, menu);
         return true;
     }
 
@@ -153,6 +157,10 @@ public class SendActivity extends ActionBarActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 

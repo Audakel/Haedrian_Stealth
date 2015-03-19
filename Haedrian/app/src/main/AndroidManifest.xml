@@ -107,11 +107,33 @@
         </activity>
         <activity
             android:name=".BuyActivity"
-            android:label="@string/title_activity_buy" >
+            android:label="@string/title_activity_buy"
+            android:parentActivityName=".HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.haedrian.haedrian.HomeActivity" />
         </activity>
         <activity
             android:name=".SendActivity"
-            android:label="@string/title_activity_send" >
+            android:label="@string/title_activity_send"
+            android:parentActivityName=".SendRequestActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.haedrian.haedrian.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".ProjectsList"
+            android:label="@string/title_activity_projects_list"
+            android:parentActivityName=".InvestActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.haedrian.haedrian.InvestActivity" />
         </activity>
     </application>
 

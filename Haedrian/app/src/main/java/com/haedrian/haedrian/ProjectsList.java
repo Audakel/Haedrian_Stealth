@@ -3,37 +3,41 @@ package com.haedrian.haedrian;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.InputType;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
+
+import com.haedrian.haedrian.Adapters.InvestListAdapter;
 
 
-public class BuyActivity extends ActionBarActivity {
-    EditText currencyEditText;
-    EditText bitcoinEditText;
+public class ProjectsList extends ActionBarActivity {
+
+    private RecyclerView mRecyclerView;
+    private InvestListAdapter mInvestListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy);
+        setContentView(R.layout.activity_projects_list);
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mInvestListAdapter = new InvestListAdapter(this);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.investListView);
+        mRecyclerView.setAdapter(mInvestListAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_buy, menu);
+//        getMenuInflater().inflate(R.menu.menu_projects_list, menu);
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

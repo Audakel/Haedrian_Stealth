@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     // Nav Drawer stuff
-    private String[] mHomeButtons = {"Home", "Add", "Projects", "Invest", "Settings"};
+    private String[] mHomeButtons = {"Home","Wallet", "Buy", "Add", "Projects", "Invest", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
