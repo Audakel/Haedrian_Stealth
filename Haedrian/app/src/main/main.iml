@@ -13,11 +13,6 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="classes3" level="project" />
-    <orderEntry type="library" name="internal_impl-21.0.3" level="project" />
-    <orderEntry type="library" name="classes1" level="project" />
-    <orderEntry type="library" name="classes" level="project" />
-    <orderEntry type="library" name="classes2" level="project" />
   </component>
 </module>
 
