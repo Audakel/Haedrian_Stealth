@@ -28,7 +28,10 @@
             android:padding="5dp"
             android:layout_marginRight="17dp"
             android:background="@drawable/round_yellow"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:id="@+id/addPersonalBank">
 
             <ImageView
                 android:layout_width="75dp"

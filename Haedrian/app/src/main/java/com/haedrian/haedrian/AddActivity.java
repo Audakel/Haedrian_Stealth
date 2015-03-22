@@ -1,5 +1,6 @@
 package com.haedrian.haedrian;
 
+        import android.app.ActivityOptions;
         import android.content.Intent;
         import android.support.v4.app.NavUtils;
         import android.support.v7.app.ActionBarActivity;
@@ -16,7 +17,7 @@ package com.haedrian.haedrian;
         import com.google.zxing.integration.android.IntentResult;
 
 
-public class AddActivity extends ActionBarActivity {
+public class AddActivity extends ActionBarActivity  {
     String upcCode = "";
 
     @Override
@@ -34,6 +35,18 @@ public class AddActivity extends ActionBarActivity {
                 startScanning();
             }
         });
+    }
+
+    public void onClick(View view) {
+        Intent intent;
+        switch(view.getId()) {
+            case R.id.addPersonalBank:
+                intent = new Intent(this, AddPersonalBankActivity.class);
+                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent, options.toBundle());
+                return;
+        }
     }
 
     @Override
@@ -59,6 +72,7 @@ public class AddActivity extends ActionBarActivity {
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

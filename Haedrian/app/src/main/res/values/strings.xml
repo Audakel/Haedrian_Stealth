@@ -65,4 +65,6 @@
     <string name="scan">Scan</string>
     <string name="categories">Categories</string>
     <string name="title_activity_projects_list">Trending</string>
+    <string name="title_activity_add_personal_bank">AddPersonalBankActivity</string>
+    <string name="title_activity_app_controller">AppController</string>
 </resources>

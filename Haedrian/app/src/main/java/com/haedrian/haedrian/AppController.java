@@ -1,6 +1,5 @@
 package com.haedrian.haedrian;
 
-import android.app.ActivityOptions;
 import android.app.Application;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -11,9 +10,9 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by James on 3/21/2015.
+ * Created by audakel on 3/21/15.
  */
-public class ApplicationController extends Application {
+public class AppController extends Application {
 
     public static final String TAG = "VolleyPatterns";
     private RequestQueue mRequestQueue;
@@ -22,7 +21,9 @@ public class ApplicationController extends Application {
     /**
      * A singleton instance of the application class for easy access in other places
      */
-    private static ApplicationController sInstance;
+    private static AppController sInstance;
+
+
 
     @Override
     public void onCreate() {
@@ -31,7 +32,7 @@ public class ApplicationController extends Application {
         // initialize the singleton
         sInstance = this;
         mRequestQueue = Volley.newRequestQueue(this); // 'this' is Context
-        checkedLoggedInState();
+
     }
 
     private void checkedLoggedInState() {
@@ -46,7 +47,7 @@ public class ApplicationController extends Application {
     /**
      * @return ApplicationController singleton instance
      */
-    public static synchronized ApplicationController getInstance() {
+    public static synchronized AppController getInstance() {
         return sInstance;
     }
 
