@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.HomeScreen;
 
         import android.app.ActivityOptions;
         import android.content.Intent;
@@ -15,6 +15,8 @@ package com.haedrian.haedrian;
 
         import com.google.zxing.integration.android.IntentIntegrator;
         import com.google.zxing.integration.android.IntentResult;
+        import com.haedrian.haedrian.AddPersonalBankActivity;
+        import com.haedrian.haedrian.R;
 
 
 public class AddActivity extends ActionBarActivity  {

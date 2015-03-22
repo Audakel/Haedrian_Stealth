@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.CreateProjectFragments;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -7,18 +7,19 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.haedrian.haedrian.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProjectDurationFragment.OnFragmentInteractionListener} interface
+ * {@link ProjectTitleFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ProjectDurationFragment#newInstance} factory method to
+ * Use the {@link ProjectTitleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProjectDurationFragment extends Fragment {
+public class ProjectTitleFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,11 +37,11 @@ public class ProjectDurationFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProjectDurationFragment.
+     * @return A new instance of fragment ProjectTitleFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProjectDurationFragment newInstance(String param1, String param2) {
-        ProjectDurationFragment fragment = new ProjectDurationFragment();
+    public static ProjectTitleFragment newInstance(String param1, String param2) {
+        ProjectTitleFragment fragment = new ProjectTitleFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,7 +49,7 @@ public class ProjectDurationFragment extends Fragment {
         return fragment;
     }
 
-    public ProjectDurationFragment() {
+    public ProjectTitleFragment() {
         // Required empty public constructor
     }
 
@@ -64,7 +65,7 @@ public class ProjectDurationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_project_duration, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_project_title, container, false);
 
         return rootView;
     }

@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.HomeScreen;
 
 import java.util.Locale;
 
@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
+import com.haedrian.haedrian.R;
 import com.squareup.picasso.Picasso;
 
 

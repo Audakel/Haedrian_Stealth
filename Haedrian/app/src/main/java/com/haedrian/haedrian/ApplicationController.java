@@ -8,11 +8,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.haedrian.haedrian.HomeScreen.HomeActivity;
 
 /**
  * Created by audakel on 3/21/15.
  */
-public class AppController extends Application {
+public class ApplicationController extends Application {
 
     public static final String TAG = "VolleyPatterns";
     private RequestQueue mRequestQueue;
@@ -21,7 +22,7 @@ public class AppController extends Application {
     /**
      * A singleton instance of the application class for easy access in other places
      */
-    private static AppController sInstance;
+    private static ApplicationController sInstance;
 
 
 
@@ -47,7 +48,7 @@ public class AppController extends Application {
     /**
      * @return ApplicationController singleton instance
      */
-    public static synchronized AppController getInstance() {
+    public static synchronized ApplicationController getInstance() {
         return sInstance;
     }
 

@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.HomeScreen;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -20,6 +20,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.haedrian.haedrian.Adapters.InvestListAdapter;
+import com.haedrian.haedrian.ProjectsList;
+import com.haedrian.haedrian.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

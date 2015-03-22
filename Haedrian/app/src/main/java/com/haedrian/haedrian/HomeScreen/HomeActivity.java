@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.HomeScreen;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -13,12 +13,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.haedrian.haedrian.CurrencyInfoActivity;
+import com.haedrian.haedrian.ProjectsActivity;
+import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.SendRequestActivity;
+import com.haedrian.haedrian.SettingsActivity;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     // Nav Drawer stuff
-    private String[] mHomeButtons = {"Home","Wallet", "Buy", "Add", "Projects", "Invest", "Settings"};
+    private String[] mHomeButtons = {"Home","Wallet", "Buy", "Add", "Projects", "Invest", "FX Rates", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
@@ -159,8 +164,15 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         //Grab all view/position/id info
         //Toast.makeText(this, "View: " + view + " \nPosition: " + position + " \nid: " + id, Toast.LENGTH_LONG).show();
 
-        if (position == 4){
+        if (position == 7){
             intent = new Intent(this, SettingsActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+
+            startActivity(intent,options1.toBundle());
+        }
+        else if (position == 6){
+            intent = new Intent(this, CurrencyInfoActivity.class);
             ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
 

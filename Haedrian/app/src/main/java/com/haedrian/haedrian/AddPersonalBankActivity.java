@@ -11,10 +11,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,7 +66,7 @@ public class AddPersonalBankActivity extends ActionBarActivity  {
                     public void onResponse(JSONObject response) {
                         try {
                             String name = response.getString("name");
-                            Toast.makeText(getApplicationContext(), name ,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -81,7 +79,7 @@ public class AddPersonalBankActivity extends ActionBarActivity  {
         });
 
 // add the request object to the queue to be executed
-        AppController.getInstance().addToRequestQueue(req);
+        ApplicationController.getInstance().addToRequestQueue(req);
 
     }
 }

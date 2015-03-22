@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="currencyShortName">
+        <item>USD</item>
+        <item>JPY</item>
+        <item>CNY</item>
+        <item>SGD</item>
+        <item>HKD</item>
+        <item>CAD</item>
+        <item>NZD</item>
+        <item>AUD</item>
+        <item>CLP</item>
+        <item>GBP</item>
+        <item>DKK</item>
+        <item>SEK</item>
+        <item>ISK</item>
+        <item>CHF</item>
+        <item>BRL</item>
+        <item>EUR</item>
+        <item>RUB</item>
+        <item>PLN</item>
+        <item>THB</item>
+        <item>KRW</item>
+        <item>TWD</item>
+    </string-array>
+
+    <string-array name="currencyLongName">
+        <item>United States Dollar</item>
+        <item>Japanese Yen</item>
+        <item>Chinese Yuan</item>
+        <item>Singapore Dollar</item>
+        <item>Hong Kong Dollar</item>
+        <item>New Zealand Dollar</item>
+        <item>Chilean Peso</item>
+        <item>British Pound Sterling</item>
+        <item>Danish Krone</item>
+        <item>Swedish Krona</item>
+        <item>Icelandic Króna</item>
+        <item>Swiss Franc</item>
+        <item>Euro</item>
+        <item>Russian Ruble</item>
+        <item>Polish Zloty</item>
+        <item>Thai Baht</item>
+        <item>South Korean Won</item>
+        <item>New Taiwan Dollar</item>
+    </string-array>
+</resources>

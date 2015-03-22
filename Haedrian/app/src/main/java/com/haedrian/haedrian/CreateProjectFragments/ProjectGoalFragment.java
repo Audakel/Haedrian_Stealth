@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.CreateProjectFragments;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -7,7 +7,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.haedrian.haedrian.R;
 
 
 /**

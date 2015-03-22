@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.HomeScreen;
 
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import com.haedrian.haedrian.R;
 
 
 public class BuyActivity extends ActionBarActivity {

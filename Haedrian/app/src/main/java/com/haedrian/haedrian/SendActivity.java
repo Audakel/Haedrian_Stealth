@@ -19,6 +19,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haedrian.haedrian.HomeScreen.HomeActivity;
+
 public class SendActivity extends ActionBarActivity{
 
     String send_amount;
