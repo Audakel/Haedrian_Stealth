@@ -6,14 +6,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class AddPersonalBankActivity extends ActionBarActivity  {
@@ -57,24 +60,27 @@ public class AddPersonalBankActivity extends ActionBarActivity  {
     }
 
     public void testVolleyRequest(){
-        final String URL = "http://api.openweathermap.org/data/2.5/weather?q=London,uk";
-        JsonArrayRequest req = new JsonArrayRequest(URL, new Response.Listener<JSONArray> () {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    VolleyLog.v("Response:%n %s", response.toString(4));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
+        final String URL = "http://api.openweathermap.org/data/2.5/weather?q=Provo,ut";
+        // pass second argument as "null" for GET requests
+        JsonObjectRequest req = new JsonObjectRequest(URL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String name = response.getString("name");
+                            Toast.makeText(getApplicationContext(), name ,Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error on array: ", error.getMessage());
+                VolleyLog.e("Error yo: ", error.getMessage());
             }
         });
 
-        // add the request object to the queue to be executed
+// add the request object to the queue to be executed
         AppController.getInstance().addToRequestQueue(req);
 
     }
