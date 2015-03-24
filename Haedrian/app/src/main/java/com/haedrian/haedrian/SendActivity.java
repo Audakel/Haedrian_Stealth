@@ -34,6 +34,8 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import static com.android.volley.Request.*;
+
 public class SendActivity extends ActionBarActivity{
 
     private String sendAmount, toUser;
@@ -149,7 +151,7 @@ public class SendActivity extends ActionBarActivity{
         progressDialog.setMessage("Sending Payment...");
         progressDialog.show();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,
                 URL, null,
                 new Response.Listener<JSONObject>() {
 
