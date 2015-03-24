@@ -95,6 +95,7 @@ public class CurrencyInfoActivity extends ActionBarActivity {
                         hidePDialog();
 
                         // Parsing json
+                        currencies.clear();
                         for(String currency : mCurrencyShortNames){
                             try {
                                 JSONObject currentCurrency = response.getJSONObject(currency);

@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -16,9 +18,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 
 public class AddPersonalBankActivity extends ActionBarActivity  {
     Button addBankButton;
+    EditText addEmailText;
+    EditText addPasswordText;
+    TextView bankAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,10 @@ public class AddPersonalBankActivity extends ActionBarActivity  {
                 testVolleyRequest();
             }
         });
+
+        addEmailText = (EditText) findViewById(R.id.addBankEmailEditText);
+        addPasswordText = (EditText) findViewById(R.id.addBankPasswordEditText);
+        bankAddress = (TextView) findViewById(R.id.newBankText);
     }
 
 
@@ -58,15 +70,31 @@ public class AddPersonalBankActivity extends ActionBarActivity  {
     }
 
     public void testVolleyRequest(){
-        final String URL = "http://api.openweathermap.org/data/2.5/weather?q=Provo,ut";
+        final String URL = "https://blockchain.info/api/v2/create_wallet";
+        HashMap<String, String> params = new HashMap<String, String>();
+
+//        if (!checkCredentials()) {
+//            Toast.makeText(getApplicationContext(), "Error on credentials", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+
+//        params.put("password", addPasswordText.getText().toString());
+//        params.put("email", addEmailText.getText().toString());
+        params.put("password", "thisisatestpassword");
+        params.put("email", "thisisatestemail");
+        params.put("api_code", "5a25bea3-7f2f-4a40-acb6-3ed0497d570e");
+        //params.put("priv", "AbCdEfGh123456");
+        //params.put("label", "AbCdEfGh123456");
+
         // pass second argument as "null" for GET requests
-        JsonObjectRequest req = new JsonObjectRequest(URL, null,
+        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            String name = response.getString("name");
-                            Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Successfully added a bank", Toast.LENGTH_LONG).show();
+                            bankAddress.setText(response.getString("address"));
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -81,5 +109,9 @@ public class AddPersonalBankActivity extends ActionBarActivity  {
 // add the request object to the queue to be executed
         ApplicationController.getInstance().addToRequestQueue(req);
 
+    }
+
+    private boolean checkCredentials() {
+        return addPasswordText.length() >= 10 && addEmailText.length() > 0;
     }
 }
