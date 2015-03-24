@@ -68,4 +68,20 @@
     <string name="title_activity_add_personal_bank">AddPersonalBankActivity</string>
     <string name="title_activity_app_controller">AppController</string>
     <string name="title_activity_invest_info">InvestInfoActivity</string>
+    <string name="name">Name, Email, Address etc.</string>
+    <string name="no_user_selected_error">Please enter a user below</string>
+    <string name="title_activity_request">RequestActivity</string>
+    <string name="your_sending">Your sending:</string>
+    <string name="amount">Amount:</string>
+    <string name="dummy_amount">$0.00</string>
+    <string name="to">To:</string>
+    <string name="dummy_to">John Doe (johndoe@haedrian.io)</string>
+    <string name="fee">Fee:      </string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="youre_sending">You\'re Sending:</string>
+    <string name="total">Total:</string>
+    <string name="youre_requesting">You\'re Requesting:</string>
+    <string name="from">From:</string>
+    <string name="request">Request</string>
 </resources>

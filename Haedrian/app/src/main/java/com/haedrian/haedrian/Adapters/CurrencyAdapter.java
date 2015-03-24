@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.haedrian.haedrian.CurrencyInfoActivity;
-import com.haedrian.haedrian.Modles.CurrencyModel;
+import com.haedrian.haedrian.Models.CurrencyModel;
 import com.haedrian.haedrian.R;
 
 import java.util.List;
@@ -65,10 +64,10 @@ public class CurrencyAdapter extends BaseAdapter {
         name.setText(currencyModel.getCurrencyName());
 
         // rating
-        buy.setText("Buy: " + String.valueOf(currencyModel.getBuy()));
+        buy.setText("Buy: " + String.valueOf(currencyModel.getBuyRate()));
 
         // sell
-        sell.setText("Sell: " + currencyModel.getSell());
+        sell.setText("Sell: " + currencyModel.getSellRate());
 
         // release year
         symbol.setText(currencyModel.getSymbol());

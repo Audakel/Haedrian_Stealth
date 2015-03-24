@@ -34,5 +34,9 @@
     <color name="purple">#7759B3</color>
     <color name="black">#000000</color>
 
+    <color name="error_border">#ebccd1</color>
+    <color name="error_red">#f2dede</color>
+    <color name="error_red_text">#a94442</color>
+
 
 </resources>

@@ -15,7 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Adapters.CurrencyAdapter;
-import com.haedrian.haedrian.Modles.CurrencyModel;
+import com.haedrian.haedrian.Models.CurrencyModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

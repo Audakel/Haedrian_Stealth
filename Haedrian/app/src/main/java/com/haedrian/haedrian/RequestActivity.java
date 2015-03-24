@@ -34,14 +34,15 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-public class SendActivity extends ActionBarActivity{
+public class RequestActivity extends ActionBarActivity{
 
-    private String sendAmount, toUser;
-    private Button sendButton, cancelButton;
-    private TextView amountTV, toUserTV, totalAmountTV, sendSuccessTV;
-    private LinearLayout sendLayout;
-    private RelativeLayout sendSuccessLayout;
-    private ImageView sendSuccessImage;
+    private String requestAmount, fromUser;
+    private Button requestButton, cancelButton;
+    private TextView amountTV, fromUserTV, totalAmountTV, requestSuccessTV;
+    private LinearLayout requestLayout;
+    private RelativeLayout successLayout;
+    private ImageView requestSuccessImage;
+
 
     private final String base = "https://blockchain.info/merchant/$guid/";
 
@@ -49,62 +50,63 @@ public class SendActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send);
+        setContentView(R.layout.activity_request);
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        sendButton = (Button) findViewById(R.id.send_button);
+        requestButton = (Button) findViewById(R.id.request_button);
         cancelButton = (Button) findViewById(R.id.cancel_button);
 
-        amountTV = (TextView) findViewById(R.id.review_amount);
-        toUserTV = (TextView) findViewById(R.id.to_user);
-        totalAmountTV = (TextView) findViewById(R.id.total_amount);
-        sendSuccessTV = (TextView) findViewById(R.id.send_success_text);
+        amountTV = (TextView) findViewById(R.id.review_request_amount);
+        fromUserTV = (TextView) findViewById(R.id.from_user);
+        totalAmountTV = (TextView) findViewById(R.id.total_request_amount);
+        requestSuccessTV = (TextView) findViewById(R.id.request_success_text);
 
-        sendLayout = (LinearLayout) findViewById(R.id.send_layout);
-        sendSuccessLayout = (RelativeLayout) findViewById(R.id.send_success_layout);
+        requestLayout = (LinearLayout) findViewById(R.id.request_layout);
+        successLayout = (RelativeLayout) findViewById(R.id.success_layout);
 
-        sendSuccessImage = (ImageView) findViewById(R.id.send_success_image);
+        requestSuccessImage = (ImageView) findViewById(R.id.request_success_image);
 
-        sendAmount = "$" + getIntent().getStringExtra("send_amount");
-        toUser = getIntent().getStringExtra("to_user");
 
-        amountTV.setText(sendAmount);
-        totalAmountTV.setText(sendAmount);
-        toUserTV.setText(toUser);
+        requestAmount = "$" + getIntent().getStringExtra("request_amount");
+        fromUser = getIntent().getStringExtra("from_user");
+
+        amountTV.setText(requestAmount);
+        totalAmountTV.setText(requestAmount);
+        fromUserTV.setText(fromUser);
 
         /*  Button Listeners  */
-        sendButton.setOnClickListener(new Button.OnClickListener(){
+        requestButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View arg0) {
 
-                sendTransaction();
+                requestTransaction();
 
-                Picasso.with(SendActivity.this)
+                Picasso.with(RequestActivity.this)
                         .load(R.drawable.success)
-                        .resize(500,500)
+                        .resize(500, 500)
                         .centerCrop()
-                        .into(sendSuccessImage);
+                        .into(requestSuccessImage);
 
-                String sendString = "Successfully sent "
-                                    + sendAmount
-                                    + " to "
-                                    + toUser
-                                    + ".";
+                String requestString = "Successfully requested "
+                                        + requestAmount
+                                        + " from "
+                                        + fromUser
+                                        + ".";
 
-                sendSuccessTV.setText(sendString);
+                requestSuccessTV.setText(requestString);
 
-                sendLayout.setVisibility(View.GONE);
-                sendSuccessLayout.setVisibility(View.VISIBLE);
+                requestLayout.setVisibility(View.GONE);
+                successLayout.setVisibility(View.VISIBLE);
 
             }});
         cancelButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View arg0) {
                 Intent intent;
-                intent = new Intent(SendActivity.this, HomeActivity.class);
+                intent = new Intent(RequestActivity.this, HomeActivity.class);
                 startActivity(intent);
             }});
     }
@@ -112,7 +114,7 @@ public class SendActivity extends ActionBarActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_send_request, menu);
+//        getMenuInflater().inflate(R.menu.menu_request_request, menu);
         return true;
     }
 
@@ -134,19 +136,12 @@ public class SendActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    // Function that does the API call to send
-    public void sendTransaction() {
-        String URL = base
-                + "payment?password=" + "password"
-                + "&second_password=" + "secondPassword"
-                + "&to=" + "address"
-                + "&amount=" + "amount"
-                + "&from=" + "from"
-                + "&fee=" + "fee"
-                + "&note=" + "note";
+    public void requestTransaction() {
+        String URL = base;
+
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Sending Payment...");
+        progressDialog.setMessage("Requesting Payment...");
         progressDialog.show();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
@@ -160,12 +155,12 @@ public class SendActivity extends ActionBarActivity{
                     }
                 }, new Response.ErrorListener() {
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Test", "Error: " + error.getMessage());
-                        progressDialog.hide();
-                    }
-                });
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Test", "Error: " + error.getMessage());
+                progressDialog.hide();
+            }
+        });
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
