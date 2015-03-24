@@ -1,12 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.haedrian.haedrian.SendRequestActivity"
-                android:background="@color/lightgrey" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgrey" >
 
     <LinearLayout
-        android:id="@+id/send_layout"
+        android:id="@+id/request_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -22,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/youre_sending"
+            android:text="@string/youre_requesting"
             android:textStyle="bold"
             android:textSize="20sp"/>
 
@@ -38,7 +37,7 @@
                 android:text="@string/amount"/>
 
             <TextView
-                android:id="@+id/review_amount"
+                android:id="@+id/review_request_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -71,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/to"
+            android:text="@string/from"
             android:textStyle="bold"
             android:textSize="20sp"/>
 
@@ -81,7 +80,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/to_user"
+                android:id="@+id/from_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
@@ -110,7 +109,7 @@
                 android:textSize="18sp"/>
 
             <TextView
-                android:id="@+id/total_amount"
+                android:id="@+id/total_request_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -124,7 +123,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/send_success_layout"
+        android:id="@+id/success_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -133,21 +132,19 @@
 
 
         <TextView
-            android:id="@+id/send_success_text"
-            android:layout_width="wrap_content"
+            android:id="@+id/request_success_text"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
 
         <ImageView
-            android:id="@+id/send_success_image"
+            android:id="@+id/request_success_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/send_success_text"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_below="@+id/request_success_text"
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
-
 
 
     <LinearLayout
@@ -162,8 +159,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/send"
-            android:id="@+id/send_button"
+            android:text="@string/request"
+            android:id="@+id/request_button"
             android:background="@color/blue"
             android:layout_marginBottom="5dp"
             android:textSize="20sp"
@@ -179,6 +176,5 @@
             android:textSize="20sp"
             android:textColor="@color/white" />
     </LinearLayout>
-
 
 </RelativeLayout>

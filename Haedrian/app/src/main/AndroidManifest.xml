@@ -144,6 +144,16 @@
             android:name=".CurrencyInfoActivity"
             android:label="@string/title_activity_invest_info" >
         </activity>
+        <activity
+            android:name=".RequestActivity"
+            android:label="@string/title_activity_request"
+            android:parentActivityName=".SendRequestActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

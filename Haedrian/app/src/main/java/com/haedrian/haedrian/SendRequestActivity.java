@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -42,6 +44,9 @@ public class SendRequestActivity extends ActionBarActivity {
     TextView dolarSignView;
     Button sendButton;
     Context context;
+
+    private LinearLayout errorLayout;
+    private EditText userET;
 
 
     @Override
@@ -70,13 +75,44 @@ public class SendRequestActivity extends ActionBarActivity {
         dolarSignView = (TextView) findViewById(R.id.dollarSignView);
         buttonSend = (Button) findViewById(R.id.buttonSend);
 
+        errorLayout = (LinearLayout) findViewById(R.id.error_layout);
+        userET = (EditText) findViewById(R.id.user_edit_text);
+
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(SendRequestActivity.this, SendActivity.class);
-                intent.putExtra("send_amount", displayNumber.getText().toString());
-                startActivity(intent);
+
+                // Hides the error message with an animation
+                if (errorLayout.getVisibility() == View.VISIBLE) {
+                    if (userET.getText().toString().equals("")) {
+
+                    }
+                    else {
+                        Intent intent;
+                        intent = new Intent(SendRequestActivity.this, SendActivity.class);
+                        intent.putExtra("send_amount", displayNumber.getText().toString());
+                        intent.putExtra("to_user", userET.getText().toString());
+                        startActivity(intent);
+                        errorLayout.setVisibility(View.GONE);
+                        errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up));
+                    }
+                }
+                else {
+                    if (userET.getText().toString().equals("")) {
+                        errorLayout.setVisibility(View.VISIBLE);
+                        errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
+                    }
+                    else {
+                        // pull up send stuff
+                        Intent intent;
+                        intent = new Intent(SendRequestActivity.this, SendActivity.class);
+                        intent.putExtra("send_amount", displayNumber.getText().toString());
+                        intent.putExtra("to_user", userET.getText().toString());
+                        startActivity(intent);
+                    }
+                }
+
+
                 //clear();
             }
         });
@@ -157,6 +193,36 @@ public class SendRequestActivity extends ActionBarActivity {
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Hides the error message with an animation
+                if (errorLayout.getVisibility() == View.VISIBLE) {
+                    if (userET.getText().toString().equals("")) {
+
+                    }
+                    else {
+                        // Pull up request stuff
+                        Intent intent;
+                        intent = new Intent(SendRequestActivity.this, RequestActivity.class);
+                        intent.putExtra("request_amount", displayNumber.getText().toString());
+                        intent.putExtra("from_user", userET.getText().toString());
+                        startActivity(intent);
+                    }
+                }
+                else {
+                    if (userET.getText().toString().equals("")) {
+                        errorLayout.setVisibility(View.VISIBLE);
+                        errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
+                    }
+                    else {
+                        // pull up request stuff
+                        Intent intent;
+                        intent = new Intent(SendRequestActivity.this, RequestActivity.class);
+                        intent.putExtra("request_amount", displayNumber.getText().toString());
+                        intent.putExtra("from_user", userET.getText().toString());
+                        startActivity(intent);
+                    }
+                }
+
                 clear();
             }
         });
