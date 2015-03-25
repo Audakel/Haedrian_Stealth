@@ -84,4 +84,7 @@
     <string name="youre_requesting">You\'re Requesting:</string>
     <string name="from">From:</string>
     <string name="request">Request</string>
+    <string name="create_wallet">Create Wallet</string>
+    <string name="title_activity_create_wallet">Create Wallet</string>
+    <string name="password">Password (min 10 char)</string>
 </resources>

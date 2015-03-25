@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.haedrian.haedrian.CurrencyInfoActivity;
+import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.ProjectsActivity;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.SendRequestActivity;
@@ -26,6 +29,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private String[] mHomeButtons = {"Home","Wallet", "Buy", "Add", "Projects", "Invest", "FX Rates", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private UserModel user;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -43,8 +47,22 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_nav_item, mHomeButtons));
         // Set the list's click listener
-       mDrawerList.setOnItemClickListener(this);
+        mDrawerList.setOnItemClickListener(this);
 
+        // This is temporary until we get the backend set up
+        DBHelper db = new DBHelper(this);
+        user = db.getUsersTable().query("id", "=", "1");
+
+        // If there isn't already a user
+        if (user.getId() == 0) {
+            user.setFirstName("Logan");
+            user.setLastName("Bentley");
+            user.setUsername("sloganho");
+            user.setEmail("loganbentley22@gmail.com");
+            user.setPhoneNumber("8016905609");
+
+            db.getUsersTable().insert(user);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -141,6 +159,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 return;
             case R.id.wallet:
                 intent = new Intent(this, WalletActivity.class);
+                intent.putExtra("user_id", user.getId());
                 ActivityOptions options4 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options4.toBundle());

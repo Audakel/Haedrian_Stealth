@@ -137,8 +137,14 @@
                 android:value=".HomeScreen.InvestActivity" />
         </activity>
         <activity
-            android:name=".AddPersonalBankActivity"
-            android:label="@string/title_activity_add_personal_bank" >
+            android:name=".CreateWalletActivity"
+            android:label="@string/title_activity_create_wallet"
+            android:parentActivityName=".HomeScreen.WalletActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.WalletActivity" />
         </activity>
         <activity
             android:name=".CurrencyInfoActivity"

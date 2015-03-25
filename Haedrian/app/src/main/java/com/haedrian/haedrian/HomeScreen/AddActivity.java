@@ -1,6 +1,5 @@
 package com.haedrian.haedrian.HomeScreen;
 
-        import android.app.ActivityOptions;
         import android.content.Intent;
         import android.support.v4.app.NavUtils;
         import android.support.v7.app.ActionBarActivity;
@@ -8,14 +7,11 @@ package com.haedrian.haedrian.HomeScreen;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.View;
-        import android.widget.Button;
-        import android.widget.ImageButton;
         import android.widget.LinearLayout;
         import android.widget.Toast;
 
         import com.google.zxing.integration.android.IntentIntegrator;
         import com.google.zxing.integration.android.IntentResult;
-        import com.haedrian.haedrian.AddPersonalBankActivity;
         import com.haedrian.haedrian.R;
 
 
@@ -39,17 +35,7 @@ public class AddActivity extends ActionBarActivity  {
         });
     }
 
-    public void onClick(View view) {
-        Intent intent;
-        switch(view.getId()) {
-            case R.id.addPersonalBank:
-                intent = new Intent(this, AddPersonalBankActivity.class);
-                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
-                        0, view.getWidth(), view.getHeight());
-                startActivity(intent, options.toBundle());
-                return;
-        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

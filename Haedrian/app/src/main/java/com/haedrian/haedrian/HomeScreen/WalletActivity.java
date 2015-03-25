@@ -3,9 +3,7 @@ package com.haedrian.haedrian.HomeScreen;
 import java.util.Locale;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -15,19 +13,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.haedrian.haedrian.CreateWalletActivity;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
+import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 import com.squareup.picasso.Picasso;
 
@@ -48,11 +48,17 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    public static int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getInt("user_id");
+        }
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -90,6 +96,8 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+
     }
 
 
@@ -182,6 +190,8 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
         private ImageView qrCode;
         private ImageButton copyButton;
+        private LinearLayout hasWalletLayout, noWalletLayout;
+        private Button createWallet;
 
         /**
          * The fragment argument representing the section number for this
@@ -208,6 +218,21 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_balance, container, false);
+
+            // Check to see if the user has a wallet associated and if not, display create a wallet button
+            DBHelper db = new DBHelper(rootView.getContext());
+
+            WalletModel wallet = db.getWalletsTable().selectByUserId(userId);
+
+            hasWalletLayout = (LinearLayout) rootView.findViewById(R.id.has_wallet_container);
+            noWalletLayout = (LinearLayout) rootView.findViewById(R.id.no_wallet_container);
+            createWallet = (Button) rootView.findViewById(R.id.create_wallet_button);
+
+            // If wallet doesn't exist
+            if (wallet.getId() == 0) {
+                hasWalletLayout.setVisibility(View.GONE);
+                noWalletLayout.setVisibility(View.VISIBLE);
+            }
 
             qrCode = (ImageView) rootView.findViewById(R.id.bitcoin_qr_code);
             copyButton = (ImageButton) rootView.findViewById(R.id.copy_button);
@@ -243,9 +268,18 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
                 }
             });
 
+            createWallet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(rootView.getContext(), CreateWalletActivity.class);
+                    startActivity(intent);
+                }
+            });
+
 
             return rootView;
         }
+
     }
 
     public static class TransactionFragment extends Fragment {

@@ -29,8 +29,6 @@
             android:layout_marginRight="17dp"
             android:background="@drawable/round_yellow"
             android:orientation="vertical"
-            android:clickable="true"
-            android:onClick="onClick"
             android:id="@+id/addPersonalBank">
 
             <ImageView
@@ -72,9 +70,7 @@
                 android:text="@string/business"
                 android:layout_gravity="center" />
 
-
         </LinearLayout>
-
 
 
     </LinearLayout>
