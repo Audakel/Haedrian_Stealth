@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.haedrian.haedrian.SendRequestActivity"
-    android:background="@color/main_color">
+    android:background="@color/lightgrey">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:id="@+id/linearLayout3">
 
         <LinearLayout
             android:id="@+id/error_layout"
@@ -56,38 +57,6 @@
 
 
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_above="@+id/linearLayout2"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/displayNumberView"
-                android:textSize="140sp"
-                android:textColor="#6466A182"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$"
-                android:id="@+id/dollarSignView"
-                android:layout_alignTop="@+id/displayNumberView"
-                android:layout_toLeftOf="@+id/displayNumberView"
-                android:layout_toStartOf="@+id/displayNumberView"
-                android:textSize="70sp"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/offset_color"/>
-        </RelativeLayout>
 
     </LinearLayout>
 
@@ -357,6 +326,38 @@
             style="?android:attr/borderlessButtonStyle"
             android:clickable="false" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="101dp"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/displayNumberView"
+            android:textSize="140sp"
+            android:textColor="#6466A182"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:id="@+id/dollarSignView"
+            android:layout_alignTop="@+id/displayNumberView"
+            android:layout_toLeftOf="@+id/displayNumberView"
+            android:layout_toStartOf="@+id/displayNumberView"
+            android:textSize="70sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/offset_color"/>
+    </RelativeLayout>
 
 
 </RelativeLayout>
