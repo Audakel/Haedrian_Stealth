@@ -1,24 +1,20 @@
 package com.haedrian.haedrian.HomeScreen;
 
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,23 +37,24 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.zxing.WriterException;
-import com.haedrian.haedrian.ImportWalletActivity;
-import com.haedrian.haedrian.Models.CurrencyModel;
-import com.haedrian.haedrian.QrCode.*;
 import com.haedrian.haedrian.CreateWalletActivity;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
 import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.ImportWalletActivity;
 import com.haedrian.haedrian.Models.WalletModel;
+import com.haedrian.haedrian.QrCode.QRCodeEncoder;
 import com.haedrian.haedrian.R;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
+
+import java.math.BigDecimal;
+import java.util.Locale;
 
 
-public class WalletActivity extends ActionBarActivity implements ActionBar.TabListener{
+public class WalletActivity extends ActionBarActivity implements ActionBar.TabListener {
 
+    public static int userId;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -67,12 +64,10 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    public static int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +135,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }
@@ -164,52 +158,9 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-
-            switch (position) {
-                case 0:
-                    return BalanceFragment.newInstance(position + 1);
-                case 1:
-                    return TransactionFragment.newInstance(position + 1);
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-            }
-            return null;
-        }
-    }
-
-
     public static class BalanceFragment extends Fragment {
 
+        private static final String ARG_SECTION_NUMBER = "section_number";
         private ImageView qrCode;
         private ImageButton copyButton;
         private LinearLayout hasWalletLayout, noWalletLayout;
@@ -218,8 +169,9 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
         private RequestQueue queue;
         private ProgressDialog progressDialog;
 
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public BalanceFragment() {
+        }
 
         public static BalanceFragment newInstance(int sectionNumber) {
             BalanceFragment fragment = new BalanceFragment();
@@ -229,7 +181,10 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
             return fragment;
         }
 
-        public BalanceFragment() {
+        public static BigDecimal round(float d, int decimalPlace) {
+            BigDecimal bd = new BigDecimal(Float.toString(d));
+            bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+            return bd;
         }
 
         @Override
@@ -275,8 +230,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
                         startActivity(intent);
                     }
                 });
-            }
-            else {
+            } else {
 
                 qrCode = (ImageView) rootView.findViewById(R.id.bitcoin_qr_code);
                 copyButton = (ImageButton) rootView.findViewById(R.id.copy_button);
@@ -338,7 +292,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
         public void getWalletBalance(String address, Context context) {
             final String URL = "https://blockchain.info/q/addressbalance/"
-                                + address;
+                    + address;
 
 
             queue = Volley.newRequestQueue(context);
@@ -369,7 +323,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
             float balance = Float.parseFloat(response);
 
-            balance = ( balance / (float) 100000000);
+            balance = (balance / (float) 100000000);
 
             getConvertedRate(String.valueOf(balance));
 
@@ -413,12 +367,6 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
             progressDialog.hide();
         }
 
-        public static BigDecimal round(float d, int decimalPlace) {
-            BigDecimal bd = new BigDecimal(Float.toString(d));
-            bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-            return bd;
-        }
-
     }
 
     public static class TransactionFragment extends Fragment {
@@ -427,6 +375,9 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public TransactionFragment() {
+        }
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -440,14 +391,54 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
             return fragment;
         }
 
-        public TransactionFragment() {
-        }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_transaction, container, false);
             return rootView;
+        }
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            switch (position) {
+                case 0:
+                    return BalanceFragment.newInstance(position + 1);
+                case 1:
+                    return TransactionFragment.newInstance(position + 1);
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getString(R.string.title_section1).toUpperCase(l);
+                case 1:
+                    return getString(R.string.title_section2).toUpperCase(l);
+            }
+            return null;
         }
     }
 

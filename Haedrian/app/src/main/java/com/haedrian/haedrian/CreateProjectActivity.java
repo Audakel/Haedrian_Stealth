@@ -1,16 +1,14 @@
-
 package com.haedrian.haedrian;
 
 import android.app.FragmentManager;
-
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -112,8 +110,7 @@ public class CreateProjectActivity extends ActionBarActivity
 
             progressBar.setBackgroundResource(R.drawable.progresstwo);
             backButton.setVisibility(View.VISIBLE);
-        }
-        else if (currentFragment == 2) {
+        } else if (currentFragment == 2) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
             ProjectCategoryFragment projectCategoryFragment = new ProjectCategoryFragment();
@@ -122,8 +119,7 @@ public class CreateProjectActivity extends ActionBarActivity
             currentFragment = 3;
 
             progressBar.setBackgroundResource(R.drawable.progressthree);
-        }
-        else if (currentFragment == 3) {
+        } else if (currentFragment == 3) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
             ProjectLocationFragment projectLocationFragment = new ProjectLocationFragment();
@@ -132,8 +128,7 @@ public class CreateProjectActivity extends ActionBarActivity
             currentFragment = 4;
 
             progressBar.setBackgroundResource(R.drawable.progressfour);
-        }
-        else if (currentFragment == 4) {
+        } else if (currentFragment == 4) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
             ProjectDurationFragment projectDurationFragment = new ProjectDurationFragment();
@@ -142,8 +137,7 @@ public class CreateProjectActivity extends ActionBarActivity
             currentFragment = 5;
 
             progressBar.setBackgroundResource(R.drawable.progressfive);
-        }
-        else if (currentFragment == 5) {
+        } else if (currentFragment == 5) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_in_left);
             ProjectGoalFragment projectGoalFragment = new ProjectGoalFragment();
@@ -168,8 +162,7 @@ public class CreateProjectActivity extends ActionBarActivity
 
             progressBar.setBackgroundResource(R.drawable.progressone);
             backButton.setVisibility(View.GONE);
-        }
-        else if (currentFragment == 3) {
+        } else if (currentFragment == 3) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
             ProjectAboutFragment projectAboutFragment = new ProjectAboutFragment();
@@ -178,8 +171,7 @@ public class CreateProjectActivity extends ActionBarActivity
             currentFragment = 2;
 
             progressBar.setBackgroundResource(R.drawable.progresstwo);
-        }
-        else if (currentFragment == 4) {
+        } else if (currentFragment == 4) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
             ProjectCategoryFragment projectCategoryFragment = new ProjectCategoryFragment();
@@ -189,8 +181,7 @@ public class CreateProjectActivity extends ActionBarActivity
 
             progressBar.setBackgroundResource(R.drawable.progressthree);
 
-        }
-        else if (currentFragment == 5) {
+        } else if (currentFragment == 5) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
             ProjectLocationFragment projectLocationFragment = new ProjectLocationFragment();
@@ -199,8 +190,7 @@ public class CreateProjectActivity extends ActionBarActivity
             currentFragment = 4;
 
             progressBar.setBackgroundResource(R.drawable.progressfour);
-        }
-        else if (currentFragment == 6) {
+        } else if (currentFragment == 6) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_out_left, R.anim.slide_out_right);
             ProjectDurationFragment projectDurationFragment = new ProjectDurationFragment();

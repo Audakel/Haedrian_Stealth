@@ -1,8 +1,8 @@
 package com.haedrian.haedrian;
 
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -49,8 +49,7 @@ public class ProjectsList extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }

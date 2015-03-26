@@ -39,7 +39,7 @@
     <string name="amount_funded">25% funded</string>
     <string name="amount_pledged">$33.54 pledged</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="drawer_open">Open.</string>
     <string name="drawer_close">Close</string>

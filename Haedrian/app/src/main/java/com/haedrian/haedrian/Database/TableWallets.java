@@ -4,9 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.google.android.gms.wallet.Wallet;
 import com.haedrian.haedrian.Models.WalletModel;
 
 /**
@@ -35,10 +33,14 @@ public class TableWallets {
         this.openHelper = openHelper;
     }
 
-    public static void onCreate(SQLiteDatabase database) { database.execSQL(CREATE_TABLE); }
+    public static void onCreate(SQLiteDatabase database) {
+        database.execSQL(CREATE_TABLE);
+    }
+
     public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
 
     }
+
     public void dropTables(SQLiteDatabase database) {
         database.execSQL("DROP TABLE IF EXISTS" + TABLE_WALLETS);
         onCreate(database);

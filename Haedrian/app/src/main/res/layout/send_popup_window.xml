@@ -1,107 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent" android:layout_height="match_parent"
-              android:weightSum="1"
-              android:id="@+id/PopUpWindowSend">
+<LinearLayout android:id="@+id/PopUpWindowSend"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="1">
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="@android:color/background_light">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_margin="30dp"
         android:background="@color/offset_color"
+        android:orientation="vertical"
         android:weightSum="1">
         >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="20sp">
+            android:layout_margin="20sp"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/SendPopWindowText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Are you sure you want to send"
-                android:id="@+id/SendPopWindowText1"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:layout_margin="5sp"
                 android:password="false"
-                android:textColor="#ffffffff"
-                android:textSize="20sp"
-                android:layout_margin="5sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="100"
-                android:id="@+id/SendPopWindowText2"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/SendPopWindowText1"
-                android:textColor="#ffffffff"
-                android:textSize="40sp"
-                android:layout_margin="5sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="$"
-                android:id="@+id/SendPopWindowDollarSign"
-                android:textColor="#ffffffff"
-                android:layout_alignTop="@+id/SendPopWindowText2"
-                android:layout_alignLeft="@+id/SendPopWindowText2"
-                android:layout_marginLeft="-10sp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="Are you sure you want to send"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="to"
-                android:id="@+id/SendPopWindowText3"
-                android:password="false"
                 android:textColor="#ffffffff"
-                android:textSize="20sp"
-                android:layout_below="@+id/SendPopWindowText2"
-                android:layout_centerHorizontal="true" />
+                android:textSize="20sp"/>
 
             <TextView
+                android:id="@+id/SendPopWindowText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/SendPopWindowText1"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5sp"
+                android:text="100"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="PERSON1"
-                android:id="@+id/SendPopWindowPerson"
                 android:textColor="#ffffffff"
-                android:textSize="40sp"
-                android:autoText="false"
+                android:textSize="40sp"/>
+
+            <TextView
+                android:id="@+id/SendPopWindowDollarSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/SendPopWindowText2"
+                android:layout_alignTop="@+id/SendPopWindowText2"
+                android:layout_marginLeft="-10sp"
+                android:text="$"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffffff"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/SendPopWindowText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/SendPopWindowText2"
+                android:layout_centerHorizontal="true"
+                android:password="false"
+                android:text="to"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffffff"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/SendPopWindowPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/SendPopWindowText3"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:autoText="false"
+                android:text="PERSON1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffffff"
+                android:textSize="40sp"/>
         </RelativeLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:orientation="horizontal"
             android:weightSum="1">
 
             <Button
+                android:id="@+id/PopWindowSendButton"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="SEND"
-                android:id="@+id/PopWindowSendButton"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"
+                android:text="SEND"/>
 
             <Button
+                android:id="@+id/PopWindowCancelButton"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="CANCEL"
-                android:id="@+id/PopWindowCancelButton"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"
+                android:text="CANCEL"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -1,16 +1,14 @@
 package com.haedrian.haedrian;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,8 +84,7 @@ public class SendRequestActivity extends ActionBarActivity {
                 if (errorLayout.getVisibility() == View.VISIBLE) {
                     if (userET.getText().toString().equals("")) {
 
-                    }
-                    else {
+                    } else {
                         Intent intent;
                         intent = new Intent(SendRequestActivity.this, SendActivity.class);
                         intent.putExtra("send_amount", displayNumber.getText().toString());
@@ -96,13 +93,11 @@ public class SendRequestActivity extends ActionBarActivity {
                         errorLayout.setVisibility(View.GONE);
                         errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up));
                     }
-                }
-                else {
+                } else {
                     if (userET.getText().toString().equals("")) {
                         errorLayout.setVisibility(View.VISIBLE);
                         errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
-                    }
-                    else {
+                    } else {
                         // pull up send stuff
                         Intent intent;
                         intent = new Intent(SendRequestActivity.this, SendActivity.class);
@@ -198,8 +193,7 @@ public class SendRequestActivity extends ActionBarActivity {
                 if (errorLayout.getVisibility() == View.VISIBLE) {
                     if (userET.getText().toString().equals("")) {
 
-                    }
-                    else {
+                    } else {
                         // Pull up request stuff
                         Intent intent;
                         intent = new Intent(SendRequestActivity.this, RequestActivity.class);
@@ -207,13 +201,11 @@ public class SendRequestActivity extends ActionBarActivity {
                         intent.putExtra("from_user", userET.getText().toString());
                         startActivity(intent);
                     }
-                }
-                else {
+                } else {
                     if (userET.getText().toString().equals("")) {
                         errorLayout.setVisibility(View.VISIBLE);
                         errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
-                    }
-                    else {
+                    } else {
                         // pull up request stuff
                         Intent intent;
                         intent = new Intent(SendRequestActivity.this, RequestActivity.class);
@@ -264,8 +256,7 @@ public class SendRequestActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }
@@ -273,9 +264,9 @@ public class SendRequestActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addNumberToDisplay(View selectedButton ){
+    private void addNumberToDisplay(View selectedButton) {
 
-        switch(selectedButton.getId()) {
+        switch (selectedButton.getId()) {
             case R.id.button0:
                 updateText("0");
                 return;
@@ -329,18 +320,15 @@ public class SendRequestActivity extends ActionBarActivity {
         String string = displayNumber.getText().toString();
         if (string.length() > 1) {
             displayNumber.setText(string.substring(0, string.length() - 1));
-        }
-        else{
+        } else {
             displayNumber.setText("0");
         }
     }
 
-    private void updateText(String number){
-        if(displayNumber.getText().toString().equals("0")){
+    private void updateText(String number) {
+        if (displayNumber.getText().toString().equals("0")) {
             displayNumber.setText(number);
-        }
-
-        else if (displayNumber.getText().length() < 6){
+        } else if (displayNumber.getText().length() < 6) {
             String newNumber = displayNumber.getText() + number;
             newNumber = removeCommas(newNumber);
             DecimalFormat formatter = new DecimalFormat("#,###,###");
@@ -349,7 +337,7 @@ public class SendRequestActivity extends ActionBarActivity {
             displayNumber.setText(yourFormattedString);
         }
 
-        if(displayNumber.getText().length() == 6){
+        if (displayNumber.getText().length() == 6) {
             Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
             Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(100);
@@ -360,20 +348,19 @@ public class SendRequestActivity extends ActionBarActivity {
     }
 
     // Number formatter has issues with the commas.... needs just the numbers
-    private String removeCommas(String number){
+    private String removeCommas(String number) {
         String newNumber = number.replaceAll(",", "");
         return newNumber;
     }
 
-    private void updateFontAttributes(){
+    private void updateFontAttributes() {
 //
-        if(displayNumber.getText().toString().equals("0")){
+        if (displayNumber.getText().toString().equals("0")) {
             displayNumber.setTextColor(Color.parseColor("#6466A182"));
-        }
-        else {
+        } else {
             displayNumber.setTextColor(Color.parseColor("#66A182"));
         }
-        switch(displayNumber.length()) {
+        switch (displayNumber.length()) {
             case 1:
                 displayNumber.setTextSize(140);
                 dolarSignView.setTextSize(70);

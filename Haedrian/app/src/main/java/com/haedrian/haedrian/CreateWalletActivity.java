@@ -3,15 +3,13 @@ package com.haedrian.haedrian;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,25 +20,21 @@ import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Models.WalletModel;
-import com.parse.ParseFacebookUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.android.volley.Request.*;
+import static com.android.volley.Request.Method;
 
 
-public class CreateWalletActivity extends ActionBarActivity  {
+public class CreateWalletActivity extends ActionBarActivity {
+    private final String TAG = "CANCEL_TAG";
     private Button addBankButton;
     private EditText addEmailText;
     private EditText addPasswordText;
-
     private UserModel user;
     private DBHelper db;
-
     private RequestQueue queue;
-    private final String TAG = "CANCEL_TAG";
-
     private WalletModel wallet;
 
     @Override
@@ -74,8 +68,6 @@ public class CreateWalletActivity extends ActionBarActivity  {
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -98,16 +90,16 @@ public class CreateWalletActivity extends ActionBarActivity  {
         return super.onOptionsItemSelected(item);
     }
 
-    public void testVolleyRequest(){
+    public void testVolleyRequest() {
 
         wallet = new WalletModel();
         wallet.setUserId(user.getId());
 
 
         final String URL = "https://blockchain.info/api/v2/create_wallet"
-                            + "?password=" + addPasswordText.getText().toString()
-                            + "&email=" + addEmailText.getText().toString()
-                            + "&api_code=5a25bea3-7f2f-4a40-acb6-3ed0497d570e";
+                + "?password=" + addPasswordText.getText().toString()
+                + "&email=" + addEmailText.getText().toString()
+                + "&api_code=5a25bea3-7f2f-4a40-acb6-3ed0497d570e";
 
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -160,7 +152,7 @@ public class CreateWalletActivity extends ActionBarActivity  {
     }
 
     @Override
-    protected void onStop () {
+    protected void onStop() {
         super.onStop();
         if (queue != null) {
             queue.cancelAll(TAG);

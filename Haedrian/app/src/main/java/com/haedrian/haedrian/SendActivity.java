@@ -6,25 +6,15 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -34,19 +24,17 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import static com.android.volley.Request.*;
+import static com.android.volley.Request.Method;
 
-public class SendActivity extends ActionBarActivity{
+public class SendActivity extends ActionBarActivity {
 
+    private final String base = "https://blockchain.info/merchant/$guid/";
     private String sendAmount, toUser;
     private Button sendButton, cancelButton;
     private TextView amountTV, toUserTV, totalAmountTV, sendSuccessTV;
     private LinearLayout sendLayout;
     private RelativeLayout sendSuccessLayout;
     private ImageView sendSuccessImage;
-
-    private final String base = "https://blockchain.info/merchant/$guid/";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +66,7 @@ public class SendActivity extends ActionBarActivity{
         toUserTV.setText(toUser);
 
         /*  Button Listeners  */
-        sendButton.setOnClickListener(new Button.OnClickListener(){
+        sendButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View arg0) {
 
@@ -86,29 +74,31 @@ public class SendActivity extends ActionBarActivity{
 
                 Picasso.with(SendActivity.this)
                         .load(R.drawable.success)
-                        .resize(500,500)
+                        .resize(500, 500)
                         .centerCrop()
                         .into(sendSuccessImage);
 
                 String sendString = "Successfully sent "
-                                    + sendAmount
-                                    + " to "
-                                    + toUser
-                                    + ".";
+                        + sendAmount
+                        + " to "
+                        + toUser
+                        + ".";
 
                 sendSuccessTV.setText(sendString);
 
                 sendLayout.setVisibility(View.GONE);
                 sendSuccessLayout.setVisibility(View.VISIBLE);
 
-            }});
-        cancelButton.setOnClickListener(new Button.OnClickListener(){
+            }
+        });
+        cancelButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent;
                 intent = new Intent(SendActivity.this, HomeActivity.class);
                 startActivity(intent);
-            }});
+            }
+        });
     }
 
     @Override
@@ -162,12 +152,12 @@ public class SendActivity extends ActionBarActivity{
                     }
                 }, new Response.ErrorListener() {
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Test", "Error: " + error.getMessage());
-                        progressDialog.hide();
-                    }
-                });
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Test", "Error: " + error.getMessage());
+                progressDialog.hide();
+            }
+        });
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");

@@ -16,15 +16,19 @@ import com.haedrian.haedrian.HomeScreen.HomeActivity;
 public class ApplicationController extends Application {
 
     public static final String TAG = "VolleyPatterns";
-    private RequestQueue mRequestQueue;
-    private boolean loggedIn;
-
     /**
      * A singleton instance of the application class for easy access in other places
      */
     private static ApplicationController sInstance;
+    private RequestQueue mRequestQueue;
+    private boolean loggedIn;
 
-
+    /**
+     * @return ApplicationController singleton instance
+     */
+    public static synchronized ApplicationController getInstance() {
+        return sInstance;
+    }
 
     @Override
     public void onCreate() {
@@ -43,13 +47,6 @@ public class ApplicationController extends Application {
             startActivity(intent);
         }
 
-    }
-
-    /**
-     * @return ApplicationController singleton instance
-     */
-    public static synchronized ApplicationController getInstance() {
-        return sInstance;
     }
 
     /**

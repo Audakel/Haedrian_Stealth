@@ -1,9 +1,9 @@
 package com.haedrian.haedrian.CreateProjectFragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +31,10 @@ public class ProjectTitleFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    public ProjectTitleFragment() {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -47,10 +51,6 @@ public class ProjectTitleFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public ProjectTitleFragment() {
-        // Required empty public constructor
     }
 
     @Override

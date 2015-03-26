@@ -1,21 +1,21 @@
 package com.haedrian.haedrian.HomeScreen;
 
-        import android.content.Intent;
-        import android.support.v4.app.NavUtils;
-        import android.support.v7.app.ActionBarActivity;
-        import android.os.Bundle;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.LinearLayout;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-        import com.google.zxing.integration.android.IntentIntegrator;
-        import com.google.zxing.integration.android.IntentResult;
-        import com.haedrian.haedrian.R;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.haedrian.haedrian.R;
 
 
-public class AddActivity extends ActionBarActivity  {
+public class AddActivity extends ActionBarActivity {
     String upcCode = "";
 
     @Override
@@ -36,7 +36,6 @@ public class AddActivity extends ActionBarActivity  {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -55,8 +54,7 @@ public class AddActivity extends ActionBarActivity  {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }
@@ -75,7 +73,7 @@ public class AddActivity extends ActionBarActivity  {
                 Toast.makeText(this, "UPC code is : " + result.toString(), Toast.LENGTH_LONG).show();
                 upcCode = contents.toString();
             } else {
-                Toast.makeText(this,"Fail!!",Toast.LENGTH_LONG ).show();
+                Toast.makeText(this, "Fail!!", Toast.LENGTH_LONG).show();
             }
         }
     }

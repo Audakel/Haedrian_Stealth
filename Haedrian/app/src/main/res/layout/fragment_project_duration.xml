@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/lightgrey"
-    android:weightSum="1">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/lightgrey"
+              android:orientation="vertical"
+              android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/project_duration"
-        android:textSize="22sp"
-        android:textColor="@color/blue"/>
+        android:textColor="@color/blue"
+        android:textSize="22sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_button_grey"
-        android:layout_marginTop="30dp" >
+        android:layout_marginTop="30dp"
+        android:background="@drawable/round_button_grey">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -28,19 +27,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:text="@string/num_of_days"
             android:textColor="@color/white"
             android:textSize="16sp"/>
 
         <EditText
-            android:paddingLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="6"
             android:background="@drawable/round_edittext"
             android:hint="@string/num_of_days_hint"
+            android:paddingLeft="5dp"
             android:textColor="@color/grey"/>
 
     </LinearLayout>
@@ -48,8 +47,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_button_grey"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_button_grey">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -57,28 +56,27 @@
             android:layout_gravity="center"/>
 
         <TextView
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/end_date_time"
             android:textColor="@color/white"
             android:textSize="16sp"/>
 
         <Button
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/round_button_offset"
-            android:text="@string/pick_date"
-            android:textColor="@color/white"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp"/>
+            android:paddingRight="5dp"
+            android:text="@string/pick_date"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

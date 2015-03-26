@@ -1,16 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.haedrian.haedrian.SendRequestActivity"
-    android:background="@color/lightgrey">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lightgrey"
+                tools:context="com.haedrian.haedrian.SendRequestActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="15dp"
-        android:id="@+id/linearLayout3">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/error_layout"
@@ -18,27 +18,27 @@
             android:layout_height="wrap_content"
             android:background="@drawable/layout_round_button_error"
             android:paddingBottom="10dp"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/error_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="5dp"
+                android:text="@string/no_user_selected_error"
                 android:textColor="@color/error_red_text"
-                android:textSize="18sp"
-                android:text="@string/no_user_selected_error"/>
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginRight="16dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -55,235 +55,234 @@
                 android:paddingLeft="5dp"/>
 
 
-
         </LinearLayout>
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp"
-        android:id="@+id/linearLayout2">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:showDividers="beginning">
 
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="1"
                 android:id="@+id/button1"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:textSize="22sp"
+                android:text="1"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4"
                 android:id="@+id/button4"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:textSize="22sp"
+                android:text="4"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="7"
                 android:id="@+id/button7"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:textSize="22sp"
+                android:text="7"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="."
                 android:id="@+id/buttonDot"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:textSize="22sp"
+                android:text="."
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:showDividers="beginning">
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="2"
                 android:id="@+id/button2"
-                android:layout_marginBottom="5dp"
-                android:textSize="22sp"
-                android:textColor="@color/offset_color"
                 style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="2"
+                android:textColor="@color/offset_color"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="5"
                 android:id="@+id/button5"
-                android:layout_marginBottom="5dp"
-                android:textSize="22sp"
-                android:textColor="@color/offset_color"
                 style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="5"
+                android:textColor="@color/offset_color"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="8"
                 android:id="@+id/button8"
-                android:layout_marginBottom="5dp"
-                android:textSize="22sp"
-                android:textColor="@color/offset_color"
                 style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="8"
+                android:textColor="@color/offset_color"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button0"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/button0"
                 android:layout_marginBottom="5dp"
-                android:textSize="22sp"
+                android:text="0"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:showDividers="beginning">
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3"
                 android:id="@+id/button3"
-                android:layout_marginBottom="5dp"
-                android:textSize="22sp"
-                android:textColor="@color/offset_color"
                 style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="3"
+                android:textColor="@color/offset_color"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="6"
                 android:id="@+id/button6"
-                android:layout_marginBottom="5dp"
-                android:textSize="22sp"
-                android:textColor="@color/offset_color"
                 style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="6"
+                android:textColor="@color/offset_color"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="9"
                 android:id="@+id/button9"
-                android:layout_marginBottom="5dp"
-                android:textSize="22sp"
-                android:textColor="@color/offset_color"
                 style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="9"
+                android:textColor="@color/offset_color"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/buttonBack"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="&lt;x"
-                android:id="@+id/buttonBack"
                 android:layout_marginBottom="5dp"
-                android:textSize="22sp"
+                android:text="&lt;x"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
         </LinearLayout>
 
@@ -291,22 +290,22 @@
 
     <LinearLayout
 
+        android:id="@+id/linearLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
+        android:layout_alignParentStart="true">
 
         <Button
+            android:id="@+id/buttonRequest"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request"
-            android:id="@+id/buttonRequest"
             android:layout_weight="1"
             android:background="@color/blue"
-            android:textColor="@color/white"
-            style="?android:attr/borderlessButtonStyle" />
+            android:text="Request"
+            android:textColor="@color/white"/>
 
         <View
             android:id="@+id/devider"
@@ -316,15 +315,15 @@
             />
 
         <Button
+            android:id="@+id/buttonSend"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
-            android:id="@+id/buttonSend"
             android:layout_weight="1"
             android:background="@color/blue"
-            android:textColor="@color/white"
-            style="?android:attr/borderlessButtonStyle"
-            android:clickable="false" />
+            android:clickable="false"
+            android:text="Send"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -336,27 +335,27 @@
         android:layout_below="@+id/linearLayout3">
 
         <TextView
+            android:id="@+id/displayNumberView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/displayNumberView"
-            android:textSize="140sp"
-            android:textColor="#6466A182"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="15dp"
+            android:text="0"
+            android:textColor="#6466A182"
+            android:textSize="140sp"/>
 
         <TextView
+            android:id="@+id/dollarSignView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$"
-            android:id="@+id/dollarSignView"
             android:layout_alignTop="@+id/displayNumberView"
+            android:layout_marginTop="20dp"
             android:layout_toLeftOf="@+id/displayNumberView"
             android:layout_toStartOf="@+id/displayNumberView"
-            android:textSize="70sp"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/offset_color"/>
+            android:text="$"
+            android:textColor="@color/offset_color"
+            android:textSize="70sp"/>
     </RelativeLayout>
 
 

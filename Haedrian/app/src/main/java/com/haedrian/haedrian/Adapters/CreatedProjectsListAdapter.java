@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.haedrian.haedrian.*;
+import com.haedrian.haedrian.R;
 
 
 /**

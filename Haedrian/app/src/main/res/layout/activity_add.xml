@@ -1,49 +1,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.haedrian.haedrian.HomeScreen.AddActivity"
-    android:background="@color/lightgrey"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/lightgrey"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              tools:context="com.haedrian.haedrian.HomeScreen.AddActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
-        android:textSize="22dp"
-        android:text="@string/my_people"/>
+        android:text="@string/my_people"
+        android:textSize="22dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/addPersonalBank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
             android:layout_marginRight="17dp"
+            android:layout_weight="1"
             android:background="@drawable/round_yellow"
             android:orientation="vertical"
-            android:id="@+id/addPersonalBank">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_user"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_user"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:layout_gravity="center"
                 android:text="@string/personal"
-                android:textStyle="bold"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>
@@ -52,23 +54,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
             android:background="@drawable/round_yellow"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_business"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_business"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="@string/business"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -78,8 +80,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:text="@string/add_new"/>
+        android:text="@string/add_new"
+        android:textSize="22sp"/>
 
     <LinearLayout
         android:id="@+id/GridLayout1"
@@ -92,26 +94,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:layout_gravity="left|top"
-            android:padding="5dp"
             android:background="@drawable/round_blue"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_facebook"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_facebook"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="@string/facebook"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>
@@ -119,27 +121,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:layout_gravity="left|top"
-            android:padding="5dp"
             android:background="@drawable/round_blue"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_users"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_users"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="@string/contacts"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>
@@ -147,26 +149,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:layout_gravity="left|top"
-            android:padding="5dp"
             android:background="@drawable/round_blue"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_google_play"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_google_play"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="@string/google_plus"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>
@@ -182,26 +184,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:layout_gravity="left|top"
-            android:padding="5dp"
             android:background="@drawable/round_blue"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_mail"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_mail"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="@string/email"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>
@@ -209,27 +211,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:layout_gravity="left|top"
-            android:padding="5dp"
             android:background="@drawable/round_blue"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_search"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_search"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="@string/search"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>
@@ -238,27 +240,27 @@
             android:id="@+id/scan_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:layout_gravity="left|top"
-            android:padding="5dp"
             android:background="@drawable/round_blue"
+            android:clickable="true"
             android:orientation="vertical"
-            android:clickable="true">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_action_barcode_2"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_barcode_2"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="@string/scan"
-                android:layout_gravity="center" />
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>

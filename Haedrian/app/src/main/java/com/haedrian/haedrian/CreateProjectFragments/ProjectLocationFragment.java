@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.CreateProjectFragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.location.Address;
 import android.location.Criteria;
@@ -10,7 +11,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,32 +38,36 @@ public class ProjectLocationFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-
-    private Button locationButton;
-    private TextView locationText;
-
-    Context context;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
     private static String addressString;
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             updateWithNewLocation(location);
         }
+
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
         @Override
-        public void onProviderEnabled(String provider) {}
+        public void onProviderEnabled(String provider) {
+        }
+
         @Override
-        public void onProviderDisabled(String provider) {}
+        public void onProviderDisabled(String provider) {
+        }
     };
+    Context context;
+    private Button locationButton;
+    private TextView locationText;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+    private OnFragmentInteractionListener mListener;
+
+    public ProjectLocationFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -81,10 +85,6 @@ public class ProjectLocationFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public ProjectLocationFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -140,7 +140,7 @@ public class ProjectLocationFragment extends Fragment {
     }
 
     private void updateWithNewLocation(Location location) {
-        if(location != null) {
+        if (location != null) {
             double latitude = location.getLatitude();
             double lng = location.getLongitude();
 
@@ -149,7 +149,7 @@ public class ProjectLocationFragment extends Fragment {
                 Geocoder gc = new Geocoder(getActivity(), Locale.getDefault());
                 List<Address> addresses = gc.getFromLocation(latitude, lng, 1);
                 StringBuilder sb = new StringBuilder();
-                if(addresses.size() > 0) {
+                if (addresses.size() > 0) {
                     Address address = addresses.get(0);
 //
 //                    for(int i = 0; i < address.getMaxAddressLineIndex(); i++){
@@ -162,9 +162,9 @@ public class ProjectLocationFragment extends Fragment {
 
                 addressString = sb.toString();
 
-            } catch(IOException e) {
+            } catch (IOException e) {
                 Log.v("Test-Error", String.valueOf(e));
-            } catch(NullPointerException e) {
+            } catch (NullPointerException e) {
 
             }
 

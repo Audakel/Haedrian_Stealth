@@ -1,8 +1,8 @@
 package com.haedrian.haedrian;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,15 +23,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.haedrian.haedrian.R.*;
+import static com.haedrian.haedrian.R.array;
+import static com.haedrian.haedrian.R.id;
+import static com.haedrian.haedrian.R.layout;
 
 
 public class CurrencyInfoActivity extends ActionBarActivity {
     private static final String TAG = CurrencyInfoActivity.class.getSimpleName();
     Button getInvestInfo;
+    CurrencyAdapter adapter;
     private List<CurrencyModel> currencies = new ArrayList<CurrencyModel>();
     private ListView listView;
-    CurrencyAdapter adapter;
     private ProgressDialog pDialog;
 
     @Override
@@ -82,7 +84,7 @@ public class CurrencyInfoActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getCurrencyInfo(){
+    private void getCurrencyInfo() {
         // Creating volley request obj
         String url = "https://blockchain.info/ticker";
         final String[] mCurrencyShortNames = getResources().getStringArray(array.currencyShortName);
@@ -96,7 +98,7 @@ public class CurrencyInfoActivity extends ActionBarActivity {
 
                         // Parsing json
                         currencies.clear();
-                        for(String currency : mCurrencyShortNames){
+                        for (String currency : mCurrencyShortNames) {
                             try {
                                 JSONObject currentCurrency = response.getJSONObject(currency);
                                 currencies.add(new CurrencyModel(

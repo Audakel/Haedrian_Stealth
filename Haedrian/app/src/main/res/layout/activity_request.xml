@@ -1,29 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/lightgrey" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lightgrey">
 
     <LinearLayout
         android:id="@+id/request_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:padding="5dp"
+        android:background="@drawable/round_white"
         android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/round_white" >
+        android:padding="5dp">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/youre_requesting"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,8 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/from"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,21 +91,21 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
-            android:background="@color/grey" />
+            android:background="@color/grey"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:text="@string/total"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/total_request_amount"
@@ -114,8 +113,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/dummy_amount"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -128,7 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="gone" >
+        android:visibility="gone">
 
 
         <TextView
@@ -148,33 +147,33 @@
 
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout4">
+        android:orientation="vertical">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/request"
             android:id="@+id/request_button"
-            android:background="@color/blue"
-            android:layout_marginBottom="5dp"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:textColor="@color/white" />
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:id="@+id/cancel_button"
+            android:layout_marginBottom="5dp"
             android:background="@color/blue"
+            android:text="@string/request"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:textColor="@color/white" />
+            android:textStyle="normal"/>
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 </RelativeLayout>

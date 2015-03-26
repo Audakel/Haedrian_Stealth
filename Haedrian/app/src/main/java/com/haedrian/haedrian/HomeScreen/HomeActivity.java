@@ -5,11 +5,10 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,7 @@ import com.haedrian.haedrian.SettingsActivity;
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     // Nav Drawer stuff
-    private String[] mHomeButtons = {"Home","Wallet", "Buy", "Add", "Projects", "Invest", "FX Rates", "Settings"};
+    private String[] mHomeButtons = {"Home", "Wallet", "Buy", "Add", "Projects", "Invest", "FX Rates", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private UserModel user;
@@ -71,8 +70,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt("user_id", newUser.getId());
             editor.commit();
-        }
-        else {
+        } else {
 
             user = db.getUsersTable().query("id", "=", "1");
         }
@@ -120,7 +118,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_home, menu);
@@ -145,7 +143,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     public void onClick(View view) {
         Intent intent;
 
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.send_request:
                 intent = new Intent(this, SendRequestActivity.class);
                 ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
@@ -156,19 +154,19 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 intent = new Intent(this, AddActivity.class);
                 ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
-                startActivity(intent,options1.toBundle());
+                startActivity(intent, options1.toBundle());
                 return;
             case R.id.projects:
                 intent = new Intent(this, ProjectsActivity.class);
                 ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
-                startActivity(intent,options2.toBundle());
+                startActivity(intent, options2.toBundle());
                 return;
             case R.id.invest:
                 intent = new Intent(this, InvestActivity.class);
                 ActivityOptions options3 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
-                startActivity(intent,options3.toBundle());
+                startActivity(intent, options3.toBundle());
                 return;
             case R.id.wallet:
                 intent = new Intent(this, WalletActivity.class);
@@ -195,19 +193,18 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         //Grab all view/position/id info
         //Toast.makeText(this, "View: " + view + " \nPosition: " + position + " \nid: " + id, Toast.LENGTH_LONG).show();
 
-        if (position == 7){
+        if (position == 7) {
             intent = new Intent(this, SettingsActivity.class);
             ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
 
-            startActivity(intent,options1.toBundle());
-        }
-        else if (position == 6){
+            startActivity(intent, options1.toBundle());
+        } else if (position == 6) {
             intent = new Intent(this, CurrencyInfoActivity.class);
             ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
 
-            startActivity(intent,options1.toBundle());
+            startActivity(intent, options1.toBundle());
         }
     }
 }

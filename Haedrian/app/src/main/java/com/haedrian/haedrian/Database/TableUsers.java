@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.haedrian.haedrian.Models.UserModel;
 
@@ -43,8 +42,13 @@ public class TableUsers {
         this.openHelper = openHelper;
     }
 
-    public static void onCreate(SQLiteDatabase database) { database.execSQL(CREATE_TABLE); }
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {}
+    public static void onCreate(SQLiteDatabase database) {
+        database.execSQL(CREATE_TABLE);
+    }
+
+    public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+    }
+
     public static void dropTable(SQLiteDatabase database) {
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(database);

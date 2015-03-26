@@ -9,16 +9,12 @@ public class InvestProjectObject {
     private int mCurrentAmountRaised;
 
 
-
     private int mDaysLeft;
     private int mDrawableImage;
 
 
-
-
     public InvestProjectObject(String projectTitle, String personName, String location, String projectDescription,
-                               int fundingGoal, int currentAmountRaised, int daysLeft,  int drawableImage)
-    {
+                               int fundingGoal, int currentAmountRaised, int daysLeft, int drawableImage) {
         mProjectTitle = projectTitle;
         mPersonName = personName;
         mLocation = location;
@@ -92,12 +88,6 @@ public class InvestProjectObject {
     public void setDaysLeft(int daysLeft) {
         mDaysLeft = daysLeft;
     }
-
-
-
-
-
-
 
 
 }

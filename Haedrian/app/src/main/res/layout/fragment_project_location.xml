@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/lightgrey">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/lightgrey"
+              android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/project_location"
-        android:textSize="22sp"
-        android:textColor="@color/blue"/>
+        android:textColor="@color/blue"
+        android:textSize="22sp"/>
 
     <Button
         android:id="@+id/location_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/get_location"
-        android:textColor="@color/white"
         android:layout_marginTop="30dp"
-        android:background="@drawable/round_purple"/>
+        android:background="@drawable/round_purple"
+        android:text="@string/get_location"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/location_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:visibility="gone"
+        android:gravity="center"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center"/>
+        android:visibility="gone"/>
 
 </LinearLayout>

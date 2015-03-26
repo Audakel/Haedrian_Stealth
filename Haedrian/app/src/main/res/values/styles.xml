@@ -5,19 +5,19 @@
         <!-- Customize your theme here. -->
 
         <!--Testing to see what just the dark menu bar looks like-->
-             <item name="actionBarStyle">@style/DefaultActionBar</item>
+        <item name="actionBarStyle">@style/DefaultActionBar</item>
     </style>
 
     <!-- ActionBar style -->
     <style name="DefaultActionBar"
-            parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-            <item name="background">@drawable/actionbar_background</item>
-            <item name="titleTextStyle">@style/ActionBarText</item>
+           parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/actionbar_background</item>
+        <item name="titleTextStyle">@style/ActionBarText</item>
     </style>
 
     <!-- ActionBar text -->
     <style name="ActionBarText"
-            parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+           parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/white</item>
     </style>
 

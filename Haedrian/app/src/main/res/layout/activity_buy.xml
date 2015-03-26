@@ -1,466 +1,467 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.haedrian.haedrian.HomeScreen.BuyActivity"
-    android:paddingBottom="2dp">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="2dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.haedrian.haedrian.HomeScreen.BuyActivity">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/round_white"
-        android:padding="5dp"
-        android:id="@+id/relativeLayout">
+        android:padding="5dp">
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Buy Amount"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textSize="20sp"
-            android:textColor="@color/turquoise" />
+            android:layout_alignParentTop="true"
+            android:text="Buy Amount"
+            android:textColor="@color/turquoise"
+            android:textSize="20sp"/>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp">
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="USD"
-                    android:id="@+id/textView9"
-                    android:textSize="14sp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="USD"
+                    android:textSize="14sp"/>
 
                 <EditText
+                    android:id="@+id/editText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:textIsSelectable="true"
-                    android:id="@+id/editText"
-                    android:layout_toRightOf="@+id/textView9"
                     android:layout_toEndOf="@+id/textView9"
-                    android:hint="0.0"
+                    android:layout_toRightOf="@+id/textView9"
+                    android:ems="10"
                     android:gravity="right"
-                    android:textSize="14sp" />
+                    android:hint="0.0"
+                    android:inputType="numberDecimal"
+                    android:textIsSelectable="true"
+                    android:textSize="14sp"/>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BTC"
-                    android:id="@+id/textView10"
-                    android:textSize="14sp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="BTC"
+                    android:textSize="14sp"/>
 
                 <EditText
+                    android:id="@+id/editText2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:textIsSelectable="true"
-                    android:id="@+id/editText2"
-                    android:layout_toRightOf="@+id/textView10"
                     android:layout_toEndOf="@+id/textView10"
-                    android:hint="0.0"
+                    android:layout_toRightOf="@+id/textView10"
+                    android:ems="10"
                     android:gravity="right"
-                    android:textSize="14sp" />
+                    android:hint="0.0"
+                    android:inputType="numberDecimal"
+                    android:textIsSelectable="true"
+                    android:textSize="14sp"/>
             </RelativeLayout>
         </LinearLayout>
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout"
-        android:background="@drawable/round_white"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:id="@+id/relativeLayout2">
+        android:background="@drawable/round_white"
+        android:padding="5dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Payment Method"
             android:id="@+id/textView11"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="20sp"
-            android:textColor="@color/turquoise" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BDO 24 hour ATM Deposit"
-            android:id="@+id/textView12"
-            android:layout_below="@+id/textView11"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:textSize="14sp" />
+            android:layout_alignParentTop="true"
+            android:text="Payment Method"
+            android:textColor="@color/turquoise"
+            android:textSize="20sp"/>
 
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView11"
+            android:layout_marginTop="10dp"
+            android:text="BDO 24 hour ATM Deposit"
+            android:textSize="14sp"/>
 
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_white"
-        android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:layout_below="@+id/relativeLayout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout3">
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_white"
+        android:padding="5dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subtotal:"
             android:id="@+id/textView13"
-            android:textSize="14sp"
-            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Haedrian Cost:"
-            android:id="@+id/textView14"
             android:layout_alignParentStart="true"
-            android:textSize="14sp"
+            android:layout_alignParentTop="true"
+            android:text="Subtotal:"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/textView13"
-            android:layout_alignParentLeft="true" />
+            android:text="Haedrian Cost:"
+            android:textSize="14sp"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Payment Method Fee:"
             android:id="@+id/textView15"
-            android:textSize="14sp"
-            android:layout_below="@+id/textView14"
-            android:layout_alignParentLeft="true" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Due:"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView14"
+            android:text="Payment Method Fee:"
+            android:textSize="14sp"/>
+
+        <TextView
             android:id="@+id/textView16"
-            android:textSize="14sp"
-            android:layout_below="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textView15"
             android:layout_alignStart="@+id/textView15"
+            android:layout_below="@+id/textView15"
             android:layout_marginTop="5dp"
-            android:textStyle="bold"
-            android:textColor="@color/turquoise" />
+            android:text="Total Due:"
+            android:textColor="@color/turquoise"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.00"
             android:id="@+id/textView17"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.00"
-            android:id="@+id/textView18"
-            android:layout_below="@+id/textView17"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.00"
-            android:id="@+id/textView19"
-            android:layout_below="@+id/textView18"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.00"
-            android:id="@+id/textView20"
-            android:layout_below="@+id/textView19"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="0.00"/>
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView17"
+            android:text="0.00"/>
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView18"
+            android:text="0.00"/>
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView19"
             android:layout_marginTop="5dp"
-            android:textColor="@color/turquoise" />
+            android:text="0.00"
+            android:textColor="@color/turquoise"
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2"
-        android:layout_below="@+id/relativeLayout3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_marginTop="10dp"
         android:background="@drawable/round_white"
 
-        android:layout_marginTop="10dp">
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:showDividers="beginning">
 
 
             <Button
+                android:id="@+id/button1"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1"
-                android:id="@+id/button1"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button4"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="4"
-                android:id="@+id/button4"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button7"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="7"
-                android:id="@+id/button7"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/buttonDot"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="."
-                android:id="@+id/buttonDot"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textSize="22sp"/>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:showDividers="beginning">
 
             <Button
+                android:id="@+id/button2"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2"
-                android:id="@+id/button2"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button5"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5"
-                android:id="@+id/button5"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button8"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="8"
-                android:id="@+id/button8"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button0"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:id="@+id/button0"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:showDividers="beginning">
 
             <Button
+                android:id="@+id/button3"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="3"
-                android:id="@+id/button3"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button6"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="6"
-                android:id="@+id/button6"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/button9"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="9"
-                android:id="@+id/button9"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/offset_color"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@color/offset_color"/>
 
             <Button
+                android:id="@+id/buttonBack"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="&lt;x"
-                android:id="@+id/buttonBack"
-                android:textSize="22sp"
                 android:textColor="@color/offset_color"
-                style="?android:attr/borderlessButtonStyle"
+                android:textSize="22sp"
                 />
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/button19"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/button19"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
 
-        android:bottomRightRadius="40dp"
-        android:bottomLeftRadius="40dp"
-        android:topLeftRadius="40dp"
-        android:topRightRadius="40dp"
         android:background="@color/turquoise"
+        android:bottomLeftRadius="40dp"
+        android:bottomRightRadius="40dp"
+        android:text="Submit"
         android:textColor="#ffffffff"
-        android:layout_marginTop="10dp" />
+        android:topLeftRadius="40dp"
+        android:topRightRadius="40dp"/>
 
 
 </RelativeLayout>

@@ -1,14 +1,10 @@
 package com.haedrian.haedrian.HomeScreen;
 
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.haedrian.haedrian.R;
@@ -36,7 +32,6 @@ public class BuyActivity extends ActionBarActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -47,8 +42,7 @@ public class BuyActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }

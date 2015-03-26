@@ -4,13 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haedrian.haedrian.R;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by Logan on 3/14/2015.

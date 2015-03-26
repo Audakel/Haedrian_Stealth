@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,31 +17,31 @@ import java.util.ArrayList;
 /**
  * Created by hbll-rm on 2/26/2015.
  */
-public class InvestListAdapter extends RecyclerView.Adapter<InvestListAdapter.MyViewHolder>{
+public class InvestListAdapter extends RecyclerView.Adapter<InvestListAdapter.MyViewHolder> {
     private final LayoutInflater inflater;
     ArrayList<InvestProjectObject> listOfProjects;
     Context mContext;
 
-    public InvestListAdapter(Context context){
+    public InvestListAdapter(Context context) {
         listOfProjects = new ArrayList<>();
         mContext = context;
 
         inflater = LayoutInflater.from(mContext);
 
         // Set up all the dummy views with project content
-        for (int i = 0; i < ProjectContent.projectTitle.length; i++){
+        for (int i = 0; i < ProjectContent.projectTitle.length; i++) {
             String mProjectTitle = ProjectContent.projectTitle[i];
-            String mPersonName= ProjectContent.personName[i];
-            String mLocation= ProjectContent.projectLocation[i];
-            String mProjectDescription= ProjectContent.projectDescription[i];
-            int mFundingGoal= ProjectContent.fundingGoal[i];
-            int mCurrentAmountRaised= ProjectContent.currentAmountRaised[i];
-            int mdaysLeft= ProjectContent.daysLeft[i];
-            int mDrawableImage= ProjectContent.projectImage[i];
+            String mPersonName = ProjectContent.personName[i];
+            String mLocation = ProjectContent.projectLocation[i];
+            String mProjectDescription = ProjectContent.projectDescription[i];
+            int mFundingGoal = ProjectContent.fundingGoal[i];
+            int mCurrentAmountRaised = ProjectContent.currentAmountRaised[i];
+            int mdaysLeft = ProjectContent.daysLeft[i];
+            int mDrawableImage = ProjectContent.projectImage[i];
 
             InvestProjectObject newProject = new InvestProjectObject(
-                    mProjectTitle,mPersonName,mLocation,mProjectDescription,
-                    mFundingGoal,mCurrentAmountRaised, mdaysLeft, mDrawableImage
+                    mProjectTitle, mPersonName, mLocation, mProjectDescription,
+                    mFundingGoal, mCurrentAmountRaised, mdaysLeft, mDrawableImage
             );
 
             listOfProjects.add(newProject);
@@ -76,7 +75,7 @@ public class InvestListAdapter extends RecyclerView.Adapter<InvestListAdapter.My
 
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.invest_list_view,parent,false);
+        View row = inflater.inflate(R.layout.invest_list_view, parent, false);
         TextView titleView = (TextView) row.findViewById(R.id.titleView);
         TextView raisedView = (TextView) row.findViewById(R.id.raisedView);
         TextView goalView = (TextView) row.findViewById(R.id.goalRaisView);
@@ -94,7 +93,7 @@ public class InvestListAdapter extends RecyclerView.Adapter<InvestListAdapter.My
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleView;
         TextView raisedView;

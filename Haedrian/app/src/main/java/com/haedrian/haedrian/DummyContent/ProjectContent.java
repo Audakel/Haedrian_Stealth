@@ -110,6 +110,6 @@ public class ProjectContent {
     };
 
     public static int[] daysLeft = {
-            45,23,12,10,8,19,14,22,26,11,6
+            45, 23, 12, 10, 8, 19, 14, 22, 26, 11, 6
     };
 }
