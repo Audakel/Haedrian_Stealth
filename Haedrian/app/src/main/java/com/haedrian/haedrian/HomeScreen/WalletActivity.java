@@ -1,9 +1,15 @@
 package com.haedrian.haedrian.HomeScreen;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Locale;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -13,6 +19,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,14 +29,31 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.zxing.WriterException;
+import com.haedrian.haedrian.ImportWalletActivity;
+import com.haedrian.haedrian.Models.CurrencyModel;
+import com.haedrian.haedrian.QrCode.*;
 import com.haedrian.haedrian.CreateWalletActivity;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 public class WalletActivity extends ActionBarActivity implements ActionBar.TabListener{
@@ -55,10 +79,8 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            userId = extras.getInt("user_id");
-        }
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        userId = sp.getInt("user_id", -1);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -191,18 +213,14 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
         private ImageView qrCode;
         private ImageButton copyButton;
         private LinearLayout hasWalletLayout, noWalletLayout;
-        private Button createWallet;
+        private Button createWallet, importWallet;
+        private TextView walletAddress, convertedAmount, bitcoinAmount;
+        private RequestQueue queue;
+        private ProgressDialog progressDialog;
 
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
+
         public static BalanceFragment newInstance(int sectionNumber) {
             BalanceFragment fragment = new BalanceFragment();
             Bundle args = new Bundle();
@@ -224,60 +242,181 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
             WalletModel wallet = db.getWalletsTable().selectByUserId(userId);
 
+            progressDialog = new ProgressDialog(rootView.getContext());
+            progressDialog.setMessage("Initializing wallet...");
+            progressDialog.show();
+
             hasWalletLayout = (LinearLayout) rootView.findViewById(R.id.has_wallet_container);
             noWalletLayout = (LinearLayout) rootView.findViewById(R.id.no_wallet_container);
             createWallet = (Button) rootView.findViewById(R.id.create_wallet_button);
+            importWallet = (Button) rootView.findViewById(R.id.import_wallet_button);
+            walletAddress = (TextView) rootView.findViewById(R.id.wallet_address);
+            convertedAmount = (TextView) rootView.findViewById(R.id.converted_currency_amount);
+            bitcoinAmount = (TextView) rootView.findViewById(R.id.bitcoin_amount);
 
             // If wallet doesn't exist
             if (wallet.getId() == 0) {
+                progressDialog.hide();
                 hasWalletLayout.setVisibility(View.GONE);
                 noWalletLayout.setVisibility(View.VISIBLE);
-            }
 
-            qrCode = (ImageView) rootView.findViewById(R.id.bitcoin_qr_code);
-            copyButton = (ImageButton) rootView.findViewById(R.id.copy_button);
-
-            Picasso.with(rootView.getContext())
-                    .load(R.drawable.qrcode)
-                    .resize(300,300)
-                    .centerCrop()
-                    .into(qrCode);
-
-            qrCode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    BitcoinAddressDialog dialog = new BitcoinAddressDialog(rootView.getContext());
-                    dialog.show();
-                }
-            });
-
-            copyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int sdk = android.os.Build.VERSION.SDK_INT;
-                    if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboard.setText(getActivity().getResources().getString(R.string.dummy_address));
-                    } else {
-                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                        android.content.ClipData clip = android.content.ClipData.newPlainText("bitcoinAddress", getActivity().getResources().getString(R.string.dummy_address));
-                        clipboard.setPrimaryClip(clip);
+                createWallet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(rootView.getContext(), CreateWalletActivity.class);
+                        startActivity(intent);
                     }
+                });
 
-                    Toast.makeText(rootView.getContext(), getActivity().getResources().getString(R.string.dummy_address) + " was copied to the clipboard", Toast.LENGTH_SHORT).show();
-                }
-            });
+                importWallet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(rootView.getContext(), ImportWalletActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+            else {
 
-            createWallet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(rootView.getContext(), CreateWalletActivity.class);
-                    startActivity(intent);
+                qrCode = (ImageView) rootView.findViewById(R.id.bitcoin_qr_code);
+                copyButton = (ImageButton) rootView.findViewById(R.id.copy_button);
+
+                // Generate QRCode and then display it
+                QRCodeEncoder encoder = new QRCodeEncoder();
+                Bitmap qrCodeBitmap = null;
+                try {
+                    qrCodeBitmap = encoder.encodeAsBitmap(wallet.getAddress(), 300);
+                } catch (WriterException e) {
+                    Log.e("ZXing", e.toString());
                 }
-            });
+
+                if (qrCodeBitmap != null) {
+                    qrCode.setImageBitmap(qrCodeBitmap);
+                }
+
+                // Display wallet address
+                walletAddress.setText(wallet.getAddress());
+
+                // Get wallet balance and display it
+                getWalletBalance(wallet.getAddress(), rootView.getContext());
+
+
+                // Set up dialog stuff with wallet address and bitmap
+                final String walletAddress = wallet.getAddress();
+                final Bitmap finalQrCodeBitmap = qrCodeBitmap;
+                qrCode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BitcoinAddressDialog dialog = new BitcoinAddressDialog(rootView.getContext(), walletAddress, finalQrCodeBitmap);
+                        dialog.show();
+                    }
+                });
+
+
+                copyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int sdk = android.os.Build.VERSION.SDK_INT;
+                        if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                            clipboard.setText(getActivity().getResources().getString(R.string.dummy_address));
+                        } else {
+                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                            android.content.ClipData clip = android.content.ClipData.newPlainText("bitcoinAddress", walletAddress);
+                            clipboard.setPrimaryClip(clip);
+                        }
+
+                        Toast.makeText(rootView.getContext(), walletAddress + " was copied to the clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
 
 
             return rootView;
+        }
+
+        public void getWalletBalance(String address, Context context) {
+            final String URL = "https://blockchain.info/q/addressbalance/"
+                                + address;
+
+
+            queue = Volley.newRequestQueue(context);
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                    URL,
+                    new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            setBalance(response);
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Test", "Error: " + error.toString());
+                    progressDialog.hide();
+                }
+            });
+
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
+
+        }
+
+        public void setBalance(String response) {
+
+            float balance = Float.parseFloat(response);
+
+            balance = ( balance / (float) 100000000);
+
+            getConvertedRate(String.valueOf(balance));
+
+            bitcoinAmount.setText(String.valueOf(balance));
+        }
+
+        public void getConvertedRate(String bitcoinAmount) {
+            final String url = "https://blockchain.info/ticker";
+
+            final String amount = bitcoinAmount;
+            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("USD");
+                                int last = currentCurrency.getInt("last");
+                                setConvertedRate(last, amount);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Error", "Error: " + error.getMessage());
+                    progressDialog.hide();
+                }
+            });
+
+            queue.add(currencyRequest);
+        }
+
+        public void setConvertedRate(int rate, String bitcoinAmount) {
+            float conversion = (float) rate * Float.parseFloat(bitcoinAmount);
+
+            BigDecimal value;
+            value = round(conversion, 2);
+
+            convertedAmount.setText(String.valueOf(value));
+            progressDialog.hide();
+        }
+
+        public static BigDecimal round(float d, int decimalPlace) {
+            BigDecimal bd = new BigDecimal(Float.toString(d));
+            bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+            return bd;
         }
 
     }

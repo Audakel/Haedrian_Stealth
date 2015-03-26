@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.haedrian.haedrian.Models.UserModel;
 
@@ -49,7 +50,7 @@ public class TableUsers {
         onCreate(database);
     }
 
-    public void insert(UserModel user) {
+    public UserModel insert(UserModel user) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -64,7 +65,18 @@ public class TableUsers {
 
         // Insesrt row
         db.insert(TABLE_USERS, null, values);
+
+        Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
+
+        if (cursor.moveToFirst()) {
+            user.setId(cursor.getInt(0));
+        }
+
+
         db.close();
+        cursor.close();
+
+        return user;
 
     }
 

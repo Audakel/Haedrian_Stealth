@@ -1,7 +1,9 @@
 package com.haedrian.haedrian.HomeScreen;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -49,19 +51,30 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(this);
 
-        // This is temporary until we get the backend set up
-        DBHelper db = new DBHelper(this);
-        user = db.getUsersTable().query("id", "=", "1");
 
-        // If there isn't already a user
-        if (user.getId() == 0) {
+        // After login, set up shared preferences to store the current users ID globally
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        int userId = sp.getInt("user_id", -1);
+        DBHelper db = new DBHelper(this);
+
+        // No user is currently set
+        if (userId == -1) {
+            user = new UserModel();
             user.setFirstName("Logan");
             user.setLastName("Bentley");
             user.setUsername("sloganho");
             user.setEmail("loganbentley22@gmail.com");
             user.setPhoneNumber("8016905609");
 
-            db.getUsersTable().insert(user);
+            UserModel newUser = db.getUsersTable().insert(user);
+
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putInt("user_id", newUser.getId());
+            editor.commit();
+        }
+        else {
+
+            user = db.getUsersTable().query("id", "=", "1");
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -159,7 +172,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 return;
             case R.id.wallet:
                 intent = new Intent(this, WalletActivity.class);
-                intent.putExtra("user_id", user.getId());
                 ActivityOptions options4 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options4.toBundle());

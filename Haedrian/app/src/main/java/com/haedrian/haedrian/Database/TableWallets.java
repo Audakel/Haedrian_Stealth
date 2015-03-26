@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.google.android.gms.wallet.Wallet;
 import com.haedrian.haedrian.Models.WalletModel;
@@ -43,21 +44,32 @@ public class TableWallets {
         onCreate(database);
     }
 
-    public void insert(WalletModel wallet) {
+    public WalletModel insert(WalletModel wallet) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_USER_ID, wallet.getUserId());
         values.put(COLUMN_WALLET_ADDRESS, wallet.getAddress());
-        values.put(COLUMN_BALANCE, wallet.getAddress());
+        values.put(COLUMN_BALANCE, wallet.getBalance());
+
+        db.insert(TABLE_WALLETS, null, values);
+        Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
+
+        if (cursor.moveToFirst()) {
+            wallet.setId(cursor.getInt(0));
+        }
+
 
         // Insert row
-        db.insert(TABLE_WALLETS, null, values);
         db.close();
+        cursor.close();
+
+        return wallet;
     }
 
     public WalletModel selectByUserId(int userId) {
+
         WalletModel wallet = new WalletModel();
 
         String selectQuery = "SELECT * FROM " + TABLE_WALLETS

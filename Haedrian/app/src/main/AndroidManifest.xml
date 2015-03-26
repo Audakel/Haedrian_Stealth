@@ -160,6 +160,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
+        <activity
+            android:name=".ImportWalletActivity"
+            android:label="@string/title_activity_import_wallet"
+            android:parentActivityName=".HomeScreen.WalletActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.WalletActivity" />
+        </activity>
     </application>
 
 </manifest>

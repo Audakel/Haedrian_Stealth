@@ -45,11 +45,11 @@
     <string name="drawer_close">Close</string>
     <string name="title_activity_wallet">Wallet</string>
     <string name="bitcoin_address">Wallet Address:</string>
-    <string name="dummy_address">1Jk34ZCPO6Uu790ZxxSW63qA</string>
-    <string name="bitcoin_fake_amount">5.21</string>
+    <string name="dummy_address">Error: No wallet address found</string>
+    <string name="bitcoin_fake_amount">0</string>
     <string name="btc">BTC</string>
     <string name="currency_code">USD</string>
-    <string name="fake_converted_amount">4,496.57</string>
+    <string name="fake_converted_amount">0.00</string>
     <string name="title_activity_buy">Buy</string>
     <string name="title_activity_send">Send</string>
     <string name="my_people">My People:</string>
@@ -85,6 +85,10 @@
     <string name="from">From:</string>
     <string name="request">Request</string>
     <string name="create_wallet">Create Wallet</string>
+    <string name="import_wallet">Import Wallet</string>
     <string name="title_activity_create_wallet">Create Wallet</string>
     <string name="password">Password (min 10 char)</string>
+    <string name="title_activity_import_wallet">Import Wallet</string>
+    <string name="wallet_address">Wallet Address:</string>
+    <string name="import_string">Import</string>
 </resources>

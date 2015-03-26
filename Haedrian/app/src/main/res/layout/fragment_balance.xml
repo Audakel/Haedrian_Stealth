@@ -53,6 +53,7 @@ tools:context="com.haedrian.haedrian.HomeScreen.WalletActivity">
                         android:layout_marginRight="5dp"/>
 
                     <TextView
+                        android:id="@+id/bitcoin_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/bitcoin_fake_amount"
@@ -75,6 +76,7 @@ tools:context="com.haedrian.haedrian.HomeScreen.WalletActivity">
                         android:textSize="30sp"/>
 
                     <TextView
+                        android:id="@+id/converted_currency_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fake_converted_amount"
@@ -108,6 +110,7 @@ tools:context="com.haedrian.haedrian.HomeScreen.WalletActivity">
                     android:textSize="16sp"/>
 
                 <TextView
+                    android:id="@+id/wallet_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dummy_address"/>
@@ -139,6 +142,17 @@ tools:context="com.haedrian.haedrian.HomeScreen.WalletActivity">
             android:layout_height="wrap_content"
             android:background="@drawable/round_blue"
             android:text="@string/create_wallet"
+            android:textColor="@color/white"
+            android:padding="15dp"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/import_wallet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_blue"
+            android:text="@string/import_wallet"
             android:textColor="@color/white"
             android:padding="15dp"
             android:layout_gravity="center" />
