@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,11 +35,14 @@ public class CreateWalletActivity extends ActionBarActivity {
     private final String TAG = "CANCEL_TAG";
     private Button addBankButton;
     private EditText addEmailText;
-    private EditText addPasswordText;
+    private EditText addPasswordText, reenterPasswordText;
     private UserModel user;
     private DBHelper db;
     private RequestQueue queue;
     private WalletModel wallet;
+
+    private LinearLayout errorLayout;
+    private TextView errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,11 @@ public class CreateWalletActivity extends ActionBarActivity {
 
         addEmailText = (EditText) findViewById(R.id.addBankEmailEditText);
         addPasswordText = (EditText) findViewById(R.id.password_edit_text);
+        reenterPasswordText = (EditText) findViewById(R.id.reenter_password_edit_text);
+
+        errorLayout = (LinearLayout) findViewById(R.id.error_layout);
+
+        errorMessage = (TextView) findViewById(R.id.error_message);
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
@@ -60,6 +72,25 @@ public class CreateWalletActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 testVolleyRequest();
+            }
+        });
+
+        addPasswordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (errorLayout.getVisibility() == View.VISIBLE) {
+                        errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up));
+                        // Execute some code after 2 seconds have passed
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                errorLayout.setVisibility(View.GONE);
+                            }
+                        }, 500);
+
+                    }
+                }
             }
         });
 
@@ -94,6 +125,18 @@ public class CreateWalletActivity extends ActionBarActivity {
 
         wallet = new WalletModel();
         wallet.setUserId(user.getId());
+
+        if ( ! addPasswordText.getText().toString().equals(reenterPasswordText.getText().toString()) ) {
+            errorLayout.setVisibility(View.VISIBLE);
+            errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
+            return;
+        }
+        else if (addPasswordText.getText().length() < 10) {
+            errorLayout.setVisibility(View.VISIBLE);
+            errorMessage.setText("Password is shorter than 10 characters!");
+            errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
+            return;
+        }
 
 
         final String URL = "https://blockchain.info/api/v2/create_wallet"

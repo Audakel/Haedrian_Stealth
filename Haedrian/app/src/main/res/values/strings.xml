@@ -91,4 +91,6 @@
     <string name="title_activity_import_wallet">Import Wallet</string>
     <string name="wallet_address">Wallet Address:</string>
     <string name="import_string">Import</string>
+    <string name="reenter_password">Re-enter Password</string>
+    <string name="passwords_dont_match">Passwords don\'t match!</string>
 </resources>
