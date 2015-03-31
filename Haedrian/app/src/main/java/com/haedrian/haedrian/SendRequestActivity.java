@@ -270,6 +270,7 @@ public class SendRequestActivity extends ActionBarActivity {
 
     private void clear() {
         displayNumber.setText("0");
+        bitcoinAmount.setText("0");
     }
 
     private void backspace() {
@@ -278,6 +279,7 @@ public class SendRequestActivity extends ActionBarActivity {
             displayNumber.setText(string.substring(0, string.length() - 1));
         } else {
             displayNumber.setText("0");
+            bitcoinAmount.setText("0");
         }
     }
 
