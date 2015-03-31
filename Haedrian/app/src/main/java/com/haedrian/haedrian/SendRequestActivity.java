@@ -2,36 +2,42 @@ package com.haedrian.haedrian;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haedrian.haedrian.Models.CurrencyModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 
 public class SendRequestActivity extends ActionBarActivity {
-
+    private String TAG = SendRequestActivity.class.getSimpleName();
     private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
     private Button buttonDot, buttonBack, buttonSend, buttonRequest;
     private TextView displayNumber;
@@ -40,6 +46,7 @@ public class SendRequestActivity extends ActionBarActivity {
     private LinearLayout errorLayout;
     private RequestQueue queue;
     private TextView bitcoinAmount;
+    private int currentBitcoinPrice = 0;
 
 
 
@@ -48,6 +55,9 @@ public class SendRequestActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
         context = getApplication();
+
+        // Get bitcoin price
+        getCurrencyInfo();
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -133,6 +143,7 @@ public class SendRequestActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 backspace();
+                getConvertedRateInstantly(displayNumber.getText().toString());
             }
         });
 
@@ -217,7 +228,7 @@ public class SendRequestActivity extends ActionBarActivity {
 
     public void onClick(View view) {
         addNumberToDisplay(view);
-        getConvertedRate(displayNumber.getText().toString());
+        getConvertedRateInstantly(displayNumber.getText().toString());
     }
 
     private void addNumberToDisplay(View selectedButton) {
@@ -257,7 +268,9 @@ public class SendRequestActivity extends ActionBarActivity {
                 updateText(".");
                 return;
             case R.id.buttonBack:
+                //TODO:: fix this hack... can figure out why backspace wont update numbers
                 backspace();
+
                 return;
             case R.id.buttonSend:
                 clear();
@@ -338,7 +351,7 @@ public class SendRequestActivity extends ActionBarActivity {
         }
     }
 
-    public void getConvertedRate(String sendAmount) {
+    public void getConvertedRateFromAPI(String sendAmount) {
         final String URL = "https://blockchain.info/tobtc?currency=USD&value=" + sendAmount;
 
 
@@ -365,4 +378,69 @@ public class SendRequestActivity extends ActionBarActivity {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
+
+    public void getConvertedRateInstantly(String sendAmount) {
+        String cleanSendAmount = removeCommas(sendAmount);
+        if (currentBitcoinPrice == 0){
+            bitcoinAmount.setText("Loading...");
+        }
+        else{
+            double balance = (Double.parseDouble(cleanSendAmount) * 1.000000) / currentBitcoinPrice;
+
+            Double roundedBalance = new BigDecimal(balance).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+            bitcoinAmount.setText(roundedBalance + "");
+        }
+
+    }
+
+
+//    =========== Check every 15 minuets as that is when API gets updated info
+
+//    private final ScheduledExecutorService scheduler =
+//            Executors.newScheduledThreadPool(1);
+//
+//    public void checkForCurrencyUpdates() {
+//        final Runnable beeper = new Runnable() {
+//            public void run() { System.out.println("beep");};
+//            final ScheduledFuture beeperHandle =
+//                    scheduler.scheduleAtFixedRate(beeper, 10, 10, SECONDS);
+//            scheduler.schedule(new Runnable() {
+//                public void run() { beeperHandle.cancel(true); }
+//            }, 60 * 60, SECONDS);
+//        }
+//    }
+
+
+    private void getCurrencyInfo() {
+        // Creating volley request obj
+        String url = "https://blockchain.info/ticker";
+
+        JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString());
+
+                        // Parsing json
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("USD");
+                                    currentBitcoinPrice = currentCurrency.getInt("buy");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+            }
+        });
+        // Adding request to request queue
+        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+    }
 }
+
+
+
+
