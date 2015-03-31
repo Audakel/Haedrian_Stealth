@@ -41,10 +41,5 @@ public class BitcoinAddressDialog extends Dialog {
 
         bitcoinQr.setImageBitmap(qrCode);
 
-//        Picasso.with(context)
-//                .load(R.drawable.qrcode)
-//                .fit()
-//                .centerInside()
-//                .into(bitcoinQr);
     }
 }

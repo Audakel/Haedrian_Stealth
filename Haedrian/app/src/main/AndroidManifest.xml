@@ -172,6 +172,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeScreen.WalletActivity"/>
         </activity>
+        <activity
+            android:name=".Scanner.CaptureActivity"
+            android:label="@string/title_activity_capture"
+            android:parentActivityName=".SendActivity">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SendActivity"/>
+        </activity>
     </application>
 
 </manifest>

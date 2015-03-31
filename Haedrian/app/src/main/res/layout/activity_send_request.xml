@@ -33,30 +33,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:paddingRight="5dp"
-                android:text="@string/name"/>
-
-            <EditText
-                android:id="@+id/user_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingLeft="5dp"/>
-
-
-        </LinearLayout>
-
     </LinearLayout>
 
 
@@ -85,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="1"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"/>
 
             <View
@@ -93,7 +70,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/button4"
@@ -102,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="4"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"/>
 
             <View
@@ -110,7 +88,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/button7"
@@ -119,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="7"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"/>
 
             <View
@@ -127,7 +106,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/buttonDot"
@@ -136,7 +115,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="."
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"/>
         </LinearLayout>
 
@@ -154,7 +134,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="2"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
 
@@ -163,7 +144,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/button5"
@@ -172,7 +153,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="5"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
 
@@ -181,7 +163,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/button8"
@@ -190,7 +172,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="8"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
 
@@ -199,7 +182,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/button0"
@@ -208,7 +191,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="0"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
         </LinearLayout>
@@ -227,7 +211,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="3"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
 
@@ -236,7 +221,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/button6"
@@ -245,7 +230,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="6"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
 
@@ -254,7 +240,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/button9"
@@ -263,7 +249,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="9"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
 
@@ -272,7 +259,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+                android:background="@color/blue"/>
 
             <Button
                 android:id="@+id/buttonBack"
@@ -281,7 +268,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="&lt;x"
-                android:textColor="@color/offset_color"
+                android:textColor="@color/blue"
+                android:onClick="onClick"
                 android:textSize="22sp"
                 />
         </LinearLayout>
@@ -321,18 +309,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/blue"
-            android:clickable="false"
             android:text="Send"
             android:textColor="@color/white"/>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="101dp"
+        android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout3">
+        android:layout_alignParentStart="true">
 
         <TextView
             android:id="@+id/displayNumberView"
@@ -340,9 +326,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="15dp"
             android:text="0"
-            android:textColor="#6466A182"
+            android:textColor="@color/light_blue"
             android:textSize="140sp"/>
 
         <TextView
@@ -354,8 +339,37 @@
             android:layout_toLeftOf="@+id/displayNumberView"
             android:layout_toStartOf="@+id/displayNumberView"
             android:text="$"
-            android:textColor="@color/offset_color"
+            android:textColor="@color/blue"
             android:textSize="70sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/displayNumberView"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/btc"
+                android:textColor="@color/light_blue"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/bitcoin_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bitcoin_fake_amount"
+                android:textColor="@color/light_blue"
+                android:textSize="36sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 

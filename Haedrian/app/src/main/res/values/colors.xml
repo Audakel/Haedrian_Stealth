@@ -31,12 +31,27 @@
     <color name="lightgrey">#E5E6E1</color>
     <color name="yellow">#FEBA4D</color>
     <color name="blue">#4183D1</color>
+    <color name="light_blue">#644183D1</color>
     <color name="purple">#7759B3</color>
     <color name="black">#000000</color>
 
     <color name="error_border">#ebccd1</color>
     <color name="error_red">#f2dede</color>
     <color name="error_red_text">#a94442</color>
+
+    <!-- QR Scanner Colors -->
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="total_transparent">#00000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="transparent">#12000000</color>
 
 
 </resources>

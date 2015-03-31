@@ -1,40 +1,40 @@
 package com.haedrian.haedrian;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.haedrian.haedrian.HomeScreen.HomeActivity;
-import com.squareup.picasso.Picasso;
+import com.haedrian.haedrian.CustomDialogs.SendConfirmationDialog;
+import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.Models.WalletModel;
+import com.haedrian.haedrian.Scanner.CaptureActivity;
 
 import org.json.JSONObject;
+
+import java.math.BigDecimal;
 
 import static com.android.volley.Request.Method;
 
 public class SendActivity extends ActionBarActivity {
 
     private final String base = "https://blockchain.info/merchant/$guid/";
-    private String sendAmount, toUser;
-    private Button sendButton, cancelButton;
-    private TextView amountTV, toUserTV, totalAmountTV, sendSuccessTV;
-    private LinearLayout sendLayout;
-    private RelativeLayout sendSuccessLayout;
-    private ImageView sendSuccessImage;
+    private String sendAmount, sendAmountBitcoin;
+    private EditText toET, noteET;
+    private WalletModel wallet;
+
+    private static final int START_SCANNER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,67 +44,33 @@ public class SendActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        sendAmount = getIntent().getStringExtra("send_amount");
+        sendAmountBitcoin = getIntent().getStringExtra("send_amount_bitcoin");
+        toET = (EditText) findViewById(R.id.to_edittext);
+        noteET = (EditText) findViewById(R.id.note_edittext);
 
-        sendButton = (Button) findViewById(R.id.send_button);
-        cancelButton = (Button) findViewById(R.id.cancel_button);
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        int userId = sp.getInt("user_id", -1);
 
-        amountTV = (TextView) findViewById(R.id.review_amount);
-        toUserTV = (TextView) findViewById(R.id.to_user);
-        totalAmountTV = (TextView) findViewById(R.id.total_amount);
-        sendSuccessTV = (TextView) findViewById(R.id.send_success_text);
+        DBHelper db = new DBHelper(this);
+        wallet = db.getWalletsTable().selectByUserId(userId);
 
-        sendLayout = (LinearLayout) findViewById(R.id.send_layout);
-        sendSuccessLayout = (RelativeLayout) findViewById(R.id.send_success_layout);
+        BigDecimal amount = round(Float.parseFloat(sendAmount), 2);
 
-        sendSuccessImage = (ImageView) findViewById(R.id.send_success_image);
+        getSupportActionBar().setTitle("Send $" + amount.toString());
 
-        sendAmount = "$" + getIntent().getStringExtra("send_amount");
-        toUser = getIntent().getStringExtra("to_user");
+    }
 
-        amountTV.setText(sendAmount);
-        totalAmountTV.setText(sendAmount);
-        toUserTV.setText(toUser);
-
-        /*  Button Listeners  */
-        sendButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-
-                sendTransaction();
-
-                Picasso.with(SendActivity.this)
-                        .load(R.drawable.success)
-                        .resize(500, 500)
-                        .centerCrop()
-                        .into(sendSuccessImage);
-
-                String sendString = "Successfully sent "
-                        + sendAmount
-                        + " to "
-                        + toUser
-                        + ".";
-
-                sendSuccessTV.setText(sendString);
-
-                sendLayout.setVisibility(View.GONE);
-                sendSuccessLayout.setVisibility(View.VISIBLE);
-
-            }
-        });
-        cancelButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent;
-                intent = new Intent(SendActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
+    public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_send_request, menu);
+        getMenuInflater().inflate(R.menu.menu_send_request, menu);
         return true;
     }
 
@@ -116,9 +82,18 @@ public class SendActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_send) {
+            BigDecimal amount = round(Float.parseFloat(sendAmount), 2);
+            SendConfirmationDialog dialog = new SendConfirmationDialog(this, "$" + String.valueOf(amount), toET.getText().toString());
+            dialog.show();
+//            sendTransaction();
             return true;
-        } else if (id == android.R.id.home) {
+        }
+        else if (id == R.id.action_scan) {
+            callScanner();
+            return true;
+        }
+        else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;
         }
@@ -128,14 +103,14 @@ public class SendActivity extends ActionBarActivity {
 
     // Function that does the API call to send
     public void sendTransaction() {
+
+
         String URL = base
                 + "payment?password=" + "password"
-                + "&second_password=" + "secondPassword"
-                + "&to=" + "address"
-                + "&amount=" + "amount"
-                + "&from=" + "from"
-                + "&fee=" + "fee"
-                + "&note=" + "note";
+                + "&to=" + toET.getText().toString()
+                + "&amount=" + sendAmountBitcoin
+                + "&from=" + wallet.getAddress()
+                + "&note=" + noteET.getText().toString();
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Sending Payment...");
@@ -162,4 +137,38 @@ public class SendActivity extends ActionBarActivity {
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
     }
+
+    private void callScanner() {
+        Intent i = new Intent(this, CaptureActivity.class);
+        startActivityForResult(i, START_SCANNER_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == START_SCANNER_REQUEST)
+        {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK)
+            {
+                Bundle extras = data.getExtras();
+
+                if (extras != null)
+                {
+                    if(extras.containsKey("DecodedData"))
+                    {
+                        String decodedData = extras.getString("DecodedData");
+                        toET.setText(decodedData);
+                    }
+                    else if(extras.containsKey("Error"))
+                    {
+                        String error = extras.getString("Error");
+                    }
+
+
+                }
+            }
+        }
+    }
+
 }
