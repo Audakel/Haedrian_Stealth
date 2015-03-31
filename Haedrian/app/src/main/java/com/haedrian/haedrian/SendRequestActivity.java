@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.Models.CurrencyModel;
+import com.haedrian.haedrian.Scanner.CaptureActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,46 +83,6 @@ public class SendRequestActivity extends ActionBarActivity {
         bitcoinAmount = (TextView) findViewById(R.id.bitcoin_amount);
 
 
-
-//        errorLayout = (LinearLayout) findViewById(R.id.error_layout);
-//
-//        buttonSend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                // Hides the error message with an animation
-//                if (errorLayout.getVisibility() == View.VISIBLE) {
-//                    if (userET.getText().toString().equals("")) {
-//
-//                    } else {
-//                        Intent intent;
-//                        intent = new Intent(SendRequestActivity.this, SendActivity.class);
-//                        intent.putExtra("send_amount", displayNumber.getText().toString());
-//                        intent.putExtra("to_user", userET.getText().toString());
-//                        startActivity(intent);
-//                        errorLayout.setVisibility(View.GONE);
-//                        errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up));
-//                    }
-//                } else {
-//                    if (userET.getText().toString().equals("")) {
-//                        errorLayout.setVisibility(View.VISIBLE);
-//                        errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
-//                    } else {
-//                        // pull up send stuff
-//                        Intent intent;
-//                        intent = new Intent(SendRequestActivity.this, SendActivity.class);
-//                        intent.putExtra("send_amount", displayNumber.getText().toString());
-//                        intent.putExtra("to_user", userET.getText().toString());
-//                        startActivity(intent);
-//                    }
-//                }
-//
-//
-//                //clear();
-//            }
-//        });
-
-
         buttonSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -129,7 +90,7 @@ public class SendRequestActivity extends ActionBarActivity {
                 Intent intent = new Intent(SendRequestActivity.this, SendActivity.class);
                 intent.putExtra("send_amount", displayNumber.getText().toString());
                 intent.putExtra("send_amount_bitcoin", bitcoinAmount.getText().toString());
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -147,39 +108,16 @@ public class SendRequestActivity extends ActionBarActivity {
             }
         });
 
-//        buttonRequest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                // Hides the error message with an animation
-//                if (errorLayout.getVisibility() == View.VISIBLE) {
-//                    if (userET.getText().toString().equals("")) {
-//
-//                    } else {
-//                        // Pull up request stuff
-//                        Intent intent;
-//                        intent = new Intent(SendRequestActivity.this, RequestActivity.class);
-//                        intent.putExtra("request_amount", displayNumber.getText().toString());
-//                        intent.putExtra("from_user", userET.getText().toString());
-//                        startActivity(intent);
-//                    }
-//                } else {
-//                    if (userET.getText().toString().equals("")) {
-//                        errorLayout.setVisibility(View.VISIBLE);
-//                        errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
-//                    } else {
-//                        // pull up request stuff
-//                        Intent intent;
-//                        intent = new Intent(SendRequestActivity.this, RequestActivity.class);
-//                        intent.putExtra("request_amount", displayNumber.getText().toString());
-//                        intent.putExtra("from_user", userET.getText().toString());
-//                        startActivity(intent);
-//                    }
-//                }
-//
-//                clear();
-//            }
-//        });
+        buttonRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SendRequestActivity.this, RequestActivity.class);
+                intent.putExtra("request_amount", displayNumber.getText().toString());
+                intent.putExtra("request_amount_bitcoin", bitcoinAmount.getText().toString());
+                startActivityForResult(intent, 1);
+            }
+        });
+
 
         displayNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -197,6 +135,21 @@ public class SendRequestActivity extends ActionBarActivity {
                 updateFontAttributes();
             }
         });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Make sure the request was successful
+        if (resultCode == RESULT_OK)
+        {
+            Bundle extras = data.getExtras();
+
+            if (extras != null)
+            {
+
+            }
+        }
 
     }
 

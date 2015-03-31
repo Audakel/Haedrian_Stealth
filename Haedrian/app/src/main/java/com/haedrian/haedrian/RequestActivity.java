@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,17 +24,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.math.BigDecimal;
 
 public class RequestActivity extends ActionBarActivity {
 
     private final String base = "https://blockchain.info/merchant/$guid/";
-    private String requestAmount, fromUser;
-    private Button requestButton, cancelButton;
-    private TextView amountTV, fromUserTV, totalAmountTV, requestSuccessTV;
-    private LinearLayout requestLayout;
-    private RelativeLayout successLayout;
-    private ImageView requestSuccessImage;
+    private String requestAmount, requestAmountBitcoin, fromUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,68 +42,27 @@ public class RequestActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        requestButton = (Button) findViewById(R.id.request_button);
-        cancelButton = (Button) findViewById(R.id.cancel_button);
-
-        amountTV = (TextView) findViewById(R.id.review_request_amount);
-        fromUserTV = (TextView) findViewById(R.id.from_user);
-        totalAmountTV = (TextView) findViewById(R.id.total_request_amount);
-        requestSuccessTV = (TextView) findViewById(R.id.request_success_text);
-
-        requestLayout = (LinearLayout) findViewById(R.id.request_layout);
-        successLayout = (RelativeLayout) findViewById(R.id.success_layout);
-
-        requestSuccessImage = (ImageView) findViewById(R.id.request_success_image);
-
-
-        requestAmount = "$" + getIntent().getStringExtra("request_amount");
+        requestAmount = getIntent().getStringExtra("request_amount");
+        requestAmountBitcoin = getIntent().getStringExtra("request_amount_bitcoin");
         fromUser = getIntent().getStringExtra("from_user");
 
-        amountTV.setText(requestAmount);
-        totalAmountTV.setText(requestAmount);
-        fromUserTV.setText(fromUser);
 
-        /*  Button Listeners  */
-        requestButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+        BigDecimal amount = round(Float.parseFloat(requestAmount), 2);
 
-                requestTransaction();
+        getSupportActionBar().setTitle("Request $" + amount.toString());
 
-                Picasso.with(RequestActivity.this)
-                        .load(R.drawable.success)
-                        .resize(500, 500)
-                        .centerCrop()
-                        .into(requestSuccessImage);
+    }
 
-                String requestString = "Successfully requested "
-                        + requestAmount
-                        + " from "
-                        + fromUser
-                        + ".";
-
-                requestSuccessTV.setText(requestString);
-
-                requestLayout.setVisibility(View.GONE);
-                successLayout.setVisibility(View.VISIBLE);
-
-            }
-        });
-        cancelButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent;
-                intent = new Intent(RequestActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
+    public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_request_request, menu);
+        getMenuInflater().inflate(R.menu.menu_request, menu);
         return true;
     }
 
@@ -116,7 +74,8 @@ public class RequestActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_request) {
+            requestTransaction();
             return true;
         } else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
@@ -140,19 +99,39 @@ public class RequestActivity extends ActionBarActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.v("Test", response.toString());
-                        progressDialog.hide();
+                        try {
+                            if (response.has("error")) {
+                                progressDialog.hide();
+                                Toast.makeText(RequestActivity.this, response.getString("error"), Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                progressDialog.hide();
+                                returnToPreviousActivitySuccess(response.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(RequestActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Test", "Error: " + error.getMessage());
                 progressDialog.hide();
+                Toast.makeText(RequestActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
+    }
+
+    private void returnToPreviousActivitySuccess(String data) {
+        Intent i = new Intent();
+        Bundle extras = new Bundle();
+        extras.putString("data", data);
+        i.putExtras(extras);
+
+        setResult(RESULT_OK, i);
+        finish();
     }
 }

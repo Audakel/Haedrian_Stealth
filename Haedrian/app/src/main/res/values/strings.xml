@@ -142,4 +142,6 @@
     <string name="to_dialog">to</string>
     <string name="recipient">John</string>
     <string name="question_mark">\?</string>
+    <string name="from_hint">Email or Username</string>
+    <string name="action_request">Action Request</string>
 </resources>

@@ -3,6 +3,7 @@ package com.haedrian.haedrian.CustomDialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,5 +40,13 @@ public class SendConfirmationDialog extends Dialog {
         amountTV.setText(amount);
         recipientTV.setText(recipient);
 
+    }
+
+    public Button getSendButton() {
+        return this.send;
+    }
+
+    public Button getCancelButton() {
+        return this.cancel;
     }
 }

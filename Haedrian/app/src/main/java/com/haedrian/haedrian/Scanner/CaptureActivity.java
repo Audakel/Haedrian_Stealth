@@ -369,6 +369,8 @@ public final class CaptureActivity extends ActionBarActivity implements SurfaceH
 	  {
 		  String code = String.valueOf(charData);
 
+          data = code;
+
           // Bitcoin addresses come as "Bitcoin:aj30d90saDOFJ2kjfda"
           String[] pieces = code.split(":");
 

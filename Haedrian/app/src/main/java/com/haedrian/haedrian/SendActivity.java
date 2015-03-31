@@ -10,7 +10,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,6 +23,7 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
@@ -84,9 +87,22 @@ public class SendActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send) {
             BigDecimal amount = round(Float.parseFloat(sendAmount), 2);
-            SendConfirmationDialog dialog = new SendConfirmationDialog(this, "$" + String.valueOf(amount), toET.getText().toString());
+            final SendConfirmationDialog dialog = new SendConfirmationDialog(this, "$" + String.valueOf(amount), toET.getText().toString());
             dialog.show();
-//            sendTransaction();
+            dialog.getSendButton().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    sendTransaction();
+                }
+            });
+            dialog.getCancelButton().setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
             return true;
         }
         else if (id == R.id.action_scan) {
@@ -104,13 +120,32 @@ public class SendActivity extends ActionBarActivity {
     // Function that does the API call to send
     public void sendTransaction() {
 
+        String noteString = "";
+        if (noteET.getText().toString() != "") {
+            noteString = "&note=" + noteET.getText().toString();
+        }
+
+        String passwordString = "payment?password=" + "password";
+
+        String recipientString = "";
+        if (toET.getText().toString().equals("")) {
+            // Throw Error
+            Toast.makeText(this, "Please specify a recipient.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            recipientString = "&to=" + toET.getText().toString();
+        }
+
+        String addressString = "&from=" + wallet.getAddress();
+        addressString = addressString.replaceAll("\\s+", "");
 
         String URL = base
-                + "payment?password=" + "password"
-                + "&to=" + toET.getText().toString()
+                + passwordString
+                + recipientString
                 + "&amount=" + sendAmountBitcoin
-                + "&from=" + wallet.getAddress()
-                + "&note=" + noteET.getText().toString();
+                + addressString
+                + noteString;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Sending Payment...");
@@ -122,20 +157,40 @@ public class SendActivity extends ActionBarActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.v("Test", response.toString());
-                        progressDialog.hide();
+                        try {
+                            if (response.has("error")) {
+                                progressDialog.hide();
+                                Toast.makeText(SendActivity.this, response.getString("error"), Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                progressDialog.hide();
+                                returnToPreviousActivitySuccess(response.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(SendActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Test", "Error: " + error.getMessage());
                 progressDialog.hide();
+                Toast.makeText(SendActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
+    }
+
+    private void returnToPreviousActivitySuccess(String data) {
+        Intent i = new Intent();
+        Bundle extras = new Bundle();
+        extras.putString("data", data);
+        i.putExtras(extras);
+
+        setResult(RESULT_OK, i);
+        finish();
     }
 
     private void callScanner() {
