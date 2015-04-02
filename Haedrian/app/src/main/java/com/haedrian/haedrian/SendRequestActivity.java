@@ -17,24 +17,27 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+<<<<<<< Updated upstream
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.Models.CurrencyModel;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
+=======
+>>>>>>> Stashed changes
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SendRequestActivity extends ActionBarActivity {
@@ -49,6 +52,10 @@ public class SendRequestActivity extends ActionBarActivity {
     private TextView bitcoinAmount;
     private int currentBitcoinPrice = 0;
 
+    // Data for all views
+    String displayNumberText = "0";
+    String bitcoinAmountText = "0";
+
 
 
     @Override
@@ -57,12 +64,38 @@ public class SendRequestActivity extends ActionBarActivity {
         setContentView(R.layout.activity_send_request);
         context = getApplication();
 
-        // Get bitcoin price
         getCurrencyInfo();
-
-        // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initializeViews();
 
+        displayNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateFontAttributes();
+            }
+        });
+
+    }
+
+    private void updateDisplay(){
+        displayNumber.setText(displayNumberText);
+        bitcoinAmount.setText(bitcoinAmountText);
+        updateFontAttributes();
+    }
+
+    public void onClick(View view) {
+        addNumberToDisplay(view);
+        getConvertedRateInstantly(displayNumberText);
+        updateDisplay();
+    }
+
+
+    // ================ Init functions ================
+    private void initializeViews() {
         button0 = (Button) findViewById(R.id.button0);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
@@ -79,8 +112,8 @@ public class SendRequestActivity extends ActionBarActivity {
         displayNumber = (TextView) findViewById(R.id.displayNumberView);
         dolarSignView = (TextView) findViewById(R.id.dollarSignView);
         buttonSend = (Button) findViewById(R.id.buttonSend);
-
         bitcoinAmount = (TextView) findViewById(R.id.bitcoin_amount);
+<<<<<<< Updated upstream
 
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
@@ -154,10 +187,12 @@ public class SendRequestActivity extends ActionBarActivity {
     }
 
 
+=======
+    }
+
+>>>>>>> Stashed changes
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_send_request, menu);
         return true;
     }
 
@@ -178,55 +213,99 @@ public class SendRequestActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    // ================ End Init functions ================
 
-    public void onClick(View view) {
-        addNumberToDisplay(view);
-        getConvertedRateInstantly(displayNumber.getText().toString());
+
+
+    // ================ Screen update functions ================
+    private void clear() {
+        displayNumberText = "0";
+        bitcoinAmountText = "0";
+    }
+
+    private void backspace() {
+        String string = displayNumber.getText().toString();
+        if (string.length() > 1) {
+            displayNumberText = string.substring(0, string.length() - 1);
+        } else {
+            displayNumberText = "0";
+            bitcoinAmountText = "0";
+        }
+    }
+
+    private void setDisplayNumberText(String number) {
+        int displayLength = displayNumber.getText().length();
+
+        if (displayNumber.getText().toString().equals("0")) {
+            if(number.equals(".")){
+                displayNumberText = "0" + number;
+                return;
+            }
+            displayNumberText = number;
+        }
+        else if (number.equals(".")) {
+            formatDecimalNumber(number);
+        }
+        else if (displayLength < 6) {
+            formatNormalNumber(number);
+        }
+        else if (displayLength == 6 && number.equals(".")) {
+            displayNumberText = displayNumberText + number;
+        }
+        else if (displayLength > 6 && displayLength <= 8) {
+            formatNormalNumber(number);
+        }
+        else if (displayLength == 6 || displayLength > 8) {
+            vibrateErrorAnimation();
+        }
+
     }
 
     private void addNumberToDisplay(View selectedButton) {
 
         switch (selectedButton.getId()) {
             case R.id.button0:
-                updateText("0");
+                setDisplayNumberText("0");
                 return;
             case R.id.button1:
-                updateText("1");
+                setDisplayNumberText("1");
                 return;
             case R.id.button2:
-                updateText("2");
+                setDisplayNumberText("2");
                 return;
             case R.id.button3:
-                updateText("3");
+                setDisplayNumberText("3");
                 return;
             case R.id.button4:
-                updateText("4");
+                setDisplayNumberText("4");
                 return;
             case R.id.button5:
-                updateText("5");
+                setDisplayNumberText("5");
                 return;
             case R.id.button6:
-                updateText("6");
+                setDisplayNumberText("6");
                 return;
             case R.id.button7:
-                updateText("7");
+                setDisplayNumberText("7");
                 return;
             case R.id.button8:
-                updateText("8");
+                setDisplayNumberText("8");
                 return;
             case R.id.button9:
-                updateText("9");
+                setDisplayNumberText("9");
                 return;
             case R.id.buttonDot:
-                updateText(".");
+                setDisplayNumberText(".");
+//                addNumberToDisplay(v)
                 return;
             case R.id.buttonBack:
-                //TODO:: fix this hack... can figure out why backspace wont update numbers
                 backspace();
-
                 return;
             case R.id.buttonSend:
-                clear();
+                Intent intent = new Intent(SendRequestActivity.this, SendActivity.class);
+                intent.putExtra("send_amount", displayNumber.getText().toString());
+                intent.putExtra("send_amount_bitcoin", bitcoinAmount.getText().toString());
+                startActivity(intent);
                 return;
             case R.id.buttonRequest:
                 clear();
@@ -234,51 +313,7 @@ public class SendRequestActivity extends ActionBarActivity {
         }
     }
 
-    private void clear() {
-        displayNumber.setText("0");
-        bitcoinAmount.setText("0");
-    }
-
-    private void backspace() {
-        String string = displayNumber.getText().toString();
-        if (string.length() > 1) {
-            displayNumber.setText(string.substring(0, string.length() - 1));
-        } else {
-            displayNumber.setText("0");
-            bitcoinAmount.setText("0");
-        }
-    }
-
-    private void updateText(String number) {
-        if (displayNumber.getText().toString().equals("0")) {
-            displayNumber.setText(number);
-        } else if (displayNumber.getText().length() < 6) {
-            String newNumber = displayNumber.getText() + number;
-            newNumber = removeCommas(newNumber);
-            DecimalFormat formatter = new DecimalFormat("#,###,###");
-            String yourFormattedString = formatter.format(Double.parseDouble(newNumber));
-
-            displayNumber.setText(yourFormattedString);
-        }
-
-        if (displayNumber.getText().length() == 6) {
-            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-            Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-            v.vibrate(100);
-
-            displayNumber.startAnimation(shake);
-        }
-
-    }
-
-    // Number formatter has issues with the commas.... needs just the numbers
-    private String removeCommas(String number) {
-        String newNumber = number.replaceAll(",", "");
-        return newNumber;
-    }
-
     private void updateFontAttributes() {
-//
         if (displayNumber.getText().toString().equals("0")) {
             displayNumber.setTextColor(getResources().getColor(R.color.light_blue));
         } else {
@@ -301,87 +336,35 @@ public class SendRequestActivity extends ActionBarActivity {
                 displayNumber.setTextSize(70);
                 dolarSignView.setTextSize(40);
                 return;
+            case 5:
+                displayNumber.setTextSize(60);
+                dolarSignView.setTextSize(30);
+                return;
+
         }
     }
-
-    public void getConvertedRateFromAPI(String sendAmount) {
-        final String URL = "https://blockchain.info/tobtc?currency=USD&value=" + sendAmount;
+    // ================ End Screen update functions ================
 
 
-        queue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URL,
-                new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        float balance = Float.parseFloat(response);
-                        balance = (balance / (float) 100000000);
-                        bitcoinAmount.setText(response);
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Test", "Error: " + error.toString());
-            }
-        });
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }
-
-    public void getConvertedRateInstantly(String sendAmount) {
-        String cleanSendAmount = removeCommas(sendAmount);
-        if (currentBitcoinPrice == 0){
-            bitcoinAmount.setText("Loading...");
-        }
-        else{
-            double balance = (Double.parseDouble(cleanSendAmount) * 1.000000) / currentBitcoinPrice;
-
-            Double roundedBalance = new BigDecimal(balance).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-
-            bitcoinAmount.setText(roundedBalance + "");
-        }
-
-    }
-
-
-//    =========== Check every 15 minuets as that is when API gets updated info
-
-//    private final ScheduledExecutorService scheduler =
-//            Executors.newScheduledThreadPool(1);
-//
-//    public void checkForCurrencyUpdates() {
-//        final Runnable beeper = new Runnable() {
-//            public void run() { System.out.println("beep");};
-//            final ScheduledFuture beeperHandle =
-//                    scheduler.scheduleAtFixedRate(beeper, 10, 10, SECONDS);
-//            scheduler.schedule(new Runnable() {
-//                public void run() { beeperHandle.cancel(true); }
-//            }, 60 * 60, SECONDS);
-//        }
-//    }
-
-
+    // ================ Helper functions ================
     private void getCurrencyInfo() {
         // Creating volley request obj
         String url = "https://blockchain.info/ticker";
-
         JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
-
                         // Parsing json
-                            try {
-                                JSONObject currentCurrency = response.getJSONObject("USD");
-                                    currentBitcoinPrice = currentCurrency.getInt("buy");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            JSONObject currentCurrency = response.getJSONObject("USD");
+                            currentBitcoinPrice = currentCurrency.getInt("buy");
+                            getConvertedRateInstantly(displayNumber.getText().toString());
+                            updateDisplay();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -392,6 +375,88 @@ public class SendRequestActivity extends ActionBarActivity {
         // Adding request to request queue
         ApplicationController.getInstance().addToRequestQueue(currencyRequest);
     }
+
+    public void getConvertedRateInstantly(String sendAmount) {
+        String cleanSendAmount = removeCommas(sendAmount);
+        if (currentBitcoinPrice == 0){
+            bitcoinAmountText = "Loading...";
+        }
+        else{
+            double balance = (Double.parseDouble(cleanSendAmount) * 1.000000) / currentBitcoinPrice;
+            Double roundedBalance = new BigDecimal(balance).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+            bitcoinAmountText = roundedBalance + "";
+        }
+
+    }
+
+    private String removeCommas(String number) {
+        String newNumber = number.replaceAll(",", "");
+        return newNumber;
+    }
+
+    private boolean checkForDoublePeriods(String number) {
+        Pattern p = Pattern.compile("\\.\\d*\\.");
+        Matcher m = p.matcher(number);
+        return m.find();
+    }
+
+    // Fringe case of .0 getting formated as 0 so you can never procede with the number
+    private boolean checkForDotZeroCase(String number) {
+        Pattern p = Pattern.compile("\\.0$");
+        Matcher m = p.matcher(number);
+        return m.find();
+    }
+
+    // Fringe case of .0 getting formated as 0 so you can never procede with the number
+    private boolean checkForDoubleDotZeroCase(String number) {
+        Pattern p = Pattern.compile("\\.00$");
+        Matcher m = p.matcher(number);
+        return m.find();
+    }
+
+    // Fringe case of .XXX getting rounded up so if you keep hitting it, it will add the number
+    private boolean checkForThreeDigitDecimalCase(String number) {
+        Pattern p = Pattern.compile("\\.\\d\\d\\d");
+        Matcher m = p.matcher(number);
+        return m.find();
+    }
+
+    private void formatNormalNumber(String number) {
+        boolean dotZeroFringeCase = false;
+        boolean doubleDotZeroFringeCase = false;
+
+        String newNumber = displayNumber.getText() + number;
+        newNumber = removeCommas(newNumber);
+        dotZeroFringeCase = checkForDotZeroCase(newNumber);
+        doubleDotZeroFringeCase = checkForDoubleDotZeroCase(newNumber);
+        if(checkForThreeDigitDecimalCase(newNumber)) {
+            vibrateErrorAnimation();
+            return;
+        }
+
+        DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+        newNumber = formatter.format(Double.parseDouble(newNumber));
+        if (dotZeroFringeCase) newNumber += ".0";
+        if (doubleDotZeroFringeCase) newNumber += ".00";
+        displayNumberText = newNumber;
+    }
+
+    private void vibrateErrorAnimation() {
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(100);
+        displayNumber.startAnimation(shake);
+    }
+
+    private void formatDecimalNumber(String number) {
+        String test = displayNumberText + number;
+        if(checkForDoublePeriods(test)){
+            vibrateErrorAnimation();
+            return;
+        }
+        displayNumberText = displayNumberText + number;
+    }
+    // ================ End Helper functions ================
 }
 
 
