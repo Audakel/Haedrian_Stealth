@@ -27,6 +27,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Contacts.Photo;
@@ -49,10 +50,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.contactslist.BuildConfig;
-import com.example.android.contactslist.R;
-import com.example.android.contactslist.util.ImageLoader;
-import com.example.android.contactslist.util.Utils;
+import android.provider.ContactsContract.CommonDataKinds.*;
+
+import com.haedrian.haedrian.util.ImageLoader;
+import com.haedrian.haedrian.util.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -86,7 +87,7 @@ public class ContactDetailFragment extends Fragment implements
     // Whether or not this fragment is showing in a two pane layout
     private boolean mIsTwoPaneLayout;
 
-    private Uri mContactUri; // Stores the contact Uri for this fragment instance
+    public Uri mContactUri; // Stores the contact Uri for this fragment instance
     private ImageLoader mImageLoader; // Handles loading the contact image in a background thread
 
     // Used to store references to key views, layouts and menu items as these need to be updated
@@ -168,7 +169,8 @@ public class ContactDetailFragment extends Fragment implements
             // restartLoader() is used instead of initLoader() as this method may be called
             // multiple times.
             getLoaderManager().restartLoader(ContactDetailQuery.QUERY_ID, null, this);
-            getLoaderManager().restartLoader(ContactAddressQuery.QUERY_ID, null, this);
+//            getLoaderManager().restartLoader(ContactAddressQuery.QUERY_ID, null, this);
+            getLoaderManager().restartLoader(ContactEmailQuery.QUERY_ID, null, this);
         } else {
             // If contactLookupUri is null, then the method was called when no contact was selected
             // in the contacts list. This should only happen in a two-pane layout when the user
@@ -324,14 +326,15 @@ public class ContactDetailFragment extends Fragment implements
                 return new CursorLoader(getActivity(), mContactUri,
                         ContactDetailQuery.PROJECTION,
                         null, null, null);
-            case ContactAddressQuery.QUERY_ID:
-                // This query loads contact address details, see
-                // ContactAddressQuery for more information.
-                final Uri uri = Uri.withAppendedPath(mContactUri, Contacts.Data.CONTENT_DIRECTORY);
-                return new CursorLoader(getActivity(), uri,
-                        ContactAddressQuery.PROJECTION,
-                        ContactAddressQuery.SELECTION,
-                        null, null);
+            case ContactEmailQuery.QUERY_ID:
+                final Uri emailUri = Uri.withAppendedPath(mContactUri, Contacts.Data.CONTENT_DIRECTORY);
+
+                ContactEmailQuery.mSelectionArgs[0] = mContactUri.getLastPathSegment();
+
+                return new CursorLoader(getActivity(), emailUri,
+                        ContactEmailQuery.PROJECTION,
+                        ContactEmailQuery.SELECTION,
+                        ContactEmailQuery.mSelectionArgs, null);
         }
         return null;
     }
@@ -354,6 +357,8 @@ public class ContactDetailFragment extends Fragment implements
                     // ContactDetailQuery.DISPLAY_NAME maps to the appropriate display
                     // name field based on OS version.
                     final String contactName = data.getString(ContactDetailQuery.DISPLAY_NAME);
+
+
                     if (mIsTwoPaneLayout && mContactName != null) {
                         // In the two pane layout, there is a dedicated TextView
                         // that holds the contact name.
@@ -366,31 +371,24 @@ public class ContactDetailFragment extends Fragment implements
                     }
                 }
                 break;
-            case ContactAddressQuery.QUERY_ID:
-                // This query loads the contact address details. More than
-                // one contact address is possible, so move each one to a
-                // LinearLayout in a Scrollview so multiple addresses can
-                // be scrolled by the user.
+            case ContactEmailQuery.QUERY_ID:
 
-                // Each LinearLayout has the same LayoutParams so this can
-                // be created once and used for each address.
                 final LinearLayout.LayoutParams layoutParams =
                         new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                // Clears out the details layout first in case the details
-                // layout has addresses from a previous data load still
-                // added as children.
                 mDetailsLayout.removeAllViews();
 
                 // Loops through all the rows in the Cursor
                 if (data.moveToFirst()) {
                     do {
+                        Log.v("TEST", data.getString(ContactEmailQuery.ADDRESS));
+
                         // Builds the address layout
                         final LinearLayout layout = buildAddressLayout(
-                                data.getInt(ContactAddressQuery.TYPE),
-                                data.getString(ContactAddressQuery.LABEL),
-                                data.getString(ContactAddressQuery.ADDRESS));
+                                data.getInt(ContactEmailQuery.TYPE),
+                                data.getString(ContactEmailQuery.LABEL),
+                                data.getString(ContactEmailQuery.ADDRESS));
                         // Adds the new address layout to the details layout
                         mDetailsLayout.addView(layout, layoutParams);
                     } while (data.moveToNext());
@@ -398,6 +396,7 @@ public class ContactDetailFragment extends Fragment implements
                     // If nothing found, adds an empty address layout
                     mDetailsLayout.addView(buildEmptyAddressLayout(), layoutParams);
                 }
+
                 break;
         }
     }
@@ -657,28 +656,26 @@ public class ContactDetailFragment extends Fragment implements
         final static int DISPLAY_NAME = 1;
     }
 
-    /**
-     * This interface defines constants used by address retrieval queries.
-     */
-    public interface ContactAddressQuery {
-        // A unique query ID to distinguish queries being run by the
-        // LoaderManager.
-        final static int QUERY_ID = 2;
+    public interface ContactEmailQuery {
 
-        // The query projection (columns to fetch from the provider)
+        final static int QUERY_ID = 3;
+
         final static String[] PROJECTION = {
-                StructuredPostal._ID,
-                StructuredPostal.FORMATTED_ADDRESS,
-                StructuredPostal.TYPE,
-                StructuredPostal.LABEL,
+                Email._ID,
+                Email.ADDRESS,
+                Email.TYPE,
+                Email.LABEL
         };
 
-        // The query selection criteria. In this case matching against the
-        // StructuredPostal content mime type.
         final static String SELECTION =
-                Data.MIMETYPE + "='" + StructuredPostal.CONTENT_ITEM_TYPE + "'";
+                Email.CONTACT_ID + " = ? " +
+                " AND " +
+                Data.MIMETYPE + " = " +
+                "'" + Email.CONTENT_ITEM_TYPE + "'";
 
-        // The query column numbers which map to each value in the projection
+        // Arguments to pass into the above query
+        String[] mSelectionArgs = { "" };
+
         final static int ID = 0;
         final static int ADDRESS = 1;
         final static int TYPE = 2;

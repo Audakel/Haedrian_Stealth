@@ -322,99 +322,99 @@ public class ContactsListFragment extends ListFragment implements
             searchItem.setVisible(false);
         }
 
-        // In version 3.0 and later, sets up and configures the ActionBar SearchView
-        if (Utils.hasHoneycomb()) {
-
-            // Retrieves the system search manager service
-            final SearchManager searchManager =
-                    (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-
-            // Retrieves the SearchView from the search menu item
-            final SearchView searchView = (SearchView) searchItem.getActionView();
-
-            // Assign searchable info to SearchView
-            searchView.setSearchableInfo(
-                    searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-            // Set listeners for SearchView
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String queryText) {
-                    // Nothing needs to happen when the user submits the search string
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    // Called when the action bar search text has changed.  Updates
-                    // the search filter, and restarts the loader to do a new query
-                    // using the new search string.
-                    String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
-
-                    // Don't do anything if the filter is empty
-                    if (mSearchTerm == null && newFilter == null) {
-                        return true;
-                    }
-
-                    // Don't do anything if the new filter is the same as the current filter
-                    if (mSearchTerm != null && mSearchTerm.equals(newFilter)) {
-                        return true;
-                    }
-
-                    // Updates current filter to new filter
-                    mSearchTerm = newFilter;
-
-                    // Restarts the loader. This triggers onCreateLoader(), which builds the
-                    // necessary content Uri from mSearchTerm.
-                    mSearchQueryChanged = true;
-                    getLoaderManager().restartLoader(
-                            ContactsQuery.QUERY_ID, null, ContactsListFragment.this);
-                    return true;
-                }
-            });
-
-            if (Utils.hasICS()) {
-                // This listener added in ICS
-                searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                    @Override
-                    public boolean onMenuItemActionExpand(MenuItem menuItem) {
-                        // Nothing to do when the action item is expanded
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                        // When the user collapses the SearchView the current search string is
-                        // cleared and the loader restarted.
-                        if (!TextUtils.isEmpty(mSearchTerm)) {
-                            onSelectionCleared();
-                        }
-                        mSearchTerm = null;
-                        getLoaderManager().restartLoader(
-                                ContactsQuery.QUERY_ID, null, ContactsListFragment.this);
-                        return true;
-                    }
-                });
-            }
-
-            if (mSearchTerm != null) {
-                // If search term is already set here then this fragment is
-                // being restored from a saved state and the search menu item
-                // needs to be expanded and populated again.
-
-                // Stores the search term (as it will be wiped out by
-                // onQueryTextChange() when the menu item is expanded).
-                final String savedSearchTerm = mSearchTerm;
-
-                // Expands the search menu item
-                if (Utils.hasICS()) {
-                    searchItem.expandActionView();
-                }
-
-                // Sets the SearchView to the previous search string
-                searchView.setQuery(savedSearchTerm, false);
-            }
-        }
+//        // In version 3.0 and later, sets up and configures the ActionBar SearchView
+//        if (Utils.hasHoneycomb()) {
+//
+//            // Retrieves the system search manager service
+//            final SearchManager searchManager =
+//                    (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+//
+//            // Retrieves the SearchView from the search menu item
+//            final SearchView searchView = (SearchView) searchItem.getActionView();
+//
+//            // Assign searchable info to SearchView
+//            searchView.setSearchableInfo(
+//                    searchManager.getSearchableInfo(getActivity().getComponentName()));
+//
+//            // Set listeners for SearchView
+//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                @Override
+//                public boolean onQueryTextSubmit(String queryText) {
+//                    // Nothing needs to happen when the user submits the search string
+//                    return true;
+//                }
+//
+//                @Override
+//                public boolean onQueryTextChange(String newText) {
+//                    // Called when the action bar search text has changed.  Updates
+//                    // the search filter, and restarts the loader to do a new query
+//                    // using the new search string.
+//                    String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
+//
+//                    // Don't do anything if the filter is empty
+//                    if (mSearchTerm == null && newFilter == null) {
+//                        return true;
+//                    }
+//
+//                    // Don't do anything if the new filter is the same as the current filter
+//                    if (mSearchTerm != null && mSearchTerm.equals(newFilter)) {
+//                        return true;
+//                    }
+//
+//                    // Updates current filter to new filter
+//                    mSearchTerm = newFilter;
+//
+//                    // Restarts the loader. This triggers onCreateLoader(), which builds the
+//                    // necessary content Uri from mSearchTerm.
+//                    mSearchQueryChanged = true;
+//                    getLoaderManager().restartLoader(
+//                            ContactsQuery.QUERY_ID, null, ContactsListFragment.this);
+//                    return true;
+//                }
+//            });
+//
+//            if (Utils.hasICS()) {
+//                // This listener added in ICS
+//                searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+//                    @Override
+//                    public boolean onMenuItemActionExpand(MenuItem menuItem) {
+//                        // Nothing to do when the action item is expanded
+//                        return true;
+//                    }
+//
+//                    @Override
+//                    public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+//                        // When the user collapses the SearchView the current search string is
+//                        // cleared and the loader restarted.
+//                        if (!TextUtils.isEmpty(mSearchTerm)) {
+//                            onSelectionCleared();
+//                        }
+//                        mSearchTerm = null;
+//                        getLoaderManager().restartLoader(
+//                                ContactsQuery.QUERY_ID, null, ContactsListFragment.this);
+//                        return true;
+//                    }
+//                });
+//            }
+//
+//            if (mSearchTerm != null) {
+//                // If search term is already set here then this fragment is
+//                // being restored from a saved state and the search menu item
+//                // needs to be expanded and populated again.
+//
+//                // Stores the search term (as it will be wiped out by
+//                // onQueryTextChange() when the menu item is expanded).
+//                final String savedSearchTerm = mSearchTerm;
+//
+//                // Expands the search menu item
+//                if (Utils.hasICS()) {
+//                    searchItem.expandActionView();
+//                }
+//
+//                // Sets the SearchView to the previous search string
+//                searchView.setQuery(savedSearchTerm, false);
+//            }
+//        }
     }
 
     @Override

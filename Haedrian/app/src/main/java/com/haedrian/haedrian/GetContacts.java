@@ -8,6 +8,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 
 import com.haedrian.haedrian.util.Utils;
 
@@ -16,7 +17,7 @@ import com.haedrian.haedrian.util.Utils;
  * FragmentActivity to hold the main {@link ContactsListFragment}. On larger screen devices which
  * can fit two panes also load {@link ContactDetailFragment}.
  */
-public class GetContacts extends FragmentActivity implements
+public class GetContacts extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     // Defines a tag for identifying log entries

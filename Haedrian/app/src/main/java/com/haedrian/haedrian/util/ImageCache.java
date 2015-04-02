@@ -24,7 +24,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 
-import com.example.android.contactslist.BuildConfig;
+import com.haedrian.haedrian.BuildConfig;
+
 
 /**
  * This class holds our bitmap caches (memory and disk).

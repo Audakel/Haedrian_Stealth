@@ -188,6 +188,16 @@
             android:name=".GetContacts"
             android:label="@string/title_activity_get_contacts" >
         </activity>
+        <activity
+            android:name=".ContactDetailActivity"
+            android:label="@string/activity_contact_detail"
+            android:parentActivityName=".GetContacts" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GetContacts" />
+        </activity>
     </application>
 
 </manifest>
