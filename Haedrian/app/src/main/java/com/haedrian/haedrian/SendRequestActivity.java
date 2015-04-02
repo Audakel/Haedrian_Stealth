@@ -23,14 +23,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-<<<<<<< Updated upstream
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.haedrian.haedrian.Models.CurrencyModel;
-import com.haedrian.haedrian.Scanner.CaptureActivity;
-=======
->>>>>>> Stashed changes
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -113,7 +105,7 @@ public class SendRequestActivity extends ActionBarActivity {
         dolarSignView = (TextView) findViewById(R.id.dollarSignView);
         buttonSend = (Button) findViewById(R.id.buttonSend);
         bitcoinAmount = (TextView) findViewById(R.id.bitcoin_amount);
-<<<<<<< Updated upstream
+
 
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
@@ -186,11 +178,6 @@ public class SendRequestActivity extends ActionBarActivity {
 
     }
 
-
-=======
-    }
-
->>>>>>> Stashed changes
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
