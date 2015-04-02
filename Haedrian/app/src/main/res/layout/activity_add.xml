@@ -119,6 +119,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/contacts_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left|top"
@@ -127,7 +128,9 @@
             android:layout_weight="1"
             android:background="@drawable/round_blue"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:clickable="true"
+            android:onClick="onClick">
 
             <ImageView
                 android:layout_width="75dp"
@@ -245,6 +248,7 @@
             android:layout_weight="1"
             android:background="@drawable/round_blue"
             android:clickable="true"
+            android:onClick="onClick"
             android:orientation="vertical"
             android:padding="5dp">
 

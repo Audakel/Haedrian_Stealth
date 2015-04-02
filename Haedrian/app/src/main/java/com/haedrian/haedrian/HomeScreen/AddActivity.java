@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.haedrian.haedrian.GetContacts;
 import com.haedrian.haedrian.R;
 
 
 public class AddActivity extends ActionBarActivity {
     String upcCode = "";
+    private LinearLayout startScanButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,19 @@ public class AddActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        LinearLayout startScanButton = (LinearLayout) findViewById(R.id.scan_button);
-        startScanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startScanning();
-            }
-        });
+        startScanButton = (LinearLayout) findViewById(R.id.scan_button);
+
+    }
+
+    public void onClick(View view) {
+        if (view.getId() == R.id.scan_button) {
+            startScanning();
+        }
+        else if (view.getId() == R.id.contacts_button) {
+            // Get contacts
+            Intent intent = new Intent(this, GetContacts.class);
+            startActivity(intent);
+        }
     }
 
 

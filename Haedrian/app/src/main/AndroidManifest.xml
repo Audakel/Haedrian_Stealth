@@ -1,186 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.haedrian.haedrian"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.haedrian.haedrian" >
 
     <!-- To access Google+ APIs: -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <!--
  To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
      option is required to comply with the Google+ Sign-In developer policies
     -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <!-- To retrieve the account name (email) as part of sign-in: -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".ApplicationController"
         android:allowBackup="true"
         android:icon="@drawable/logobird_black"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible">
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
             android:name=".HomeScreen.HomeActivity"
-            android:label="@string/title_activity_home">
+            android:label="@string/title_activity_home" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SendRequestActivity"
             android:label="@string/title_activity_send_request"
-            android:parentActivityName=".HomeScreen.HomeActivity">
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".HomeScreen.AddActivity"
             android:label="@string/title_activity_add"
-            android:parentActivityName=".HomeScreen.HomeActivity">
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
             >
         </activity>
         <activity
             android:name=".ProjectsActivity"
             android:label="@string/title_activity_projects"
             android:parentActivityName=".HomeScreen.HomeActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".HomeScreen.InvestActivity"
             android:label="@string/title_activity_invest"
-            android:parentActivityName=".HomeScreen.HomeActivity">
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".CreateProjectActivity"
             android:label="@string/title_activity_create"
-            android:parentActivityName=".HomeScreen.HomeActivity">
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings">
+            android:label="@string/title_activity_settings" >
         </activity>
         <activity
             android:name=".HomeScreen.WalletActivity"
             android:label="@string/title_activity_wallet"
-            android:parentActivityName=".HomeScreen.HomeActivity">
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".HomeScreen.BuyActivity"
             android:label="@string/title_activity_buy"
-            android:parentActivityName=".HomeScreen.HomeActivity">
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".SendActivity"
             android:label="@string/title_activity_send"
-            android:parentActivityName=".SendRequestActivity">
+            android:parentActivityName=".SendRequestActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".ProjectsList"
             android:label="@string/title_activity_projects_list"
-            android:parentActivityName=".HomeScreen.InvestActivity">
+            android:parentActivityName=".HomeScreen.InvestActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.InvestActivity"/>
+                android:value=".HomeScreen.InvestActivity" />
         </activity>
         <activity
             android:name=".CreateWalletActivity"
             android:label="@string/title_activity_create_wallet"
-            android:parentActivityName=".HomeScreen.WalletActivity">
+            android:parentActivityName=".HomeScreen.WalletActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.WalletActivity"/>
+                android:value=".HomeScreen.WalletActivity" />
         </activity>
         <activity
             android:name=".CurrencyInfoActivity"
-            android:label="@string/title_activity_invest_info">
+            android:label="@string/title_activity_invest_info" >
         </activity>
         <activity
             android:name=".RequestActivity"
             android:label="@string/title_activity_request"
-            android:parentActivityName=".SendRequestActivity">
+            android:parentActivityName=".SendRequestActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity"/>
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".ImportWalletActivity"
             android:label="@string/title_activity_import_wallet"
-            android:parentActivityName=".HomeScreen.WalletActivity">
+            android:parentActivityName=".HomeScreen.WalletActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.WalletActivity"/>
+                android:value=".HomeScreen.WalletActivity" />
         </activity>
         <activity
             android:name=".Scanner.CaptureActivity"
             android:label="@string/title_activity_capture"
-            android:parentActivityName=".SendActivity">
+            android:parentActivityName=".SendActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SendActivity"/>
+                android:value=".SendActivity" />
+        </activity>
+        <activity
+            android:name=".GetContacts"
+            android:label="@string/title_activity_get_contacts" >
+        </activity>
+        <activity
+            android:name=".ContactDetailActivity"
+            android:label="@string/activity_contact_detail"
+            android:parentActivityName=".GetContacts" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GetContacts" />
         </activity>
     </application>
 
