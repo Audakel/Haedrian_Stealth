@@ -60,16 +60,7 @@ public class SendRequestActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeViews();
 
-        displayNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                updateFontAttributes();
-            }
-        });
+
 
     }
 
@@ -106,60 +97,6 @@ public class SendRequestActivity extends ActionBarActivity {
         buttonSend = (Button) findViewById(R.id.buttonSend);
         bitcoinAmount = (TextView) findViewById(R.id.bitcoin_amount);
 
-
-
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SendRequestActivity.this, SendActivity.class);
-                intent.putExtra("send_amount", displayNumber.getText().toString());
-                intent.putExtra("send_amount_bitcoin", bitcoinAmount.getText().toString());
-                startActivityForResult(intent, 1);
-            }
-        });
-
-        buttonDot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNumberToDisplay(v);
-            }
-        });
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backspace();
-                getConvertedRateInstantly(displayNumber.getText().toString());
-            }
-        });
-
-        buttonRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SendRequestActivity.this, RequestActivity.class);
-                intent.putExtra("request_amount", displayNumber.getText().toString());
-                intent.putExtra("request_amount_bitcoin", bitcoinAmount.getText().toString());
-                startActivityForResult(intent, 1);
-            }
-        });
-
-
-        displayNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                updateFontAttributes();
-            }
-        });
 
     }
 
@@ -213,8 +150,9 @@ public class SendRequestActivity extends ActionBarActivity {
     private void backspace() {
         String string = displayNumber.getText().toString();
         if (string.length() > 1) {
-            displayNumberText = string.substring(0, string.length() - 1);
+            formatBackspaceNormalNumber(string.substring(0, string.length() - 1));
         } else {
+
             displayNumberText = "0";
             bitcoinAmountText = "0";
         }
@@ -413,6 +351,26 @@ public class SendRequestActivity extends ActionBarActivity {
         boolean doubleDotZeroFringeCase = false;
 
         String newNumber = displayNumber.getText() + number;
+        newNumber = removeCommas(newNumber);
+        dotZeroFringeCase = checkForDotZeroCase(newNumber);
+        doubleDotZeroFringeCase = checkForDoubleDotZeroCase(newNumber);
+        if(checkForThreeDigitDecimalCase(newNumber)) {
+            vibrateErrorAnimation();
+            return;
+        }
+
+        DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+        newNumber = formatter.format(Double.parseDouble(newNumber));
+        if (dotZeroFringeCase) newNumber += ".0";
+        if (doubleDotZeroFringeCase) newNumber += ".00";
+        displayNumberText = newNumber;
+    }
+
+    private void formatBackspaceNormalNumber(String number) {
+        boolean dotZeroFringeCase = false;
+        boolean doubleDotZeroFringeCase = false;
+
+        String newNumber = number;
         newNumber = removeCommas(newNumber);
         dotZeroFringeCase = checkForDotZeroCase(newNumber);
         doubleDotZeroFringeCase = checkForDoubleDotZeroCase(newNumber);
