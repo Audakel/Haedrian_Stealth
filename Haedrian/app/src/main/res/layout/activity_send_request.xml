@@ -293,7 +293,8 @@
             android:layout_weight="1"
             android:background="@color/blue"
             android:text="Request"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:onClick="onClick"/>
 
         <View
             android:id="@+id/devider"
@@ -310,7 +311,8 @@
             android:layout_weight="1"
             android:background="@color/blue"
             android:text="Send"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:onClick="onClick"/>
     </LinearLayout>
 
     <RelativeLayout
