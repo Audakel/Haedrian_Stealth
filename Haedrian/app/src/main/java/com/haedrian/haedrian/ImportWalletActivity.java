@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 
@@ -72,5 +73,17 @@ public class ImportWalletActivity extends ActionBarActivity {
         db.getWalletsTable().insert(wallet);
         finish();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
     }
 }

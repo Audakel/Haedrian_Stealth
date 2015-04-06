@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.CreateProjectFragments.ProjectAboutFragment;
 import com.haedrian.haedrian.CreateProjectFragments.ProjectCategoryFragment;
 import com.haedrian.haedrian.CreateProjectFragments.ProjectDurationFragment;
@@ -212,5 +213,17 @@ public class CreateProjectActivity extends ActionBarActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
     }
 }

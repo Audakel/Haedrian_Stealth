@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 
 /**
@@ -34,10 +35,14 @@ public class ApplicationController extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // initialize the singleton
+        // initialize the singleton for volley
         sInstance = this;
         mRequestQueue = Volley.newRequestQueue(this); // 'this' is Context
 
+
+        // configure Flurry and init Flurry
+        FlurryAgent.setLogEnabled(true);
+        FlurryAgent.init(this, ApplicationConstants.flurryKey);
     }
 
     private void checkedLoggedInState() {

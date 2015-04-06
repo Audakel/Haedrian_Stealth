@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
@@ -23,6 +24,9 @@ import com.haedrian.haedrian.ProjectsActivity;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
@@ -138,6 +142,17 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
     }
 
     public void onClick(View view) {
