@@ -95,7 +95,7 @@
     <string name="reenter_password">Re-enter Password</string>
     <string name="passwords_dont_match">Passwords don\'t match!</string>
     <string name="note">Note:</string>
-    <string name="to_hint">Email or Bitcoin Adress</string>
+    <string name="to_hint">Email or Bitcoin Address</string>
     <string name="note_hint">Notes</string>
     <string name="action_send">Send Action</string>
     <string name="action_scan">Scan Action</string>

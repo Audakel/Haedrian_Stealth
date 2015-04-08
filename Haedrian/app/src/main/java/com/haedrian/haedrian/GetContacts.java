@@ -1,6 +1,7 @@
 package com.haedrian.haedrian;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 
@@ -81,20 +82,12 @@ public class GetContacts extends ActionBarActivity implements
      * This interface callback lets the main contacts list fragment notify
      * this activity that a contact has been selected.
      *
-     * @param contactUri The contact Uri to the selected contact.
+     * @param cursor The contact Uri to the selected contact.
      */
     @Override
-    public void onContactSelected(Uri contactUri) {
-        if (isTwoPaneLayout && mContactDetailFragment != null) {
-            // If two pane layout then update the detail fragment to show the selected contact
-            mContactDetailFragment.setContact(contactUri);
-        } else {
-            // Otherwise single pane layout, start a new ContactDetailActivity with
-            // the contact Uri
-            Intent intent = new Intent(this, ContactDetailActivity.class);
-            intent.setData(contactUri);
-            startActivity(intent);
-        }
+    public void onContactSelected(Cursor cursor, int position) {
+        Intent intent = new Intent(this, ContactDetailActivity.class);
+        startActivity(intent);
     }
 
     /**
