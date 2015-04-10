@@ -28,7 +28,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Contacts.Photo;
 import android.support.v4.app.ListFragment;
@@ -267,19 +266,27 @@ public class ContactsListFragment extends ListFragment implements
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         // Gets the Cursor object currently bound to the ListView
-        Cursor cursor = mAdapter.getCursor();
+        final Cursor cursor = mAdapter.getCursor();
 
         // Moves to the Cursor row corresponding to the ListView item that was clicked
         cursor.moveToPosition(position);
 
-        Log.v("TEST", cursor.getString(4));
+        // Creates a contact lookup Uri from contact ID and lookup_key
+        final Uri uri = Contacts.getLookupUri(
+                cursor.getLong(ContactsQuery.ID),
+                cursor.getString(ContactsQuery.LOOKUP_KEY));
 
         // Notifies the parent activity that the user selected a contact. In a two-pane layout, the
         // parent activity loads a ContactDetailFragment that displays the details for the selected
         // contact. In a single-pane layout, the parent activity starts a new activity that
         // displays contact details in its own Fragment.
-        mOnContactSelectedListener.onContactSelected(cursor, position);
+        mOnContactSelectedListener.onContactSelected(uri);
 
+        // If two-pane layout sets the selected item to checked so it remains highlighted. In a
+        // single-pane layout a new activity is started so this is not needed.
+        if (mIsTwoPaneLayout) {
+            getListView().setItemChecked(position, true);
+        }
     }
 
     /**
@@ -488,17 +495,28 @@ public class ContactsListFragment extends ListFragment implements
             // If this is a two-pane layout and there is a search query then
             // there is some additional work to do around default selected
             // search item.
-
-            // No results, clear selection.
-            onSelectionCleared();
-
-            // Only restore from saved state one time. Next time fall back
-            // to selecting first item. If the fragment state is saved again
-            // then the currently selected item will once again be saved.
-            mPreviouslySelectedSearchItem = 0;
-            mSearchQueryChanged = false;
+            if (mIsTwoPaneLayout && !TextUtils.isEmpty(mSearchTerm) && mSearchQueryChanged) {
+                // Selects the first item in results, unless this fragment has
+                // been restored from a saved state (like orientation change)
+                // in which case it selects the previously selected search item.
+                if (data != null && data.moveToPosition(mPreviouslySelectedSearchItem)) {
+                    // Creates the content Uri for the previously selected contact by appending the
+                    // contact's ID to the Contacts table content Uri
+                    final Uri uri = Uri.withAppendedPath(
+                            Contacts.CONTENT_URI, String.valueOf(data.getLong(ContactsQuery.ID)));
+                    mOnContactSelectedListener.onContactSelected(uri);
+                    getListView().setItemChecked(mPreviouslySelectedSearchItem, true);
+                } else {
+                    // No results, clear selection.
+                    onSelectionCleared();
+                }
+                // Only restore from saved state one time. Next time fall back
+                // to selecting first item. If the fragment state is saved again
+                // then the currently selected item will once again be saved.
+                mPreviouslySelectedSearchItem = 0;
+                mSearchQueryChanged = false;
+            }
         }
-
     }
 
     @Override
@@ -706,9 +724,7 @@ public class ContactsListFragment extends ListFragment implements
             // generated from the other fields in the row.
             final String photoUri = cursor.getString(ContactsQuery.PHOTO_THUMBNAIL_DATA);
 
-
             final String displayName = cursor.getString(ContactsQuery.DISPLAY_NAME);
-            final String email = cursor.getString(ContactsQuery.EMAIL_ADDRESS);
 
             final int startIndex = indexOfSearchQuery(displayName);
 
@@ -716,7 +732,15 @@ public class ContactsListFragment extends ListFragment implements
                 // If the user didn't do a search, or the search string didn't match a display
                 // name, show the display name without highlighting
                 holder.text1.setText(displayName);
-                holder.text2.setText(email);
+
+                if (TextUtils.isEmpty(mSearchTerm)) {
+                    // If the search search is empty, hide the second line of text
+                    holder.text2.setVisibility(View.GONE);
+                } else {
+                    // Shows a second line of text that indicates the search string matched
+                    // something other than the display name
+                    holder.text2.setVisibility(View.VISIBLE);
+                }
             } else {
                 // If the search string matched the display name, applies a SpannableString to
                 // highlight the search string with the displayed display name
@@ -731,7 +755,9 @@ public class ContactsListFragment extends ListFragment implements
 
                 // Binds the SpannableString to the display name View object
                 holder.text1.setText(highlightedName);
-                holder.text2.setText(email);
+
+                // Since the search string matched the name, this hides the secondary message
+                holder.text2.setVisibility(View.GONE);
             }
 
             // Processes the QuickContactBadge. A QuickContactBadge first appears as a contact's
@@ -826,9 +852,9 @@ public class ContactsListFragment extends ListFragment implements
     public interface OnContactsInteractionListener {
         /**
          * Called when a contact is selected from the ListView.
-         * @param cursor The contact Uri.
+         * @param contactUri The contact Uri.
          */
-        public void onContactSelected(Cursor cursor, int position);
+        public void onContactSelected(Uri contactUri);
 
         /**
          * Called when the ListView selection is cleared like when
@@ -847,10 +873,10 @@ public class ContactsListFragment extends ListFragment implements
         final static int QUERY_ID = 1;
 
         // A content URI for the Contacts table
-        final static Uri CONTENT_URI = ContactsContract.CommonDataKinds.Email.CONTENT_URI;
+        final static Uri CONTENT_URI = Contacts.CONTENT_URI;
 
         // The search/filter query Uri
-        final static Uri FILTER_URI = ContactsContract.CommonDataKinds.Email.CONTENT_FILTER_URI;
+        final static Uri FILTER_URI = Contacts.CONTENT_FILTER_URI;
 
         // The selection clause for the CursorLoader query. The search criteria defined here
         // restrict results to contacts that have a display name and are linked to visible groups.
@@ -874,31 +900,28 @@ public class ContactsListFragment extends ListFragment implements
         final static String[] PROJECTION = {
 
                 // The contact's row id
-                ContactsContract.Contacts._ID,
+                Contacts._ID,
 
                 // A pointer to the contact that is guaranteed to be more permanent than _ID. Given
                 // a contact's current _ID value and LOOKUP_KEY, the Contacts Provider can generate
                 // a "permanent" contact URI.
-                ContactsContract.Contacts.LOOKUP_KEY,
+                Contacts.LOOKUP_KEY,
 
                 // In platform version 3.0 and later, the Contacts table contains
                 // DISPLAY_NAME_PRIMARY, which either contains the contact's displayable name or
                 // some other useful identifier such as an email address. This column isn't
                 // available in earlier versions of Android, so you must use Contacts.DISPLAY_NAME
                 // instead.
-                Utils.hasHoneycomb() ? ContactsContract.Contacts.DISPLAY_NAME_PRIMARY : ContactsContract.Contacts.DISPLAY_NAME,
+                Utils.hasHoneycomb() ? Contacts.DISPLAY_NAME_PRIMARY : Contacts.DISPLAY_NAME,
 
                 // In Android 3.0 and later, the thumbnail image is pointed to by
                 // PHOTO_THUMBNAIL_URI. In earlier versions, there is no direct pointer; instead,
                 // you generate the pointer from the contact's ID value and constants defined in
                 // android.provider.ContactsContract.Contacts.
-                Utils.hasHoneycomb() ? ContactsContract.Contacts.PHOTO_THUMBNAIL_URI : ContactsContract.Contacts._ID,
-
-
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
+                Utils.hasHoneycomb() ? Contacts.PHOTO_THUMBNAIL_URI : Contacts._ID,
 
                 // The sort order column for the returned Cursor, used by the AlphabetIndexer
-                SORT_ORDER
+                SORT_ORDER,
         };
 
         // The query column numbers which map to each value in the projection
@@ -906,8 +929,6 @@ public class ContactsListFragment extends ListFragment implements
         final static int LOOKUP_KEY = 1;
         final static int DISPLAY_NAME = 2;
         final static int PHOTO_THUMBNAIL_DATA = 3;
-        final static int EMAIL_ADDRESS = 4;
-        final static int SORT_KEY = 5;
+        final static int SORT_KEY = 4;
     }
-
 }

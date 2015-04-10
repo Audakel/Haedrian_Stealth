@@ -36,7 +36,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.flurry.android.FlurryAgent;
 import com.google.zxing.WriterException;
 import com.haedrian.haedrian.CreateWalletActivity;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
@@ -50,9 +49,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 
 public class WalletActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -443,18 +440,6 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
             }
             return null;
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FlurryAgent.onStartSession(this);
-        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(this);
     }
 
 }

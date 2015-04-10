@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
@@ -25,14 +23,6 @@ import com.haedrian.haedrian.ProjectsActivity;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;
-import com.parse.GetCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
@@ -49,6 +39,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -61,42 +52,24 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
         // After login, set up shared preferences to store the current users ID globally
-        final SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
-        final DBHelper db = new DBHelper(this);
-
-        Bundle extras = getIntent().getExtras();
-
-        String parseId = "";
-        if (extras != null) {
-            parseId = extras.getString("parse_id");
-        }
+        DBHelper db = new DBHelper(this);
 
         // No user is currently set
         if (userId == -1) {
+            user = new UserModel();
+            user.setFirstName("Logan");
+            user.setLastName("Bentley");
+            user.setUsername("sloganho");
+            user.setEmail("loganbentley22@gmail.com");
+            user.setPhoneNumber("8016905609");
 
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-            query.getInBackground(parseId, new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
-                    if (e == null) {
-                        user = new UserModel();
-                        user.setParseId(object.getObjectId());
-                        user.setFirstName(object.getString("firstName"));
-                        user.setLastName(object.getString("lastName"));
-                        user.setUsername(object.getString("username"));
-                        user.setEmail(object.getString("email"));
-                        user.setPhoneNumber(object.getString("phoneNumber"));
+            UserModel newUser = db.getUsersTable().insert(user);
 
-                        UserModel newUser = db.getUsersTable().insert(user);
-
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putInt("user_id", newUser.getId());
-                        editor.commit();
-                    } else {
-                        // something went wrong
-                    }
-                }
-            });
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putInt("user_id", newUser.getId());
+            editor.commit();
         } else {
 
             user = db.getUsersTable().query("id", "=", "1");
@@ -165,17 +138,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FlurryAgent.onStartSession(this);
-        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(this);
     }
 
     public void onClick(View view) {

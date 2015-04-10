@@ -14,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Adapters.CurrencyAdapter;
 import com.haedrian.haedrian.Models.CurrencyModel;
 
@@ -144,17 +143,5 @@ public class CurrencyInfoActivity extends ActionBarActivity {
             pDialog.dismiss();
             pDialog = null;
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FlurryAgent.onStartSession(this);
-        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(this);
     }
 }

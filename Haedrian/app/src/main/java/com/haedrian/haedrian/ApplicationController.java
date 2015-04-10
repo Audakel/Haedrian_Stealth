@@ -8,9 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
-import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
-import com.parse.Parse;
 
 /**
  * Created by audakel on 3/21/15.
@@ -36,18 +34,9 @@ public class ApplicationController extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // initialize the singleton for volley
+        // initialize the singleton
         sInstance = this;
         mRequestQueue = Volley.newRequestQueue(this); // 'this' is Context
-
-        // configure Flurry and init Flurry
-        FlurryAgent.setLogEnabled(true);
-        FlurryAgent.init(this, ApplicationConstants.flurryKey);
-
-        //Parse setup
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "QdakXDOx8Ta6W4g2kfdWkGyN0CS9CjxppjirJnqN", "CyXcvlXI1I0qfxAdhoYT0dlnHpNn0RSn5NoS1CB3");
 
     }
 

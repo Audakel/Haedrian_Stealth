@@ -5,11 +5,10 @@ package com.haedrian.haedrian.Models;
  */
 public class UserModel {
     private int id, walletId, creditScore;
-    private String parseId, username, firstName, lastName, phoneNumber, email;
+    private String username, firstName, lastName, phoneNumber, email;
 
     public UserModel() {
         this.id = 0;
-        this.parseId = "";
         this.creditScore = 0;
         this.username = "";
         this.firstName = "";
@@ -25,10 +24,6 @@ public class UserModel {
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getParseId() { return parseId; }
-
-    public void setParseId(String parseId) { this.parseId = parseId; }
 
     public int getWalletId() {
         return walletId;

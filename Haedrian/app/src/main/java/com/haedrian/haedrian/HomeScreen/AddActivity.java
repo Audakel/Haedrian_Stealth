@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.flurry.android.FlurryAgent;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.haedrian.haedrian.GetContacts;
@@ -95,17 +94,5 @@ public class AddActivity extends ActionBarActivity {
         //customize the prompt message before scanning
         integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
         integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FlurryAgent.onStartSession(this);
-        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(this);
     }
 }

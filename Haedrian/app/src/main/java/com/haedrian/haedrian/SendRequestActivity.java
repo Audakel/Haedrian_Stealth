@@ -23,15 +23,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.flurry.android.FlurryAgent;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -178,9 +174,7 @@ public class SendRequestActivity extends ActionBarActivity {
         else if (displayLength < 6) {
             formatNormalNumber(number);
         }
-        // TODO: this is where the bug lives that needs to be fixed
-        else if ((displayLength == 6 && number.equals(".")) ||
-                (displayLength == 5 && number.equals("."))) {
+        else if (displayLength == 6 && number.equals(".")) {
             displayNumberText = displayNumberText + number;
         }
         else if (displayLength > 6 && displayLength <= 8) {
@@ -408,18 +402,6 @@ public class SendRequestActivity extends ActionBarActivity {
         displayNumberText = displayNumberText + number;
     }
     // ================ End Helper functions ================
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FlurryAgent.onStartSession(this);
-        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(this);
-    }
 }
 
 

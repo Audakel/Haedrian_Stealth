@@ -43,9 +43,9 @@
               android:fontFamily="sans-serif"
               android:singleLine="true"
               android:ellipsize="marquee"
-              android:visibility="visible"
+              android:visibility="gone"
               android:text="@string/search_match_other"
-              android:textAppearance="?android:attr/textAppearanceSmall" />
+              android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <!-- Use standard android.R class text1 id instead of app specific id. This is just useful for
          consistency. This view also sets layout_alignWithParentIfMissing=true which lets the view

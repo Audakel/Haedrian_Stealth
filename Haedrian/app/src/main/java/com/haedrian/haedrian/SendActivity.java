@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -33,8 +30,7 @@ import java.math.BigDecimal;
 
 import static com.android.volley.Request.Method;
 
-public class SendActivity extends ActionBarActivity implements
-        ContactsListFragment.OnContactsInteractionListener {
+public class SendActivity extends ActionBarActivity {
 
     private final String base = "https://blockchain.info/merchant/$guid/";
     private String sendAmount, sendAmountBitcoin;
@@ -65,9 +61,6 @@ public class SendActivity extends ActionBarActivity implements
         BigDecimal amount = round(Float.parseFloat(sendAmount), 2);
 
         getSupportActionBar().setTitle("Send $" + amount.toString());
-
-        ContactsListFragment mContactsListFragment = (ContactsListFragment)
-                getSupportFragmentManager().findFragmentById(R.id.contact_list);
 
     }
 
@@ -233,22 +226,4 @@ public class SendActivity extends ActionBarActivity implements
         }
     }
 
-    @Override
-    public void onContactSelected(Cursor cursor, int position) {
-
-        if (cursor.moveToPosition(position)) {
-            String name = cursor.getString(ContactsListFragment.ContactsQuery.DISPLAY_NAME);
-            String email = cursor.getString(ContactsListFragment.ContactsQuery.EMAIL_ADDRESS);
-            // To load the photoUri, create an Image Loader and then call .loadImage(photoUri, imageview)
-            String photoUri = cursor.getString(ContactsListFragment.ContactsQuery.PHOTO_THUMBNAIL_DATA);
-
-            toET.setText(email);
-        }
-
-    }
-
-    @Override
-    public void onSelectionCleared() {
-
-    }
 }

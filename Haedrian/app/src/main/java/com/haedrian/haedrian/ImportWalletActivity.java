@@ -9,23 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Database.DBHelper;
-import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Models.WalletModel;
-import com.parse.ParseObject;
 
 
 public class ImportWalletActivity extends ActionBarActivity {
 
-    private EditText walletET;
+    private EditText walletAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import_wallet);
 
-        walletET = (EditText) findViewById(R.id.import_wallet_address);
+        walletAddress = (EditText) findViewById(R.id.import_wallet_address);
     }
 
 
@@ -65,37 +62,15 @@ public class ImportWalletActivity extends ActionBarActivity {
         DBHelper db = new DBHelper(this);
         WalletModel wallet = new WalletModel();
 
-        String walletAddress = walletET.getText().toString();
-        wallet.setAddress(walletAddress);
+        wallet.setAddress(walletAddress.getText().toString());
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
 
-        UserModel user = db.getUsersTable().query("id", "=", String.valueOf(userId));
-
         wallet.setUserId(userId);
 
         db.getWalletsTable().insert(wallet);
-
-        ParseObject walletObject = new ParseObject("Wallet");
-        walletObject.put("walletObjectAddress", walletAddress);
-        walletObject.put("userId", user.getParseId());
-        walletObject.put("balance", 0);
-        walletObject.saveInBackground();
-
         finish();
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FlurryAgent.onStartSession(this);
-        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(this);
     }
 }
