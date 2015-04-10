@@ -195,7 +195,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 startActivity(intent, options1.toBundle());
                 return;
             case R.id.projects:
-                intent = new Intent(this, ProjectsActivity.class);
+                intent = new Intent(this, CreditCheckActivity.class);
                 ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options2.toBundle());

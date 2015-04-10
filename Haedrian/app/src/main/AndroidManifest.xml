@@ -53,6 +53,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeScreen.HomeActivity" />
+            <meta-data
+                android:name="lenddoAppId"
+                android:value="55252b62aa96123cde05473f" />
         </activity>
         <activity
             android:name=".HomeScreen.AddActivity"
@@ -197,6 +200,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GetContacts" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.CreditCheckActivity"
+            android:label="@string/title_activity_credit_check" >
         </activity>
     </application>
 
