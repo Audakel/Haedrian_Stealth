@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/LenddoSDK" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/google-play-services_lib" />
+            <option value="$PROJECT_DIR$/mylibrary" />
           </set>
         </option>
       </GradleProjectSettings>
