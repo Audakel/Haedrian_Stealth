@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,9 +12,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.haedrian.haedrian.ApplicationConstants;
 import com.haedrian.haedrian.R;
+import com.lenddo.data.DataManager;
+import com.lenddo.sdk.core.Credentials;
+import com.lenddo.sdk.core.LenddoClient;
 import com.lenddo.sdk.core.LenddoEventListener;
+import com.lenddo.sdk.core.formbuilder.LenddoConfig;
 import com.lenddo.sdk.models.FormDataCollector;
 import com.lenddo.sdk.utils.UIHelper;
 import com.lenddo.sdk.widget.LenddoButton;
@@ -31,6 +38,16 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credit_check);
+
+        // Initialize Data Collection
+        LenddoConfig.setTestMode(true);
+        Credentials socialServiceCredentials = new Credentials();
+        socialServiceCredentials.setSecretKey(ApplicationConstants.lenddo_member_service_secret);
+        socialServiceCredentials.setUserId(ApplicationConstants.lenddo_member_service_userid);
+
+        //LenddoClient client = new LenddoClient(null, null, socialServiceCredentials, null);
+
+        //DataManager.setup(client, "lenddo");
 
         dateOfBirth = (TextView) findViewById(R.id.dobButton);
         initEditTexts();
@@ -54,9 +71,6 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
             }
         });
 
-
-
-//
     }
 
     private void callCalenderDisplay() {
@@ -76,26 +90,62 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
     }
 
     private void fillOutForm() {
+//        FormDataCollector formData = new FormDataCollector();
+//        formData.setUserId("123456789");
+//        formData.setLastName(mLastNameEditText.getText().toString());
+//        formData.setFirstName(mFirstNameEditText.getText().toString());
+//        formData.setEmail(mEmailEditText.getText().toString());
+//        formData.setDateOfBirth(mBirthDateEditText.getText().toString());
+//        //send custom fields
+//        formData.putField("Loan_Amount", mLoanEditText.getText().toString());
+//        formData.validate();
+
         FormDataCollector formData = new FormDataCollector();
         formData.setUserId("123456789");
-        formData.setLastName(mLastNameEditText.getText().toString());
-        formData.setFirstName(mFirstNameEditText.getText().toString());
-        formData.setEmail(mEmailEditText.getText().toString());
-        formData.setDateOfBirth(mBirthDateEditText.getText().toString());
-
+        formData.setLastName("Harrison");
+        formData.setFirstName("Austin");
+        formData.setEmail("audakel@gmail.com");
+        formData.setDateOfBirth("1/26/1991");
         //send custom fields
-        formData.putField("Loan_Amount", mLoanEditText.getText().toString());
-
+        formData.putField("Loan_Amount", 100);
         formData.validate();
     }
 
     private void initEditTexts() {
-        mFirstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
-        mLastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
-        mEmailEditText = (EditText) findViewById(R.id.emailEditText);
-        mAddressEditText = (EditText) findViewById(R.id.addressEditText);
-        mBirthDateEditText = (EditText) findViewById(R.id.birthDateEditText);
-        mLoanEditText = (EditText) findViewById(R.id.loanEditText);
+//        mFirstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
+//        mLastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
+//        mEmailEditText = (EditText) findViewById(R.id.emailEditText);
+//        mAddressEditText = (EditText) findViewById(R.id.addressEditText);
+//        mBirthDateEditText = (EditText) findViewById(R.id.birthDateEditText);
+//        mLoanEditText = (EditText) findViewById(R.id.loanEditText);
+    }
+
+
+
+    @Override
+    public boolean onButtonClicked(FormDataCollector collector) {
+        fillOutForm();
+        Toast.makeText(this, "onAuthorizeComplete", Toast.LENGTH_LONG).show();
+
+        return true;
+    }
+
+    @Override
+    public void onAuthorizeComplete(FormDataCollector collector) {
+        Log.v("Lenddo: ", "onAuthorizeComplete called");
+        Toast.makeText(this, "onAuthorizeComplete", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onAuthorizeCanceled(FormDataCollector collector) {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        helper.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -121,26 +171,5 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onButtonClicked(FormDataCollector collector) {
-        return false;
-    }
-
-    @Override
-    public void onAuthorizeComplete(FormDataCollector collector) {
-
-    }
-
-    @Override
-    public void onAuthorizeCanceled(FormDataCollector collector) {
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        helper.onActivityResult(requestCode, resultCode, data);
     }
 }

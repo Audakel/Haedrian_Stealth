@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile project(':LenddoSDK')
+    compile project(':LenddoData')
 }
