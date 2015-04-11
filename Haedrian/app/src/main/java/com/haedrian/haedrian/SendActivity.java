@@ -25,11 +25,16 @@ import com.haedrian.haedrian.CustomDialogs.SendConfirmationDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static com.android.volley.Request.Method;
 
@@ -132,7 +137,10 @@ public class SendActivity extends ActionBarActivity implements
             noteString = "&note=" + noteET.getText().toString();
         }
 
-        String passwordString = "payment?password=" + "password";
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        String secret = sp.getString("secret", "");
+
+        String passwordString = "payment?password=" + secret;
 
         String recipientString = "";
         if (toET.getText().toString().equals("")) {
@@ -141,7 +149,8 @@ public class SendActivity extends ActionBarActivity implements
             return;
         }
         else {
-            recipientString = "&to=" + toET.getText().toString();
+            String recipient = getRecipientBitcoinAddress(toET.getText().toString());
+            recipientString = "&to=" + recipient;
         }
 
         String addressString = "&from=" + wallet.getAddress();
@@ -188,6 +197,36 @@ public class SendActivity extends ActionBarActivity implements
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
+    }
+
+    private String  getRecipientBitcoinAddress(String recipient) {
+
+        // This method will have to do some serious regex to determine what to query off of. Right now it just assumes email
+        ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("_User");
+        innerQuery.whereEqualTo("email", recipient);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Wallet");
+        try {
+            // This is what's not working
+            Log.v("TEST", "Inner query: " + innerQuery.get("objectId"));
+            query.whereEqualTo("userId", innerQuery.get("objectId"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> results, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < results.size(); i++) {
+                        String walletAddress = results.get(i).getString("walletAddress");
+                        Log.v("TEST", "Wallet address: " + walletAddress);
+                    }
+                }
+                else {
+                    Log.v("TEST", e.getMessage());
+                }
+            }
+        });
+
+        return "";
     }
 
     private void returnToPreviousActivitySuccess(String data) {
