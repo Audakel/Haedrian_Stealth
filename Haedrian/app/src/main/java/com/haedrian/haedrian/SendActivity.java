@@ -42,7 +42,7 @@ public class SendActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     private final String base = "https://blockchain.info/merchant/$guid/";
-    private String sendAmount, sendAmountBitcoin;
+    private String sendAmount, sendAmountBitcoin, walletAddress;
     private EditText toET, noteET;
     private WalletModel wallet;
 
@@ -133,7 +133,7 @@ public class SendActivity extends ActionBarActivity implements
     public void sendTransaction() {
 
         String noteString = "";
-        if (noteET.getText().toString() != "") {
+        if ( ! noteET.getText().toString().equals("")) {
             noteString = "&note=" + noteET.getText().toString();
         }
 
@@ -149,7 +149,8 @@ public class SendActivity extends ActionBarActivity implements
             return;
         }
         else {
-            String recipient = getRecipientBitcoinAddress(toET.getText().toString());
+            getRecipientBitcoinAddress(toET.getText().toString());
+            String recipient = getWalletAddress();
             recipientString = "&to=" + recipient;
         }
 
@@ -199,34 +200,52 @@ public class SendActivity extends ActionBarActivity implements
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
     }
 
-    private String  getRecipientBitcoinAddress(String recipient) {
+    private void getRecipientBitcoinAddress(String recipient) {
 
         // This method will have to do some serious regex to determine what to query off of. Right now it just assumes email
-        ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("_User");
-        innerQuery.whereEqualTo("email", recipient);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Wallet");
-        try {
-            // This is what's not working
-            Log.v("TEST", "Inner query: " + innerQuery.get("objectId"));
-            query.whereEqualTo("userId", innerQuery.get("objectId"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        query.findInBackground(new FindCallback<ParseObject>() {
+
+        ParseQuery<ParseObject> emailQuery = ParseQuery.getQuery("_User");
+        emailQuery.whereEqualTo("email", recipient);
+
+        emailQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
             public void done(List<ParseObject> results, ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < results.size(); i++) {
-                        String walletAddress = results.get(i).getString("walletAddress");
-                        Log.v("TEST", "Wallet address: " + walletAddress);
-                    }
+                    String userId = results.get(0).getObjectId();
+
+                    ParseQuery<ParseObject> walletQuery = ParseQuery.getQuery("Wallet");
+
+                    // This is what's not working
+                    walletQuery.whereEqualTo("userId", userId);
+
+                    walletQuery.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> results, ParseException e) {
+                            if (e == null) {
+                                for (int i = 0; i < results.size(); i++) {
+                                    String walletAddress = results.get(i).getString("walletAddress");
+                                    setWalletAddress(walletAddress);
+                                    Log.v("TEST", "Wallet address: " + walletAddress);
+                                }
+                            }
+                            else {
+                                Log.v("TEST", e.getMessage());
+                            }
+                        }
+                    });
                 }
                 else {
                     Log.v("TEST", e.getMessage());
                 }
             }
         });
+    }
 
-        return "";
+    private void setWalletAddress(String walletAddress) {
+        this.walletAddress = walletAddress;
+    }
+
+    private String getWalletAddress() {
+      return this.walletAddress;
     }
 
     private void returnToPreviousActivitySuccess(String data) {
