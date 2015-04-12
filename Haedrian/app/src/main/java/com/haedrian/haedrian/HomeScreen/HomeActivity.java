@@ -16,10 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.haedrian.haedrian.CreditScore.CreditCheckActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
-import com.haedrian.haedrian.ProjectsActivity;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;

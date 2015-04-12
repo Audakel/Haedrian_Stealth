@@ -202,8 +202,20 @@
                 android:value=".GetContacts" />
         </activity>
         <activity
-            android:name=".HomeScreen.CreditCheckActivity"
+            android:name=".CreditScore.CreditCheckActivity"
             android:label="@string/title_activity_credit_check" >
+        </activity>
+        <activity
+            android:name=".CreditScore.CompleteActivity"
+            android:label="@string/title_activity_complete" >
+        </activity>
+        <activity
+            android:name=".CreditScore.CanceledActivity"
+            android:label="@string/title_activity_canceled" >
+        </activity>
+        <activity
+            android:name=".CreditScore.WaitForCreditScore"
+            android:label="@string/title_activity_wait_for_credit_score" >
         </activity>
     </application>
 

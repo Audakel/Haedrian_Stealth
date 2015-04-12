@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">BanKO Demo</string>
-    <string name="verify_with_lenddo">Verify with Lenddo</string>
+    <string name="verify_with_haedrian">Verify</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -17,7 +17,7 @@
     <string name="mark_your_address">Mark your address</string>
     <string name="confirm">Confirm</string>
     <string name="marker_required">Tap on the map to place a marker</string>
-    <string name="verify_your_address" />
+    <string name="verify_your_address" >Verify your address</string>
     <string name="address_set">Address confirmed. Click here to change.</string>
     <string name="type_place_name">Type the name of a place</string>
     <string name="map_navigation_instructions">Tap on the map to mark the location.\n\nYou may type on the search bar, drag the map or use pinch to zoom to navigate the map.</string>

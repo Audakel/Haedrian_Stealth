@@ -1,45 +1,26 @@
 package com.lenddo.sdk.widget;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import com.lenddo.sdk.R;
-import com.lenddo.sdk.core.LenddoConstants;
-import com.lenddo.sdk.core.LenddoEventListener;
-import com.lenddo.sdk.models.AuthorizationStatus;
 import com.lenddo.sdk.models.FormDataCollector;
 import com.lenddo.sdk.utils.UIHelper;
 import com.lenddo.sdk.utils.Utils;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.util.EncodingUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 /**
  * Created by joseph on 8/18/14.
@@ -66,10 +47,10 @@ public class LenddoButton extends Button implements View.OnClickListener {
     }
 
     protected void initStyle(AttributeSet attrs) {
-        setBackgroundResource(R.drawable.lenddo_verify_button);
+        //setBackgroundResource(Color.parseColor("#00BE90"));
         setGravity(Gravity.CENTER);
         setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.img_logo_button_bar), null, null, null);
-        setText(getResources().getString(R.string.verify_with_lenddo));
+        setText(getResources().getString(R.string.verify_with_haedrian));
         setTextColor(getResources().getColor(R.color.lenddo_white));
         if (!isInEditMode()) {
             setOnClickListener(this);
