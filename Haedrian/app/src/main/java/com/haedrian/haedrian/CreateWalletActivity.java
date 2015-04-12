@@ -24,9 +24,15 @@ import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Models.WalletModel;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 import static com.android.volley.Request.Method;
 
@@ -43,6 +49,10 @@ public class CreateWalletActivity extends ActionBarActivity {
 
     private LinearLayout errorLayout;
     private TextView errorMessage;
+
+    public static final int SALT_BYTE_SIZE = 32;
+    public static final int HASH_BYTE_SIZE = 32;
+    public static final int PBKDF2_ITERATIONS = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,9 +148,13 @@ public class CreateWalletActivity extends ActionBarActivity {
             return;
         }
 
+        String password = addPasswordText.getText().toString();
+        String secondPass = hash(password);
+
 
         final String URL = "https://blockchain.info/api/v2/create_wallet"
-                + "?password=" + addPasswordText.getText().toString()
+                + "?password=" + password
+                + "?priv=" + secondPass
                 + "&email=" + addEmailText.getText().toString()
                 + "&api_code=5a25bea3-7f2f-4a40-acb6-3ed0497d570e";
 
@@ -179,12 +193,43 @@ public class CreateWalletActivity extends ActionBarActivity {
 
     }
 
+    private String hash(String password) {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[SALT_BYTE_SIZE];
+        random.nextBytes(salt);
+
+        byte[] hashedPassword = new byte[0];
+        try {
+            hashedPassword = encrypt(password, salt);
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+        return hashedPassword.toString();
+    }
+
+    public byte[] encrypt(String password, byte[] salt) throws NoSuchAlgorithmException {
+        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+        byte[] passBytes = password.getBytes();
+        byte[] result = new byte[passBytes.length + salt.length];
+        System.arraycopy(passBytes, 0, result, 0, passBytes.length);
+        System.arraycopy(salt, 0, result, passBytes.length, salt.length);
+        byte[] passHash = sha256.digest(result);
+        return passHash;
+    }
+
+
     private void saveWallet(String address) {
 
         if (address != "" && address != null) {
             wallet.setAddress(address);
             wallet.setBalance("0");
             db.getWalletsTable().insert(wallet);
+
+            ParseObject wallet = new ParseObject("Wallet");
+            wallet.put("walletAddress", address);
+            wallet.put("userId", user.getParseId());
+            wallet.put("balance", 0);
+            wallet.saveInBackground();
 
             finish();
         }
@@ -200,5 +245,15 @@ public class CreateWalletActivity extends ActionBarActivity {
         if (queue != null) {
             queue.cancelAll(TAG);
         }
+//        FlurryAgent.onEndSession(this);
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        FlurryAgent.onStartSession(this);
+//        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
+    }
+
 }

@@ -32,4 +32,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile project(':LenddoSDK')
     compile project(':LenddoData')
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
 }

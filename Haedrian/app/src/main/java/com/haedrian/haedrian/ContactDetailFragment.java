@@ -432,7 +432,7 @@ public class ContactDetailFragment extends Fragment implements
      *         populated with the provided address details.
      */
     private LinearLayout buildAddressLayout(int addressType, String addressTypeLabel,
-            final String address) {
+                                            final String address) {
 
         // Inflates the address layout
         final LinearLayout addressLayout =
@@ -444,14 +444,11 @@ public class ContactDetailFragment extends Fragment implements
                 (TextView) addressLayout.findViewById(R.id.contact_detail_header);
         final TextView addressTextView =
                 (TextView) addressLayout.findViewById(R.id.contact_detail_item);
-        final ImageButton viewAddressButton =
-                (ImageButton) addressLayout.findViewById(R.id.button_view_address);
 
         // If there's no addresses for the contact, shows the empty view and message, and hides the
         // header and button.
         if (addressTypeLabel == null && addressType == 0) {
             headerTextView.setVisibility(View.GONE);
-            viewAddressButton.setVisibility(View.GONE);
             addressTextView.setText(R.string.no_address);
         } else {
             // Gets postal address label type
@@ -461,34 +458,6 @@ public class ContactDetailFragment extends Fragment implements
             // Sets TextView objects in the layout
             headerTextView.setText(label);
             addressTextView.setText(address);
-
-            // Defines an onClickListener object for the address button
-            viewAddressButton.setOnClickListener(new View.OnClickListener() {
-                // Defines what to do when users click the address button
-                @Override
-                public void onClick(View view) {
-
-                    final Intent viewIntent =
-                            new Intent(Intent.ACTION_VIEW, constructGeoUri(address));
-
-                    // A PackageManager instance is needed to verify that there's a default app
-                    // that handles ACTION_VIEW and a geo Uri.
-                    final PackageManager packageManager = getActivity().getPackageManager();
-
-                    // Checks for an activity that can handle this intent. Preferred in this
-                    // case over Intent.createChooser() as it will still let the user choose
-                    // a default (or use a previously set default) for geo Uris.
-                    if (packageManager.resolveActivity(
-                            viewIntent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
-                        startActivity(viewIntent);
-                    } else {
-                        // If no default is found, displays a message that no activity can handle
-                        // the view button.
-                        Toast.makeText(getActivity(),
-                                R.string.no_intent_found, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
 
         }
         return addressLayout;

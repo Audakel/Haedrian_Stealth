@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
+import com.parse.Parse;
 
 /**
  * Created by audakel on 3/21/15.
@@ -37,6 +38,11 @@ public class ApplicationController extends Application {
         // initialize the singleton
         sInstance = this;
         mRequestQueue = Volley.newRequestQueue(this); // 'this' is Context
+
+        //Parse setup
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "QdakXDOx8Ta6W4g2kfdWkGyN0CS9CjxppjirJnqN", "CyXcvlXI1I0qfxAdhoYT0dlnHpNn0RSn5NoS1CB3");
 
     }
 

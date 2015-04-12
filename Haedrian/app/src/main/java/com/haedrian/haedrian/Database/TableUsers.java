@@ -14,6 +14,7 @@ public class TableUsers {
     public static final String TABLE_USERS = "users";
 
     public static final String COLUMN_ID = "id";
+    public static final String COLUMN_PARSE_ID = "parse_id";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_FIRST_NAME = "first_name";
     public static final String COLUMN_LAST_NAME = "last_name";
@@ -27,6 +28,7 @@ public class TableUsers {
             + TABLE_USERS
             + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_PARSE_ID + " TEXT, "
             + COLUMN_USERNAME + " TEXT, "
             + COLUMN_FIRST_NAME + " TEXT, "
             + COLUMN_LAST_NAME + " TEXT, "
@@ -60,6 +62,7 @@ public class TableUsers {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_USERNAME, user.getUsername());
+        values.put(COLUMN_PARSE_ID, user.getParseId());
         values.put(COLUMN_FIRST_NAME, user.getFirstName());
         values.put(COLUMN_LAST_NAME, user.getLastName());
         values.put(COLUMN_PHONE_NUMBER, user.getPhoneNumber());
@@ -67,7 +70,7 @@ public class TableUsers {
         values.put(COLUMN_WALLET_ID, user.getWalletId());
         values.put(COLUMN_CREDIT_SCORE, user.getCreditScore());
 
-        // Insesrt row
+        // Insert row
         db.insert(TABLE_USERS, null, values);
 
         Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
@@ -100,13 +103,14 @@ public class TableUsers {
 
         if (cursor.moveToFirst()) {
             user.setId(cursor.getInt(0));
-            user.setUsername(cursor.getString(1));
-            user.setFirstName(cursor.getString(2));
-            user.setLastName(cursor.getString(3));
-            user.setPhoneNumber(cursor.getString(4));
-            user.setEmail(cursor.getString(5));
-            user.setWalletId(cursor.getInt(6));
-            user.setCreditScore(cursor.getInt(7));
+            user.setParseId(cursor.getString(1));
+            user.setUsername(cursor.getString(2));
+            user.setFirstName(cursor.getString(3));
+            user.setLastName(cursor.getString(4));
+            user.setPhoneNumber(cursor.getString(5));
+            user.setEmail(cursor.getString(6));
+            user.setWalletId(cursor.getInt(7));
+            user.setCreditScore(cursor.getInt(8));
         }
 
         cursor.close();
