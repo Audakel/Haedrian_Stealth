@@ -8,6 +8,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -147,12 +148,19 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             queries.add(emailQuery);
             queries.add(passwordQuery);
 
+            final String tempPass = password;
             ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
             mainQuery.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> results, ParseException e) {
                     if (e == null) {
                         for (int i = 0; i < results.size(); i++) {
                             showProgress(false);
+
+                            SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("secret", tempPass);
+                            editor.commit();
+
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             intent.putExtra("parse_id", results.get(i).getObjectId());
                             startActivity(intent);
