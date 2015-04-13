@@ -25,11 +25,16 @@ import com.haedrian.haedrian.CustomDialogs.SendConfirmationDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static com.android.volley.Request.Method;
 
@@ -37,7 +42,7 @@ public class SendActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     private final String base = "https://blockchain.info/merchant/$guid/";
-    private String sendAmount, sendAmountBitcoin;
+    private String sendAmount, sendAmountBitcoin, walletAddress;
     private EditText toET, noteET;
     private WalletModel wallet;
 
@@ -128,11 +133,14 @@ public class SendActivity extends ActionBarActivity implements
     public void sendTransaction() {
 
         String noteString = "";
-        if (noteET.getText().toString() != "") {
+        if ( ! noteET.getText().toString().equals("")) {
             noteString = "&note=" + noteET.getText().toString();
         }
 
-        String passwordString = "payment?password=" + "password";
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        String secret = sp.getString("secret", "");
+
+        String passwordString = "payment?password=" + secret;
 
         String recipientString = "";
         if (toET.getText().toString().equals("")) {
@@ -141,7 +149,9 @@ public class SendActivity extends ActionBarActivity implements
             return;
         }
         else {
-            recipientString = "&to=" + toET.getText().toString();
+            getRecipientBitcoinAddress(toET.getText().toString());
+            String recipient = getWalletAddress();
+            recipientString = "&to=" + recipient;
         }
 
         String addressString = "&from=" + wallet.getAddress();
@@ -188,6 +198,54 @@ public class SendActivity extends ActionBarActivity implements
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
+    }
+
+    private void getRecipientBitcoinAddress(String recipient) {
+
+        // This method will have to do some serious regex to determine what to query off of. Right now it just assumes email
+
+        ParseQuery<ParseObject> emailQuery = ParseQuery.getQuery("_User");
+        emailQuery.whereEqualTo("email", recipient);
+
+        emailQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> results, ParseException e) {
+                if (e == null) {
+                    String userId = results.get(0).getObjectId();
+
+                    ParseQuery<ParseObject> walletQuery = ParseQuery.getQuery("Wallet");
+
+                    // This is what's not working
+                    walletQuery.whereEqualTo("userId", userId);
+
+                    walletQuery.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> results, ParseException e) {
+                            if (e == null) {
+                                for (int i = 0; i < results.size(); i++) {
+                                    String walletAddress = results.get(i).getString("walletAddress");
+                                    setWalletAddress(walletAddress);
+                                    Log.v("TEST", "Wallet address: " + walletAddress);
+                                }
+                            }
+                            else {
+                                Log.v("TEST", e.getMessage());
+                            }
+                        }
+                    });
+                }
+                else {
+                    Log.v("TEST", e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void setWalletAddress(String walletAddress) {
+        this.walletAddress = walletAddress;
+    }
+
+    private String getWalletAddress() {
+      return this.walletAddress;
     }
 
     private void returnToPreviousActivitySuccess(String data) {

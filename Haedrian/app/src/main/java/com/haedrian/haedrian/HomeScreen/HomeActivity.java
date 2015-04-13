@@ -23,6 +23,10 @@ import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
@@ -52,24 +56,42 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
         // After login, set up shared preferences to store the current users ID globally
-        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        final SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
-        DBHelper db = new DBHelper(this);
+        final DBHelper db = new DBHelper(this);
+
+        Bundle extras = getIntent().getExtras();
+
+        String parseId = "";
+        if (extras != null) {
+            parseId = extras.getString("parse_id");
+        }
 
         // No user is currently set
         if (userId == -1) {
-            user = new UserModel();
-            user.setFirstName("Logan");
-            user.setLastName("Bentley");
-            user.setUsername("sloganho");
-            user.setEmail("loganbentley22@gmail.com");
-            user.setPhoneNumber("8016905609");
 
-            UserModel newUser = db.getUsersTable().insert(user);
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+            query.getInBackground(parseId, new GetCallback<ParseObject>() {
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+                        user = new UserModel();
+                        user.setParseId(object.getObjectId());
+                        user.setFirstName(object.getString("firstName"));
+                        user.setLastName(object.getString("lastName"));
+                        user.setUsername(object.getString("username"));
+                        user.setEmail(object.getString("email"));
+                        user.setPhoneNumber(object.getString("phoneNumber"));
 
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putInt("user_id", newUser.getId());
-            editor.commit();
+                        UserModel newUser = db.getUsersTable().insert(user);
+
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putInt("user_id", newUser.getId());
+                        editor.commit();
+                    } else {
+                        // something went wrong
+                    }
+                }
+            });
         } else {
 
             user = db.getUsersTable().query("id", "=", "1");

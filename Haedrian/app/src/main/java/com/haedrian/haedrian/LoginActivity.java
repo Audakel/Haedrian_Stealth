@@ -8,6 +8,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -31,9 +32,11 @@ import android.widget.TextView;
 
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.parse.FindCallback;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,28 +139,22 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
 
-
-            ParseQuery<ParseObject> emailQuery = ParseQuery.getQuery("_User");
-            emailQuery.whereEqualTo("email", email);
-
-            ParseQuery<ParseObject> passwordQuery = ParseQuery.getQuery("_User");
-            passwordQuery.whereEqualTo("password", password);
-
-            List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
-            queries.add(emailQuery);
-            queries.add(passwordQuery);
-
-            ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
-            mainQuery.findInBackground(new FindCallback<ParseObject>() {
-                public void done(List<ParseObject> results, ParseException e) {
+            final String tempPass = password;
+            ParseUser.logInInBackground(email, password, new LogInCallback() {
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
                     if (e == null) {
-                        for (int i = 0; i < results.size(); i++) {
-                            showProgress(false);
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            intent.putExtra("parse_id", results.get(i).getObjectId());
-                            startActivity(intent);
-                            finish();
-                        }
+                        showProgress(false);
+
+                        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("secret", tempPass);
+                        editor.commit();
+
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.putExtra("parse_id", parseUser.getObjectId());
+                        startActivity(intent);
+                        finish();
                     }
                     else {
                         Log.d("Error", e.getMessage());
