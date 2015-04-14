@@ -18,7 +18,9 @@ import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
@@ -37,6 +40,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +90,22 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
+
+        ImageView appLogo = (ImageView) findViewById(R.id.app_logo);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics ();
+        display.getMetrics(outMetrics);
+        float density  = getResources().getDisplayMetrics().density;
+
+        int width = Math.round((outMetrics.widthPixels / density) - 50);
+
+
+        Picasso.with(this)
+                .load(R.drawable.logobird_black)
+                .centerCrop()
+                .resize(width, width)
+                .into(appLogo);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
