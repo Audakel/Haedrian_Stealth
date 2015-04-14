@@ -35,6 +35,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private UserModel user;
+    private String parseId;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -62,7 +63,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
         Bundle extras = getIntent().getExtras();
 
-        String parseId = "";
+        parseId = "";
         if (extras != null) {
             parseId = extras.getString("parse_id");
         }
@@ -194,6 +195,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 intent = new Intent(this, WalletActivity.class);
                 ActivityOptions options4 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
+                intent.putExtra("parse_id", parseId);
                 startActivity(intent, options4.toBundle());
                 return;
             case R.id.buy:

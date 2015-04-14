@@ -60,9 +60,12 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         actionBar.hide();
         setContentView(R.layout.activity_login);
 
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        String email = sp.getString("email", "");
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        mEmailView.setText(email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -92,6 +95,14 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         getLoaderManager().initLoader(0, null, this);
     }
 
+    public void onClick(View view) {
+        if (view.getId() == R.id.sign_up_button) {
+            Intent intent = new Intent(this, SignupActivity.class);
+            startActivity(intent);
+
+        }
+    }
+
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -105,7 +116,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -149,6 +160,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("secret", tempPass);
+                        editor.putString("email", email);
                         editor.commit();
 
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);

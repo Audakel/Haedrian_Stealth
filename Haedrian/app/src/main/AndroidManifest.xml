@@ -33,7 +33,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize|stateVisible">
+            android:windowSoftInputMode="adjustResize|stateVisible" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -216,6 +216,10 @@
         <activity
             android:name=".CreditScore.WaitForCreditScore"
             android:label="@string/title_activity_wait_for_credit_score" >
+        </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:label="@string/title_activity_signup" >
         </activity>
     </application>
 
