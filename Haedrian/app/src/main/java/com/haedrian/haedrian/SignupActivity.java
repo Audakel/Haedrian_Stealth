@@ -48,11 +48,10 @@ public class SignupActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_signup, menu);
+//        getMenuInflater().inflate(R.menu.menu_signup, menu);
         return true;
     }
 
@@ -137,10 +136,10 @@ public class SignupActivity extends ActionBarActivity {
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("secret", tempPass);
                     editor.putString("email", tempEmail);
+                    editor.putString("parse_id", user.getObjectId());
                     editor.commit();
 
                     Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
-                    intent.putExtra("parse_id", user.getObjectId());
                     startActivity(intent);
                     finish();
                 } else {
