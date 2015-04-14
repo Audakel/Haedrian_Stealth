@@ -227,5 +227,9 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="set_primary_address">Set Primary Address</string>
         <string name="click_here_to_set_your_address">Click here to confirm your address</string>
         <string name="title_activity_wait_for_credit_score">WaitForCreditScore</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="email_required">Email*</string>
+    <string name="username">Username*</string>
+    <string name="phone_number">Phone Number (Optional)</string>
 
 </resources>

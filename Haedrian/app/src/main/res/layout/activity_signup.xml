@@ -1,0 +1,141 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/lightgrey"
+    tools:context="com.haedrian.haedrian.CreditScore.CreditCheckActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/formContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:layout_height="fill_parent">
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+
+            <LinearLayout style="@style/fieldContainer">
+
+                <TextView
+                    android:text="@string/email_required"
+                    style="@style/formLabel" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/email_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textEmailAddress" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout style="@style/fieldContainer">
+
+                <TextView
+                    style="@style/formLabel"
+                    android:text="@string/first_name"/>
+
+                <EditText
+                    android:id="@+id/first_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"/>
+            </LinearLayout>
+            <LinearLayout style="@style/fieldContainer">
+
+                <TextView
+                    style="@style/formLabel"
+                    android:text="@string/last_name"/>
+
+                <EditText
+                    android:id="@+id/last_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords" />
+            </LinearLayout>
+            <LinearLayout style="@style/fieldContainer">
+                <TextView
+                    style="@style/formLabel"
+                    android:text="@string/username"/>
+                <EditText
+                    android:tag="middle_name"
+                    android:id="@+id/username_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/fieldContainer">
+
+                <TextView
+                    style="@style/formLabel"
+                    android:text="@string/phone_number"/>
+
+                <EditText
+                    android:id="@+id/phone_number_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="phone" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/fieldContainer">
+
+                <TextView
+                    style="@style/formLabel"
+                    android:text="@string/password"/>
+
+                <EditText
+                    android:id="@+id/password_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/fieldContainer">
+
+                <TextView
+                    style="@style/formLabel"
+                    android:text="@string/reenter_password"/>
+
+                <EditText
+                    android:id="@+id/reenter_password_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/round_blue"
+                android:text="@string/submit"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

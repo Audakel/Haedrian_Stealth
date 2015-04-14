@@ -41,20 +41,27 @@ import com.haedrian.haedrian.CreateWalletActivity;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.ImportWalletActivity;
+import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.QrCode.QRCodeEncoder;
 import com.haedrian.haedrian.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Locale;
 
 
 public class WalletActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     public static int userId;
+    private static String parseId;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -76,6 +83,13 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         userId = sp.getInt("user_id", -1);
+
+        Bundle extras = getIntent().getExtras();
+
+        parseId = "";
+        if (extras != null) {
+            parseId = extras.getString("parse_id");
+        }
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -163,12 +177,14 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
         private static final String ARG_SECTION_NUMBER = "section_number";
         private ImageView qrCode;
         private ImageButton copyButton;
-        private LinearLayout hasWalletLayout, noWalletLayout;
-        private Button createWallet, importWallet;
         private TextView walletAddress, convertedAmount, bitcoinAmount;
         private RequestQueue queue;
-        private ProgressDialog progressDialog;
+        private DBHelper db;
 
+        private Context context;
+        private final String TAG = "CANCEL_TAG";
+
+        private ProgressDialog progressDialog;
 
         public BalanceFragment() {
         }
@@ -192,102 +208,165 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_balance, container, false);
 
+            context = rootView.getContext();
+            queue = Volley.newRequestQueue(context);
+
+            progressDialog = new ProgressDialog(context);
+
             // Check to see if the user has a wallet associated and if not, display create a wallet button
-            DBHelper db = new DBHelper(rootView.getContext());
+            db = new DBHelper(rootView.getContext());
 
-            WalletModel wallet = db.getWalletsTable().selectByUserId(userId);
-
-            progressDialog = new ProgressDialog(rootView.getContext());
             progressDialog.setMessage("Initializing wallet...");
             progressDialog.show();
 
-            hasWalletLayout = (LinearLayout) rootView.findViewById(R.id.has_wallet_container);
-            noWalletLayout = (LinearLayout) rootView.findViewById(R.id.no_wallet_container);
-            createWallet = (Button) rootView.findViewById(R.id.create_wallet_button);
-            importWallet = (Button) rootView.findViewById(R.id.import_wallet_button);
             walletAddress = (TextView) rootView.findViewById(R.id.wallet_address);
             convertedAmount = (TextView) rootView.findViewById(R.id.converted_currency_amount);
             bitcoinAmount = (TextView) rootView.findViewById(R.id.bitcoin_amount);
 
-            // If wallet doesn't exist
-            if (wallet.getId() == 0) {
-                progressDialog.hide();
-                hasWalletLayout.setVisibility(View.GONE);
-                noWalletLayout.setVisibility(View.VISIBLE);
-
-                createWallet.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(rootView.getContext(), CreateWalletActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                importWallet.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(rootView.getContext(), ImportWalletActivity.class);
-                        startActivity(intent);
-                    }
-                });
-            } else {
-
-                qrCode = (ImageView) rootView.findViewById(R.id.bitcoin_qr_code);
-                copyButton = (ImageButton) rootView.findViewById(R.id.copy_button);
-
-                // Generate QRCode and then display it
-                QRCodeEncoder encoder = new QRCodeEncoder();
-                Bitmap qrCodeBitmap = null;
-                try {
-                    qrCodeBitmap = encoder.encodeAsBitmap(wallet.getAddress(), 300);
-                } catch (WriterException e) {
-                    Log.e("ZXing", e.toString());
-                }
-
-                if (qrCodeBitmap != null) {
-                    qrCode.setImageBitmap(qrCodeBitmap);
-                }
-
-                // Display wallet address
-                walletAddress.setText(wallet.getAddress());
-
-                // Get wallet balance and display it
-                getWalletBalance(wallet.getAddress(), rootView.getContext());
+            qrCode = (ImageView) rootView.findViewById(R.id.bitcoin_qr_code);
+            copyButton = (ImageButton) rootView.findViewById(R.id.copy_button);
 
 
-                // Set up dialog stuff with wallet address and bitmap
-                final String walletAddress = wallet.getAddress();
-                final Bitmap finalQrCodeBitmap = qrCodeBitmap;
-                qrCode.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        BitcoinAddressDialog dialog = new BitcoinAddressDialog(rootView.getContext(), walletAddress, finalQrCodeBitmap);
-                        dialog.show();
-                    }
-                });
-
-
-                copyButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int sdk = android.os.Build.VERSION.SDK_INT;
-                        if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                            clipboard.setText(getActivity().getResources().getString(R.string.dummy_address));
-                        } else {
-                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                            android.content.ClipData clip = android.content.ClipData.newPlainText("bitcoinAddress", walletAddress);
-                            clipboard.setPrimaryClip(clip);
+            // Check for wallet
+            ParseQuery<ParseObject> walletQuery = ParseQuery.getQuery("Wallet");
+            walletQuery.whereEqualTo("userId", parseId);
+            walletQuery.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> parseObjects, ParseException e) {
+                    if (e == null) {
+                        // If it exists
+                        if (parseObjects.size() > 0) {
+                            WalletModel wallet = new WalletModel();
+                            wallet.setUserId(userId);
+                            wallet.setAddress(parseObjects.get(0).getString("walletAddress"));
+                            wallet.setBalance(String.valueOf(parseObjects.get(0).getNumber("balance")));
+                            initializeWallet(wallet);
+                        }
+                        else {
+                            createWallet();
                         }
 
-                        Toast.makeText(rootView.getContext(), walletAddress + " was copied to the clipboard", Toast.LENGTH_SHORT).show();
                     }
-                });
-
-            }
-
+                    else {
+                        Toast.makeText(rootView.getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
             return rootView;
+        }
+
+        public void initializeWallet(WalletModel wallet) {
+
+            // Generate QRCode and then display it
+            QRCodeEncoder encoder = new QRCodeEncoder();
+            Bitmap qrCodeBitmap = null;
+            try {
+                qrCodeBitmap = encoder.encodeAsBitmap(wallet.getAddress(), 300);
+            } catch (WriterException e) {
+                Log.e("ZXing", e.toString());
+            }
+
+            if (qrCodeBitmap != null) {
+                qrCode.setImageBitmap(qrCodeBitmap);
+            }
+
+            // Display wallet address
+            walletAddress.setText(wallet.getAddress());
+
+            // Get wallet balance and display it
+            getWalletBalance(wallet.getAddress(), context);
+
+
+            // Set up dialog stuff with wallet address and bitmap
+            final String walletAddress = wallet.getAddress();
+            final Bitmap finalQrCodeBitmap = qrCodeBitmap;
+            qrCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BitcoinAddressDialog dialog = new BitcoinAddressDialog(context, walletAddress, finalQrCodeBitmap);
+                    dialog.show();
+                }
+            });
+
+
+            copyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int sdk = android.os.Build.VERSION.SDK_INT;
+                    if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboard.setText(getActivity().getResources().getString(R.string.dummy_address));
+                    } else {
+                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                        android.content.ClipData clip = android.content.ClipData.newPlainText("bitcoinAddress", walletAddress);
+                        clipboard.setPrimaryClip(clip);
+                    }
+
+                    Toast.makeText(context, walletAddress + " was copied to the clipboard", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        public void createWallet() {
+            SharedPreferences sp = context.getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+            String password = sp.getString("secret", "");
+
+            DBHelper db = new DBHelper(context);
+
+            UserModel user = db.getUsersTable().query("id", "=", String.valueOf(userId));
+
+
+            final String URL = "https://blockchain.info/api/v2/create_wallet"
+                    + "?password=" + password
+                    + "&email=" + user.getEmail()
+                    + "&api_code=5a25bea3-7f2f-4a40-acb6-3ed0497d570e";
+
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    URL, null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                saveWallet(response.getString("address"));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Test", "Error: " + error.toString());
+                    progressDialog.dismiss();
+                }
+            });
+
+            jsonObjectRequest.setTag(TAG);
+            queue.add(jsonObjectRequest);
+
+        }
+
+        private void saveWallet(String address) {
+            WalletModel wallet = new WalletModel();
+
+            if (address != "" && address != null) {
+                wallet.setUserId(userId);
+                wallet.setAddress(address);
+                wallet.setBalance("0");
+                db.getWalletsTable().insert(wallet);
+
+                ParseObject parseWallet = new ParseObject("Wallet");
+                parseWallet.put("walletAddress", address);
+                parseWallet.put("userId", parseId);
+                parseWallet.put("balance", 0);
+                parseWallet.saveInBackground();
+
+                initializeWallet(wallet);
+            }
         }
 
         public void getWalletBalance(String address, Context context) {
@@ -310,7 +389,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.d("Test", "Error: " + error.toString());
-                    progressDialog.hide();
+                    progressDialog.dismiss();
                 }
             });
 
@@ -350,7 +429,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.d("Error", "Error: " + error.getMessage());
-                    progressDialog.hide();
+                    progressDialog.dismiss();
                 }
             });
 
@@ -364,7 +443,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
             value = round(conversion, 2);
 
             convertedAmount.setText(String.valueOf(value));
-            progressDialog.hide();
+            progressDialog.dismiss();
         }
 
     }
