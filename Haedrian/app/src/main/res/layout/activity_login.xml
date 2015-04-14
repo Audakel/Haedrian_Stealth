@@ -1,36 +1,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-
-              tools:context="com.haedrian.haedrian.LoginActivity"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.haedrian.haedrian.LoginActivity"
     android:background="@color/turquoise">
 
     <!-- Login progress -->
 
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Haedrian Labs"
+        android:text="@string/app_name"
         android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:textSize="42sp"
-        android:textColor="#ffff"
+        android:textSize="60sp"
+        android:textColor="@color/white"
         android:textStyle="italic" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Empower the next 3 billion"
+        android:text="@string/by_haedrian"
         android:id="@+id/textView4"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
+        android:textSize="20sp"
         android:textColor="@color/lightgrey"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginBottom="30dp" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -75,7 +80,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ff5bdcff"
+                android:background="@color/turquoise"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 

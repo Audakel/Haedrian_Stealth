@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Haedrian</string>
-    <string name="title_activity_home">Haedrian</string>
+    <string name="app_name">Curo</string>
+    <string name="title_activity_home">Curo</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_send_request">Send/Request</string>
@@ -231,5 +231,6 @@ s    <string name="activity_contacts_list">Contacts List</string>
     <string name="email_required">Email*</string>
     <string name="username">Username*</string>
     <string name="phone_number">Phone Number (Optional)</string>
+    <string name="by_haedrian">By Haedrian Labs</string>
 
 </resources>
