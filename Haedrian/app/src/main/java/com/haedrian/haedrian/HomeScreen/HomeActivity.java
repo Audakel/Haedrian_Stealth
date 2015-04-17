@@ -59,14 +59,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         // After login, set up shared preferences to store the current users ID globally
         final SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
+        parseId = sp.getString("parse_id", "");
         final DBHelper db = new DBHelper(this);
-
-        Bundle extras = getIntent().getExtras();
-
-        parseId = "";
-        if (extras != null) {
-            parseId = extras.getString("parse_id");
-        }
 
         // No user is currently set
         if (userId == -1) {

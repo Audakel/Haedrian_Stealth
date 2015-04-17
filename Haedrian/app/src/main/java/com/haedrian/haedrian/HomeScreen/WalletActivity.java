@@ -83,13 +83,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         userId = sp.getInt("user_id", -1);
-
-        Bundle extras = getIntent().getExtras();
-
-        parseId = "";
-        if (extras != null) {
-            parseId = extras.getString("parse_id");
-        }
+        parseId = sp.getString("parse_id", "");
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
