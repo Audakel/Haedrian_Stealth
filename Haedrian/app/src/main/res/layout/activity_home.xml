@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:text="People"
+                android:text="@string/my_people_home"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold"/>
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:text="Manage Projects"
+                android:text="@string/apply_for_loan"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold"/>

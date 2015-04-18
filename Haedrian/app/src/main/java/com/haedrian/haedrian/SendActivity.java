@@ -17,10 +17,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.CustomDialogs.SendConfirmationDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
@@ -34,14 +38,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.android.volley.Request.Method;
+import static com.android.volley.Response.Listener;
 
 public class SendActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
-    private final String base = "https://blockchain.info/merchant/$guid/";
+    private final String base = "https://blockchain.info/merchant/$guid/payment";
     private String sendAmount, sendAmountBitcoin, walletAddress;
     private EditText toET, noteET;
     private WalletModel wallet;
@@ -132,6 +139,8 @@ public class SendActivity extends ActionBarActivity implements
     // Function that does the API call to send
     public void sendTransaction() {
 
+        RequestQueue queue = Volley.newRequestQueue(this);
+
         String noteString = "";
         if ( ! noteET.getText().toString().equals("")) {
             noteString = "&note=" + noteET.getText().toString();
@@ -157,6 +166,8 @@ public class SendActivity extends ActionBarActivity implements
         String addressString = "&from=" + wallet.getAddress();
         addressString = addressString.replaceAll("\\s+", "");
 
+        Log.v("TEST", addressString);
+
         String URL = base
                 + passwordString
                 + recipientString
@@ -164,13 +175,22 @@ public class SendActivity extends ActionBarActivity implements
                 + addressString
                 + noteString;
 
+
+
+
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Sending Payment...");
         progressDialog.show();
 
+        getRecipientBitcoinAddress(toET.getText().toString());
+        final String recipient = getWalletAddress();
+        final String from = getWalletAddress();
+        final String password = secret;
+        final String note = noteET.getText().toString();
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,
-                URL, null,
-                new Response.Listener<JSONObject>() {
+                base, null,
+                new Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -194,10 +214,21 @@ public class SendActivity extends ActionBarActivity implements
                 progressDialog.hide();
                 Toast.makeText(SendActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("password", password);
+                params.put("to", recipient);
+                params.put("from", from);
+                params.put("note", note);
+
+                return params;
+            }
+        };
 
         // Adds request to the request queue
-        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest, "json_obj_req");
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
     private void getRecipientBitcoinAddress(String recipient) {

@@ -94,7 +94,7 @@
     <string name="reenter_password">Re-enter Password</string>
     <string name="passwords_dont_match">Passwords don\'t match!</string>
     <string name="note">Note:</string>
-    <string name="to_hint">Email or Bitcoin Adress</string>
+    <string name="to_hint">Email or Bitcoin Address</string>
     <string name="note_hint">Notes</string>
     <string name="action_send">Send Action</string>
     <string name="action_scan">Scan Action</string>
@@ -232,5 +232,7 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="username">Username*</string>
         <string name="phone_number">Phone Number (Optional)</string>
         <string name="by_haedrian">By Haedrian Labs</string>
+    <string name="apply_for_loan">Apply For Loan</string>
+    <string name="my_people_home">My People</string>
 
 </resources>

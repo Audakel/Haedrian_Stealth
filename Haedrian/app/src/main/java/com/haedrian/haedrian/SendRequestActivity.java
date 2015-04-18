@@ -48,8 +48,6 @@ public class SendRequestActivity extends ActionBarActivity {
     String displayNumberText = "0";
     String bitcoinAmountText = "0";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
