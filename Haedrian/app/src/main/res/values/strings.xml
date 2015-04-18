@@ -179,7 +179,7 @@ s    <string name="activity_contacts_list">Contacts List</string>
 
 
         <!-- Lenddo App partner id -->
-        <string name="lenddo_app_id">PUT YOUR LENDDO PARTNER ID here</string>
+        <string name="lenddo_app_id">55252b62aa96123cde05473f</string>
         <string name="google_places_api_key">PUT YOUR GOOGLE PLACES API KEY HERE</string>
         <string name="facebook_app_id">665660453522389</string>
         <string name="last_name">Last Name*</string>

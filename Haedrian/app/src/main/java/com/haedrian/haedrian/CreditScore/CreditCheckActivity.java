@@ -76,9 +76,8 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
         socialServiceCredentials.setSecretKey(ApplicationConstants.lenddo_member_service_secret);
         socialServiceCredentials.setUserId(ApplicationConstants.lenddo_member_service_userid);
 
-        //LenddoClient client = new LenddoClient(null, null, socialServiceCredentials, null);
-
-        //DataManager.setup(client, "lenddo");
+        LenddoClient client = new LenddoClient(null, null, socialServiceCredentials);
+        DataManager.setup(client);
 
         primaryAddressButton.setPrefillListener(new OnPrefillListener() {
             @Override
@@ -94,7 +93,7 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
         });
 
         helper = new UIHelper(this, this);
-        //lenddoButton.setUiHelper(helper);
+
         dobButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,14 +116,15 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
         gender.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, genderChoices));
         sourceOfFunds.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sourceOfFundsChoices));
 
-        Button dummyVerifyButton = (Button) findViewById(R.id.verifyButton);
-        dummyVerifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CreditCheckActivity.this, WaitForCreditScore.class);
-                startActivity(intent);
-            }
-        });
+//        Button dummyVerifyButton = (Button) findViewById(R.id.verifyButton);
+//        dummyVerifyButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(CreditCheckActivity.this, WaitForCreditScore.class);
+//                startActivity(intent);
+//            }
+//        });
+        lenddoButton.setUiHelper(helper);
     }
 
 
@@ -172,7 +172,7 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
     }
 
     private void initView() {
-        //lenddoButton = (LenddoButton) findViewById(R.id.verifyButton);
+        lenddoButton = (LenddoButton) findViewById(R.id.verifyButton);
         primaryAddressButton = (AddressButton) findViewById(R.id.addressButton);
 
         lastName = (EditText) findViewById(R.id.editTextLastName);
@@ -228,6 +228,8 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
 
 
     // ============= Lenddo Overrides
+
+
     @Override
     public boolean onButtonClicked(FormDataCollector formData) {
         //auto-collect

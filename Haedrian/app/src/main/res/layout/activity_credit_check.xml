@@ -435,27 +435,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-            <!--<com.lenddo.sdk.widget.LenddoButton-->
-                <!--android:id="@+id/verifyButton"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:layout_marginTop="30dp"-->
-                <!--android:gravity="center"-->
-                <!--android:paddingLeft="30dp"-->
-                <!--android:paddingRight="30dp" />-->
-            <Button
+            <com.lenddo.sdk.widget.LenddoButton
                 android:id="@+id/verifyButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/turquoise"
-                android:text="@string/verify_with_haedrian"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:textColor="@color/white"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp" />
+            <!--<Button-->
+                <!--android:id="@+id/verifyButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/turquoise"-->
+                <!--android:text="@string/verify_with_haedrian"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="30dp"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:paddingLeft="30dp"-->
+                <!--android:paddingRight="30dp" />-->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
