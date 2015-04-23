@@ -234,5 +234,11 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="by_haedrian">By Haedrian Labs</string>
     <string name="apply_for_loan">Apply For Loan</string>
     <string name="my_people_home">My People</string>
+    <string name="from_dialog">from</string>
+    <string name="has_requested">has requested</string>
+    <string name="from_you">from you.</string>
+    <string name="pay_now">Do you wish to pay them now?</string>
+    <string name="not_now">No, not now.</string>
+    <string name="yes_pay_them">Yes, pay them.</string>
 
 </resources>

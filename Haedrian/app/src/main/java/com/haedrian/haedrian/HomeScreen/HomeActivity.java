@@ -15,18 +15,24 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.haedrian.haedrian.CreditScore.CreditCheckActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
+import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
+import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import java.util.List;
 
 import lenddo.com.lenddoconnect.SimpleLoan;
 
@@ -46,6 +52,9 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // Set up actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -94,8 +103,49 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             user = db.getUsersTable().query("id", "=", "1");
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        // Check if funds have been requested of user
+        checkForRequest(parseId);
+    }
+
+    private void checkForRequest(String parseId) {
+
+        ParseQuery<ParseObject> requestQuery = ParseQuery.getQuery("Request");
+        requestQuery.whereEqualTo("requesteeId", parseId);
+        requestQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    // If user has any requests
+                    if (parseObjects.size() > 0) {
+                        displayRequestDialog(parseObjects);
+                    }
+                }
+                else {
+                    Toast.makeText(HomeActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void displayRequestDialog(List<ParseObject> requests) {
+
+        final RequestDialog dialog = new RequestDialog(this, requests.get(0));
+        dialog.show();
+        dialog.getYesButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.getNotNowButton().setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
     private void setupDrawer() {
