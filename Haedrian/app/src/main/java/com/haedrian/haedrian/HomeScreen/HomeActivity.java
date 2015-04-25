@@ -25,7 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.ApplicationController;
-import com.haedrian.haedrian.CreditScore.CreditCheckActivity;
+
+import com.haedrian.haedrian.CreditScore.CheckForCreditScore;
+import com.haedrian.haedrian.CreditScore.HasCreditScoreActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
@@ -47,7 +49,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lenddo.com.lenddoconnect.SimpleLoan;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
@@ -166,65 +167,65 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private void sendPayment(ParseObject requestObject) {
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
-        String secret = sp.getString("secret", "");
-
-        final String recipient = getWalletAddress();
-        final String from = walletAddress;
-        final String password = secret;
-        final String note = noteET.getText().toString();
-
-        Log.v("TEST", "Receiver: " + recipientId);
-        Log.v("TEST", "Sender: "  + walletAddress);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                base, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response.has("error")) {
-                                progressDialog.hide();
-                                Toast.makeText(SendActivity.this, response.getString("error"), Toast.LENGTH_SHORT).show();
-                                // Save as failed transaction
-                                saveTransaction(false, response.getString("error"));
-                            }
-                            else {
-                                // Save as successful transaction
-                                saveTransaction(true, response.getString("message"));
-                                returnToPreviousActivitySuccess(response.getString("message"));
-                            }
-                        } catch (JSONException e) {
-                            Toast.makeText(SendActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                            // Save as failed transaction
-                            saveTransaction(false, e.getMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.hide();
-                Toast.makeText(SendActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("password", password);
-                params.put("to", recipient);
-                params.put("from", from);
-                params.put("note", note);
-
-                return params;
-            }
-        };
-
-        // Adds request to the request queue
-        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//
+//        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+//        String secret = sp.getString("secret", "");
+//
+//        final String recipient = getWalletAddress();
+//        final String from = walletAddress;
+//        final String password = secret;
+//        final String note = noteET.getText().toString();
+//
+//        Log.v("TEST", "Receiver: " + recipientId);
+//        Log.v("TEST", "Sender: "  + walletAddress);
+//
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+//                base, null,
+//                new Response.Listener<JSONObject>() {
+//
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            if (response.has("error")) {
+//                                progressDialog.hide();
+//                                Toast.makeText(SendActivity.this, response.getString("error"), Toast.LENGTH_SHORT).show();
+//                                // Save as failed transaction
+//                                saveTransaction(false, response.getString("error"));
+//                            }
+//                            else {
+//                                // Save as successful transaction
+//                                saveTransaction(true, response.getString("message"));
+//                                returnToPreviousActivitySuccess(response.getString("message"));
+//                            }
+//                        } catch (JSONException e) {
+//                            Toast.makeText(SendActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+//                            // Save as failed transaction
+//                            saveTransaction(false, e.getMessage());
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                progressDialog.hide();
+//                Toast.makeText(SendActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        }){
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("password", password);
+//                params.put("to", recipient);
+//                params.put("from", from);
+//                params.put("note", note);
+//
+//                return params;
+//            }
+//        };
+//
+//        // Adds request to the request queue
+//        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
     private void setupDrawer() {
@@ -305,7 +306,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 startActivity(intent, options1.toBundle());
                 return;
             case R.id.projects:
+                /*For testing  --
+                intent = new Intent(this, ExistingCreditScoreActivity.class);
                 intent = new Intent(this, CreditCheckActivity.class);
+                */
+                intent = new Intent(this, CheckForCreditScore.class);
                 ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options2.toBundle());

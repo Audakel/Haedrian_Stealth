@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/lightgrey"
-    tools:context="com.haedrian.haedrian.CreditScore.CreditCheckActivity">
+    tools:context="com.haedrian.haedrian.CreditScore.GetCreditScoreActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -295,12 +295,12 @@
                     style="@style/formLabel"
                     android:text="@string/primary_address"
                     />
-                <com.lenddo.widget.address.AddressButton
-                    android:id="@+id/addressButton"
-                    app:headerLabel="Verify your address"
-                    android:hint="@string/click_here_to_set_your_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <!--<com.lenddo.widget.address.AddressButton-->
+                    <!--android:id="@+id/addressButton"-->
+                    <!--app:headerLabel="Verify your address"-->
+                    <!--android:hint="@string/click_here_to_set_your_address"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"/>-->
             </LinearLayout>
             <LinearLayout style="@style/fieldContainer">
 

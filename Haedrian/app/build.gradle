@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.haedrian.haedrian"
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 18
         versionCode 1
         versionName "1.0"
     }
@@ -23,16 +23,16 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.3'
-    //compile 'com.google.android.gms:play-services:6.5.87'
-    compile 'com.google.zxing:core:3.1.0'
     compile 'com.google.zxing:android-integration:3.1.0'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
-    //    compile 'commons-io:commons-io:+'
-    compile 'com.android.support:support-v4:21.0.3'
     compile 'com.squareup.picasso:picasso:2.5.0'
-    compile project(':LenddoSDK')
-    compile project(':LenddoData')
-    compile project(':simple_loan')
+    compile 'com.google.zxing:core:3.1.0'
+    compile 'com.android.support:support-v4:21.0.3'
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+//    compile project(':LenddoSDK')
+//    compile project(':LenddoData')
+//    compile 'commons-io:commons-io:+'
+//    compile 'com.google.android.gms:play-services:6.5.87'
+
 }

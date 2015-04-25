@@ -180,7 +180,7 @@ s    <string name="activity_contacts_list">Contacts List</string>
 
         <!-- Lenddo App partner id -->
         <string name="lenddo_app_id">55252b62aa96123cde05473f</string>
-        <string name="google_places_api_key">PUT YOUR GOOGLE PLACES API KEY HERE</string>
+        <string name="google_places_api_key">AIzaSyCmeRpZVUVGnNQGvmCXv9ikYLZCVDI0IXM</string>
         <string name="facebook_app_id">665660453522389</string>
         <string name="last_name">Last Name*</string>
         <string name="first_name">First Name*</string>
@@ -232,13 +232,15 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="username">Username*</string>
         <string name="phone_number">Phone Number (Optional)</string>
         <string name="by_haedrian">By Haedrian Labs</string>
-    <string name="apply_for_loan">Apply For Loan</string>
-    <string name="my_people_home">My People</string>
-    <string name="from_dialog">from</string>
-    <string name="has_requested">has requested</string>
-    <string name="from_you">from you.</string>
-    <string name="pay_now">Do you wish to pay them now?</string>
-    <string name="not_now">No, not now.</string>
-    <string name="yes_pay_them">Yes, pay them.</string>
+        <string name="apply_for_loan">Apply For Loan</string>
+        <string name="my_people_home">My People</string>
+        <string name="from_dialog">from</string>
+        <string name="has_requested">has requested</string>
+        <string name="from_you">from you.</string>
+        <string name="pay_now">Do you wish to pay them now?</string>
+        <string name="not_now">No, not now.</string>
+        <string name="yes_pay_them">Yes, pay them.</string>
+        <string name="title_activity_existing_credit_score">ExistingCreditScoreActivity</string>
+        <string name="title_activity_check_for_credit_score">CheckForCreditScore</string>
 
 </resources>

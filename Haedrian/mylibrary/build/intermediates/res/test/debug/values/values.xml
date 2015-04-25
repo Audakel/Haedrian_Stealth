@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -161,10 +161,10 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <string name="app_name">My Library</string>
-    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
     <style name="Base.Animation.AppCompat.DropDownUp" parent="android:Animation">
