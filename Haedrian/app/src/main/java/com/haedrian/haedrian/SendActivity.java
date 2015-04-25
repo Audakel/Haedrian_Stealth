@@ -49,9 +49,12 @@ public class SendActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     private final String base = "https://blockchain.info/merchant/$guid/payment";
-    private String sendAmount, sendAmountBitcoin, walletAddress;
+    private String sendAmount, sendAmountBitcoin, walletAddress, parseId, receiverId, userId;
     private EditText toET, noteET;
     private WalletModel wallet;
+    private BigDecimal sendAmountNumber, sendAmountBitcoinNumber;
+    private int bitcoinBuy, bitcoinSell;
+    private ProgressDialog progressDialog;
 
     private static final int START_SCANNER_REQUEST = 1;
 
@@ -63,20 +66,27 @@ public class SendActivity extends ActionBarActivity implements
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        progressDialog = new ProgressDialog(this);
+
         sendAmount = getIntent().getStringExtra("send_amount");
         sendAmountBitcoin = getIntent().getStringExtra("send_amount_bitcoin");
+        bitcoinBuy = getIntent().getIntExtra("bitcoin_buy", 0);
+        bitcoinSell = getIntent().getIntExtra("bitcoin_sell", 0);
+
         toET = (EditText) findViewById(R.id.to_edittext);
         noteET = (EditText) findViewById(R.id.note_edittext);
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
+        parseId = sp.getString("parse_id", "");
 
         DBHelper db = new DBHelper(this);
         wallet = db.getWalletsTable().selectByUserId(userId);
 
-        BigDecimal amount = round(Float.parseFloat(sendAmount), 2);
+        sendAmountNumber = round(Float.parseFloat(sendAmount), 2);
+        sendAmountBitcoinNumber = new BigDecimal(sendAmountBitcoin);
 
-        getSupportActionBar().setTitle("Send $" + amount.toString());
+        getSupportActionBar().setTitle("Send $" + sendAmountNumber.toString());
 
         ContactsListFragment mContactsListFragment = (ContactsListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.contact_list);
@@ -112,7 +122,9 @@ public class SendActivity extends ActionBarActivity implements
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    sendTransaction();
+                    progressDialog.setMessage("Sending Payment...");
+                    progressDialog.show();
+                    getRecipientBitcoinAddress(toET.getText().toString());
                 }
             });
             dialog.getCancelButton().setOnClickListener(new View.OnClickListener() {
@@ -136,57 +148,61 @@ public class SendActivity extends ActionBarActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    // Function that does the API call to send
-    public void sendTransaction() {
+    private void getRecipientBitcoinAddress(String recipient) {
+
+        // This method will have to do some serious regex to determine what to query off of. Right now it just assumes email
+
+        ParseQuery<ParseObject> emailQuery = ParseQuery.getQuery("_User");
+        emailQuery.whereEqualTo("email", recipient);
+
+        emailQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> results, ParseException e) {
+                if (e == null) {
+                    if (results.size() > 0) {
+                        userId = results.get(0).getObjectId();
+
+                        ParseQuery<ParseObject> walletQuery = ParseQuery.getQuery("Wallet");
+
+                        walletQuery.whereEqualTo("userId", userId);
+
+                        walletQuery.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> results, ParseException e) {
+                                if (e == null) {
+                                    if (results.size() > 0) {
+                                        sendPayment(results.get(0).getString("walletAddress"), userId);
+                                    }
+                                } else {
+                                    Log.v("TEST", e.getMessage());
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        // TODO: Call to fire off email
+                    }
+                }
+                else {
+                    Log.v("TEST", e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void sendPayment(String walletAddress, String recipientId) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
-
-        String noteString = "";
-        if ( ! noteET.getText().toString().equals("")) {
-            noteString = "&note=" + noteET.getText().toString();
-        }
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         String secret = sp.getString("secret", "");
 
-        String passwordString = "payment?password=" + secret;
-
-        String recipientString = "";
-        if (toET.getText().toString().equals("")) {
-            // Throw Error
-            Toast.makeText(this, "Please specify a recipient.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else {
-            getRecipientBitcoinAddress(toET.getText().toString());
-            String recipient = getWalletAddress();
-            recipientString = "&to=" + recipient;
-        }
-
-        String addressString = "&from=" + wallet.getAddress();
-        addressString = addressString.replaceAll("\\s+", "");
-
-        Log.v("TEST", addressString);
-
-        String URL = base
-                + passwordString
-                + recipientString
-                + "&amount=" + sendAmountBitcoin
-                + addressString
-                + noteString;
-
-
-
-
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Sending Payment...");
-        progressDialog.show();
-
-        getRecipientBitcoinAddress(toET.getText().toString());
         final String recipient = getWalletAddress();
-        final String from = getWalletAddress();
+        final String from = walletAddress;
         final String password = secret;
         final String note = noteET.getText().toString();
+
+        Log.v("TEST", "Receiver: "  + recipientId);
+        Log.v("TEST", "Sender: "  + walletAddress);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,
                 base, null,
@@ -198,13 +214,18 @@ public class SendActivity extends ActionBarActivity implements
                             if (response.has("error")) {
                                 progressDialog.hide();
                                 Toast.makeText(SendActivity.this, response.getString("error"), Toast.LENGTH_SHORT).show();
+                                // Save as failed transaction
+                                saveTransaction(false, response.getString("error"));
                             }
                             else {
-                                progressDialog.hide();
+                                // Save as successful transaction
+                                saveTransaction(true, response.getString("message"));
                                 returnToPreviousActivitySuccess(response.getString("message"));
                             }
                         } catch (JSONException e) {
                             Toast.makeText(SendActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                            // Save as failed transaction
+                            saveTransaction(false, e.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -212,7 +233,7 @@ public class SendActivity extends ActionBarActivity implements
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.hide();
-                Toast.makeText(SendActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SendActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -231,44 +252,20 @@ public class SendActivity extends ActionBarActivity implements
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
-    private void getRecipientBitcoinAddress(String recipient) {
+    private void saveTransaction(boolean wasSuccessful, String message) {
 
-        // This method will have to do some serious regex to determine what to query off of. Right now it just assumes email
+        ParseObject parseTransaction = new ParseObject("Transaction");
+        parseTransaction.put("senderId", parseId);
+        parseTransaction.put("receiverId", userId);
+        parseTransaction.put("amountBitcoin", sendAmountBitcoinNumber);
+        parseTransaction.put("amountCurrency", sendAmountNumber);
+        parseTransaction.put("currentBuyRate", bitcoinBuy);
+        parseTransaction.put("currentSellRate", bitcoinSell);
+        parseTransaction.put("wasSuccessful", wasSuccessful);
+        parseTransaction.put("message", message);
+        parseTransaction.saveInBackground();
 
-        ParseQuery<ParseObject> emailQuery = ParseQuery.getQuery("_User");
-        emailQuery.whereEqualTo("email", recipient);
-
-        emailQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> results, ParseException e) {
-                if (e == null) {
-                    String userId = results.get(0).getObjectId();
-
-                    ParseQuery<ParseObject> walletQuery = ParseQuery.getQuery("Wallet");
-
-                    // This is what's not working
-                    walletQuery.whereEqualTo("userId", userId);
-
-                    walletQuery.findInBackground(new FindCallback<ParseObject>() {
-                        public void done(List<ParseObject> results, ParseException e) {
-                            if (e == null) {
-                                for (int i = 0; i < results.size(); i++) {
-                                    String walletAddress = results.get(i).getString("walletAddress");
-                                    setWalletAddress(walletAddress);
-                                    Log.v("TEST", "Wallet address: " + walletAddress);
-                                }
-                            }
-                            else {
-                                Log.v("TEST", e.getMessage());
-                            }
-                        }
-                    });
-                }
-                else {
-                    Log.v("TEST", e.getMessage());
-                }
-            }
-        });
+        progressDialog.hide();
     }
 
     private void setWalletAddress(String walletAddress) {
@@ -278,6 +275,10 @@ public class SendActivity extends ActionBarActivity implements
     private String getWalletAddress() {
       return this.walletAddress;
     }
+
+    private void setReceiverId(String receiverId) { this.receiverId = receiverId; }
+
+    private String getReceiverId() { return this.receiverId; }
 
     private void returnToPreviousActivitySuccess(String data) {
         Intent i = new Intent();

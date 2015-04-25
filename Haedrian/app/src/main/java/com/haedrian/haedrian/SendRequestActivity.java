@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -42,7 +43,9 @@ public class SendRequestActivity extends ActionBarActivity {
     private LinearLayout errorLayout;
     private RequestQueue queue;
     private TextView bitcoinAmount;
-    private int currentBitcoinPrice = 0;
+    private int currentBitcoinPriceBuy = 0;
+    private int currentBitcoinPriceSell = 0;
+    private static final int REQUEST_CODE = 1;
 
     // Data for all views
     String displayNumberText = "0";
@@ -103,11 +106,13 @@ public class SendRequestActivity extends ActionBarActivity {
         // Make sure the request was successful
         if (resultCode == RESULT_OK)
         {
-            Bundle extras = data.getExtras();
+            if (requestCode == REQUEST_CODE) {
+                Bundle extras = data.getExtras();
 
-            if (extras != null)
-            {
-
+                if (extras != null) {
+                    String message = extras.getString("data");
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                }
             }
         }
 
@@ -185,6 +190,7 @@ public class SendRequestActivity extends ActionBarActivity {
     }
 
     private void addNumberToDisplay(View selectedButton) {
+        Intent intent;
 
         switch (selectedButton.getId()) {
             case R.id.button0:
@@ -225,12 +231,19 @@ public class SendRequestActivity extends ActionBarActivity {
                 backspace();
                 return;
             case R.id.buttonSend:
-                Intent intent = new Intent(SendRequestActivity.this, SendActivity.class);
+                intent = new Intent(SendRequestActivity.this, SendActivity.class);
                 intent.putExtra("send_amount", displayNumber.getText().toString());
                 intent.putExtra("send_amount_bitcoin", bitcoinAmount.getText().toString());
-                startActivity(intent);
+                intent.putExtra("bitcoin_buy", currentBitcoinPriceBuy);
+                intent.putExtra("bitcoin_sell", currentBitcoinPriceSell);
+                startActivityForResult(intent, REQUEST_CODE);
+                clear();
                 return;
             case R.id.buttonRequest:
+                intent = new Intent(SendRequestActivity.this, RequestActivity.class);
+                intent.putExtra("request_amount", displayNumber.getText().toString());
+                intent.putExtra("request_amount_bitcoin", bitcoinAmount.getText().toString());
+                startActivityForResult(intent, REQUEST_CODE);
                 clear();
                 return;
         }
@@ -282,7 +295,8 @@ public class SendRequestActivity extends ActionBarActivity {
                         // Parsing json
                         try {
                             JSONObject currentCurrency = response.getJSONObject("USD");
-                            currentBitcoinPrice = currentCurrency.getInt("buy");
+                            currentBitcoinPriceBuy = currentCurrency.getInt("buy");
+                            currentBitcoinPriceSell = currentCurrency.getInt("sell");
                             getConvertedRateInstantly(displayNumber.getText().toString());
                             updateDisplay();
                         } catch (JSONException e) {
@@ -301,11 +315,11 @@ public class SendRequestActivity extends ActionBarActivity {
 
     public void getConvertedRateInstantly(String sendAmount) {
         String cleanSendAmount = removeCommas(sendAmount);
-        if (currentBitcoinPrice == 0){
+        if (currentBitcoinPriceBuy == 0){
             bitcoinAmountText = "Loading...";
         }
         else{
-            double balance = (Double.parseDouble(cleanSendAmount) * 1.000000) / currentBitcoinPrice;
+            double balance = (Double.parseDouble(cleanSendAmount) * 1.000000) / currentBitcoinPriceBuy;
             Double roundedBalance = new BigDecimal(balance).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
             bitcoinAmountText = roundedBalance + "";
         }
