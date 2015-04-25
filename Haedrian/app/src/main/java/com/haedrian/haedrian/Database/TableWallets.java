@@ -13,7 +13,7 @@ import com.haedrian.haedrian.Models.WalletModel;
 public class TableWallets {
     public static final String TABLE_WALLETS = "wallets";
 
-    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_ID = "_id";
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_WALLET_ADDRESS = "wallet_address";
     public static final String COLUMN_BALANCE = "balance";

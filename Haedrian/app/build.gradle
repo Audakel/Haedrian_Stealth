@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.haedrian.haedrian"
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 18
         versionCode 1
         versionName "1.0"
     }
@@ -32,7 +32,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile project(':LenddoSDK')
     compile project(':LenddoData')
-    compile project(':simple_loan')
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+
 }

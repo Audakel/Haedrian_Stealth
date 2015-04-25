@@ -2,9 +2,9 @@ Lenddo Data SDK
 ===============
 
 The Lenddo Data SDK allows you to collect information about users in order for Lenddo to verify
-the user's information. The Lenddo Data module collects information transparently and in the
-background and can be activated as soon as the user has finished the Lenddo Authorization process
-in your app (See LenddoSDK docs for details)
+the user's information and enhance its scoring capabilities. The Lenddo Data module collects
+information transparently and in the background and can be activated as soon as the user has
+finished the Lenddo Authorization process in your app (See LenddoSDK docs for details)
 
 Prerequisites
 =============
@@ -51,24 +51,38 @@ permissions enable LenddoData to extract much more information for verification.
 module will automatically detect which permissions are available and adjust its data collection
 appropriately.
 
-To Add permissions you may edit the LenddoData/src/main/AndroidManifest.xml:
+To Add/Remove permissions you may edit the LenddoData/src/main/AndroidManifest.xml.
+
+Below is the list of required permissions:
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
-    <!--<uses-permission android:name="android.permission.READ_SMS" />-->
-    <!--<uses-permission android:name="android.permission.READ_CONTACTS" />-->
-    <!--<uses-permission android:name="android.permission.READ_CALENDAR" />-->
-    <!--<uses-permission android:name="android.permission.READ_CALL_LOG" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
-    <!--<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
-    <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-Uncomment the lines below to use the full recommended range of permissions required by LenddoData.
 If some permissions have already been defined in your main app, you simply ignore those here. Note
 that this permissions will be presented to users during installation. Ensure also that enabling
 these permissions are consistent with your Apps privacy policy.
+
+Data Collection Mechanism
+-------------------------
+
+The LenddoData captures the following data stored on the phone consistent with the permissions defined:
+
+* Contacts
+* SMS (Performed Periodically)
+* Call History
+* User's Location (Performed Periodically)
+* User's Browsing history
+* Calendar Events
+* Phone Number, Brand and Model
 
 Initialize Data Collection
 --------------------------
@@ -157,9 +171,7 @@ See the LenddoSDK for details)
 
 Adding this snippet will trigger Data Collection:
 
-    Utils.setUserId(this, status.getUserId());
-    DataManager.startAndroidData(this);
-
+    DataManager.startAndroidData(this, status.getUserId());
 
 This will look something like:
 

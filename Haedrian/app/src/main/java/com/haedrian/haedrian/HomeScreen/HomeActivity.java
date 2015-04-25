@@ -16,7 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.haedrian.haedrian.CreditScore.CreditCheckActivity;
+import com.haedrian.haedrian.CreditScore.CheckForCreditScore;
+import com.haedrian.haedrian.CreditScore.HasCreditScoreActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
@@ -28,7 +29,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import lenddo.com.lenddoconnect.SimpleLoan;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
@@ -176,7 +176,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 startActivity(intent, options1.toBundle());
                 return;
             case R.id.projects:
+                /*For testing  --
+                intent = new Intent(this, ExistingCreditScoreActivity.class);
                 intent = new Intent(this, CreditCheckActivity.class);
+                */
+                intent = new Intent(this, CheckForCreditScore.class);
                 ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options2.toBundle());

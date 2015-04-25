@@ -1,6 +1,8 @@
 package com.haedrian.haedrian.Database;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,7 +15,7 @@ import com.haedrian.haedrian.Models.UserModel;
 public class TableUsers {
     public static final String TABLE_USERS = "users";
 
-    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PARSE_ID = "parse_id";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_FIRST_NAME = "first_name";
@@ -79,11 +81,42 @@ public class TableUsers {
             user.setId(cursor.getInt(0));
         }
 
-
         db.close();
         cursor.close();
 
         return user;
+
+    }
+
+
+
+
+    public Integer updateCreditScore(Integer score) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CREDIT_SCORE, score);
+
+        int rowId = 0;
+        Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
+        if (cursor.moveToFirst()) {
+            rowId = (cursor.getInt(0));
+        }
+
+        // Which row to update, based on the ID
+        String selection = COLUMN_CREDIT_SCORE + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(rowId) };
+
+        int returnScore = db.update(
+                TABLE_USERS,
+                values,
+                selection,
+                selectionArgs);
+
+        db.close();
+        cursor.close();
+
+        return returnScore;
 
     }
 
