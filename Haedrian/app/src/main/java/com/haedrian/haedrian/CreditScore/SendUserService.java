@@ -1,3 +1,4 @@
+/*
 package com.haedrian.haedrian.CreditScore;
 
 import android.app.AlarmManager;
@@ -10,10 +11,10 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.haedrian.haedrian.util.Utils;
 import com.lenddo.data.CalendarEventsManager;
 import com.lenddo.data.DataManager;
 import com.lenddo.data.listeners.OnLocationFoundListener;
-import com.lenddo.data.utils.Utils;
 
 public class SendUserService extends IntentService {
 
@@ -30,6 +31,7 @@ public class SendUserService extends IntentService {
 
     private void sendLocation() {
         if (location != null) {
+
             DataManager.getInstance().sendUsersLocation(getLocation(), Utils.getUserId(getApplicationContext()));
             Utils.setLocationSent(getApplicationContext(), true);
         }
@@ -71,3 +73,4 @@ public class SendUserService extends IntentService {
 
 
 }
+*/

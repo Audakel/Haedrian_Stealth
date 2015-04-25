@@ -76,8 +76,8 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
         socialServiceCredentials.setSecretKey(ApplicationConstants.lenddo_member_service_secret);
         socialServiceCredentials.setUserId(ApplicationConstants.lenddo_member_service_userid);
 
-        LenddoClient client = new LenddoClient(null, null, socialServiceCredentials);
-        DataManager.setup(client);
+//        LenddoClient client = new LenddoClient(null, null, socialServiceCredentials);
+//        DataManager.setup(client);
 
         primaryAddressButton.setPrefillListener(new OnPrefillListener() {
             @Override
@@ -173,7 +173,7 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
 
     private void initView() {
         lenddoButton = (LenddoButton) findViewById(R.id.verifyButton);
-        primaryAddressButton = (AddressButton) findViewById(R.id.addressButton);
+        //primaryAddressButton = (AddressButton) findViewById(R.id.addressButton);
 
         lastName = (EditText) findViewById(R.id.editTextLastName);
         middleName = (EditText) findViewById(R.id.editTextMiddleName);
@@ -310,7 +310,7 @@ public class CreditCheckActivity extends ActionBarActivity implements LenddoEven
         finishIntent.putExtra("status", status.getStatus());
         finishIntent.putExtra("userId", status.getUserId());
         finishIntent.putExtra("transId", status.getTransId());
-        DataManager.startAndroidData(this);
+        //DataManager.startAndroidData(this);
         startActivity(finishIntent);
         finish();
 

@@ -1,2 +1,2 @@
-include ':app', ':mylibrary', ':LenddoSDK', ':LenddoData', ':google-play-services_lib', ':simple_loan'
+include ':app', ':mylibrary', ':google-play-services_lib'
 

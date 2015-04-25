@@ -47,7 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lenddo.com.lenddoconnect.SimpleLoan;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
@@ -151,7 +150,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                sendPayment(requestObject);
+                //sendPayment(requestObject);
             }
         });
         dialog.getNotNowButton().setOnClickListener(new View.OnClickListener() {
@@ -164,7 +163,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
     }
 
-    private void sendPayment(ParseObject requestObject) {
+    /*private void sendPayment(ParseObject requestObject) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -226,7 +225,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
-
+*/
     private void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
 
