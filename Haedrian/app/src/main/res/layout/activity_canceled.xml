@@ -25,6 +25,5 @@ tools:context="com.haedrian.haedrian.CreditScore.CanceledActivity">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="18sp"
-    android:textColor="@color/lenddo_blue"
     android:text="@string/canceled"/>
 </LinearLayout>

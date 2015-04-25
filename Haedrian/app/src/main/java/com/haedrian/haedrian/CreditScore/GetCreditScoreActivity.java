@@ -171,7 +171,7 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
 
     private void initView() {
         lenddoButton = (LenddoButton) findViewById(R.id.verifyButton);
-        primaryAddressButton = (AddressButton) findViewById(R.id.addressButton);
+       // primaryAddressButton = (AddressButton) findViewById(R.id.addressButton);
 
         lastName = (EditText) findViewById(R.id.editTextLastName);
         middleName = (EditText) findViewById(R.id.editTextMiddleName);
