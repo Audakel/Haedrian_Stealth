@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.haedrian.haedrian.ApplicationController;
 import com.haedrian.haedrian.CreditScore.CreditCheckActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
@@ -32,7 +40,12 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import lenddo.com.lenddoconnect.SimpleLoan;
 
@@ -130,12 +143,15 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private void displayRequestDialog(List<ParseObject> requests) {
 
+        final ParseObject requestObject = requests.get(0);
         final RequestDialog dialog = new RequestDialog(this, requests.get(0));
         dialog.show();
+        dialog.setCancelable(false);
         dialog.getYesButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                sendPayment(requestObject);
             }
         });
         dialog.getNotNowButton().setOnClickListener(new View.OnClickListener() {
@@ -146,6 +162,69 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             }
         });
 
+    }
+
+    private void sendPayment(ParseObject requestObject) {
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        String secret = sp.getString("secret", "");
+
+        final String recipient = getWalletAddress();
+        final String from = walletAddress;
+        final String password = secret;
+        final String note = noteET.getText().toString();
+
+        Log.v("TEST", "Receiver: " + recipientId);
+        Log.v("TEST", "Sender: "  + walletAddress);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                base, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.has("error")) {
+                                progressDialog.hide();
+                                Toast.makeText(SendActivity.this, response.getString("error"), Toast.LENGTH_SHORT).show();
+                                // Save as failed transaction
+                                saveTransaction(false, response.getString("error"));
+                            }
+                            else {
+                                // Save as successful transaction
+                                saveTransaction(true, response.getString("message"));
+                                returnToPreviousActivitySuccess(response.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(SendActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                            // Save as failed transaction
+                            saveTransaction(false, e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.hide();
+                Toast.makeText(SendActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("password", password);
+                params.put("to", recipient);
+                params.put("from", from);
+                params.put("note", note);
+
+                return params;
+            }
+        };
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
     private void setupDrawer() {
