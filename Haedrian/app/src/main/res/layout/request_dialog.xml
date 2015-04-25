@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="@string/has_requested"/>
+            android:text="has_requested"/>
 
         <TextView
             android:id="@+id/dialog_request_amount"
@@ -43,7 +43,7 @@
             android:id="@+id/dialog_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/from_you"
+            android:text="from you"
             android:textSize="18sp"
             android:layout_marginLeft="5dp" />
 
@@ -65,7 +65,7 @@
             android:id="@+id/dialog_pay_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pay_now"
+            android:text="pay_now"
             android:textSize="18sp"
             android:layout_marginLeft="5dp" />
 
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/error_red_text"
-            android:text="@string/not_now"
+            android:text="not now"
             android:textColor="@color/white"/>
 
         <View
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/blue"
-            android:text="@string/yes_pay_them"
+            android:text="yes_pay_them"
             android:textColor="@color/white"/>
 
     </LinearLayout>

@@ -32,7 +32,6 @@
             android:id="@+id/dialog_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/from_dialog"
             android:layout_marginLeft="5dp" />
 
         <TextView
