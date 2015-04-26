@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.zxing.WriterException;
+import com.haedrian.haedrian.Adapters.TransactionListAdapter;
 import com.haedrian.haedrian.CreateWalletActivity;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
 import com.haedrian.haedrian.Database.DBHelper;
@@ -54,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -448,6 +451,12 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private ListView transactionList;
+        private List<ParseObject> transactions;
+        private ArrayList<ParseObject> arrayList = new ArrayList<ParseObject>();
+        private TransactionListAdapter adapter;
+        private Context context;
+        private TextView noTransactions;
 
         public TransactionFragment() {
         }
@@ -468,7 +477,54 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_transaction, container, false);
+
+            transactionList = (ListView) rootView.findViewById(R.id.transaction_list);
+            noTransactions = (TextView) rootView.findViewById(R.id.no_transaction_textview);
+
+            transactions = new ArrayList<ParseObject>();
+
+            this.context = rootView.getContext();
+
             return rootView;
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+            if(isVisibleToUser)
+            {
+                arrayList.clear();
+
+                // Get all transactions here
+                ParseQuery<ParseObject> transactionQuery = new ParseQuery("Transaction");
+                transactionQuery.whereEqualTo("senderId", parseId);
+                transactionQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> parseObjects, ParseException e) {
+                        if (e == null) {
+                            // If it exists
+                            if (parseObjects.size() > 0) {
+
+                                noTransactions.setVisibility(View.GONE);
+
+                                for (int i = 0; i < parseObjects.size(); i++) {
+                                    arrayList.add(parseObjects.get(i));
+                                }
+
+                                adapter = new TransactionListAdapter(context, R.layout.row_transaction, arrayList);
+                                transactionList.setAdapter(adapter);
+                            } else {
+
+                            }
+
+                        } else {
+                            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+            }
         }
     }
 

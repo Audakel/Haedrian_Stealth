@@ -58,6 +58,9 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private ListView mDrawerList;
     private UserModel user;
     private String parseId;
+    private final static String PENDING_STATUS = "m5jO6Rz54h";
+    private final static String REFUSED_STATUS = "10eX5swCo0";
+    private final static String FULFILLED_STATUS = "GIidPHawur";
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -125,6 +128,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
         ParseQuery<ParseObject> requestQuery = ParseQuery.getQuery("Request");
         requestQuery.whereEqualTo("requesteeId", parseId);
+        requestQuery.whereEqualTo("fulfillmentStatusId", PENDING_STATUS);
         requestQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -132,6 +136,9 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                     // If user has any requests
                     if (parseObjects.size() > 0) {
                         displayRequestDialog(parseObjects);
+                    }
+                    else {
+                        Log.v("TEST", "test here");
                     }
                 }
                 else {
@@ -160,9 +167,32 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                refusePayment(requestObject);
             }
         });
 
+    }
+
+    private void getUserId(ParseObject requestObject) {
+        ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("_User");
+        userQuery.whereEqualTo("objectId", requestObject.get("requestorId"));
+        userQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    // If user has any requests
+                    if (parseObjects.size() > 0) {
+                        sendPayment(parseObjects.get(0));
+                    }
+                    else {
+                        Log.v("TEST", "test here");
+                    }
+                }
+                else {
+                    Toast.makeText(HomeActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void sendPayment(ParseObject requestObject) {
@@ -226,6 +256,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 //
 //        // Adds request to the request queue
 //        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void refusePayment(ParseObject requestObject) {
+        requestObject.put("fulfillmentStatusId", REFUSED_STATUS);
+        requestObject.saveInBackground();
     }
 
     private void setupDrawer() {

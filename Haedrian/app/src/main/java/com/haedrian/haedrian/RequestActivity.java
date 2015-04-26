@@ -51,6 +51,7 @@ public class RequestActivity extends ActionBarActivity implements
     private int bitcoinBuy, bitcoinSell;
     private ProgressDialog progressDialog;
     private final static int START_SCANNER_REQUEST = 1;
+    private final static String  PENDING_STATUS = "m5jO6Rz54h";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class RequestActivity extends ActionBarActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_request) {
+        if (id == R.id.action_send) {
             progressDialog.show();
             requestTransaction();
             return true;
@@ -164,7 +165,6 @@ public class RequestActivity extends ActionBarActivity implements
                 }
                 else {
                     progressDialog.hide();
-                    Log.v("TEST", e.getMessage());
                     createRequestTransaction(false, "Request money from " + userId + " failed.");
                 }
             }
@@ -180,7 +180,7 @@ public class RequestActivity extends ActionBarActivity implements
         parseRequest.put("amountCurrency", requestAmountNumber);
         parseRequest.put("currentBuyRate", bitcoinBuy);
         parseRequest.put("currentSellRate", bitcoinSell);
-        parseRequest.put("isFulfilled", false);
+        parseRequest.put("fulfillmentStatusId", PENDING_STATUS);
         parseRequest.saveInBackground();
 
         progressDialog.hide();

@@ -242,5 +242,6 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="yes_pay_them">Yes, pay them.</string>
         <string name="title_activity_existing_credit_score">ExistingCreditScoreActivity</string>
         <string name="title_activity_check_for_credit_score">CheckForCreditScore</string>
+    <string name="no_transaction">You have not had any transactions yet!</string>
 
 </resources>
