@@ -77,18 +77,18 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
 //        LenddoClient client = new LenddoClient(null, null, socialServiceCredentials);
 //        DataManager.setup(client);
 
-        primaryAddressButton.setPrefillListener(new OnPrefillListener() {
-            @Override
-            public Address getAddress() {
-                return getAddressInfo();
-            }
-        });
-        primaryAddressButton.setOnAddressConfirmedListener(new OnAddressConfirmedListener() {
-            @Override
-            public void onAddressConfirmed(LatLng location) {
-                primaryAddress.setLatLng(location);
-            }
-        });
+//        primaryAddressButton.setPrefillListener(new OnPrefillListener() {
+//            @Override
+//            public Address getAddress() {
+//                return getAddressInfo();
+//            }
+//        });
+//        primaryAddressButton.setOnAddressConfirmedListener(new OnAddressConfirmedListener() {
+//            @Override
+//            public void onAddressConfirmed(LatLng location) {
+//                primaryAddress.setLatLng(location);
+//            }
+//        });
 
         helper = new UIHelper(this, this);
 
@@ -114,14 +114,6 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
         gender.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, genderChoices));
         sourceOfFunds.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sourceOfFundsChoices));
 
-//        Button dummyVerifyButton = (Button) findViewById(R.id.verifyButton);
-//        dummyVerifyButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(CreditCheckActivity.this, WaitForCreditScore.class);
-//                startActivity(intent);
-//            }
-//        });
         lenddoButton.setUiHelper(helper);
     }
 
@@ -309,8 +301,9 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
     public void onAuthorizeComplete(FormDataCollector collector) {
         DBHelper db = new DBHelper(this);
         //TODO:: fix this with actual credit score that comes back from Lenddo
-        int score = db.getUsersTable().updateCreditScore(randomNumber(100) + 450);
-        Log.v(TAG, "Inserted credit score: " + score);
+        int creditScore = randomNumber(100) + 450;
+        int scoreSuccess = db.getUsersTable().updateCreditScore(creditScore);
+        Log.v(TAG, "Inserted credit score: " + creditScore);
 
 
         Intent finishIntent = new Intent(GetCreditScoreActivity.this, CompleteActivity.class);
@@ -319,6 +312,7 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
         finishIntent.putExtra("status", status.getStatus());
         finishIntent.putExtra("userId", status.getUserId());
         finishIntent.putExtra("transId", status.getTransId());
+        finishIntent.putExtra("creditScore", creditScore+"");
 
 //        DataManager.startAndroidData(this);
 

@@ -35,7 +35,7 @@ import java.util.Calendar;
 
 
 public class HasCreditScoreActivity extends ActionBarActivity {
-    Button getCreditScore;
+    Button getCreditScore, updateLoanInfoButton;
     TextView creditScoreTextView;
     String TAG = "ExistingCreditScoreActivity";
     DBHelper db;
@@ -48,6 +48,15 @@ public class HasCreditScoreActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_credit_score);
         creditScoreTextView = (TextView) findViewById(R.id.creditScoreTextView);
+
+        updateLoanInfoButton = (Button) findViewById(R.id.updateLoanInfoButton);
+        updateLoanInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GetCreditScoreActivity.class);
+                startActivity(intent);
+            }
+        });
 
         getCreditScore = (Button) findViewById(R.id.checkCreditScoreButton);
         getCreditScore.setOnClickListener(new View.OnClickListener() {

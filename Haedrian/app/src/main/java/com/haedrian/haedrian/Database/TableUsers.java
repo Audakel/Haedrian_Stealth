@@ -87,13 +87,18 @@ public class TableUsers {
         return user;
 
     }
+    public Integer getCreditScore() {
+        UserModel user = query(COLUMN_CREDIT_SCORE, ">", "0");
+        if (user != null){
+            return user.getCreditScore();
+        }
 
-
-
+        return 0;
+    }
 
     public Integer updateCreditScore(Integer score) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
-
+        //TODO:: Fix to actually grab userID instead of just getting last row
         ContentValues values = new ContentValues();
         values.put(COLUMN_CREDIT_SCORE, score);
 

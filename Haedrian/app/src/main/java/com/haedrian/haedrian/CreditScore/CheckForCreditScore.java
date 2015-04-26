@@ -36,6 +36,7 @@ public class CheckForCreditScore extends ActionBarActivity {
 
         Intent intent;
         if (user.getCreditScore() > 0){
+//            intent = new Intent(this, GetCreditScoreActivity.class);
             intent = new Intent(this, HasCreditScoreActivity.class);
             startActivity(intent);
         }

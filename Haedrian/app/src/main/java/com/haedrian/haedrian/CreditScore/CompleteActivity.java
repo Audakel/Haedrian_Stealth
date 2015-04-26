@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.haedrian.haedrian.R;
 
 import android.app.Activity;
@@ -13,6 +15,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -26,6 +30,22 @@ public class CompleteActivity extends Activity {
         Intent intent = getIntent();
         String transactionId = intent.getStringExtra("transId");
         transactionInfo.setText(Html.fromHtml("Your transaction ID is: <b>" + transactionId + "</b>"));
+
+        DBHelper dbHelper = new DBHelper(this);
+        String score = dbHelper.getUsersTable().getCreditScore().toString();
+
+
+        TextView creditScoreText = (TextView) findViewById(R.id.creditScoreText);
+        creditScoreText.setText(score);
+
+        Button returnButton = (Button) findViewById(R.id.returnHomeButton);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HasCreditScoreActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

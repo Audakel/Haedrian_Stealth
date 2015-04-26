@@ -30,7 +30,7 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
-//    compile project(':LenddoSDK')
+    compile project(':LenddoSDK')
 //    compile project(':LenddoData')
 //    compile 'commons-io:commons-io:+'
 //    compile 'com.google.android.gms:play-services:6.5.87'
