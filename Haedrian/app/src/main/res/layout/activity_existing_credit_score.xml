@@ -5,7 +5,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.haedrian.haedrian.CreditScore.HasCreditScoreActivity"
-    android:background="@color/lightgrey">
+    android:background="@color/lightgrey"
+    >
 
     <TextView android:text="Score" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Update Loan Information"
-        android:id="@+id/button13"
+        android:id="@+id/updateLoanInfoButton"
         android:background="@color/turquoise"
         android:layout_above="@+id/checkCreditScoreButton"
         android:layout_alignParentRight="true"
@@ -53,7 +54,7 @@
         android:text="Score is out of 1000. Keep your personal information and social accounts updated to build a good credit score and get access to local financial services."
         android:textStyle="italic"
         android:textSize="12sp"
-        android:layout_above="@+id/button13"
+        android:layout_above="@+id/updateLoanInfoButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="20dp" />

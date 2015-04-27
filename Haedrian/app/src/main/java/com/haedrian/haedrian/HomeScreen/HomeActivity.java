@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,19 +28,17 @@ import com.haedrian.haedrian.ApplicationController;
 import com.haedrian.haedrian.CreditScore.CheckForCreditScore;
 import com.haedrian.haedrian.CreditScore.HasCreditScoreActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
-import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
-import com.haedrian.haedrian.Models.WalletModel;
+import com.haedrian.haedrian.ProjectsActivity;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.SendActivity;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,10 +47,9 @@ import java.util.List;
 import java.util.Map;
 
 
-
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     // Nav Drawer stuff
-    private String[] mHomeButtons = {"Home", "Wallet", "Buy", "Add", "Projects", "Invest", "FX Rates", "Settings"};
+    private String[] mHomeButtons = {"Home", "Wallet", "Buy", "Send", "Projects", "Invest", "FX Rates", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private UserModel user;
@@ -69,9 +65,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Set up actionbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -120,6 +113,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             user = db.getUsersTable().query("id", "=", "1");
         }
 
+<<<<<<< HEAD
         // Check if funds have been requested of user
         checkForRequest(parseId);
     }
@@ -261,6 +255,10 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private void refusePayment(ParseObject requestObject) {
         requestObject.put("fulfillmentStatusId", REFUSED_STATUS);
         requestObject.saveInBackground();
+=======
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+>>>>>>> 1f6d39c72fa2fbb05ac55dd632ce9e298822a0db
     }
 
     private void setupDrawer() {
@@ -382,18 +380,62 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         //Grab all view/position/id info
         //Toast.makeText(this, "View: " + view + " \nPosition: " + position + " \nid: " + id, Toast.LENGTH_LONG).show();
 
-        if (position == 7) {
-            intent = new Intent(this, SettingsActivity.class);
+
+        if (position == 0) {
+            intent = new Intent(this, HomeActivity.class);
             ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
 
             startActivity(intent, options1.toBundle());
-        } else if (position == 6) {
+        }
+        else if (position == 1) {
+            intent = new Intent(this, WalletActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+
+            startActivity(intent, options1.toBundle());
+        }
+        else if (position == 2) {
+            intent = new Intent(this, BuyActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+
+            startActivity(intent, options1.toBundle());
+        }
+        else if (position == 3) {
+            intent = new Intent(this, SendRequestActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+
+            startActivity(intent, options1.toBundle());
+        }
+        else if (position == 4) {
+            intent = new Intent(this, ProjectsActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+
+            startActivity(intent, options1.toBundle());
+        }
+        else if (position == 5) {
+            intent = new Intent(this, InvestActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+
+            startActivity(intent, options1.toBundle());
+        }
+        else if (position == 6) {
             intent = new Intent(this, CurrencyInfoActivity.class);
             ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
 
             startActivity(intent, options1.toBundle());
         }
+        else if (position == 7) {
+            intent = new Intent(this, SettingsActivity.class);
+            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+            startActivity(intent, options1.toBundle());
+        }
+
     }
 }

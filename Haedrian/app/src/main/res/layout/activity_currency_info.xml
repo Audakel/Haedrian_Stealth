@@ -15,7 +15,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Refresh Data"/>
+        android:text="Refresh Data"
+        android:background="@color/turquoise" />
 
     <ListView
         android:id="@+id/currencyListView"
