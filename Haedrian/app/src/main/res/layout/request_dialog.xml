@@ -4,11 +4,12 @@
     android:layout_width="wrap_content"
     android:layout_height="200dp">
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_above="@+id/pay_now_container"
+        android:layout_above="@+id/has_requested_container"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -22,6 +23,21 @@
             android:layout_marginRight="5dp"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/has_requested_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@+id/pay_now_container"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp" >
+
 
         <TextView
             android:id="@+id/dialog_request"
@@ -104,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/blue"
-            android:text="yes_pay_them"
+            android:text="@string/yes_pay_them"
             android:textColor="@color/white"/>
 
     </LinearLayout>

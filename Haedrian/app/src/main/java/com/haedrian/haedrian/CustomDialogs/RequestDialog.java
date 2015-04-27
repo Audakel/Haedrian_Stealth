@@ -8,9 +8,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.haedrian.haedrian.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by Logan on 4/22/2015.
@@ -40,9 +44,26 @@ public class RequestDialog extends Dialog {
         amountTV = (TextView) findViewById(R.id.dialog_request_amount);
 
         String requestorId = request.getString("requestorId");
-        String amount = String.valueOf(request.getNumber("amountCurrency"));
+        ParseQuery<ParseObject> userQuery = new ParseQuery<ParseObject>("_User");
+        userQuery.whereEqualTo("objectId", requestorId);
+        userQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    if (parseObjects.size() > 0) {
+                        String amount = String.valueOf(request.getNumber("amountCurrency"));
+                        String usersName = parseObjects.get(0).getString("firstName") + " " + parseObjects.get(0).getString("lastName");
+                        amountTV.setText("$" + amount);
+                        requestorTV.setText(usersName);
+                    }
+                    else {
 
-        amountTV.setText("$" + amount);
+                    }
+                }
+                else {
+                }
+            }
+        });
 
     }
 
