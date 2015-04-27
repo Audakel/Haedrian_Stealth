@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -67,6 +68,10 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credit_check);
+
+        // Setup ActionBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         LenddoConfig.setTestMode(false);
         initView();
 
@@ -342,7 +347,7 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_credit_check, menu);
+//        getMenuInflater().inflate(R.menu.menu_credit_check, menu);
         return true;
     }
 
@@ -354,6 +359,10 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
         return super.onOptionsItemSelected(item);

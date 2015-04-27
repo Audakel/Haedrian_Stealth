@@ -215,7 +215,13 @@
         </activity>
         <activity
             android:name=".CreditScore.GetCreditScoreActivity"
-            android:label="@string/title_activity_credit_check" >
+            android:label="@string/title_activity_credit_check"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".CreditScore.CompleteActivity"
@@ -235,11 +241,23 @@
         </activity>
         <activity
             android:name=".CreditScore.HasCreditScoreActivity"
-            android:label="@string/title_activity_existing_credit_score" >
+            android:label="@string/title_activity_existing_credit_score"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
             android:name=".CreditScore.CheckForCreditScore"
-            android:label="@string/title_activity_check_for_credit_score" >
+            android:label="@string/title_activity_check_for_credit_score"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
     </application>
 

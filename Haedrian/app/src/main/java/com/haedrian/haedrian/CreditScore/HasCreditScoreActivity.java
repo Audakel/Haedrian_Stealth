@@ -3,6 +3,7 @@ package com.haedrian.haedrian.CreditScore;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,10 @@ public class HasCreditScoreActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_credit_score);
+
+        // Set up actionBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         creditScoreTextView = (TextView) findViewById(R.id.creditScoreTextView);
 
         updateLoanInfoButton = (Button) findViewById(R.id.updateLoanInfoButton);
@@ -79,7 +84,7 @@ public class HasCreditScoreActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_existing_credit_score, menu);
+//        getMenuInflater().inflate(R.menu.menu_existing_credit_score, menu);
         return true;
     }
 
@@ -92,6 +97,10 @@ public class HasCreditScoreActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 
