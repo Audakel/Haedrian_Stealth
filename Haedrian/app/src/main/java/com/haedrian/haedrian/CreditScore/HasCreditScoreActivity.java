@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.ApplicationController;
+import com.haedrian.haedrian.CreateProjectActivity;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.haedrian.haedrian.Models.UserModel;
@@ -35,7 +36,7 @@ import java.util.Calendar;
 
 
 public class HasCreditScoreActivity extends ActionBarActivity {
-    Button getCreditScore, updateLoanInfoButton;
+    Button getCreditScore, updateLoanInfoButton, createProjectButton;
     TextView creditScoreTextView;
     String TAG = "ExistingCreditScoreActivity";
     DBHelper db;
@@ -48,6 +49,15 @@ public class HasCreditScoreActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_credit_score);
         creditScoreTextView = (TextView) findViewById(R.id.creditScoreTextView);
+
+        createProjectButton = (Button) findViewById(R.id.createProjectButton);
+        createProjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreateProjectActivity.class);
+                startActivity(intent);
+            }
+        });
 
         updateLoanInfoButton = (Button) findViewById(R.id.updateLoanInfoButton);
         updateLoanInfoButton.setOnClickListener(new View.OnClickListener() {

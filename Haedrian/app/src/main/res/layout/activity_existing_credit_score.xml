@@ -54,11 +54,20 @@
         android:text="Score is out of 1000. Keep your personal information and social accounts updated to build a good credit score and get access to local financial services."
         android:textStyle="italic"
         android:textSize="12sp"
-        android:layout_above="@+id/updateLoanInfoButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_above="@+id/createProjectButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="5dp" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Project"
+        android:id="@+id/createProjectButton"
+        android:background="@color/turquoise"
+        android:layout_above="@+id/updateLoanInfoButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
 
 
 </RelativeLayout>
