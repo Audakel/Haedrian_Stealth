@@ -287,17 +287,15 @@ public class ContactsListFragment extends ListFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         // Inflate the menu items
-        inflater.inflate(R.menu.contact_list_menu, menu);
+//        inflater.inflate(R.menu.contact_list_menu, menu);
         // Locate the search item
-        MenuItem searchItem = menu.findItem(R.id.menu_search);
+//        MenuItem searchItem = menu.findItem(R.id.menu_search);
 
         // In versions prior to Android 3.0, hides the search item to prevent additional
         // searches. In Android 3.0 and later, searching is done via a SearchView in the ActionBar.
         // Since the search doesn't create a new Activity to do the searching, the menu item
         // doesn't need to be turned off.
-        if (mIsSearchResultView) {
-            searchItem.setVisible(false);
-        }
+
 
 //        // In version 3.0 and later, sets up and configures the ActionBar SearchView
 //        if (Utils.hasHoneycomb()) {
@@ -408,19 +406,6 @@ public class ContactsListFragment extends ListFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Sends a request to the People app to display the create contact screen
-            case R.id.menu_add_contact:
-                final Intent intent = new Intent(Intent.ACTION_INSERT, Contacts.CONTENT_URI);
-                startActivity(intent);
-                break;
-            // For platforms earlier than Android 3.0, triggers the search activity
-            case R.id.menu_search:
-                if (!Utils.hasHoneycomb()) {
-                    getActivity().onSearchRequested();
-                }
-                break;
-        }
         return super.onOptionsItemSelected(item);
     }
 

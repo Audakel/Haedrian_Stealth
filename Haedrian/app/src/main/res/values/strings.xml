@@ -64,9 +64,9 @@
     <string name="scan">Scan</string>
     <string name="categories">Categories</string>
     <string name="title_activity_projects_list">Trending</string>
-    <string name="title_activity_add_personal_bank">AddPersonalBankActivity</string>
+    <string name="title_activity_add_personal_bank">Add Personal Bank</string>
     <string name="title_activity_app_controller">AppController</string>
-    <string name="title_activity_invest_info">InvestInfoActivity</string>
+    <string name="title_activity_invest_info">Invest Info</string>
     <string name="name">Name, Email, Address etc.</string>
     <string name="no_user_selected_error">Please enter a user below</string>
     <string name="title_activity_request">RequestActivity</string>
@@ -174,7 +174,7 @@ s    <string name="activity_contacts_list">Contacts List</string>
     <string name="search_match_other">Matches Other Field</string>
     <string name="no_address">No addresses found</string>
     <string name="no_intent_found">No application found to handle this action</string>
-    <string name="title_activity_credit_check">CreditCheckActivity</string>
+    <string name="title_activity_credit_check">Credit Check</string>
 
 
 
@@ -185,9 +185,9 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="last_name">Last Name*</string>
         <string name="first_name">First Name*</string>
         <string name="date_of_birth">Date of Birth*</string>
-        <string name="title_activity_loan_application">LoanApplicationActivity</string>
+        <string name="title_activity_loan_application">Loan Application</string>
         <string name="loan_amount">Loan Amount</string>
-        <string name="title_activity_complete">CompleteActivity</string>
+        <string name="title_activity_complete">Complete</string>
         <string name="loan_application_complete">Loan Submission Complete. We\'ll get back to you!</string>
         <string name="expected_disbursement">Expected Disbursement</string>
         <string name="interest_rate">Interest Rate</string>
@@ -212,7 +212,7 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="thank_you">Thank you we have received your loan application.</string>
         <string name="middle_name">Middle Name</string>
 
-        <string name="title_activity_form_builder">FormBuilderActivity</string>
+        <string name="title_activity_form_builder">Form Builder</string>
         <string name="customer_id">Client ID</string>
         <string name="ellipses">...</string>
         <string name="employment_start_date">Employment Start Date</string>
@@ -221,12 +221,12 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="mother_middle_name">Mother Middle Name</string>
         <string name="mother_first_name">Mother First Name</string>
         <string name="university">University</string>
-        <string name="title_activity_canceled">CanceledActivity</string>
+        <string name="title_activity_canceled">Canceled</string>
         <string name="canceled">You have canceled your application.</string>
         <string name="primary_address">Verify your Address</string>
         <string name="set_primary_address">Set Primary Address</string>
         <string name="click_here_to_set_your_address">Click here to confirm your address</string>
-        <string name="title_activity_wait_for_credit_score">WaitForCreditScore</string>
+        <string name="title_activity_wait_for_credit_score">Credit Score</string>
         <string name="title_activity_signup">Signup</string>
         <string name="email_required">Email*</string>
         <string name="username">Username*</string>
@@ -240,8 +240,8 @@ s    <string name="activity_contacts_list">Contacts List</string>
         <string name="pay_now">Do you wish to pay them now?</string>
         <string name="not_now">No, not now.</string>
         <string name="yes_pay_them">Yes, pay them.</string>
-        <string name="title_activity_existing_credit_score">ExistingCreditScoreActivity</string>
-        <string name="title_activity_check_for_credit_score">CheckForCreditScore</string>
+        <string name="title_activity_existing_credit_score">Credit Score</string>
+        <string name="title_activity_check_for_credit_score">Credit Score</string>
         <string name="no_transaction">You have not had any transactions yet!</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.haedrian.haedrian.CreditScore;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,10 @@ public class CheckForCreditScore extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set up ActionBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_check_for_credit_score);
         db = new DBHelper(this);
         sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
@@ -28,6 +33,18 @@ public class CheckForCreditScore extends ActionBarActivity {
         user = db.getUsersTable().query("id", "=", String.valueOf(userId));
 
         //TODO:: This only works by checking local database. Need to figure out how to also check parse or our server for score
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -39,10 +56,12 @@ public class CheckForCreditScore extends ActionBarActivity {
 //            intent = new Intent(this, GetCreditScoreActivity.class);
             intent = new Intent(this, HasCreditScoreActivity.class);
             startActivity(intent);
+            finish();
         }
         else {
             intent = new Intent(this, GetCreditScoreActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }
