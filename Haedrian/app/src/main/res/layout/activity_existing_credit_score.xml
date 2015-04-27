@@ -69,7 +69,8 @@
         android:background="@color/turquoise"
         android:layout_above="@+id/updateLoanInfoButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>
