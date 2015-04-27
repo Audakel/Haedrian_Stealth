@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/colors.xml -->
     <eat-comment/>
     <color name="black">#000000</color>
     <color name="blue_header_divider">#3e56a5</color>
@@ -9,11 +9,11 @@
     <color name="lenddo_white">#FFFFFF</color>
     <color name="white">#55FFFFFF</color>
     <declare-styleable name="AddressButton"><attr format="string" name="headerLabel"/></declare-styleable>
-    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="address_set">Address confirmed. Click here to change.</string>
@@ -36,7 +36,7 @@
     <string name="type_place_name">Type the name of a place</string>
     <string name="verify_with_lenddo">Verify with Lenddo</string>
     <string name="verify_your_address"/>
-    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/values/styles.xml -->
     <eat-comment/>
     <style name="AddressDialogTheme" parent="android:Theme.Holo.Light.Dialog">
         <item name="android:windowNoTitle">true</item>

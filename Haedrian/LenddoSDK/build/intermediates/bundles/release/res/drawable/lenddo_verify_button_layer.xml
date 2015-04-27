@@ -1,3 +1,3 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/lenddo_verify_button_border" android:id="@+id/rounded_corners"/>
-</layer-list><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/drawable/lenddo_verify_button_layer.xml -->
+</layer-list><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/drawable/lenddo_verify_button_layer.xml -->
