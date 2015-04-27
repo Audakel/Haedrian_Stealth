@@ -6,4 +6,4 @@
         android:toAlpha="1.0"
         android:duration="1000"
         />
-</set><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/anim/fadein.xml --><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/bundles/debug/res/anim/fadein.xml -->
+</set><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/anim/fadein.xml --><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/bundles/debug/res/anim/fadein.xml -->

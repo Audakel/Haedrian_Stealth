@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/exploded-aar/Haedrian/google-play-services_lib/unspecified/res/values-ar/values.xml -->
+    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/exploded-aar/Haedrian/google-play-services_lib/unspecified/res/values-ar/values.xml -->
     <eat-comment/>
     <string msgid="473679118463211576" name="common_android_wear_notification_needs_update_text">"‏يتطلب أحد التطبيقات تحديثًا لتطبيق Android Wear."</string>
     <string msgid="3046420540094071256" name="common_android_wear_update_text">"‏لن يتم تشغيل هذا التطبيق ما لم تحدِّث تطبيق Android Wear."</string>

@@ -231,64 +231,64 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
         //auto-collect
         formData.collect(GetCreditScoreActivity.this, R.id.formContainer);
 
-//        primaryAddress.setHouseNumber(houseNumber.getText().toString());
-//        primaryAddress.setStreet(street.getText().toString());
-//        primaryAddress.setBarangay(barangay.getText().toString());
-//        primaryAddress.setProvince(province.getText().toString());
-//        primaryAddress.setCity(city.getText().toString());
-//        primaryAddress.setPostalCode(postalCode.getText().toString());
-//        primaryAddress.setCountryCode("PH");
-//
-//        //place partner defined user identifier
-//        formData.setUserId(customerId.getText().toString());
-//        formData.setLastName(lastName.getText().toString());
-//        formData.setMiddleName(middleName.getText().toString());
-//        formData.setHomePhone(homePhone.getText().toString());
-//        formData.setFirstName(firstName.getText().toString());
-//        formData.setEmail(email.getText().toString());
-//        formData.setEmployerName(nameOfEmployer.getText().toString());
-//        formData.setMobilePhone(mobilePhone.getText().toString());
-//        formData.setDateOfBirth(dateOfBirth.getText().toString());
-//        formData.setStartEmploymentDate(editTextEmploymentStart.getText().toString());
-//        formData.setEndEmploymentDate(editTextEmploymentEnd.getText().toString());
-//        formData.setMotherFirstName(motherFirstName.getText().toString());
-//        formData.setMotherLastName(motherLastName.getText().toString());
-//        formData.setMotherMiddleName(motherMiddleName.getText().toString());
-//        formData.setUniversityName(university.getText().toString());
-//        formData.setAddress(primaryAddress);
-//
-//        //send custom fields
-//        formData.putField("Loan_Amount", loanAmmount.getText().toString());
-
-        // ============ Testing data ===============
-        primaryAddress.setHouseNumber("100");
-        primaryAddress.setStreet("La Calle");
-        primaryAddress.setBarangay("Bel-Air");
-        primaryAddress.setProvince("La Union");
-        primaryAddress.setCity("San Fernando");
-        primaryAddress.setPostalCode("1200");
+        primaryAddress.setHouseNumber(houseNumber.getText().toString());
+        primaryAddress.setStreet(street.getText().toString());
+        primaryAddress.setBarangay(barangay.getText().toString());
+        primaryAddress.setProvince(province.getText().toString());
+        primaryAddress.setCity(city.getText().toString());
+        primaryAddress.setPostalCode(postalCode.getText().toString());
         primaryAddress.setCountryCode("PH");
 
         //place partner defined user identifier
         formData.setUserId(customerId.getText().toString());
-        formData.setLastName("Bit");
-        formData.setMiddleName("");
-        formData.setHomePhone("00-63-906-1234567");
-        formData.setFirstName("Audakel");
-        formData.setEmail("audakel@gmail.com");
-        formData.setEmployerName("BYU");
-        formData.setMobilePhone("4803591947");
-        formData.setDateOfBirth("1/01/1991");
-        formData.setStartEmploymentDate("5/05/2012");
-        formData.setEndEmploymentDate("5/05/2013");
-        formData.setMotherFirstName("Sam");
-        formData.setMotherLastName("Harris");
-        formData.setMotherMiddleName("");
-        formData.setUniversityName("BYU");
+        formData.setLastName(lastName.getText().toString());
+        formData.setMiddleName(middleName.getText().toString());
+        formData.setHomePhone(homePhone.getText().toString());
+        formData.setFirstName(firstName.getText().toString());
+        formData.setEmail(email.getText().toString());
+        formData.setEmployerName(nameOfEmployer.getText().toString());
+        formData.setMobilePhone(mobilePhone.getText().toString());
+        formData.setDateOfBirth(dateOfBirth.getText().toString());
+        formData.setStartEmploymentDate(editTextEmploymentStart.getText().toString());
+        formData.setEndEmploymentDate(editTextEmploymentEnd.getText().toString());
+        formData.setMotherFirstName(motherFirstName.getText().toString());
+        formData.setMotherLastName(motherLastName.getText().toString());
+        formData.setMotherMiddleName(motherMiddleName.getText().toString());
+        formData.setUniversityName(university.getText().toString());
         formData.setAddress(primaryAddress);
 
         //send custom fields
-        formData.putField("Loan_Amount", "100");
+        formData.putField("Loan_Amount", loanAmmount.getText().toString());
+
+        // ============ Testing data ===============
+//        primaryAddress.setHouseNumber("100");
+//        primaryAddress.setStreet("La Calle");
+//        primaryAddress.setBarangay("Bel-Air");
+//        primaryAddress.setProvince("La Union");
+//        primaryAddress.setCity("San Fernando");
+//        primaryAddress.setPostalCode("1200");
+//        primaryAddress.setCountryCode("PH");
+//
+//        //place partner defined user identifier
+//        formData.setUserId(customerId.getText().toString());
+//        formData.setLastName("Bit");
+//        formData.setMiddleName("");
+//        formData.setHomePhone("00-63-906-1234567");
+//        formData.setFirstName("Audakel");
+//        formData.setEmail("audakel@gmail.com");
+//        formData.setEmployerName("BYU");
+//        formData.setMobilePhone("4803591947");
+//        formData.setDateOfBirth("1/01/1991");
+//        formData.setStartEmploymentDate("5/05/2012");
+//        formData.setEndEmploymentDate("5/05/2013");
+//        formData.setMotherFirstName("Sam");
+//        formData.setMotherLastName("Harris");
+//        formData.setMotherMiddleName("");
+//        formData.setUniversityName("BYU");
+//        formData.setAddress(primaryAddress);
+//
+//        //send custom fields
+//        formData.putField("Loan_Amount", "100");
 
         // ============ End Testing data ===============
 
