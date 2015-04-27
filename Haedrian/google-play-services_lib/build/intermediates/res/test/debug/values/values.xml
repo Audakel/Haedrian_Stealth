@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/google-play-services_lib/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/google-play-services_lib/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_signin_btn_dark_text_default">@android:color/white</color>

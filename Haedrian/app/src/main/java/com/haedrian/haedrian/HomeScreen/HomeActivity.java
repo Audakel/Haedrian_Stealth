@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.haedrian.haedrian.ApplicationController;
 import com.haedrian.haedrian.CreditScore.CheckForCreditScore;
 import com.haedrian.haedrian.CreditScore.HasCreditScoreActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
+import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.ProjectsActivity;
@@ -35,6 +37,7 @@ import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.SendActivity;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -113,7 +116,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             user = db.getUsersTable().query("id", "=", "1");
         }
 
-<<<<<<< HEAD
         // Check if funds have been requested of user
         checkForRequest(parseId);
     }
@@ -255,10 +257,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private void refusePayment(ParseObject requestObject) {
         requestObject.put("fulfillmentStatusId", REFUSED_STATUS);
         requestObject.saveInBackground();
-=======
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
->>>>>>> 1f6d39c72fa2fbb05ac55dd632ce9e298822a0db
     }
 
     private void setupDrawer() {

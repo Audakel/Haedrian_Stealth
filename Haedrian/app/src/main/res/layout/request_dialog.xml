@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="has_requested"/>
+            android:text="@string/has_requested"/>
 
         <TextView
             android:id="@+id/dialog_request_amount"
@@ -43,7 +43,7 @@
             android:id="@+id/dialog_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="from you"
+            android:text="@string/from_you"
             android:textSize="18sp"
             android:layout_marginLeft="5dp" />
 
@@ -65,7 +65,7 @@
             android:id="@+id/dialog_pay_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="pay_now"
+            android:text="@string/pay_now"
             android:textSize="18sp"
             android:layout_marginLeft="5dp" />
 
