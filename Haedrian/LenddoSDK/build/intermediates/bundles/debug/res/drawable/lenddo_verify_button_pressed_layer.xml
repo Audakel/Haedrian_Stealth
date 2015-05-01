@@ -2,4 +2,4 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/lenddo_verify_button_pressed_border" android:id="@+id/rounded_corners"/>
-</selector><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/drawable/lenddo_verify_button_pressed_layer.xml -->
+</selector><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/drawable/lenddo_verify_button_pressed_layer.xml -->

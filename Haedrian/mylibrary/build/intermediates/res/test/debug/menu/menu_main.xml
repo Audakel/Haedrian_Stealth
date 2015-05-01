@@ -4,4 +4,4 @@
     <item android:id="@+id/action_settings" android:title="action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
-<!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/mylibrary/src/main/res/menu/menu_main.xml --><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/bundles/debug/res/menu/menu_main.xml -->
+<!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/mylibrary/src/main/res/menu/menu_main.xml --><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/mylibrary/build/intermediates/bundles/debug/res/menu/menu_main.xml -->
