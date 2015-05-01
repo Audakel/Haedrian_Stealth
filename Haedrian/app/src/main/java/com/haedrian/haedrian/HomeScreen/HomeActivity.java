@@ -31,6 +31,7 @@ import com.haedrian.haedrian.CreditScore.HasCreditScoreActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.MapsActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.ProjectsActivity;
 import com.haedrian.haedrian.R;
@@ -116,7 +117,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             });
         } else {
 
-            user = db.getUsersTable().query("id", "=", "1");
+            user = db.getUsersTable().query("_id", "=", "1");
         }
 
         // Check if funds have been requested of user
@@ -364,7 +365,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 startActivity(intent, options4.toBundle());
                 return;
             case R.id.buy:
-                intent = new Intent(this, BuyActivity.class);
+                intent = new Intent(this, MapsActivity.class);
                 ActivityOptions options5 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options5.toBundle());

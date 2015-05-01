@@ -20,4 +20,4 @@
         android:layout_height="10dp"
         android:visibility="gone"
         android:layout_alignParentTop="true" />
-</RelativeLayout><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/res/layout/web_authorize.xml --><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/bundles/debug/res/layout/web_authorize.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/res/layout/web_authorize.xml --><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/bundles/debug/res/layout/web_authorize.xml -->

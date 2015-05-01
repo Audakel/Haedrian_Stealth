@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/error_red_text"
-            android:text="not now"
+            android:text="@string/not_now"
             android:textColor="@color/white"/>
 
         <View

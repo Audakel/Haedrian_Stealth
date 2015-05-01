@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/google-play-services_lib/build/intermediates/bundles/debug/res/values-be/values.xml -->
+    <!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/google-play-services_lib/build/intermediates/bundles/debug/res/values-be/values.xml -->
     <eat-comment/>
     <string msgid="4181637455539816337" name="common_google_play_services_enable_button">"Уключыць службы Google Play"</string>
     <string msgid="7627896071867667758" name="common_google_play_services_enable_text">"Гэта прыкладанне не будзе працаваць, пакуль вы не ўключыце службы Google Play."</string>
