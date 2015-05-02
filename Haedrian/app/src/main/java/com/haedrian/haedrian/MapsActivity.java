@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -21,9 +22,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -40,6 +44,10 @@ public class MapsActivity extends ActionBarActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private double latitude;
     private double longitude;
+    private List<LatLng> latLngs;
+    private List<String> titles;
+    private List<String> descriptions;
+
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -66,6 +74,13 @@ public class MapsActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        latLngs = new ArrayList<>();
+        titles = new ArrayList<>();
+        descriptions = new ArrayList<>();
+
+        // Get locations
+        getLocations();
+
         // Location stuff
         LocationManager locationManager;
         String svcName = Context.LOCATION_SERVICE;
@@ -89,6 +104,45 @@ public class MapsActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_maps2);
         setUpMapIfNeeded();
+    }
+
+    public void getLocations() {
+
+        for (int i = 0; i < 9; i++) {
+
+            String url = "http://coinmap.org/data/data-overpass-bitcoin-" + i + ".json";
+            JsonArrayRequest currencyRequest = new JsonArrayRequest(url,
+                    new Response.Listener<JSONArray>() {
+
+                        @Override
+                        public void onResponse(JSONArray jsonArray) {
+                            try {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    titles.add(jsonArray.getJSONObject(i).getString("title"));
+                                    if (jsonArray.getJSONObject(i).has("desc")) {
+                                        descriptions.add(jsonArray.getJSONObject(i).getString("desc"));
+                                    }
+                                    else {
+                                        descriptions.add("");
+                                    }
+                                    LatLng latLng = new LatLng(Double.parseDouble(jsonArray.getJSONObject(i).getString("lat")), Double.parseDouble(jsonArray.getJSONObject(i).getString("lon")));
+                                    latLngs.add(latLng);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    , new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            }
+            );
+            // Adding request to request queue
+            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+        }
     }
 
     @Override
@@ -163,42 +217,32 @@ public class MapsActivity extends ActionBarActivity {
                 .title("You")
                 .snippet(""));
 
-        for (int i = 0; i < 2; i++) {
 
-            String url = "http://coinmap.org/data/data-overpass-bitcoin-" + i + ".json";
-            JsonArrayRequest currencyRequest = new JsonArrayRequest(url,
-                    new Response.Listener<JSONArray>() {
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
-                        @Override
-                        public void onResponse(JSONArray jsonArray) {
-                            try {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    String title = jsonArray.getJSONObject(i).getString("title");
-                                    //                                String desc = jsonArray.getJSONObject(i).getString("desc");
-                                    Double lon = Double.parseDouble(jsonArray.getJSONObject(i).getString("lon"));
-                                    Double lat = Double.parseDouble(jsonArray.getJSONObject(i).getString("lat"));
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                long start = SystemClock.uptimeMillis();
+                int count = 0;
+                Projection projection = mMap.getProjection();
+                LatLngBounds bounds = projection.getVisibleRegion().latLngBounds;
+                for (int i = latLngs.size() - 1; i >= 0; i--) {
+                    LatLng position = latLngs.get(i);
+                    if (bounds.contains(position)) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLngs.get(i))
+                                .title(titles.get(i))
+                                .snippet(descriptions.get(i))
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bitcoinmarker))
+                                .snippet(""));
 
-                                    mMap.addMarker(new MarkerOptions()
-                                            .position(new LatLng(lat, lon))
-                                            .title(title)
-                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.bitcoinmarker))
-                                            .snippet(""));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        latLngs.remove(i);
+                        count++;
                     }
-                    , new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
                 }
+                long end = SystemClock.uptimeMillis();
             }
-            );
-            // Adding request to request queue
-            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
-        }
+        });
 
     }
 }

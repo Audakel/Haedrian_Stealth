@@ -86,7 +86,7 @@ public class HasCreditScoreActivity extends ActionBarActivity {
         db = new DBHelper(this);
         sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         userId = sp.getInt("user_id", -1);
-        user = db.getUsersTable().query("id", "=", String.valueOf(userId));
+        user = db.getUsersTable().query("_id", "=", String.valueOf(userId));
         creditScoreTextView.setText(user.getCreditScore()+"");
     }
 

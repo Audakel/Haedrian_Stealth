@@ -30,7 +30,7 @@ public class CheckForCreditScore extends ActionBarActivity {
         db = new DBHelper(this);
         sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         userId = sp.getInt("user_id", -1);
-        user = db.getUsersTable().query("id", "=", String.valueOf(userId));
+        user = db.getUsersTable().query("_id", "=", String.valueOf(userId));
 
         //TODO:: This only works by checking local database. Need to figure out how to also check parse or our server for score
     }
