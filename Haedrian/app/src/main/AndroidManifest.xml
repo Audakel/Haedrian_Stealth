@@ -281,6 +281,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
+        <activity
+            android:name=".TransactionDetailsActivity"
+            android:label="@string/title_activity_transaction_details" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

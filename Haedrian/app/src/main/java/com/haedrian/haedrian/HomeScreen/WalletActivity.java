@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.QrCode.QRCodeEncoder;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.TransactionDetailsActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -513,6 +515,13 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
                                 adapter = new TransactionListAdapter(context, R.layout.row_transaction, arrayList);
                                 transactionList.setAdapter(adapter);
+                                transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Intent intent = new Intent(context, TransactionDetailsActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
                             } else {
 
                             }
