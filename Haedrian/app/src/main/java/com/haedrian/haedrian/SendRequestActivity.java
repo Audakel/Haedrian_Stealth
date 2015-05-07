@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.haedrian.haedrian.Application.ApplicationController;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -866,6 +866,8 @@ public class ContactsListFragment extends ListFragment implements
 
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
 
+
+                ContactsContract.CommonDataKinds.Phone.NUMBER,
                 // The sort order column for the returned Cursor, used by the AlphabetIndexer
                 SORT_ORDER
         };
@@ -876,7 +878,8 @@ public class ContactsListFragment extends ListFragment implements
         final static int DISPLAY_NAME = 2;
         final static int PHOTO_THUMBNAIL_DATA = 3;
         final static int EMAIL_ADDRESS = 4;
-        final static int SORT_KEY = 5;
+        final static int PHONE_NUMBER = 5;
+        final static int SORT_KEY = 6;
     }
 
 }

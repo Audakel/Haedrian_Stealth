@@ -1,4 +1,4 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.Application;
 
 import android.app.Application;
 import android.content.Intent;

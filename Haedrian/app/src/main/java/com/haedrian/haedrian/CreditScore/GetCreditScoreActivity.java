@@ -1,9 +1,7 @@
 package com.haedrian.haedrian.CreditScore;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,8 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.haedrian.haedrian.ApplicationConstants;
+import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.R;
 import com.lenddo.sdk.core.Credentials;
@@ -33,8 +30,6 @@ import com.lenddo.sdk.models.FormDataCollector;
 import com.lenddo.sdk.utils.UIHelper;
 import com.lenddo.sdk.widget.LenddoButton;
 import com.lenddo.widget.address.AddressButton;
-import com.lenddo.widget.address.OnAddressConfirmedListener;
-import com.lenddo.widget.address.OnPrefillListener;
 import com.lenddo.widget.address.models.Address;
 
 import java.text.ParseException;

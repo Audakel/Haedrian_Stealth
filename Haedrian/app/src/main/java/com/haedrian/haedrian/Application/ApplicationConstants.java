@@ -1,10 +1,10 @@
-package com.haedrian.haedrian;
+package com.haedrian.haedrian.Application;
 
 /**
  * Created by James on 3/21/2015.
  */
 public class ApplicationConstants {
-    public final static String base = "http://haedrian.io/";
+    public final static String BASE = "http://haedrian.io/";
     public final static String lenddo_social_service_secret = "";
     public final static String lenddo_social_service_userid = "";
     public final static String lenddo_product_service_secret = "";

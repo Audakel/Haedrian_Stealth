@@ -12,11 +12,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.haedrian.haedrian.Application.ApplicationCommunicator;
+import com.haedrian.haedrian.Application.ApplicationConstants;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignupActivity extends ActionBarActivity {
@@ -116,37 +128,53 @@ public class SignupActivity extends ActionBarActivity {
             return;
         }
 
-        // If everything passes
-        final ParseUser user = new ParseUser();
-        user.setUsername(email);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.put("firstName", firstName);
-        user.put("lastName", lastName);
-        user.put("phoneNumber", phoneNumber);
-        user.put("handle", username);
-        user.put("creditScore", 0);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("email", email);
+        params.put("firstName", firstName);
+        params.put("lastName", lastName);
+        params.put("username", username);
+        params.put("password", password);
 
-        final String tempPass = password;
-        final String tempEmail = email;
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("secret", tempPass);
-                    editor.putString("email", tempEmail);
-                    editor.putString("parse_id", user.getObjectId());
-                    editor.commit();
+        createUser(params);
 
-                    Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(SignupActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+    }
+    public void createUser(Map<String, String> params) {
+        // params.get("firstName"); etc......
+        String url = ApplicationConstants.BASE + "";
+
+        final Map<String, String> finalParams = params;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                        if (userId != -1) {
+//                            SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = sp.edit();
+//                            editor.putString("email", email);
+//                            editor.putInt("user_id", userId);
+//                            editor.commit();
+//
+//                            Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignupActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                return finalParams;
+            }
+        };
 
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 }

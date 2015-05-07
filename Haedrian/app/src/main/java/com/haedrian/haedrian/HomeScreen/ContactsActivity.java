@@ -1,42 +1,92 @@
 package com.haedrian.haedrian.HomeScreen;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.haedrian.haedrian.ContactsListFragment;
+import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.GetContacts;
 import com.haedrian.haedrian.R;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-public class AddActivity extends ActionBarActivity {
+
+public class ContactsActivity extends ActionBarActivity implements
+        ContactsListFragment.OnContactsInteractionListener {
+
     String upcCode = "";
     private LinearLayout startScanButton;
+    private EditText contactsET;
+    private LinearLayout resultsLinearLayout;
+    private TextView resultsNumber;
+    private ListView dataList;
+
+
+    private DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_contacts);
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         startScanButton = (LinearLayout) findViewById(R.id.scan_button);
 
+        contactsET = (EditText) findViewById(R.id.contact_edit_text);
+        resultsLinearLayout = (LinearLayout) findViewById(R.id.results_linear_layout);
+        resultsNumber = (TextView) findViewById(R.id.results_number_textview);
+        dataList = (ListView) findViewById(R.id.contact_list);
+
+
+        // To do autocomplete with the listview
+        contactsET.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+                // Requery/Filter the adapter and then set it to listview here
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+
     }
 
     public void onClick(View view) {
-        if (view.getId() == R.id.scan_button) {
-            startScanning();
-        }
-        else if (view.getId() == R.id.contacts_button) {
+        if (view.getId() == R.id.contacts_button) {
             // Get contacts
             Intent intent = new Intent(this, GetContacts.class);
             startActivity(intent);
@@ -86,13 +136,14 @@ public class AddActivity extends ActionBarActivity {
         }
     }
 
-    public void startScanning() {
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.addExtra("SCAN_WIDTH", 640);
-        integrator.addExtra("SCAN_HEIGHT", 480);
-        integrator.addExtra("SCAN_MODE", "QR_CODE_MODE,PRODUCT_MODE");
-        //customize the prompt message before scanning
-        integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
-        integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
+
+    @Override
+    public void onContactSelected(Cursor cursor, int position) {
+
+    }
+
+    @Override
+    public void onSelectionCleared() {
+
     }
 }

@@ -18,24 +18,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.haedrian.haedrian.ApplicationController;
-
 import com.haedrian.haedrian.CreditScore.CheckForCreditScore;
-import com.haedrian.haedrian.CreditScore.HasCreditScoreActivity;
 import com.haedrian.haedrian.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.MapsActivity;
 import com.haedrian.haedrian.Models.UserModel;
-import com.haedrian.haedrian.ProjectsActivity;
 import com.haedrian.haedrian.R;
-import com.haedrian.haedrian.SendActivity;
 import com.haedrian.haedrian.SendRequestActivity;
 import com.haedrian.haedrian.SettingsActivity;
 import com.parse.FindCallback;
@@ -43,17 +32,13 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     // Nav Drawer stuff
-    private String[] mHomeButtons = {"Home", "Wallet", "Buy", "Send", "Projects", "Invest", "FX Rates", "Settings"};
+    private String[] mHomeButtons = {"Exchange Rates", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private UserModel user;
@@ -336,7 +321,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 startActivity(intent, options.toBundle());
                 return;
             case R.id.add:
-                intent = new Intent(this, AddActivity.class);
+                intent = new Intent(this, ContactsActivity.class);
                 ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options1.toBundle());
@@ -351,12 +336,12 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options2.toBundle());
                 return;
-            case R.id.invest:
-                intent = new Intent(this, InvestActivity.class);
-                ActivityOptions options3 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                        0, view.getWidth(), view.getHeight());
-                startActivity(intent, options3.toBundle());
-                return;
+//            case R.id.invest:
+//                intent = new Intent(this, InvestActivity.class);
+//                ActivityOptions options3 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                        0, view.getWidth(), view.getHeight());
+//                startActivity(intent, options3.toBundle());
+//                return;
             case R.id.wallet:
                 intent = new Intent(this, WalletActivity.class);
                 ActivityOptions options4 = ActivityOptions.makeScaleUpAnimation(view, 0,
@@ -385,60 +370,75 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
         if (position == 0) {
-            intent = new Intent(this, HomeActivity.class);
-            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                    0, view.getWidth(), view.getHeight());
-
-            startActivity(intent, options1.toBundle());
-        }
-        else if (position == 1) {
-            intent = new Intent(this, WalletActivity.class);
-            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                    0, view.getWidth(), view.getHeight());
-
-            startActivity(intent, options1.toBundle());
-        }
-        else if (position == 2) {
-            intent = new Intent(this, BuyActivity.class);
-            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                    0, view.getWidth(), view.getHeight());
-
-            startActivity(intent, options1.toBundle());
-        }
-        else if (position == 3) {
-            intent = new Intent(this, SendRequestActivity.class);
-            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                    0, view.getWidth(), view.getHeight());
-
-            startActivity(intent, options1.toBundle());
-        }
-        else if (position == 4) {
-            intent = new Intent(this, ProjectsActivity.class);
-            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                    0, view.getWidth(), view.getHeight());
-
-            startActivity(intent, options1.toBundle());
-        }
-        else if (position == 5) {
-            intent = new Intent(this, InvestActivity.class);
-            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                    0, view.getWidth(), view.getHeight());
-
-            startActivity(intent, options1.toBundle());
-        }
-        else if (position == 6) {
             intent = new Intent(this, CurrencyInfoActivity.class);
             ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
 
             startActivity(intent, options1.toBundle());
         }
-        else if (position == 7) {
+        else if (position == 1) {
             intent = new Intent(this, SettingsActivity.class);
             ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
             startActivity(intent, options1.toBundle());
         }
+
+
+//        if (position == 0) {
+//            intent = new Intent(this, HomeActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//
+//            startActivity(intent, options1.toBundle());
+//        }
+//        else if (position == 1) {
+//            intent = new Intent(this, WalletActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//
+//            startActivity(intent, options1.toBundle());
+//        }
+//        else if (position == 2) {
+//            intent = new Intent(this, BuyActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//
+//            startActivity(intent, options1.toBundle());
+//        }
+//        else if (position == 3) {
+//            intent = new Intent(this, SendRequestActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//
+//            startActivity(intent, options1.toBundle());
+//        }
+//        else if (position == 4) {
+//            intent = new Intent(this, ProjectsActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//
+//            startActivity(intent, options1.toBundle());
+//        }
+//        else if (position == 5) {
+//            intent = new Intent(this, InvestActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//
+//            startActivity(intent, options1.toBundle());
+//        }
+//        else if (position == 6) {
+//            intent = new Intent(this, CurrencyInfoActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//
+//            startActivity(intent, options1.toBundle());
+//        }
+//        else if (position == 7) {
+//            intent = new Intent(this, SettingsActivity.class);
+//            ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                    0, view.getWidth(), view.getHeight());
+//            startActivity(intent, options1.toBundle());
+//        }
 
     }
 }

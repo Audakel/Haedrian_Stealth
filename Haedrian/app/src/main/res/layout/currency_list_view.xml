@@ -9,8 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"

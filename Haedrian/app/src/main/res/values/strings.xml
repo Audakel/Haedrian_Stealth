@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_send_request">Send/Request</string>
-    <string name="title_activity_add">People</string>
+    <string name="title_activity_add">Contacts</string>
     <string name="title_activity_projects">Projects</string>
     <string name="title_activity_invest">Invest</string>
     <string name="save">Save</string>
@@ -252,5 +252,21 @@ s    <string name="activity_contacts_list">Contacts List</string>
     <string name="dummy_date">May 5, 2015</string>
     <string name="dummy_from">Me</string>
     <string name="dummy_note">Hey! Here is a little money that I owe you from last weeks dinner. Spend it wisely! ;)</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="title_activity_currency_info">Exchange Rates</string>
+    <string name="contact_search">Search</string>
+    <string name="results">Results</string>
+    <string name="account">Account</string>
+    <string name="name_title">Name</string>
+    <string name="dummy_email">aquila@haedrian.io</string>
+    <string name="send_limits">Your send limits</string>
+    <string name="dummy_send_limit">Send $100 per day</string>
+    <string name="app">App</string>
+    <string name="currency_title">Native Currency</string>
+    <string name="dummy_currency">USD</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="about_title">About</string>
+    <string name="help_title">Help</string>
+    <string name="sign_out_title">Sign out</string>
 
 </resources>

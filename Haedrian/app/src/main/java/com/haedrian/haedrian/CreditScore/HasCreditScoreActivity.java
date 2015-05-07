@@ -12,13 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.haedrian.haedrian.ApplicationController;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CreateProjectActivity;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;

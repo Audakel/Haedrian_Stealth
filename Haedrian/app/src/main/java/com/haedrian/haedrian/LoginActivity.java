@@ -33,6 +33,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.haedrian.haedrian.Application.ApplicationCommunicator;
+import com.haedrian.haedrian.Application.ApplicationConstants;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -42,8 +49,12 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -170,33 +181,57 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
 
-            final String tempPass = password;
-            ParseUser.logInInBackground(email, password, new LogInCallback() {
-                @Override
-                public void done(ParseUser parseUser, ParseException e) {
-                    if (e == null) {
-                        showProgress(false);
 
-                        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("secret", tempPass);
-                        editor.putString("email", email);
-                        editor.putString("parse_id", parseUser.getObjectId());
-                        editor.commit();
+            // Perform API call
+            login(email, password);
 
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else {
-                        Log.d("Error", e.getMessage());
-                        showProgress(false);
-                        mPasswordView.setError(getString(R.string.error_incorrect_password));
-                        mPasswordView.requestFocus();
-                    }
-                }
-            });
         }
+    }
+
+    public void login(String email, String password) {
+        Map<String, String> params = new HashMap<>();
+        params.put("email", email);
+        params.put("password", password);
+        String url = ApplicationConstants.BASE + "";
+
+
+        final Map<String, String> finalParams = params;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                        if (success) {
+//                            showProgress(false);
+//
+//                            SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = sp.edit();
+//                            editor.putString("email", email);
+//                            editor.commit();
+//
+//                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                showProgress(false);
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                return finalParams;
+            }
+        };
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
     private boolean isEmailValid(String email) {

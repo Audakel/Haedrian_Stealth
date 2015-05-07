@@ -2,12 +2,11 @@ package com.haedrian.haedrian;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -15,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Adapters.CurrencyAdapter;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Models.CurrencyModel;
 
 import org.json.JSONException;
@@ -24,13 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.haedrian.haedrian.R.array;
-import static com.haedrian.haedrian.R.id;
 import static com.haedrian.haedrian.R.layout;
 
 
 public class CurrencyInfoActivity extends ActionBarActivity {
     private static final String TAG = CurrencyInfoActivity.class.getSimpleName();
-    Button getInvestInfo;
     CurrencyAdapter adapter;
     private List<CurrencyModel> currencies = new ArrayList<CurrencyModel>();
     private ListView listView;
@@ -41,13 +39,8 @@ public class CurrencyInfoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_currency_info);
 
-        getInvestInfo = (Button) findViewById(id.getInvestInfoButton);
-        getInvestInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getCurrencyInfo();
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         listView = (ListView) findViewById(R.id.currencyListView);
         adapter = new CurrencyAdapter(this, currencies);
@@ -76,9 +69,12 @@ public class CurrencyInfoActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        if (id == R.id.action_refresh) {
+            getCurrencyInfo();
+        }
+        else if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
         }
 
         return super.onOptionsItemSelected(item);

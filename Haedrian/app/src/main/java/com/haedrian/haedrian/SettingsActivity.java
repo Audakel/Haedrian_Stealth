@@ -3,6 +3,8 @@ package com.haedrian.haedrian;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -15,116 +17,27 @@ import android.preference.PreferenceCategory;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends PreferenceActivity {
-    /**
-     * Determines whether to always show the simplified settings UI, where
-     * settings are presented in a single list. When false, settings are shown
-     * as a master/detail two-pane view on tablets. When true, a single pane is
-     * shown on tablets.
-     */
-    private static final boolean ALWAYS_SIMPLE_PREFS = false;
+public class SettingsActivity extends ActionBarActivity {
 
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        setupSimplePreferencesScreen();
-    }
-
-    /**
-     * Shows the simplified settings UI if the device configuration if the
-     * device configuration dictates that a simplified, single-pane UI should be
-     * shown.
-     */
-    private void setupSimplePreferencesScreen() {
-
-
-        // In the simplified UI, fragments are not used at all and we instead
-        // use the older PreferenceActivity APIs.
-
-        // Add 'general' preferences.
-        addPreferencesFromResource(R.xml.pref_general);
-
-        // Add 'notifications' preferences, and a corresponding header.
-        PreferenceCategory optionHeader = new PreferenceCategory(this);
-        optionHeader.setTitle("Locality");
-        getPreferenceScreen().addPreference(optionHeader);
-        addPreferencesFromResource(R.xml.pref_currency);
-
-        // Add 'data and sync' preferences, and a corresponding header.
-        optionHeader = new PreferenceCategory(this);
-        optionHeader.setTitle("Data & Security");
-        getPreferenceScreen().addPreference(optionHeader);
-        addPreferencesFromResource(R.xml.pref_data_security);
-
-        // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
-        // their values. When their values change, their summaries are updated
-        // to reflect the new value, per the Android Design guidelines.
-
-//        bindPreferenceSummaryToValue(findPreference("example_text"));
-//        bindPreferenceSummaryToValue(findPreference("example_list"));
-//        bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-//        bindPreferenceSummaryToValue(findPreference("currency_list"));
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
 
     }
 
+    public void onClick(View view) {
+        int id = view.getId();
 
-//    /**
-//     * A preference value change listener that updates the preference's summary
-//     * to reflect its new value.
-//     */
-//    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-//        @Override
-//        public boolean onPreferenceChange(Preference preference, Object value) {
-//            String stringValue = value.toString();
-//
-//            if (preference instanceof ListPreference) {
-//                // For list preferences, look up the correct display value in
-//                // the preference's 'entries' list.
-//                ListPreference listPreference = (ListPreference) preference;
-//                int index = listPreference.findIndexOfValue(stringValue);
-//
-//                CharSequence[] entries = { "English", "French" };
-//                listPreference.setEntries(entries);
-//
-//                // Set the summary to reflect the new value.
-//                preference.setSummary(
-//                        index >= 0
-//                                ? listPreference.getEntries()[index]
-//                                : null);
-//
-//            }
-//            else {
-//                // For all other preferences, set the summary to the value's
-//                // simple string representation.
-//                preference.setSummary(stringValue);
-//            }
-//            return true;
-//        }
-//    };
-
-//    /**
-//     * Binds a preference's summary to its value. More specifically, when the
-//     * preference's value is changed, its summary (line of text below the
-//     * preference title) is updated to reflect the value. The summary is also
-//     * immediately updated upon calling this method. The exact display format is
-//     * dependent on the type of preference.
-//     *
-//     * @see #sBindPreferenceSummaryToValueListener
-//     */
-//    private static void bindPreferenceSummaryToValue(Preference preference) {
-//        // Set the listener to watch for value changes.
-//        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-//
-//        // Trigger the listener immediately with the preference's
-//        // current value.
-//        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-//                PreferenceManager
-//                        .getDefaultSharedPreferences(preference.getContext())
-//                        .getString(preference.getKey(), ""));
-//    }
+        switch (id) {
+            case R.id.sign_out_container:
+                // In the future lock the wallet and go to signin page
+                // For now just finish() and system.exit(0) <- BAD PRACTICE
+                finish();
+                System.exit(0);
+        }
+    }
 
 
 }

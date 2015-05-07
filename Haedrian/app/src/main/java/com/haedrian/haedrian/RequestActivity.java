@@ -25,6 +25,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.haedrian.haedrian.Application.ApplicationConstants;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.RequestConfirmationDialog;
 import com.haedrian.haedrian.CustomDialogs.SendConfirmationDialog;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
@@ -39,7 +41,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RequestActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
@@ -128,8 +132,10 @@ public class RequestActivity extends ActionBarActivity implements
         dialog.getSendButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getUserId(finalFrom);
                 dialog.dismiss();
+                progressDialog.setMessage("Sending Payment...");
+                progressDialog.show();
+                requestPayment();
             }
         });
         dialog.getCancelButton().setOnClickListener(new View.OnClickListener() {
@@ -141,51 +147,44 @@ public class RequestActivity extends ActionBarActivity implements
         });
     }
 
-    // This method gets the userid from the person you are requesting from
-    private void getUserId(final String email) {
+    private void requestPayment() {
+        Map<String, String> params = new HashMap<>();
+        params.put("requestor", "recipient");
+        params.put("requestee", "requestee");
+        params.put("amount", "amount");
+        params.put("note", "note");
 
-        // This method will have to do some serious regex to determine what to query off of. Right now it just assumes email
+        requestMoney(params);
+    }
 
-        ParseQuery<ParseObject> emailQuery = ParseQuery.getQuery("_User");
-        emailQuery.whereEqualTo("email", email);
+    private void requestMoney(Map<String, String> params) {
+        String url = ApplicationConstants.BASE + "";
+        final Map<String, String> finalParams = params;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url, null,
+                new Response.Listener<JSONObject>() {
 
-        emailQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                }, new Response.ErrorListener() {
+
             @Override
-            public void done(List<ParseObject> results, ParseException e) {
-                if (e == null) {
-                    if (results.size() > 0) {
-                        userId = results.get(0).getObjectId();
-                        createRequestTransaction(true, "Request money from " + email + " successful.");
-                    }
-                    else {
-                        // TODO: Call to fire off email
-                        progressDialog.hide();
-                        returnToPreviousActivitySuccess("Sent email to: " + email + " to request funds.");
-                    }
-                }
-                else {
-                    progressDialog.hide();
-                    createRequestTransaction(false, "Request money from " + userId + " failed.");
-                }
+            public void onErrorResponse(VolleyError error) {
+
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                return finalParams;
+            }
+        };
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
-    private void createRequestTransaction(boolean wasSuccessful, String message) {
-
-        ParseObject parseRequest = new ParseObject("Request");
-        parseRequest.put("requestorId", parseId);
-        parseRequest.put("requesteeId", userId);
-        parseRequest.put("amountBitcoin", requestAmountBitcoinNumber);
-        parseRequest.put("amountCurrency", requestAmountNumber);
-        parseRequest.put("currentBuyRate", bitcoinBuy);
-        parseRequest.put("currentSellRate", bitcoinSell);
-        parseRequest.put("fulfillmentStatusId", PENDING_STATUS);
-        parseRequest.saveInBackground();
-
-        progressDialog.hide();
-        returnToPreviousActivitySuccess(message);
-    }
 
     private void returnToPreviousActivitySuccess(String data) {
         Intent i = new Intent();
