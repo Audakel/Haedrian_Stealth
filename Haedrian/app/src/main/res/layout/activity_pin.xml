@@ -1,48 +1,91 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/lightgrey"
-                tools:context="com.haedrian.haedrian.HomeScreen.SendRequest.SendRequestActivity">
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/lightgrey"
+    tools:context="com.haedrian.haedrian.UserInteraction.PinActivity">
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/app_logo"
+        android:layout_centerHorizontal="true"
+        android:textSize="60sp"
+        android:textColor="@color/blue"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/create_pin_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:text="@string/create_pin"
+        android:textColor="@color/blue"
+        android:textSize="16sp"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
+        android:id="@+id/pin_circles"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/create_pin_title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:orientation="vertical">
+        android:orientation="horizontal" >
 
-        <LinearLayout
-            android:id="@+id/error_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/layout_round_button_error"
-            android:paddingBottom="10dp"
-            android:visibility="gone">
+        <View
+            android:id="@+id/circle1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle_default"/>
 
-            <TextView
-                android:id="@+id/error_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="5dp"
-                android:text="@string/no_user_selected_error"
-                android:textColor="@color/error_red_text"
-                android:textSize="18sp"/>
+        <View
+            android:id="@+id/circle2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle_default"/>
 
-        </LinearLayout>
+        <View
+            android:id="@+id/circle3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle_default"/>
+
+        <View
+            android:id="@+id/circle4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle_default"/>
+
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -107,16 +150,6 @@
                 android:layout_marginRight="6dp"
                 android:background="@color/blue"/>
 
-            <Button
-                android:id="@+id/buttonDot"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="."
-                android:textColor="@color/blue"
-                android:onClick="onClick"
-                android:textSize="22sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -276,103 +309,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-
-        android:id="@+id/linearLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <!--<Button-->
-            <!--android:id="@+id/buttonRequest"-->
-            <!--style="?android:attr/borderlessButtonStyle"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@color/blue"-->
-            <!--android:text="Request"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:onClick="onClick"/>-->
-
-        <!--<View-->
-            <!--android:id="@+id/devider"-->
-            <!--android:layout_width="1dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="#FFFFFF"/>-->
-
-        <Button
-            android:id="@+id/buttonSend"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blue"
-            android:text="Send"
-            android:textColor="@color/white"
-            android:onClick="onClick"/>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <TextView
-            android:id="@+id/currency_amount_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="0"
-            android:textColor="@color/blue"
-            android:textSize="120sp"/>
-
-        <TextView
-            android:id="@+id/currency_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$"
-            android:textColor="@color/blue"
-            android:textSize="70sp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/currency_amount_view"
-            android:layout_toStartOf="@+id/currency_amount_view" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/currency_amount_view"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="@string/btc"
-                android:maxLength="10"
-                android:textColor="@color/light_blue"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/bitcoin_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bitcoin_fake_amount"
-                android:textColor="@color/light_blue"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
 
 </RelativeLayout>
-

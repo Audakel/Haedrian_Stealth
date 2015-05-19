@@ -1,5 +1,6 @@
-package com.haedrian.haedrian.HomeScreen;
+package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -11,14 +12,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,7 +34,6 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class BuyActivity extends ActionBarActivity {
@@ -167,6 +165,8 @@ public class BuyActivity extends ActionBarActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        Intent intent = new Intent(BuyActivity.this, OrderSummaryActivity.class);
+                        startActivity(intent);
                     }
                 });
             }

@@ -1,9 +1,9 @@
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- The main content view -->
+<!--<android.support.v4.widget.DrawerLayout-->
+    <!--android:id="@+id/drawer_layout"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <!--&lt;!&ndash; The main content view &ndash;&gt;-->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:tools="http://schemas.android.com/tools"
@@ -217,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:text="@string/bitcon_map"
+                    android:text="@string/deposit_locations"
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     android:textStyle="bold"/>
@@ -226,16 +226,16 @@
 
         </RelativeLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
 
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="170dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/grey"
-        android:choiceMode="singleChoice"
-        android:divider="@color/white"
-        android:dividerHeight="0dp"/>
-</android.support.v4.widget.DrawerLayout>
+    <!--<ListView-->
+        <!--android:id="@+id/left_drawer"-->
+        <!--android:layout_width="170dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:background="@color/white"-->
+        <!--android:choiceMode="singleChoice"-->
+        <!--android:divider="@color/blue"-->
+        <!--android:dividerHeight="0dp"/>-->
+<!--</android.support.v4.widget.DrawerLayout>-->

@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,13 +34,16 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
+import com.haedrian.haedrian.Models.CurrencyModel;
 import com.haedrian.haedrian.R;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -65,6 +69,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_login);
+
+        getToken();
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         String email = sp.getString("email", "");
@@ -115,6 +121,60 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    private String getToken() {
+        String token = "";
+
+        // Creating volley request obj
+        String url = ApplicationConstants.BASE + "token-auth/";
+        JSONObject jsonBody = new JSONObject();
+
+        try {
+            jsonBody.put("username", "logan");
+            jsonBody.put("password", "password");
+        } catch (JSONException e) {
+
+        }
+
+        JsonObjectRequest currencyRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String token = response.getString("token");
+                            if ( ! token.equals("")) {
+                                Intent intent = new Intent(LoginActivity.this, PinActivity.class);
+                                Bundle extras = new Bundle();
+                                extras.putString("token", token);
+                                startActivity(intent, extras);
+                            }
+                        }
+                        catch (JSONException e) {
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                int statusCode = error.networkResponse.statusCode;
+
+                switch (statusCode) {
+                    case 400:
+                        // TODO: return incorrect password message
+                        Log.v("TEST", "400 error");
+                        break;
+
+                }
+            }
+        });
+
+        // Adding request to request queue
+        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+
+
+        return token;
     }
 
     public void onClick(View view) {

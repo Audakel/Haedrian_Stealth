@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +38,8 @@ import java.util.regex.Pattern;
 public class SendRequestActivity extends ActionBarActivity {
     private String TAG = SendRequestActivity.class.getSimpleName();
     private Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9;
-    private Button buttonDot, buttonBack, buttonSend, buttonRequest;
+    private Button buttonDot, buttonSend, buttonRequest;
+    private ImageButton buttonBackSpace;
     private TextView displayNumber;
     private TextView dolarSignView;
     private Context context;
@@ -92,10 +94,10 @@ public class SendRequestActivity extends ActionBarActivity {
         button8 = (Button) findViewById(R.id.button8);
         button9 = (Button) findViewById(R.id.button9);
         buttonDot = (Button) findViewById(R.id.buttonDot);
-        buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonBackSpace = (ImageButton) findViewById(R.id.backspace_button);
 //        buttonRequest = (Button) findViewById(R.id.buttonRequest);
-        displayNumber = (TextView) findViewById(R.id.displayNumberView);
-        dolarSignView = (TextView) findViewById(R.id.dollarSignView);
+        displayNumber = (TextView) findViewById(R.id.currency_amount_view);
+        dolarSignView = (TextView) findViewById(R.id.currency_sign);
         buttonSend = (Button) findViewById(R.id.buttonSend);
         bitcoinAmount = (TextView) findViewById(R.id.bitcoin_amount);
 
@@ -228,7 +230,7 @@ public class SendRequestActivity extends ActionBarActivity {
                 setDisplayNumberText(".");
 //                addNumberToDisplay(v)
                 return;
-            case R.id.buttonBack:
+            case R.id.backspace_button:
                 backspace();
                 return;
             case R.id.buttonSend:

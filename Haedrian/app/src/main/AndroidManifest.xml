@@ -130,7 +130,7 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".HomeScreen.BuyActivity"
+            android:name=".HomeScreen.AddMoney.BuyActivity"
             android:label="@string/title_activity_buy"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -290,6 +290,14 @@
         <activity
             android:name=".HomeScreen.Wallet.TransactionDetailsActivity"
             android:label="@string/title_activity_transaction_details" >
+        </activity>
+        <activity
+            android:name=".HomeScreen.AddMoney.OrderSummaryActivity"
+            android:label="@string/title_activity_order_summary" >
+        </activity>
+        <activity
+            android:name=".UserInteraction.PinActivity"
+            android:label="@string/title_activity_pin" >
         </activity>
     </application>
 

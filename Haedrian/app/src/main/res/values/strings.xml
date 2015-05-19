@@ -45,12 +45,12 @@
     <string name="title_activity_wallet">Wallet</string>
     <string name="bitcoin_address">Wallet Address:</string>
     <string name="dummy_address">Error: No wallet address found</string>
-    <string name="bitcoin_fake_amount">0.002487</string>
+    <string name="bitcoin_fake_amount">0.0</string>
     <string name="btc">BTC</string>
     <string name="currency_code">USD</string>
     <string name="fake_converted_amount">0.00</string>
     <string name="title_activity_buy">Buy Bitcoin</string>
-    <string name="title_activity_send">Send</string>
+    <string name="title_activity_send">Send Money</string>
     <string name="my_people">My People:</string>
     <string name="personal">Personal</string>
     <string name="business">Business</string>
@@ -288,5 +288,15 @@ s    <string name="activity_contacts_list">Contacts List</string>
     <string name="buy_bitcoin">Buy Bitcoin</string>
     <string name="order_summary">Order Summary</string>
     <string name="about_to_buy">You are about to buy</string>
+    <string name="dummy_transaction_to">Mentors International</string>
+    <string name="deposit_locations">Money Deposit Locations</string>
+    <string name="title_activity_order_summary">Order Summary</string>
+    <string name="buy_order">Buy Order #</string>
+    <string name="status">Status</string>
+    <string name="dummy_status">Pending Payment</string>
+    <string name="payment_instructions">Payment Instructions</string>
+    <string name="mark_as_paid">Mark As Paid</string>
+    <string name="title_activity_pin">PinActivity</string>
+    <string name="create_pin">Create pin</string>
 
 </resources>

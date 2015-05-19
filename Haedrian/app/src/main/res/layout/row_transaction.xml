@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/to_string"
                     android:layout_marginLeft="10dp"
-                    android:text="dsFD3rdsr3i2g98djkDjs8fj1KFSLJ"
+                    android:text="@string/dummy_transaction_to"
                     android:textStyle="bold"/>
 
 

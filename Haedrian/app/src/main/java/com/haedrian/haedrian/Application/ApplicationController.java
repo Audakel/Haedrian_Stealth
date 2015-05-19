@@ -11,6 +11,9 @@ import com.android.volley.toolbox.Volley;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.parse.Parse;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 /**
  * Created by audakel on 3/21/15.
  */
@@ -105,4 +108,5 @@ public class ApplicationController extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
 }
