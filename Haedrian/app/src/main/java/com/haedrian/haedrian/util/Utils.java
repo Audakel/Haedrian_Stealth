@@ -20,7 +20,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.haedrian.haedrian.GetContacts;
+import com.haedrian.haedrian.HomeScreen.Contacts.GetContacts;
 
 /**
  * This class contains static utility methods.

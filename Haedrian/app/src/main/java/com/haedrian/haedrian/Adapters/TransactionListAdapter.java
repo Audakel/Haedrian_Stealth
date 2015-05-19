@@ -39,10 +39,8 @@ public class TransactionListAdapter extends ArrayAdapter<ParseObject> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         TransactionDataHolder holder = null;
-        Log.v("TEST", "Got in here");
 
-        if(row == null)
-        {
+        if(row == null) {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(resource, parent, false);
             holder = new TransactionDataHolder();
@@ -53,8 +51,7 @@ public class TransactionListAdapter extends ArrayAdapter<ParseObject> {
 
             row.setTag(holder);
         }
-        else
-        {
+        else {
             holder = (TransactionDataHolder)row.getTag();
         }
 

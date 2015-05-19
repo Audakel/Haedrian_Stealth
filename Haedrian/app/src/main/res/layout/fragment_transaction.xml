@@ -4,7 +4,7 @@
       android:layout_height="match_parent"
       android:background="@color/lightgrey"
       android:orientation="vertical"
-      tools:context="com.haedrian.haedrian.HomeScreen.WalletActivity">
+      tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity">
 
     <TextView
         android:id="@+id/no_transaction_textview"

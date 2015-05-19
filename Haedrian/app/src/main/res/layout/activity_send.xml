@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/lightgrey"
     android:orientation="vertical"
-    tools:context="com.haedrian.haedrian.HomeScreen.WalletActivity">
+    tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity">
 
 
     <LinearLayout
@@ -65,22 +65,22 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:text="@string/contacts"
-        android:textStyle="bold"
-        android:layout_marginRight="5dp"
-        android:textSize="18sp"
-        android:layout_marginBottom="5dp"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="5dp"-->
+        <!--android:text="@string/contacts"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:textSize="18sp"-->
+        <!--android:layout_marginBottom="5dp"/>-->
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/contact_list"
-        android:name="com.haedrian.haedrian.ContactsListFragment"
-        xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <!--<fragment-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/contact_list"-->
+    <!--android:name="com.haedrian.haedrian.HomeScreen.Contacts.ContactsListFragment"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"/>-->
 
 
 </LinearLayout>

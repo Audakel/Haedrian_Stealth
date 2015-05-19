@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.haedrian.haedrian.ProjectsList;
+import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.ProjectsList;
 import com.haedrian.haedrian.R;
 
 import java.util.Arrays;

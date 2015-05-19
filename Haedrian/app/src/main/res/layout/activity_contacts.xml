@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    android:background="@color/white"
-    tools:context="com.raceentry.checkin.CheckIn" >
+    android:background="@color/white" >
 
 
 
@@ -75,7 +74,7 @@
         android:layout_height="match_parent"
         android:id="@+id/contact_list"
         android:layout_below="@id/results_linear_layout"
-        android:name="com.haedrian.haedrian.ContactsListFragment"
+        android:name="com.haedrian.haedrian.HomeScreen.Contacts.ContactsListFragment"
         xmlns:android="http://schemas.android.com/apk/res/android"/>
 
 

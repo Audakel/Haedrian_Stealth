@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/lightgrey"
-                tools:context="com.haedrian.haedrian.SendRequestActivity">
+                tools:context="com.haedrian.haedrian.HomeScreen.SendRequest.SendRequestActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -285,23 +285,22 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <Button
-            android:id="@+id/buttonRequest"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blue"
-            android:text="Request"
-            android:textColor="@color/white"
-            android:onClick="onClick"/>
+        <!--<Button-->
+            <!--android:id="@+id/buttonRequest"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/blue"-->
+            <!--android:text="Request"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:onClick="onClick"/>-->
 
-        <View
-            android:id="@+id/devider"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            />
+        <!--<View-->
+            <!--android:id="@+id/devider"-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="#FFFFFF"/>-->
 
         <Button
             android:id="@+id/buttonSend"

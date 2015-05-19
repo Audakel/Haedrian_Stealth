@@ -18,15 +18,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.haedrian.haedrian.CreditScore.CheckForCreditScore;
-import com.haedrian.haedrian.CurrencyInfoActivity;
+import com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore.CheckForCreditScore;
+import com.haedrian.haedrian.UserInteraction.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
-import com.haedrian.haedrian.MapsActivity;
+import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
-import com.haedrian.haedrian.SendRequestActivity;
-import com.haedrian.haedrian.SettingsActivity;
+import com.haedrian.haedrian.HomeScreen.SendRequest.SendRequestActivity;
+import com.haedrian.haedrian.UserInteraction.SettingsActivity;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -320,28 +320,28 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options.toBundle());
                 return;
-            case R.id.add:
-                intent = new Intent(this, ContactsActivity.class);
-                ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                        0, view.getWidth(), view.getHeight());
-                startActivity(intent, options1.toBundle());
-                return;
-            case R.id.projects:
-                /*For testing  --
-                intent = new Intent(this, ExistingCreditScoreActivity.class);
-                intent = new Intent(this, CreditCheckActivity.class);
-                */
-                intent = new Intent(this, CheckForCreditScore.class);
-                ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
-                        0, view.getWidth(), view.getHeight());
-                startActivity(intent, options2.toBundle());
-                return;
-//            case R.id.invest:
-//                intent = new Intent(this, InvestActivity.class);
-//                ActivityOptions options3 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//            case R.id.add:
+//                intent = new Intent(this, ContactsActivity.class);
+//                ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
 //                        0, view.getWidth(), view.getHeight());
-//                startActivity(intent, options3.toBundle());
+//                startActivity(intent, options1.toBundle());
 //                return;
+//            case R.id.projects:
+//                /*For testing  --
+//                intent = new Intent(this, ExistingCreditScoreActivity.class);
+//                intent = new Intent(this, CreditCheckActivity.class);
+//                */
+//                intent = new Intent(this, CheckForCreditScore.class);
+//                ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
+//                        0, view.getWidth(), view.getHeight());
+//                startActivity(intent, options2.toBundle());
+//                return;
+            case R.id.bitcoin_map:
+                intent = new Intent(this, MapsActivity.class);
+                ActivityOptions options5 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent, options5.toBundle());
+                return;
             case R.id.wallet:
                 intent = new Intent(this, WalletActivity.class);
                 ActivityOptions options4 = ActivityOptions.makeScaleUpAnimation(view, 0,
@@ -350,10 +350,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 startActivity(intent, options4.toBundle());
                 return;
             case R.id.buy:
-                intent = new Intent(this, MapsActivity.class);
-                ActivityOptions options5 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                intent = new Intent(this, BuyActivity.class);
+                ActivityOptions options6 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
-                startActivity(intent, options5.toBundle());
+                intent.putExtra("parse_id", parseId);
+                startActivity(intent, options6.toBundle());
                 return;
             default:
                 return;
