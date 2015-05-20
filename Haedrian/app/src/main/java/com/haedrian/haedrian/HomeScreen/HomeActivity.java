@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity;
 import com.haedrian.haedrian.UserInteraction.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
@@ -65,6 +66,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 //        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_nav_item, mHomeButtons));
         // Set the list's click listener
 //        mDrawerList.setOnItemClickListener(this);
+
+        Log.v("TEST", ApplicationController.getToken());
 
 
         // After login, set up shared preferences to store the current users ID globally
@@ -121,7 +124,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         displayRequestDialog(parseObjects);
                     }
                     else {
-                        Log.v("TEST", "test here");
                     }
                 }
                 else {
@@ -168,7 +170,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         sendPayment(parseObjects.get(0));
                     }
                     else {
-                        Log.v("TEST", "test here");
                     }
                 }
                 else {
@@ -289,7 +290,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 
@@ -299,6 +300,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
 
         // Activate the navigation drawer toggle
 //        if (mDrawerToggle.onOptionsItemSelected(item)) {

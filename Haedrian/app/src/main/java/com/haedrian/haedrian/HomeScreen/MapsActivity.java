@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.HomeScreen;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -9,11 +10,13 @@ import android.os.SystemClock;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
@@ -28,6 +31,7 @@ import com.haedrian.haedrian.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,26 +105,54 @@ public class MapsActivity extends ActionBarActivity {
 
     public void getLocations() {
 
-        for (int i = 0; i < 9; i++) {
+//        for (int i = 0; i < 9; i++) {
+//
+//            String url = "http://coinmap.org/data/data-overpass-bitcoin-" + i + ".json";
+//            JsonArrayRequest currencyRequest = new JsonArrayRequest(url,
+//                    new Response.Listener<JSONArray>() {
+//
+//                        @Override
+//                        public void onResponse(JSONArray jsonArray) {
+//                            try {
+//                                for (int i = 0; i < jsonArray.length(); i++) {
+//                                    titles.add(jsonArray.getJSONObject(i).getString("title"));
+//                                    if (jsonArray.getJSONObject(i).has("desc")) {
+//                                        descriptions.add(jsonArray.getJSONObject(i).getString("desc"));
+//                                    }
+//                                    else {
+//                                        descriptions.add("");
+//                                    }
+//                                    LatLng latLng = new LatLng(Double.parseDouble(jsonArray.getJSONObject(i).getString("lat")), Double.parseDouble(jsonArray.getJSONObject(i).getString("lon")));
+//                                    latLngs.add(latLng);
+//                                }
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    , new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError volleyError) {
+//
+//                }
+//            }
+//            );
+//            // Adding request to request queue
+//            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+//        }
 
-            String url = "http://coinmap.org/data/data-overpass-bitcoin-" + i + ".json";
-            JsonArrayRequest currencyRequest = new JsonArrayRequest(url,
-                    new Response.Listener<JSONArray>() {
+//        for (int i = 0; i < 9; i++) {
+            Resources res = getResources();
+            String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=bdo+banks+in+Manila&key=AIzaSyA9koyYrNBHQKg3nATQKX_YvmjyqMs6eF4" + res.getString(R.string.google_places_api_key);
+            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject>() {
 
                         @Override
-                        public void onResponse(JSONArray jsonArray) {
+                        public void onResponse(JSONObject jsonObject) {
                             try {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    titles.add(jsonArray.getJSONObject(i).getString("title"));
-                                    if (jsonArray.getJSONObject(i).has("desc")) {
-                                        descriptions.add(jsonArray.getJSONObject(i).getString("desc"));
-                                    }
-                                    else {
-                                        descriptions.add("");
-                                    }
-                                    LatLng latLng = new LatLng(Double.parseDouble(jsonArray.getJSONObject(i).getString("lat")), Double.parseDouble(jsonArray.getJSONObject(i).getString("lon")));
-                                    latLngs.add(latLng);
-                                }
+                                JSONArray array = jsonObject.getJSONArray("results");
+                                Log.v("TEST", jsonObject.toString());
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -135,7 +167,7 @@ public class MapsActivity extends ActionBarActivity {
             );
             // Adding request to request queue
             ApplicationController.getInstance().addToRequestQueue(currencyRequest);
-        }
+//        }
     }
 
     @Override

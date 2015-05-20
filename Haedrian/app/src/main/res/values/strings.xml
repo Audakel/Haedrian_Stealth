@@ -298,5 +298,10 @@ s    <string name="activity_contacts_list">Contacts List</string>
     <string name="mark_as_paid">Mark As Paid</string>
     <string name="title_activity_pin">PinActivity</string>
     <string name="create_pin">Create pin</string>
+    <string name="prompt_username">Username</string>
+    <string name="reenter_pin">Reenter Pin</string>
+    <string name="enter_pin">Enter Pin</string>
+    <string name="pins_dont_match">Pins don\'t match!</string>
+    <string name="incorrect_pin">Incorrect pin!</string>
 
 </resources>

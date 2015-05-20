@@ -70,14 +70,15 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         actionBar.hide();
         setContentView(R.layout.activity_login);
 
-        getToken();
-
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
-        String email = sp.getString("email", "");
+        String pinStateValue = sp.getString("pin_state", "");
 
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mEmailView.setText(email);
+        // If there is no overallPinstate then have them enter a new one
+        if ( ! pinStateValue.equals("")) {
+            Intent intent = new Intent(LoginActivity.this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -90,6 +91,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 return false;
             }
         });
+
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -106,82 +109,24 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         display.getMetrics(outMetrics);
         float density  = getResources().getDisplayMetrics().density;
 
-        int width = Math.round((outMetrics.widthPixels / density) - 50);
+        int height = Math.round((outMetrics.heightPixels / density) / 3);
 
 
         Picasso.with(this)
-                .load(R.drawable.logobird_black)
+                .load(R.drawable.logo)
                 .centerCrop()
-                .resize(width, width)
+                .resize(height, height)
                 .into(appLogo);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    private void populateAutoComplete() {
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private String getToken() {
-        String token = "";
-
-        // Creating volley request obj
-        String url = ApplicationConstants.BASE + "token-auth/";
-        JSONObject jsonBody = new JSONObject();
-
-        try {
-            jsonBody.put("username", "logan");
-            jsonBody.put("password", "password");
-        } catch (JSONException e) {
-
-        }
-
-        JsonObjectRequest currencyRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String token = response.getString("token");
-                            if ( ! token.equals("")) {
-                                Intent intent = new Intent(LoginActivity.this, PinActivity.class);
-                                Bundle extras = new Bundle();
-                                extras.putString("token", token);
-                                startActivity(intent, extras);
-                            }
-                        }
-                        catch (JSONException e) {
-
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                int statusCode = error.networkResponse.statusCode;
-
-                switch (statusCode) {
-                    case 400:
-                        // TODO: return incorrect password message
-                        Log.v("TEST", "400 error");
-                        break;
-
-                }
-            }
-        });
-
-        // Adding request to request queue
-        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
-
-
-        return token;
-    }
-
     public void onClick(View view) {
         if (view.getId() == R.id.sign_up_button) {
             Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);
-
+            finish();
         }
     }
 
@@ -223,10 +168,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
         }
 
         if (cancel) {
@@ -245,50 +186,57 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-    public void login(String email, String password) {
-        Map<String, String> params = new HashMap<>();
-        params.put("email", email);
-        params.put("password", password);
-        String url = ApplicationConstants.BASE + "";
+    private void login(String username, String password) {
+        String token = "";
 
+        // Creating volley request obj
+        String url = ApplicationConstants.BASE + "token-auth/";
+        JSONObject jsonBody = new JSONObject();
 
-        final Map<String, String> finalParams = params;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                url, null,
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("password", password);
+        } catch (JSONException e) {
+
+        }
+
+        JsonObjectRequest currencyRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
                 new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
-//                        if (success) {
-//                            showProgress(false);
-//
-//                            SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
-//                            SharedPreferences.Editor editor = sp.edit();
-//                            editor.putString("email", email);
-//                            editor.commit();
-//
-//                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        }
+                        try {
+                            String token = response.getString("token");
+                            if ( ! token.equals("")) {
+                                Intent intent = new Intent(LoginActivity.this, PinActivity.class);
+                                intent.putExtra("token", token);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                        catch (JSONException e) {
+                            showProgress(false);
+                            mPasswordView.setError(getString(R.string.error_incorrect_password));
+                            mPasswordView.requestFocus();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
-                showProgress(false);
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() {
-                return finalParams;
-            }
-        };
+                int statusCode = error.networkResponse.statusCode;
 
-        // Adds request to the request queue
-        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+                switch (statusCode) {
+                    case 400:
+                        // TODO: return incorrect password message
+                        Log.v("TEST", "400 error");
+                        break;
+
+                }
+            }
+        });
+
+        // Adding request to request queue
+        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
     }
 
     private boolean isEmailValid(String email) {

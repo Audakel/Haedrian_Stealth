@@ -26,6 +26,7 @@ public class ApplicationController extends Application {
     private static ApplicationController sInstance;
     private RequestQueue mRequestQueue;
     private boolean loggedIn;
+    private static String token = "";
 
     /**
      * @return ApplicationController singleton instance
@@ -108,5 +109,9 @@ public class ApplicationController extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
+    public static String getToken() { return token; }
+
+    public static void setToken(String userToken) { token = userToken; }
 
 }
