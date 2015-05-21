@@ -25,6 +25,7 @@ import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.HomeScreen.SendRequest.SendRequestActivity;
+import com.haedrian.haedrian.UserInteraction.LoginActivity;
 import com.haedrian.haedrian.UserInteraction.SettingsActivity;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -36,8 +37,6 @@ import java.util.List;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
-    // Nav Drawer stuff
-    private String[] mHomeButtons = {"Exchange Rates", "Settings"};
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private UserModel user;
@@ -45,8 +44,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private final static String PENDING_STATUS = "m5jO6Rz54h";
     private final static String REFUSED_STATUS = "10eX5swCo0";
     private final static String FULFILLED_STATUS = "GIidPHawur";
-
     private ActionBarDrawerToggle mDrawerToggle;
+
+
+    // Nav Drawer stuff
+//    private String[] mHomeButtons = {"Exchange Rates", "Settings"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +68,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 //        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_nav_item, mHomeButtons));
         // Set the list's click listener
 //        mDrawerList.setOnItemClickListener(this);
-
-        Log.v("TEST", ApplicationController.getToken());
 
 
         // After login, set up shared preferences to store the current users ID globally
@@ -112,25 +112,25 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private void checkForRequest(String parseId) {
 
-        ParseQuery<ParseObject> requestQuery = ParseQuery.getQuery("Request");
-        requestQuery.whereEqualTo("requesteeId", parseId);
-        requestQuery.whereEqualTo("fulfillmentStatusId", PENDING_STATUS);
-        requestQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null) {
-                    // If user has any requests
-                    if (parseObjects.size() > 0) {
-                        displayRequestDialog(parseObjects);
-                    }
-                    else {
-                    }
-                }
-                else {
-                    Toast.makeText(HomeActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        ParseQuery<ParseObject> requestQuery = ParseQuery.getQuery("Request");
+//        requestQuery.whereEqualTo("requesteeId", parseId);
+//        requestQuery.whereEqualTo("fulfillmentStatusId", PENDING_STATUS);
+//        requestQuery.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> parseObjects, ParseException e) {
+//                if (e == null) {
+//                    // If user has any requests
+//                    if (parseObjects.size() > 0) {
+//                        displayRequestDialog(parseObjects);
+//                    }
+//                    else {
+//                    }
+//                }
+//                else {
+//                    Toast.makeText(HomeActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
     }
 
@@ -173,7 +173,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                     }
                 }
                 else {
-                    Toast.makeText(HomeActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, getResources().getString(R.string.msg_error) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -305,6 +305,9 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.action_sign_out) {
+            signOut();
+        }
 
         // Activate the navigation drawer toggle
 //        if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -312,6 +315,24 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 //        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void signOut() {
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString("token", "");
+        // This is so that it will prompt the user to enter in the pin on app startup
+        editor.putString("pin_state", "");
+
+        ApplicationController.setToken("");
+
+        editor.commit();
+
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void onClick(View view) {

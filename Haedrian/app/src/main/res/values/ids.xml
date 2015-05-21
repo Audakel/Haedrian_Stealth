@@ -7,4 +7,9 @@
   <item type="id" name="quit"/>
   <item type="id" name="restart_preview"/>
   <item type="id" name="return_scan_result"/>
+  <item name="btc_for" type="id">BTC for</item>
+  <item name="login_error_message" type="id">An error ocurred. Please try again later.</item>
+  <item name="incorrect_credentials" type="id">The credentials were not recognized. Please try
+    again.
+  </item>
 </resources>

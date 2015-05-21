@@ -14,7 +14,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Logan on 4/22/2015.
@@ -53,7 +55,8 @@ public class RequestDialog extends Dialog {
                     if (parseObjects.size() > 0) {
                         String amount = String.valueOf(request.getNumber("amountCurrency"));
                         String usersName = parseObjects.get(0).getString("firstName") + " " + parseObjects.get(0).getString("lastName");
-                        amountTV.setText("$" + amount);
+                        Currency currency = Currency.getInstance(Locale.getDefault());
+                        amountTV.setText(currency.getSymbol() + amount);
                         requestorTV.setText(usersName);
                     }
                     else {

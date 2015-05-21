@@ -8,6 +8,12 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_settings"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_sign_out"
+        android:title="@string/sign_out_title"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 
 </menu>

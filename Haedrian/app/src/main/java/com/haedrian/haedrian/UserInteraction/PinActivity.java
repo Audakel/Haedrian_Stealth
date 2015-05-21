@@ -102,7 +102,7 @@ public class PinActivity extends ActionBarActivity {
         display.getMetrics(outMetrics);
         float density  = getResources().getDisplayMetrics().density;
 
-        int height = Math.round((outMetrics.heightPixels / density) / 3);
+        int height = Math.round((outMetrics.heightPixels / density) / 4);
 
 
         Picasso.with(this)
@@ -205,6 +205,8 @@ public class PinActivity extends ActionBarActivity {
         editor.putString("token", "");
         // This is so that it will prompt the user to enter in the pin on app startup
         editor.putString("pin_state", "");
+
+        ApplicationController.setToken("");
 
         editor.commit();
 

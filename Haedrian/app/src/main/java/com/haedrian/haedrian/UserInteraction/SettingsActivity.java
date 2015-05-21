@@ -1,5 +1,8 @@
 package com.haedrian.haedrian.UserInteraction;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
@@ -8,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
 
 /**
@@ -55,11 +59,26 @@ public class SettingsActivity extends ActionBarActivity {
 
         switch (id) {
             case R.id.sign_out_container:
-                // In the future lock the wallet and go to signin page
-                // For now just finish() and system.exit(0) <- BAD PRACTICE
-                finish();
-                System.exit(0);
+                signOut();
         }
+    }
+
+    private void signOut() {
+        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString("token", "");
+        // This is so that it will prompt the user to enter in the pin on app startup
+        editor.putString("pin_state", "");
+
+        ApplicationController.setToken("");
+
+        editor.commit();
+
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

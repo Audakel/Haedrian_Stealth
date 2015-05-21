@@ -27,7 +27,9 @@ import com.haedrian.haedrian.Scanner.CaptureActivity;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class RequestActivity extends ActionBarActivity implements
@@ -67,7 +69,8 @@ public class RequestActivity extends ActionBarActivity implements
         requestAmountNumber = round(Float.parseFloat(requestAmount), 2);
         requestAmountBitcoinNumber = new BigDecimal(requestAmountBitcoin);
 
-        getSupportActionBar().setTitle("Request $" + requestAmountNumber.toString());
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        getSupportActionBar().setTitle( getResources().getString(R.string.request) + " " + currency.getSymbol() + requestAmountNumber.toString());
 
     }
 

@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.UserInteraction;
 
 import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -34,6 +35,7 @@ public class CurrencyInfoActivity extends ActionBarActivity {
     private List<CurrencyModel> currencies = new ArrayList<CurrencyModel>();
     private ListView listView;
     private ProgressDialog pDialog;
+    private Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,10 @@ public class CurrencyInfoActivity extends ActionBarActivity {
 
         pDialog = new ProgressDialog(this);
         // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage(resources.getString(R.string.dialog_loading));
         pDialog.show();
+
+        resources = getResources();
 
         getCurrencyInfo();
     }

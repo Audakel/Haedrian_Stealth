@@ -118,10 +118,10 @@
                 android:text="@string/one_btc"/>
 
             <TextView
+                android:id="@+id/currency_sign_buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="@string/dummy_currency_sign"/>
+                android:layout_marginLeft="5dp"/>
 
             <TextView
                 android:id="@+id/amount_currency"

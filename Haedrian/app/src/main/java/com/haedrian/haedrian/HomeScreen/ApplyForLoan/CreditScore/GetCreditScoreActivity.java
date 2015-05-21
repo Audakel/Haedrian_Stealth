@@ -2,6 +2,7 @@ package com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -54,9 +55,13 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
     private AddressButton primaryAddressButton;
     private Button employmentStartDateButton, employmentEndDateButton, dobButton;
     private Spinner gender, sourceOfFunds;
-    String genderChoices[] = {"Male","Female"};
-    String sourceOfFundsChoices[] = {"Please Select", "Salary", "Commission", "Business",
-            "Pension", "Remittance", "Allowance", "Self-Employed"};
+    private Resources resources = getResources();
+
+    String genderChoices[] = {resources.getString(R.string.male), resources.getString(R.string.female)};
+    String sourceOfFundsChoices[] = {resources.getString(R.string.please_select), resources.getString(R.string.salary), resources.getString(R.string.commission),
+                                    resources.getString(R.string.business), resources.getString(R.string.pension), resources.getString(R.string.remittance),
+                                    resources.getString(R.string.allowance), resources.getString(R.string.self_employed)};
+
 
 
     @Override
@@ -66,6 +71,7 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
 
         // Setup ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         LenddoConfig.setTestMode(false);
         initView();
@@ -237,7 +243,7 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
         primaryAddress.setProvince(province.getText().toString());
         primaryAddress.setCity(city.getText().toString());
         primaryAddress.setPostalCode(postalCode.getText().toString());
-        primaryAddress.setCountryCode("PH");
+        primaryAddress.setCountryCode(resources.getString(R.string.phillipines_country_code));
 
         //place partner defined user identifier
         formData.setUserId(customerId.getText().toString());
@@ -323,7 +329,7 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
 
     @Override
     public void onAuthorizeCanceled(FormDataCollector collector) {
-        Toast.makeText(GetCreditScoreActivity.this, "canceled!", Toast.LENGTH_LONG).show();
+        Toast.makeText(GetCreditScoreActivity.this, resources.getString(R.string.canceled_toast), Toast.LENGTH_LONG).show();
         Intent finishIntent = new Intent(GetCreditScoreActivity.this, CanceledActivity.class);
         startActivity(finishIntent);
         finish();

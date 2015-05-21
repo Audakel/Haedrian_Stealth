@@ -31,6 +31,8 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Currency;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +47,7 @@ public class SendRequestActivity extends ActionBarActivity {
     private Context context;
     private LinearLayout errorLayout;
     private RequestQueue queue;
-    private TextView bitcoinAmount;
+    private TextView bitcoinAmount, currencySign;
     private int currentBitcoinPriceBuy = 0;
     private int currentBitcoinPriceSell = 0;
     private static final int REQUEST_CODE = 1;
@@ -59,6 +61,11 @@ public class SendRequestActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
         context = getApplication();
+
+        currencySign = (TextView) findViewById(R.id.currency_sign);
+
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        currencySign.setText(currency.getSymbol());
 
         getCurrencyInfo();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -319,7 +326,7 @@ public class SendRequestActivity extends ActionBarActivity {
     public void getConvertedRateInstantly(String sendAmount) {
         String cleanSendAmount = removeCommas(sendAmount);
         if (currentBitcoinPriceBuy == 0){
-            bitcoinAmountText = "Loading...";
+            bitcoinAmountText = getResources().getString(R.string.dialog_loading);
         }
         else{
             double balance = (Double.parseDouble(cleanSendAmount) * 1.000000) / currentBitcoinPriceBuy;

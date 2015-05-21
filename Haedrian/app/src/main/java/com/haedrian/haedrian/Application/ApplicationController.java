@@ -2,6 +2,7 @@ package com.haedrian.haedrian.Application;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -113,5 +114,6 @@ public class ApplicationController extends Application {
     public static String getToken() { return token; }
 
     public static void setToken(String userToken) { token = userToken; }
+
 
 }

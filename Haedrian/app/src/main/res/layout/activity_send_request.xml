@@ -317,36 +317,42 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout2"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <TextView
-            android:id="@+id/currency_amount_view"
+        <LinearLayout
+            android:id="@+id/currency_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="0"
-            android:textColor="@color/blue"
-            android:textSize="120sp"/>
+            android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/currency_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$"
-            android:textColor="@color/blue"
-            android:textSize="70sp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/currency_amount_view"
-            android:layout_toStartOf="@+id/currency_amount_view" />
+            <TextView
+                android:id="@+id/currency_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textColor="@color/blue"
+                android:textSize="70sp"
+                android:text="$"/>
+
+            <TextView
+                android:id="@+id/currency_amount_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/blue"
+                android:textSize="120sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/currency_amount_view"
+            android:layout_below="@+id/currency_view"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true">
 

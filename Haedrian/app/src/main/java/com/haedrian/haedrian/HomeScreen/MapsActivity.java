@@ -239,7 +239,7 @@ public class MapsActivity extends ActionBarActivity {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 7.0f));
         mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
-                .title("You")
+                .title(getResources().getString(R.string.you))
                 .snippet(""));
 
 

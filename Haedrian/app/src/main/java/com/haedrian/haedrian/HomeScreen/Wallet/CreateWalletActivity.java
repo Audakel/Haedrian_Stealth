@@ -3,6 +3,7 @@ package com.haedrian.haedrian.HomeScreen.Wallet;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -47,6 +48,7 @@ public class CreateWalletActivity extends ActionBarActivity {
     private DBHelper db;
     private RequestQueue queue;
     private WalletModel wallet;
+    private Resources resources;
 
     private LinearLayout errorLayout;
     private TextView errorMessage;
@@ -78,6 +80,8 @@ public class CreateWalletActivity extends ActionBarActivity {
         addEmailText.setText(user.getEmail());
 
         addBankButton = (Button) findViewById(R.id.addBankButton);
+
+        resources = getResources();
 
         addBankButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +148,7 @@ public class CreateWalletActivity extends ActionBarActivity {
         }
         else if (addPasswordText.getText().length() < 10) {
             errorLayout.setVisibility(View.VISIBLE);
-            errorMessage.setText("Password is shorter than 10 characters!");
+            errorMessage.setText(resources.getString(R.string.short_password));
             errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
             return;
         }
@@ -161,7 +165,7 @@ public class CreateWalletActivity extends ActionBarActivity {
 
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Creating Wallet...");
+        progressDialog.setMessage(resources.getString(R.string.creating_wallet));
         progressDialog.show();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST,
@@ -170,14 +174,7 @@ public class CreateWalletActivity extends ActionBarActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            progressDialog.hide();
-                            saveWallet(response.getString("address"));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            progressDialog.hide();
-                        }
+                        progressDialog.hide();
                     }
                 }, new Response.ErrorListener() {
 
@@ -218,23 +215,6 @@ public class CreateWalletActivity extends ActionBarActivity {
         return passHash;
     }
 
-
-    private void saveWallet(String address) {
-
-        if (address != "" && address != null) {
-            wallet.setAddress(address);
-            wallet.setBalance("0");
-            db.getWalletsTable().insert(wallet);
-
-            ParseObject wallet = new ParseObject("Wallet");
-            wallet.put("walletAddress", address);
-            wallet.put("userId", user.getParseId());
-            wallet.put("balance", 0);
-            wallet.saveInBackground();
-
-            finish();
-        }
-    }
 
     private boolean checkCredentials() {
         return addPasswordText.length() >= 10 && addEmailText.length() > 0;

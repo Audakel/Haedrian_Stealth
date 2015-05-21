@@ -34,6 +34,8 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 
 public class BuyActivity extends ActionBarActivity {
@@ -42,6 +44,7 @@ public class BuyActivity extends ActionBarActivity {
     private Spinner methodSpinner;
     private String buyRate = "0";
     private Button submitButton;
+    private TextView currencySign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,10 @@ public class BuyActivity extends ActionBarActivity {
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        currencySign = (TextView) findViewById(R.id.currency_sign_buy);
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        currencySign.setText(currency.getSymbol());
 
         getExchangeRate();
 

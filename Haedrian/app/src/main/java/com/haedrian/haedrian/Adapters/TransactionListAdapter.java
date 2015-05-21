@@ -58,11 +58,11 @@ public class TransactionListAdapter extends ArrayAdapter<ParseObject> {
         int transactionType = (Math.random()<0.5) ? 0 : 1;
 
         if (transactionType == 0) {
-            holder.transactionType.setText("Sent Bitcoin");
+            holder.transactionType.setText(context.getResources().getString(R.string.sent_bitcoin));
             holder.imageType.setImageResource(R.drawable.send);
         }
         else {
-            holder.transactionType.setText("Received Bitcoin");
+            holder.transactionType.setText(context.getResources().getString(R.string.received_bitcoin));
             holder.imageType.setImageResource(R.drawable.receive);
         }
 

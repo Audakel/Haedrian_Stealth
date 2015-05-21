@@ -35,7 +35,9 @@ import com.haedrian.haedrian.Scanner.CaptureActivity;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SendActivity extends ActionBarActivity implements
@@ -78,8 +80,10 @@ public class SendActivity extends ActionBarActivity implements
 
         sendAmountNumber = round(Float.parseFloat(sendAmount), 2);
         sendAmountBitcoinNumber = new BigDecimal(sendAmountBitcoin);
+        Currency currency = Currency.getInstance(Locale.getDefault());
 
-        getSupportActionBar().setTitle("Send $" + sendAmountNumber.toString());
+
+        getSupportActionBar().setTitle(getResources().getString(R.string.send) + " " + currency.getSymbol() + sendAmountNumber.toString());
 
         ContactsListFragment mContactsListFragment = (ContactsListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.contact_list);
@@ -109,13 +113,14 @@ public class SendActivity extends ActionBarActivity implements
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send) {
             BigDecimal amount = round(Float.parseFloat(sendAmount), 2);
-            final SendConfirmationDialog dialog = new SendConfirmationDialog(this, "$" + String.valueOf(amount), toET.getText().toString());
+            Currency currency = Currency.getInstance(Locale.getDefault());
+            final SendConfirmationDialog dialog = new SendConfirmationDialog(this, currency.getSymbol() + String.valueOf(amount), toET.getText().toString());
             dialog.show();
             dialog.getSendButton().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    progressDialog.setMessage("Sending Payment...");
+                    progressDialog.setMessage(getResources().getString(R.string.sending_payment));
                     progressDialog.show();
                     sendPayment();
                 }

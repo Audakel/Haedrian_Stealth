@@ -110,10 +110,10 @@ public class ContactsActivity extends ActionBarActivity implements
             String contents = result.getContents();
 
             if (contents != null) {
-                Toast.makeText(this, "UPC code is : " + result.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "UPC code is : " + result.toString(), Toast.LENGTH_LONG).show();
                 upcCode = contents.toString();
             } else {
-                Toast.makeText(this, "Fail!!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "Fail!!", Toast.LENGTH_LONG).show();
             }
         }
     }

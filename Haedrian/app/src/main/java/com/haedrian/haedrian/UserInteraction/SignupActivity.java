@@ -91,32 +91,32 @@ public class SignupActivity extends ActionBarActivity {
 
         // TODO: More validation
         if ( ! password.equals(reenterPasswordET.getText().toString())) {
-            Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.passwords_dont_match), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (email == "") {
-            Toast.makeText(this, "Email address is required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.email_address_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (firstName == "") {
-            Toast.makeText(this, "First name is required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.first_name_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (lastName == "") {
-            Toast.makeText(this, "Last name is required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.last_name_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (username == "") {
-            Toast.makeText(this, "Username is required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.username_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (password.length() < 10) {
-            Toast.makeText(this, "Password is too short!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.short_password), Toast.LENGTH_SHORT).show();
             return;
         }
 

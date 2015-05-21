@@ -135,8 +135,6 @@ public abstract class PlusBaseActivity extends Activity
             // Disconnect from Google Play Services, then reconnect in order to restart the
             // process from scratch.
             initiatePlusClientDisconnect();
-
-            Log.v(TAG, "Sign out successful!");
         }
 
         updateConnectButtonState();

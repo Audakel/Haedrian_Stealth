@@ -210,7 +210,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
             // Check to see if the user has a wallet associated and if not, display create a wallet button
             db = new DBHelper(rootView.getContext());
 
-            progressDialog.setMessage("Initializing wallet...");
+            progressDialog.setMessage(getResources().getString(R.string.initializing_wallet));
             progressDialog.show();
 
             walletAddress = (TextView) rootView.findViewById(R.id.wallet_address);
@@ -308,39 +308,41 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
 
             DBHelper db = new DBHelper(context);
 
-            UserModel user = db.getUsersTable().query("id", "=", String.valueOf(userId));
+//            UserModel user = db.getUsersTable().query("id", "=", String.valueOf(userId));
 
 
-            final String URL = "https://blockchain.info/api/v2/create_wallet"
-                    + "?password=" + password
-                    + "&email=" + user.getEmail()
-                    + "&api_code=5a25bea3-7f2f-4a40-acb6-3ed0497d570e";
+//            final String URL = "https://blockchain.info/api/v2/create_wallet"
+//                    + "?password=" + password
+//                    + "&email=" + user.getEmail()
+//                    + "&api_code=5a25bea3-7f2f-4a40-acb6-3ed0497d570e";
 
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                    URL, null,
-                    new Response.Listener<JSONObject>() {
+//            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+//                    URL, null,
+//                    new Response.Listener<JSONObject>() {
+//
+//                        @Override
+//                        public void onResponse(JSONObject response) {
+//                            try {
+//                                saveWallet(response.getString("address"));
+//
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }, new Response.ErrorListener() {
+//
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    VolleyLog.d("Test", "Error: " + error.toString());
+//                    progressDialog.dismiss();
+//                }
+//            });
+//
+//            jsonObjectRequest.setTag(TAG);
+//            queue.add(jsonObjectRequest);
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                saveWallet(response.getString("address"));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d("Test", "Error: " + error.toString());
-                    progressDialog.dismiss();
-                }
-            });
-
-            jsonObjectRequest.setTag(TAG);
-            queue.add(jsonObjectRequest);
+            progressDialog.dismiss();
 
         }
 
@@ -522,7 +524,7 @@ public class WalletActivity extends ActionBarActivity implements ActionBar.TabLi
                             }
 
                         } else {
-                            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, getResources().getString(R.string.msg_error) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
