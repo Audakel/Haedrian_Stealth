@@ -100,10 +100,10 @@ public class RequestActivity extends ActionBarActivity implements
             requestTransaction();
             return true;
         }
-        else if (id == R.id.action_scan) {
-            callScanner();
-            return true;
-        }
+//        else if (id == R.id.action_scan) {
+//            callScanner();
+//            return true;
+//        }
         else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;

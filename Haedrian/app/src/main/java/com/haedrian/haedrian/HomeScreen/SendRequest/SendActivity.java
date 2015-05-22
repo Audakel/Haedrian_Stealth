@@ -134,10 +134,10 @@ public class SendActivity extends ActionBarActivity implements
             });
             return true;
         }
-        else if (id == R.id.action_scan) {
-            callScanner();
-            return true;
-        }
+//        else if (id == R.id.action_scan) {
+//            callScanner();
+//            return true;
+//        }
         else if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             return true;

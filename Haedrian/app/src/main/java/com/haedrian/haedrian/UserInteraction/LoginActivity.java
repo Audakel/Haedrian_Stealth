@@ -125,7 +125,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
     public void onClick(View view) {
         if (view.getId() == R.id.sign_up_button) {
-            attemptLogin();
+            Intent intent = new Intent(this, SignupActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -201,7 +202,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                         try {
                             String token = response.getString("token");
                             if ( ! token.equals("")) {
-                                Log.v("TEST", "here");
                                 Intent intent = new Intent(LoginActivity.this, PinActivity.class);
                                 intent.putExtra("token", token);
                                 startActivity(intent);
@@ -223,12 +223,12 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 switch (statusCode) {
                     case 400:
                         // TODO: return incorrect password message
-                        Toast.makeText(LoginActivity.this, getResources().getString(R.id.incorrect_credentials), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, getResources().getString(R.string.incorrect_credentials), Toast.LENGTH_SHORT).show();
                         showProgress(false);
                         break;
                     default:
                         // Something else broke
-                        Toast.makeText(LoginActivity.this, getResources().getString(R.id.login_error_message), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();
                         showProgress(false);
                         break;
 

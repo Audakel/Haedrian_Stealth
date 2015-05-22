@@ -248,7 +248,13 @@
         </activity>
         <activity
             android:name=".UserInteraction.SignupActivity"
-            android:label="@string/title_activity_signup" >
+            android:label="@string/title_activity_signup"
+            android:parentActivityName=".UserInteraction.LoginActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserInteraction.LoginActivity" />
         </activity>
         <activity
             android:name=".HomeScreen.ApplyForLoan.CreditScore.HasCreditScoreActivity"

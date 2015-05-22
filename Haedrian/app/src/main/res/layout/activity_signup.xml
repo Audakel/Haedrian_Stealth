@@ -30,14 +30,21 @@
 
             <LinearLayout style="@style/fieldContainer">
 
-                <TextView
-                    android:text="@string/email_required"
-                    style="@style/formLabel" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                <LinearLayout style="@style/fieldContainer">
+                    <TextView
+                        style="@style/formLabel"
+                        android:text="@string/username"/>
+                    <EditText
+                        android:tag="middle_name"
+                        android:id="@+id/username_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout style="@style/fieldContainer">
+                    <TextView
+                        android:text="@string/email_required"
+                        style="@style/formLabel" />
                     <EditText
                         android:id="@+id/email_edit_text"
                         android:layout_width="match_parent"
@@ -47,7 +54,20 @@
                         android:inputType="textEmailAddress" />
                 </LinearLayout>
 
+                <LinearLayout style="@style/fieldContainer">
+                    <TextView
+                        android:text="@string/country_required"
+                        style="@style/formLabel" />
+                    <Spinner
+                        android:id="@+id/country_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+
             </LinearLayout>
+
+
             <LinearLayout style="@style/fieldContainer">
 
                 <TextView
@@ -71,16 +91,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords" />
-            </LinearLayout>
-            <LinearLayout style="@style/fieldContainer">
-                <TextView
-                    style="@style/formLabel"
-                    android:text="@string/username"/>
-                <EditText
-                    android:tag="middle_name"
-                    android:id="@+id/username_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout style="@style/fieldContainer">

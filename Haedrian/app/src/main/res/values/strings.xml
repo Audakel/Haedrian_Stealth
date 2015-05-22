@@ -94,7 +94,7 @@
     <string name="reenter_password">Re-enter Password</string>
     <string name="passwords_dont_match">Passwords don\'t match!</string>
     <string name="note">Note:</string>
-    <string name="to_hint">Email or Bitcoin Address</string>
+    <string name="to_hint">Recipient\'s username</string>
     <string name="note_hint">Notes</string>
     <string name="action_send">Send Action</string>
     <string name="action_scan">Scan Action</string>
@@ -230,7 +230,7 @@
     <string name="title_activity_signup">Signup</string>
     <string name="email_required">Email*</string>
     <string name="username">Username*</string>
-    <string name="phone_number">Phone Number (Optional)</string>
+    <string name="phone_number">Phone Number*</string>
     <string name="by_haedrian">By Haedrian Labs</string>
     <string name="apply_for_loan">Apply For Loan</string>
     <string name="my_people_home">My People</string>
@@ -329,5 +329,14 @@
     <string name="sent_bitcoin">Sent Bitcoin</string>
     <string name="received_bitcoin">Received Bitcoin</string>
     <string name="initializing_wallet">Initializing wallet...</string>
+    <string name="login_error_message">An error ocurred. Please try again later.</string>
+    <string name="incorrect_credentials">The credentials were not recognized. Please try again.</string>
+    <string name="phone_number_required">Phone number is required!</string>
+    <string name="united_states">United States</string>
+    <string name="phillipines">Phillipines</string>
+    <string name="united_states_abbr">US</string>
+    <string name="country_required">Country*</string>
+    <string name="country_code_required">Please select a country!</string>
+    <string name="country_spinner_hint">Please select a country</string>
 
 </resources>

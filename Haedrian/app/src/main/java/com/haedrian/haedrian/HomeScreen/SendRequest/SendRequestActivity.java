@@ -31,6 +31,8 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -53,8 +55,8 @@ public class SendRequestActivity extends ActionBarActivity {
     private static final int REQUEST_CODE = 1;
 
     // Data for all views
-    String displayNumberText = "0";
-    String bitcoinAmountText = "0";
+    private String displayNumberText = "0";
+    private String bitcoinAmountText = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,10 @@ public class SendRequestActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeViews();
 
-
-
     }
 
     private void updateDisplay(){
-        displayNumber.setText(displayNumberText);
+//        displayNumber.setText(displayNumberText);
         bitcoinAmount.setText(bitcoinAmountText);
         updateFontAttributes();
     }
@@ -161,9 +161,20 @@ public class SendRequestActivity extends ActionBarActivity {
     }
 
     private void backspace() {
-        String string = displayNumber.getText().toString();
-        if (string.length() > 1) {
-            formatBackspaceNormalNumber(string.substring(0, string.length() - 1));
+        if (displayNumberText.length() > 1) {
+//            String amount = displayNumber.getText().toString();
+            displayNumberText = displayNumberText.substring(0, displayNumberText.length() - 1);
+
+            Double newAmount = Double.parseDouble(displayNumberText);
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            // To strip out the currency symbol
+            DecimalFormatSymbols symbols = ((DecimalFormat)format).getDecimalFormatSymbols();
+            symbols.setCurrencySymbol("");
+            ((DecimalFormat)format).setDecimalFormatSymbols(symbols);
+
+            String formattedAmount = format.format(newAmount).replaceAll(" ", "");
+
+            displayNumber.setText(formattedAmount);
         } else {
 
             displayNumberText = "0";
@@ -172,28 +183,31 @@ public class SendRequestActivity extends ActionBarActivity {
     }
 
     private void setDisplayNumberText(String number) {
+
         int displayLength = displayNumber.getText().length();
 
-        if (displayNumber.getText().toString().equals("0")) {
-            if(number.equals(".")){
-                displayNumberText = "0" + number;
-                return;
+        if (displayLength < 8) {
+            if ( ! displayNumber.getText().toString().equals(".")) {
+
+                if (displayNumber.getText().toString().equals("0")) {
+                    displayNumberText = "";
+                }
+
+                displayNumberText = displayNumberText + number;
+
+                Double amount = Double.parseDouble(displayNumberText);
+                NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+                // To strip out the currency symbol
+                DecimalFormatSymbols symbols = ((DecimalFormat)format).getDecimalFormatSymbols();
+                symbols.setCurrencySymbol("");
+                ((DecimalFormat)format).setDecimalFormatSymbols(symbols);
+
+                String newAmount = format.format(amount).replaceAll(" ", "");
+
+                displayNumber.setText(newAmount);
             }
-            displayNumberText = number;
         }
-        else if (number.equals(".")) {
-            formatDecimalNumber(number);
-        }
-        else if (displayLength < 6) {
-            formatNormalNumber(number);
-        }
-        else if (displayLength == 6 && number.equals(".")) {
-            displayNumberText = displayNumberText + number;
-        }
-        else if (displayLength > 6 && displayLength <= 8) {
-            formatNormalNumber(number);
-        }
-        else if (displayLength == 6 || displayLength > 8) {
+        else {
             vibrateErrorAnimation();
         }
 
@@ -238,6 +252,9 @@ public class SendRequestActivity extends ActionBarActivity {
 //                addNumberToDisplay(v)
                 return;
             case R.id.backspace_button:
+                backspace();
+                return;
+            case R.id.back_space_container:
                 backspace();
                 return;
             case R.id.buttonSend:
