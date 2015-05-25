@@ -67,14 +67,7 @@ public class PinActivity extends ActionBarActivity {
             currentPinState = State.Enter;
         }
 
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            this.token = extras.getString("token");
-        }
-        else {
-            this.token = "";
-        }
+        this.token = ApplicationController.getToken();
 
         ImageView appLogo = (ImageView) findViewById(R.id.app_logo);
         circle1 = findViewById(R.id.circle1);
@@ -352,7 +345,7 @@ public class PinActivity extends ActionBarActivity {
 
         if (decryptedToken != null) {
             if (decryptedToken.contains("token:")) {
-                String userToken = decryptedToken.substring(6, decryptedToken.length() - 1);
+                String userToken = decryptedToken.substring(6, decryptedToken.length());
                 ApplicationController.setToken(userToken);
                 // Pin is correct
                 Intent intent = new Intent(this, HomeActivity.class);

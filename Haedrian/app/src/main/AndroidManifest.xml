@@ -296,7 +296,13 @@
         </activity>
         <activity
             android:name=".HomeScreen.Wallet.TransactionDetailsActivity"
-            android:label="@string/title_activity_transaction_details" >
+            android:label="@string/title_activity_transaction_details"
+            android:parentActivityName=".HomeScreen.Wallet.WalletActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.Wallet.WalletActivity" />
         </activity>
         <activity
             android:name=".HomeScreen.AddMoney.OrderSummaryActivity"
@@ -305,6 +311,10 @@
         <activity
             android:name=".UserInteraction.PinActivity"
             android:label="@string/title_activity_pin" >
+        </activity>
+        <activity
+            android:name=".UserInteraction.About"
+            android:label="@string/title_activity_about" >
         </activity>
     </application>
 

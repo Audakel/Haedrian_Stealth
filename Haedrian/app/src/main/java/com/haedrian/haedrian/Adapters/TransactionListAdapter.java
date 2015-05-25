@@ -22,13 +22,13 @@ import java.util.Locale;
 /**
  * Created by Logan on 4/25/2015.
  */
-public class TransactionListAdapter extends ArrayAdapter<ParseObject> {
+public class TransactionListAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private int resource;
-    private ArrayList<ParseObject> transactions;
+    private ArrayList<String> transactions;
 
-    public TransactionListAdapter(Context context, int resource, ArrayList<ParseObject> transactions) {
+    public TransactionListAdapter(Context context, int resource, ArrayList<String> transactions) {
         super(context, resource, transactions);
         this.context = context;
         this.resource = resource;
@@ -66,7 +66,7 @@ public class TransactionListAdapter extends ArrayAdapter<ParseObject> {
             holder.imageType.setImageResource(R.drawable.receive);
         }
 
-        Double currencyAmount = Double.parseDouble(String.valueOf(transactions.get(position).getNumber("amountCurrency")));
+        Double currencyAmount = Double.parseDouble(String.valueOf(transactions.get(position)));
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
         holder.amount.setText(currencyFormatter.format(currencyAmount));

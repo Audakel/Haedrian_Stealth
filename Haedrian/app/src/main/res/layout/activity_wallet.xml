@@ -1,6 +1,29 @@
-<android.support.v4.view.ViewPager android:id="@+id/pager"
-                                   xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:tools="http://schemas.android.com/tools"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="match_parent"
-                                   tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity"/>
+<!--<android.support.v4.view.ViewPager android:id="@+id/pager"-->
+                                   <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+                                   <!--xmlns:tools="http://schemas.android.com/tools"-->
+                                   <!--android:layout_width="match_parent"-->
+                                   <!--android:layout_height="match_parent"-->
+                                   <!--tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity"/>-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgrey"
+    android:orientation="vertical"
+    tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity">
+
+       <fragment
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/balance_fragment"
+       android:name="com.haedrian.haedrian.HomeScreen.Wallet.BalanceFragment"
+       xmlns:android="http://schemas.android.com/apk/res/android"/>
+
+        <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/transaction_fragment"
+        android:name="com.haedrian.haedrian.HomeScreen.Wallet.TransactionFragment"
+        xmlns:android="http://schemas.android.com/apk/res/android"/>
+
+</LinearLayout>

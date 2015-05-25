@@ -179,6 +179,17 @@ public class SendRequestActivity extends ActionBarActivity {
 
             displayNumberText = "0";
             bitcoinAmountText = "0";
+
+            Double newAmount = Double.parseDouble(displayNumberText);
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            // To strip out the currency symbol
+            DecimalFormatSymbols symbols = ((DecimalFormat)format).getDecimalFormatSymbols();
+            symbols.setCurrencySymbol("");
+            ((DecimalFormat)format).setDecimalFormatSymbols(symbols);
+
+            String formattedAmount = format.format(newAmount).replaceAll(" ", "");
+
+            displayNumber.setText(formattedAmount);
         }
     }
 

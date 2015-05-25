@@ -202,8 +202,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                         try {
                             String token = response.getString("token");
                             if ( ! token.equals("")) {
+                                ApplicationController.setToken(token);
                                 Intent intent = new Intent(LoginActivity.this, PinActivity.class);
-                                intent.putExtra("token", token);
                                 startActivity(intent);
                                 finish();
                             }

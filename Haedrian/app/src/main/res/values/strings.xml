@@ -328,7 +328,7 @@
     <string name="username_required">Username is required!</string>
     <string name="sent_bitcoin">Sent Bitcoin</string>
     <string name="received_bitcoin">Received Bitcoin</string>
-    <string name="initializing_wallet">Initializing wallet...</string>
+    <string name="initializing_wallet">Loading wallet...</string>
     <string name="login_error_message">An error ocurred. Please try again later.</string>
     <string name="incorrect_credentials">The credentials were not recognized. Please try again.</string>
     <string name="phone_number_required">Phone number is required!</string>
@@ -338,5 +338,14 @@
     <string name="country_required">Country*</string>
     <string name="country_code_required">Please select a country!</string>
     <string name="country_spinner_hint">Please select a country</string>
+    <string name="duplicate_username">Username already taken. Please choose a different one.</string>
+    <string name="invalid_password">This password is invalid</string>
+    <string name="invalid_email">Email address is invalid</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="invalid_username">Username is not valid</string>
+    <string name="get_wallet_address">Get Wallet Address</string>
+    <string name="dummy_bitcoin_address">1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v</string>
+    <string name="transactions">Transactions</string>
+    <string name="title_activity_about">About</string>
 
 </resources>

@@ -32,6 +32,7 @@ import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
@@ -148,30 +149,22 @@ public class SendActivity extends ActionBarActivity implements
 
     private void sendPayment() {
 
-        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
-        String secret = sp.getString("secret", "");
-
-        Map<String, String> params = new HashMap<>();
-        params.put("recipient", "recipient");
-        params.put("from", "userId");
-        params.put("note", noteET.getText().toString());
-
         // Check for network connection. If no network connection, open up sms messaging app with prepopulated number and commands
         try {
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
-                sendMoney(params);
+                sendMoney();
             }
             else {
                 netInfo = cm.getNetworkInfo(1);
 
                 if(netInfo != null && netInfo.getState()== NetworkInfo.State.CONNECTED){
-                    sendMoney(params);
+                    sendMoney();
                 }
                 else {
-                    sendMoneyText(params);
+                    sendMoneyText();
                 }
             }
         }
@@ -179,23 +172,33 @@ public class SendActivity extends ActionBarActivity implements
             e.printStackTrace();
         }
 
-        sendMoney(params);
+        sendMoney();
     }
 
-    public void sendMoney(Map<String, String> params) {
-        String url = ApplicationConstants.BASE + "";
+    public void sendMoney() {
+        String url = ApplicationConstants.BASE + "send/";
 
-        final Map<String, String> finalParams = params;
+        JSONObject body = new JSONObject();
+        try {
+            body.put("receiver", "mentors_international");
+            body.put("amount_local", "45781");
+            body.put("target_address", "adsfajfwoibasdfjaksdj");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                url, null,
+                url, body,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-//                        if (success) {
-//                            progressDialog.hide();
-//                            returnToPreviousActivitySuccess(ApplicationCommunicator.successMessage);
-//                        }
+                        try {
+                            progressDialog.hide();
+                            returnToPreviousActivitySuccess(response.getString("target"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
@@ -206,8 +209,14 @@ public class SendActivity extends ActionBarActivity implements
             }
         }){
             @Override
-            protected Map<String, String> getParams() {
-                return finalParams;
+            public HashMap<String, String> getHeaders() {
+                String token = ApplicationController.getToken();
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                params.put("Content-Type", "application/json;charset=UTF-8");
+                params.put("Accept", "application/json");
+
+                return params;
             }
         };
 
@@ -215,7 +224,7 @@ public class SendActivity extends ActionBarActivity implements
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
-    public void sendMoneyText(Map<String, String> params) {
+    public void sendMoneyText() {
         sendSMS("ourPhoneNumber", "text commands");
     }
 
