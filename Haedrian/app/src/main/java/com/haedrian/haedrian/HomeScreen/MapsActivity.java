@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
 
@@ -34,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MapsActivity extends ActionBarActivity {
@@ -142,31 +144,54 @@ public class MapsActivity extends ActionBarActivity {
 //        }
 
 //        for (int i = 0; i < 9; i++) {
-            Resources res = getResources();
-            String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=bdo+banks+in+Manila&key=AIzaSyA9koyYrNBHQKg3nATQKX_YvmjyqMs6eF4" + res.getString(R.string.google_places_api_key);
-            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
-                    new Response.Listener<JSONObject>() {
+        Resources res = getResources();
+        String url = ApplicationConstants.BASE + "locations/?query=BDO&lat=14.5800&lng=121.0000";
 
-                        @Override
-                        public void onResponse(JSONObject jsonObject) {
-                            try {
-                                JSONArray array = jsonObject.getJSONArray("results");
-                                Log.v("TEST", jsonObject.toString());
+        JsonArrayRequest locationsRequest = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            Log.v("TEST", jsonArray.toString());
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                Double lat = Double.parseDouble(object.getJSONObject("geometry").getJSONObject("location").getString("lat"));
+                                Double lng = Double.parseDouble(object.getJSONObject("geometry").getJSONObject("location").getString("lng"));
+                                LatLng latLng = new LatLng(lat, lng);
+
+                                String title = object.getString("name");
+                                String description = object.getString("formatted_address");
+
+                                latLngs.add(latLng);
+                                titles.add(title);
+                                descriptions.add(description);
                             }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
-                    , new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
                 }
+                , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.v("TEST", volleyError.toString());
+            }}) {
+            @Override
+            public HashMap<String, String> getHeaders() {
+                String token = ApplicationController.getToken();
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                params.put("Content-Type", "application/json;charset=UTF-8");
+                params.put("Accept", "application/json");
+
+                return params;
             }
-            );
-            // Adding request to request queue
-            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+        };
+
+        // Adding request to request queue
+        ApplicationController.getInstance().addToRequestQueue(locationsRequest);
 //        }
     }
 
