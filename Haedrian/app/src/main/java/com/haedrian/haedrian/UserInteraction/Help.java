@@ -8,12 +8,12 @@ import android.view.MenuItem;
 
 import com.haedrian.haedrian.R;
 
-public class About extends ActionBarActivity {
+public class Help extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_help);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -21,7 +21,7 @@ public class About extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_about, menu);
+//        getMenuInflater().inflate(R.menu.menu_help, menu);
         return true;
     }
 

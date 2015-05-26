@@ -287,6 +287,8 @@ public class PinActivity extends ActionBarActivity {
 
         if (state.equals(State.Create)) {
             userPrompt.setText(res.getString(R.string.create_pin));
+            enteredPin = "";
+            reenteredPin = "";
         }
         else if (state.equals(State.Reenter)) {
             userPrompt.setText(res.getString(R.string.reenter_pin));

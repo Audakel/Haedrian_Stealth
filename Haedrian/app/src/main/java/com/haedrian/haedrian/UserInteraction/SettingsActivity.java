@@ -60,6 +60,17 @@ public class SettingsActivity extends ActionBarActivity {
         switch (id) {
             case R.id.sign_out_container:
                 signOut();
+                break;
+            case R.id.about_container:
+                Intent intent = new Intent(this, About.class);
+                startActivity(intent);
+                break;
+            case R.id.help_container:
+                Intent intent1 = new Intent(this, Help.class);
+                startActivity(intent1);
+                break;
+            default:
+                break;
         }
     }
 
