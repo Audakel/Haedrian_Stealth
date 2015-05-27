@@ -9,7 +9,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
+import com.haedrian.haedrian.R;
 import com.parse.Parse;
 
 import javax.crypto.Cipher;
@@ -43,6 +45,11 @@ public class ApplicationController extends Application {
         // initialize the singleton
         sInstance = this;
         mRequestQueue = Volley.newRequestQueue(this); // 'this' is Context
+
+        FlurryAgent.setLogEnabled(false);
+
+        FlurryAgent.setVersionName(getString(R.string.version));
+        FlurryAgent.init(this, ApplicationConstants.MY_FLURRY_API_KEY);
 
         //Parse setup
         // Enable Local Datastore.

@@ -37,6 +37,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
@@ -121,6 +122,20 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
     public void onClick(View view) {

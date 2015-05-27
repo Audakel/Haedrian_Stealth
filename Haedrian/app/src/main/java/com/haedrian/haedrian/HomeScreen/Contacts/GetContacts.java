@@ -9,6 +9,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.BuildConfig;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.Utils;
@@ -76,6 +77,20 @@ public class GetContacts extends ActionBarActivity implements
             mContactDetailFragment = (ContactDetailFragment)
                     getSupportFragmentManager().findFragmentById(R.id.contact_detail);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
     /**

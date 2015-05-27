@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.ProjectsList;
 import com.haedrian.haedrian.R;
 
@@ -50,6 +51,20 @@ public class InvestActivity extends ActionBarActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
 

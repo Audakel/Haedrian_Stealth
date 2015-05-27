@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.R;
 
@@ -41,6 +42,20 @@ public class CompleteActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
 

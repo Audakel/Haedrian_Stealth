@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.R;
@@ -123,6 +124,19 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
         lenddoButton.setUiHelper(helper);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
+    }
 
 
     private void getEmploymentEnd() {

@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Models.WalletModel;
@@ -111,6 +112,23 @@ public class CreateWalletActivity extends ActionBarActivity {
 
         queue = Volley.newRequestQueue(this);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
     }
 
 
@@ -218,23 +236,6 @@ public class CreateWalletActivity extends ActionBarActivity {
 
     private boolean checkCredentials() {
         return addPasswordText.length() >= 10 && addEmailText.length() > 0;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (queue != null) {
-            queue.cancelAll(TAG);
-        }
-//        FlurryAgent.onEndSession(this);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-//        FlurryAgent.onStartSession(this);
-//        FlurryAgent.logEvent(this.getClass().getSimpleName() + " opened");
     }
 
 }

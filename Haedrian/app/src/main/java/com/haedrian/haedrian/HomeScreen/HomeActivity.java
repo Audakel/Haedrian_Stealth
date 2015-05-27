@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity;
 import com.haedrian.haedrian.UserInteraction.CurrencyInfoActivity;
@@ -108,6 +109,20 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
         // Check if funds have been requested of user
         checkForRequest(parseId);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
     private void checkForRequest(String parseId) {

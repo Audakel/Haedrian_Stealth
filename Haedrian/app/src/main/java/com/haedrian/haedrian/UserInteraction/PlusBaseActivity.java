@@ -6,6 +6,7 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.plus.PlusClient;
@@ -74,6 +75,22 @@ public abstract class PlusBaseActivity extends Activity
 //        mPlusClient =
 //                new PlusClient.Builder(this, this, this).setScopes(Scopes.PLUS_LOGIN,
 //                        Scopes.PLUS_ME).build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initiatePlusClientConnect();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        initiatePlusClientDisconnect();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
     /**
@@ -160,18 +177,6 @@ public abstract class PlusBaseActivity extends Activity
             });
         }
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initiatePlusClientConnect();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        initiatePlusClientDisconnect();
     }
 
     public boolean isPlusClientConnecting() {

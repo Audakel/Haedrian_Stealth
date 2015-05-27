@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.AESHelper;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
@@ -33,6 +34,7 @@ public class PinActivity extends ActionBarActivity {
 
     private String token;
     private int pinState = 0;
+    private int pinAttempts = 0;
     private String enteredPin = "";
     private String reenteredPin = "";
 
@@ -104,6 +106,21 @@ public class PinActivity extends ActionBarActivity {
                 .resize(height, height)
                 .into(appLogo);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent("Incorrect pin attempts: " + pinAttempts);
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
     @Override
@@ -339,6 +356,8 @@ public class PinActivity extends ActionBarActivity {
             try {
                 decryptedToken = AESHelper.decrypt(enteredPin, storedToken);
             } catch (Exception e) {
+                FlurryAgent.logEvent("User incorrectly entered pin");
+                pinAttempts++;
                 // Incorrect pin
                 Toast.makeText(this, res.getString(R.string.incorrect_pin), Toast.LENGTH_LONG).show();
                 changeState(State.Enter);

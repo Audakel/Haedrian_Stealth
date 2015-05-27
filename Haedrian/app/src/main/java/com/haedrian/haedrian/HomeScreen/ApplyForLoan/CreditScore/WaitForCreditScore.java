@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectActivity;
 import com.haedrian.haedrian.R;
 
@@ -28,7 +29,19 @@ public class WaitForCreditScore extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -82,25 +82,23 @@ public class BalanceFragment extends Fragment {
         return rootView;
     }
 
-    public void initializeWallet() {
+    public void initializeDisplay(String bitcoinAdress) {
 
         // Generate QRCode and then display it
         QRCodeEncoder encoder = new QRCodeEncoder();
         Bitmap qrCodeBitmap = null;
         try {
-            qrCodeBitmap = encoder.encodeAsBitmap(getString(R.string.dummy_bitcoin_address), 300);
+            qrCodeBitmap = encoder.encodeAsBitmap(bitcoinAdress, 300);
         } catch (WriterException e) {
             Log.e("ZXing", e.toString());
         }
 
 
-        // Get wallet balance and display it
-        getWalletBalance();
 
         progressDialog.dismiss();
 
         // Set up dialog stuff with wallet address and bitmap
-        final String walletAddress = getString(R.string.dummy_bitcoin_address);
+        final String walletAddress = bitcoinAdress;
         final Bitmap finalQrCodeBitmap = qrCodeBitmap;
         getWalletAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,8 +110,8 @@ public class BalanceFragment extends Fragment {
 
     }
 
-    public void getWalletBalance() {
-        final String URL = ApplicationConstants.BASE + "balance/";
+    public void initializeWallet() {
+        final String URL = ApplicationConstants.BASE + "wallet-info/";
 
 //        Log.v("TEST", ApplicationController.getToken());
 
@@ -124,7 +122,8 @@ public class BalanceFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            setBalance(response.getString("balance"));
+                            setBalance(response.getJSONObject("bitcoin").getString("balance"));
+                            initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

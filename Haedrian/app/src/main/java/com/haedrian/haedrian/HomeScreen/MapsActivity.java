@@ -12,11 +12,17 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
@@ -34,6 +40,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +54,9 @@ public class MapsActivity extends ActionBarActivity {
     private List<LatLng> latLngs;
     private List<String> titles;
     private List<String> descriptions;
+    private Spinner locationSpinner;
+
+    private ArrayList<String> depositLocations = new ArrayList<>();
 
     private final LocationListener locationListener = new LocationListener() {
         @Override
@@ -69,6 +80,7 @@ public class MapsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps2);
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,6 +88,29 @@ public class MapsActivity extends ActionBarActivity {
         latLngs = new ArrayList<>();
         titles = new ArrayList<>();
         descriptions = new ArrayList<>();
+
+        locationSpinner = (Spinner) findViewById(R.id.location_spinner);
+
+        fillLocationInfo();
+
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, depositLocations);
+        locationSpinner.setAdapter(locationAdapter);
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                latLngs.clear();
+                titles.clear();
+                descriptions.clear();
+                mMap.clear();
+                FlurryAgent.logEvent("User searched for the locations of this bank: " + depositLocations.get(position));
+                getLocations();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // Get locations
         getLocations();
@@ -101,51 +136,47 @@ public class MapsActivity extends ActionBarActivity {
 
         locationManager.requestLocationUpdates(provider, 200, 10, locationListener);
 
-        setContentView(R.layout.activity_maps2);
         setUpMapIfNeeded();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
+    }
+
+    private void fillLocationInfo() {
+       depositLocations.add(getString(R.string.bdo));
+       depositLocations.add(getString(R.string.bpi));
+       depositLocations.add(getString(R.string.globe_gcash));
+       depositLocations.add(getString(R.string.security_bank));
+       depositLocations.add(getString(R.string.union_bank));
+
     }
 
     public void getLocations() {
 
-//        for (int i = 0; i < 9; i++) {
-//
-//            String url = "http://coinmap.org/data/data-overpass-bitcoin-" + i + ".json";
-//            JsonArrayRequest currencyRequest = new JsonArrayRequest(url,
-//                    new Response.Listener<JSONArray>() {
-//
-//                        @Override
-//                        public void onResponse(JSONArray jsonArray) {
-//                            try {
-//                                for (int i = 0; i < jsonArray.length(); i++) {
-//                                    titles.add(jsonArray.getJSONObject(i).getString("title"));
-//                                    if (jsonArray.getJSONObject(i).has("desc")) {
-//                                        descriptions.add(jsonArray.getJSONObject(i).getString("desc"));
-//                                    }
-//                                    else {
-//                                        descriptions.add("");
-//                                    }
-//                                    LatLng latLng = new LatLng(Double.parseDouble(jsonArray.getJSONObject(i).getString("lat")), Double.parseDouble(jsonArray.getJSONObject(i).getString("lon")));
-//                                    latLngs.add(latLng);
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                    , new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError volleyError) {
-//
-//                }
-//            }
-//            );
-//            // Adding request to request queue
-//            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
-//        }
-
-//        for (int i = 0; i < 9; i++) {
-        Resources res = getResources();
-        String url = ApplicationConstants.BASE + "locations/?query=BDO&lat=14.5800&lng=121.0000";
+        String query = "";
+        try {
+            String depositLocation = depositLocations.get(locationSpinner.getSelectedItemPosition());
+            query = URLEncoder.encode(depositLocation, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String lat = String.valueOf(latitude);
+        String lng = String.valueOf(longitude);
+        String url = ApplicationConstants.BASE
+                + "locations/?query=" + query
+                + "&lat=" + lat
+                + "&lng=" + lng;
 
         JsonArrayRequest locationsRequest = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
@@ -153,7 +184,6 @@ public class MapsActivity extends ActionBarActivity {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
                         try {
-                            Log.v("TEST", jsonArray.toString());
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 Double lat = Double.parseDouble(object.getJSONObject("geometry").getJSONObject("location").getString("lat"));
@@ -167,6 +197,7 @@ public class MapsActivity extends ActionBarActivity {
                                 titles.add(title);
                                 descriptions.add(description);
                             }
+                            drawLocations();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -192,7 +223,6 @@ public class MapsActivity extends ActionBarActivity {
 
         // Adding request to request queue
         ApplicationController.getInstance().addToRequestQueue(locationsRequest);
-//        }
     }
 
     @Override
@@ -220,8 +250,11 @@ public class MapsActivity extends ActionBarActivity {
 
     private void updateWithNewLocation(Location location) {
         if (location != null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
+//            latitude = location.getLatitude();
+//            longitude = location.getLongitude();
+            latitude = 14.575426;
+            longitude = 121.084511;
+            FlurryAgent.logEvent("User/'s Latitude: " + latitude + " User/'s Longitude: " + longitude);
         }
     }
 
@@ -260,8 +293,7 @@ public class MapsActivity extends ActionBarActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 7.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 14.0f));
         mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .title(getResources().getString(R.string.you))
@@ -272,27 +304,31 @@ public class MapsActivity extends ActionBarActivity {
 
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
-                long start = SystemClock.uptimeMillis();
-                int count = 0;
-                Projection projection = mMap.getProjection();
-                LatLngBounds bounds = projection.getVisibleRegion().latLngBounds;
-                for (int i = latLngs.size() - 1; i >= 0; i--) {
-                    LatLng position = latLngs.get(i);
-                    if (bounds.contains(position)) {
-                        mMap.addMarker(new MarkerOptions()
-                                .position(latLngs.get(i))
-                                .title(titles.get(i))
-                                .snippet(descriptions.get(i))
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bitcoinmarker))
-                                .snippet(""));
-
-                        latLngs.remove(i);
-                        count++;
-                    }
-                }
-                long end = SystemClock.uptimeMillis();
+                drawLocations();
             }
         });
 
+    }
+
+    public void drawLocations() {
+        long start = SystemClock.uptimeMillis();
+        int count = 0;
+        Projection projection = mMap.getProjection();
+        LatLngBounds bounds = projection.getVisibleRegion().latLngBounds;
+        for (int i = latLngs.size() - 1; i >= 0; i--) {
+            LatLng position = latLngs.get(i);
+            if (bounds.contains(position)) {
+                mMap.addMarker(new MarkerOptions()
+                        .position(latLngs.get(i))
+                        .title(titles.get(i))
+                        .snippet(descriptions.get(i))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bitcoinmarker))
+                        .snippet(""));
+
+                latLngs.remove(i);
+                count++;
+            }
+        }
+        long end = SystemClock.uptimeMillis();
     }
 }

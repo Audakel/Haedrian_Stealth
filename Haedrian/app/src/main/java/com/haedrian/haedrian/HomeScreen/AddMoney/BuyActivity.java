@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.ConfirmOrderDialog;
 import com.haedrian.haedrian.CustomDialogs.PaymentMethodDialog;
@@ -45,6 +46,7 @@ public class BuyActivity extends ActionBarActivity {
     private String buyRate = "0";
     private Button submitButton;
     private TextView currencySign;
+    private ArrayList<String> paymentMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,18 @@ public class BuyActivity extends ActionBarActivity {
         bitcoinEditText = (EditText) findViewById(R.id.bitcoin_edittext);
         amountCurrency = (TextView) findViewById(R.id.amount_currency);
         submitButton = (Button) findViewById(R.id.submit_button);
+
+        paymentMethods = new ArrayList<String>();
+        paymentMethods.add("BDO 24-hour ATM Deposit");
+        paymentMethods.add("BDO Online Banking");
+        paymentMethods.add("BDO over-the-counter deposit");
+        paymentMethods.add("BPI Express Online");
+        paymentMethods.add("BPI over-the-counter deposit");
+        paymentMethods.add("GCash");
+        paymentMethods.add("Globe Share-a-Load");
+        paymentMethods.add("Security Bank");
+        paymentMethods.add("UnionBank of the Philippines");
+        paymentMethods.add("UnionBank of the Philippines Online Banking");
 
         currencyEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -130,18 +144,6 @@ public class BuyActivity extends ActionBarActivity {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     // Do API call here to get the methods and the fees from coins.ph
 
-                    ArrayList<String> paymentMethods = new ArrayList<String>();
-                    paymentMethods.add("BDO 24-hour ATM Deposit");
-                    paymentMethods.add("BDO Online Banking");
-                    paymentMethods.add("BDO over-the-counter deposit");
-                    paymentMethods.add("BPI Express Online");
-                    paymentMethods.add("BPI over-the-counter deposit");
-                    paymentMethods.add("GCash");
-                    paymentMethods.add("Globe Share-a-Load");
-                    paymentMethods.add("Security Bank");
-                    paymentMethods.add("UnionBank of the Philippines");
-                    paymentMethods.add("UnionBank of the Philippines Online Banking");
-
                     // Show dialog
                     final PaymentMethodDialog dialog = new PaymentMethodDialog(BuyActivity.this, paymentMethods);
                     dialog.show();
@@ -172,6 +174,7 @@ public class BuyActivity extends ActionBarActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        FlurryAgent.logEvent("User selected this deposit option: " + paymentMethods.get(methodSpinner.getSelectedItemPosition()));
                         Intent intent = new Intent(BuyActivity.this, OrderSummaryActivity.class);
                         startActivity(intent);
                     }
@@ -179,6 +182,20 @@ public class BuyActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
     private void getExchangeRate() {

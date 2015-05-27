@@ -25,6 +25,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.BuildConfig;
 import com.haedrian.haedrian.util.Utils;
 
@@ -70,6 +71,20 @@ public class ContactDetailActivity extends ActionBarActivity {
             // No intent provided, nothing to do so finish()
             finish();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
@@ -24,6 +25,20 @@ public class ImportWalletActivity extends ActionBarActivity {
         setContentView(R.layout.activity_import_wallet);
 
         walletAddress = (EditText) findViewById(R.id.import_wallet_address);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
     }
 
 

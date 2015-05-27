@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Adapters.InvestListAdapter;
 import com.haedrian.haedrian.R;
 
@@ -30,6 +31,20 @@ public class ProjectsList extends ActionBarActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.investListView);
         mRecyclerView.setAdapter(mInvestListAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
     }
 
 

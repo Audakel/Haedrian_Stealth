@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectFragments.ProjectAboutFragment;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectFragments.ProjectCategoryFragment;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectFragments.ProjectDurationFragment;
@@ -58,7 +59,19 @@ public class CreateProjectActivity extends ActionBarActivity
         fragmentTransaction.add(R.id.fragment_container, projectTitleFragment);
         fragmentTransaction.commit();
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

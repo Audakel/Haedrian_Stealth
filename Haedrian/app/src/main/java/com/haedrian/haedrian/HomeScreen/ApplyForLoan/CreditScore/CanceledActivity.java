@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.R;
 
 import android.app.Activity;
@@ -17,6 +18,19 @@ public class CanceledActivity extends Activity {
         setContentView(R.layout.activity_canceled);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

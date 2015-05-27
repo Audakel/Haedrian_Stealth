@@ -245,7 +245,7 @@
     <string name="no_transaction">You have not had any transactions yet!</string>
     <string name="title_activity_maps">Buy/Sell Bitcoin</string>
     <string name="buy_sell">Buy/Sell Bitcoin</string>
-    <string name="find_a_location">Find the location closest to you that accepts or exchanges bitcoin!</string>
+    <string name="find_a_location">Pick a deposit bank to see locations near you!</string>
     <string name="from_to">To:</string>
     <string name="transaction_type">Request Pending...</string>
     <string name="title_activity_transaction_details">Transaction Details</string>
@@ -358,5 +358,10 @@
     <string name="title_activity_help">Help</string>
     <string name="help">For help and support, email</string>
     <string name="get_back_to_you">and we\'ll get back to you as soon as we can!</string>
+    <string name="bdo">BDO</string>
+    <string name="bpi">BPI</string>
+    <string name="globe_gcash">Globe GCash</string>
+    <string name="security_bank">Security Bank</string>
+    <string name="union_bank">Union Bank</string>
 
 </resources>

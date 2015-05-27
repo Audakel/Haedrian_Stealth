@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectActivity;
 import com.haedrian.haedrian.Database.DBHelper;
@@ -89,6 +90,19 @@ public class HasCreditScoreActivity extends ActionBarActivity {
         creditScoreTextView.setText(user.getCreditScore()+"");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

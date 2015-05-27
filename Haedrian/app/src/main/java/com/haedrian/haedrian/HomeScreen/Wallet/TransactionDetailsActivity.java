@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.R;
 
 
@@ -17,6 +18,20 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_transaction_details);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
     }
 
     @Override
