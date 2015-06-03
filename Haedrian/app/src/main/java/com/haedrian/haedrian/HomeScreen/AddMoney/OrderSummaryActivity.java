@@ -1,27 +1,66 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
+import com.haedrian.haedrian.CustomDialogs.BuyInstructionsDialog;
+import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
 import com.haedrian.haedrian.R;
+
+import org.w3c.dom.Text;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class OrderSummaryActivity extends ActionBarActivity {
 
     private Button paymentInstructionsButton, markAsPaidButton, cancelButton;
+    private TextView buyAmountTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
+
+    private Double buyAmount = 0.00;
+    private Double haedrianFee = 0.00;
+    private Double paymentMethodFee = 0.00;
+    private Double total = 0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         paymentInstructionsButton = (Button) findViewById(R.id.payment_instructions_button);
         markAsPaidButton = (Button) findViewById(R.id.mark_as_paid_button);
-        cancelButton = (Button) findViewById(R.id.cancel_button);
+
+        buyAmountTV = (TextView) findViewById(R.id.amount);
+        haedrianFeeTV = (TextView) findViewById(R.id.haedrian_fee);
+        paymentMethodFeeTV = (TextView) findViewById(R.id.payment_method_fee);
+        totalDueTV = (TextView) findViewById(R.id.total_due);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            buyAmount = extras.getDouble("buy_amount");
+            haedrianFee = extras.getDouble("haedrian_fee");
+            paymentMethodFee = extras.getDouble("payment_method_fee");
+            total = extras.getDouble("total");
+        }
+
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
+        buyAmountTV.setText(currencyFormatter.format(buyAmount));
+        haedrianFeeTV.setText(currencyFormatter.format(haedrianFee));
+        paymentMethodFeeTV.setText(currencyFormatter.format(paymentMethodFee));
+        totalDueTV.setText(currencyFormatter.format(total));
+
     }
 
     @Override
@@ -53,7 +92,8 @@ public class OrderSummaryActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == android.R.id.home) {
+            onBackPressed();
             return true;
         }
 
@@ -69,14 +109,16 @@ public class OrderSummaryActivity extends ActionBarActivity {
                 break;
             case R.id.mark_as_paid_button:
                 break;
-            case R.id.cancel_button:
-                break;
+            case R.id.wallet_activity_link:
+                Intent intent = new Intent(this, WalletActivity.class);
+                startActivity(intent);
             default:
                 break;
         }
     }
 
     private void showPaymentInstructionsDialog() {
-
+        BuyInstructionsDialog buyInstructionsDialog = new BuyInstructionsDialog(this, "instructions");
+        buyInstructionsDialog.show();
     }
 }

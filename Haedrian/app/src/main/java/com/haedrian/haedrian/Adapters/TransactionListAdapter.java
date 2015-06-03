@@ -11,24 +11,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.haedrian.haedrian.Models.TransactionModel;
 import com.haedrian.haedrian.R;
 import com.parse.ParseObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by Logan on 4/25/2015.
  */
-public class TransactionListAdapter extends ArrayAdapter<String> {
+public class TransactionListAdapter extends ArrayAdapter {
 
     private Context context;
     private int resource;
-    private ArrayList<String> transactions;
+    private ArrayList<TransactionModel> transactions;
 
-    public TransactionListAdapter(Context context, int resource, ArrayList<String> transactions) {
+    public TransactionListAdapter(Context context, int resource, ArrayList<TransactionModel> transactions) {
         super(context, resource, transactions);
         this.context = context;
         this.resource = resource;
@@ -55,18 +57,18 @@ public class TransactionListAdapter extends ArrayAdapter<String> {
             holder = (TransactionDataHolder)row.getTag();
         }
 
-        int transactionType = (Math.random()<0.5) ? 0 : 1;
+        String transactionType = transactions.get(position).getEntryType();
 
-        if (transactionType == 0) {
+        if (transactionType.equals("outgoing")) {
             holder.transactionType.setText(context.getResources().getString(R.string.sent_bitcoin));
             holder.imageType.setImageResource(R.drawable.send);
         }
-        else {
+        else if (transactionType.equals("incoming")) {
             holder.transactionType.setText(context.getResources().getString(R.string.received_bitcoin));
             holder.imageType.setImageResource(R.drawable.receive);
         }
 
-        Double currencyAmount = Double.parseDouble(String.valueOf(transactions.get(position)));
+        Double currencyAmount = Double.parseDouble(transactions.get(position).getAmount());
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
         holder.amount.setText(currencyFormatter.format(currencyAmount));

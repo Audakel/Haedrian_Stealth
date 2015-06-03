@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.location.Criteria;
@@ -18,8 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
@@ -35,12 +38,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +59,12 @@ public class MapsActivity extends ActionBarActivity {
     private List<LatLng> latLngs;
     private List<String> titles;
     private List<String> descriptions;
-    private Spinner locationSpinner;
+    private Spinner locationSpinner, outletSpinner;
+
+    private ProgressDialog progressDialog;
 
     private ArrayList<String> depositLocations = new ArrayList<>();
+    private ArrayList<ArrayList<String>> outletLocations = new ArrayList<>();
 
     private final LocationListener locationListener = new LocationListener() {
         @Override
@@ -90,30 +98,14 @@ public class MapsActivity extends ActionBarActivity {
         descriptions = new ArrayList<>();
 
         locationSpinner = (Spinner) findViewById(R.id.location_spinner);
+        outletSpinner = (Spinner) findViewById(R.id.outlet_spinner);
 
-        fillLocationInfo();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.dialog_loading));
+        progressDialog.show();
 
-        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, depositLocations);
-        locationSpinner.setAdapter(locationAdapter);
-        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                latLngs.clear();
-                titles.clear();
-                descriptions.clear();
-                mMap.clear();
-                FlurryAgent.logEvent("User searched for the locations of this bank: " + depositLocations.get(position));
-                getLocations();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        // Get locations
-        getLocations();
+        // Get exchange types
+        getExchangeTypes();
 
         // Location stuff
         LocationManager locationManager;
@@ -153,21 +145,114 @@ public class MapsActivity extends ActionBarActivity {
         FlurryAgent.onEndSession(this);
     }
 
-    private void fillLocationInfo() {
-       depositLocations.add(getString(R.string.bdo));
-       depositLocations.add(getString(R.string.bpi));
-       depositLocations.add(getString(R.string.globe_gcash));
-       depositLocations.add(getString(R.string.security_bank));
-       depositLocations.add(getString(R.string.union_bank));
+//    private void fillLocationInfo() {
+//       depositLocations.add(getString(R.string.bdo));
+//       depositLocations.add(getString(R.string.bpi));
+//       depositLocations.add(getString(R.string.globe_gcash));
+//       depositLocations.add(getString(R.string.security_bank));
+//       depositLocations.add(getString(R.string.union_bank));
+//
+//    }
 
+    public void getExchangeTypes() {
+        String URL = ApplicationConstants.BASE + "exchange-types/";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                URL, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray locations = response.getJSONArray("locations");
+                            for (int i = 0; i < locations.length(); i++) {
+                                depositLocations.add(locations.getJSONObject(i).getString("name"));
+                                JSONArray outlets = locations.getJSONObject(i).getJSONArray("outlets");
+                                ArrayList<String> outlet = new ArrayList<>();
+                                for (int j = 0; j < outlets.length(); j++) {
+                                    outlet.add(outlets.getString(j));
+                                }
+                                outletLocations.add(outlet);
+                            }
+                            // Get locations
+                            getLocations();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Test", "Error: " + error.toString());
+            }
+
+        }) {
+            @Override
+            public HashMap<String, String> getHeaders() {
+                String token = ApplicationController.getToken();
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                params.put("Content-Type", "application/json;charset=UTF-8");
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
     public void getLocations() {
 
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, depositLocations);
+        locationSpinner.setAdapter(locationAdapter);
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Set up outlets here
+                FlurryAgent.logEvent("User searched for the locations of this bank: " + depositLocations.get(position));
+                ArrayList<String> tempOutlets = outletLocations.get(position);
+                getOutlets(tempOutlets, position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    public void getOutlets(ArrayList<String> tempOutlets, final int locationPosition) {
+        progressDialog.hide();
+        ArrayAdapter<String> outletAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tempOutlets);
+        outletSpinner.setAdapter(outletAdapter);
+        outletSpinner.setVisibility(View.VISIBLE);
+        outletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                latLngs.clear();
+                titles.clear();
+                descriptions.clear();
+                mMap.clear();
+                String outlet = outletLocations.get(locationPosition).get(position);
+                FlurryAgent.logEvent("User searched for this outlet:" + outlet);
+                getOutletLocations(outlet);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public void getOutletLocations(String outlet) {
         String query = "";
         try {
-            String depositLocation = depositLocations.get(locationSpinner.getSelectedItemPosition());
-            query = URLEncoder.encode(depositLocation, "UTF-8");
+            query = URLEncoder.encode(outlet, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -208,7 +293,8 @@ public class MapsActivity extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.v("TEST", volleyError.toString());
-            }}) {
+            }
+        }) {
             @Override
             public HashMap<String, String> getHeaders() {
                 String token = ApplicationController.getToken();
@@ -220,6 +306,8 @@ public class MapsActivity extends ActionBarActivity {
                 return params;
             }
         };
+
+        locationsRequest.setRetryPolicy(new TimeoutRetryPolicy());
 
         // Adding request to request queue
         ApplicationController.getInstance().addToRequestQueue(locationsRequest);

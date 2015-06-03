@@ -13,7 +13,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +37,7 @@ public class RequestDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.request_dialog);
+        setContentView(R.layout.dialog_request);
 
         notNowButton = (Button) findViewById(R.id.dialog_not_now);
         yesButton = (Button) findViewById(R.id.dialog_yes);

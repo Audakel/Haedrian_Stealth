@@ -50,7 +50,7 @@ public class InvestListAdapter extends RecyclerView.Adapter<InvestListAdapter.My
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = inflater.inflate(R.layout.invest_list_view, viewGroup, false);
+        View view = inflater.inflate(R.layout.view_invest_list, viewGroup, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -75,7 +75,7 @@ public class InvestListAdapter extends RecyclerView.Adapter<InvestListAdapter.My
 
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.invest_list_view, parent, false);
+        View row = inflater.inflate(R.layout.view_invest_list, parent, false);
         TextView titleView = (TextView) row.findViewById(R.id.titleView);
         TextView raisedView = (TextView) row.findViewById(R.id.raisedView);
         TextView goalView = (TextView) row.findViewById(R.id.goalRaisView);

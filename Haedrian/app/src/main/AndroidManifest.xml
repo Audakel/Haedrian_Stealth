@@ -306,7 +306,7 @@
         </activity>
         <activity
             android:name=".HomeScreen.AddMoney.OrderSummaryActivity"
-            android:label="@string/title_activity_order_summary" >
+            android:label="@string/title_activity_order_summary">
         </activity>
         <activity
             android:name=".UserInteraction.PinActivity"

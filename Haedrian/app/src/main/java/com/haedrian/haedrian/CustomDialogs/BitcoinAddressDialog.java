@@ -3,12 +3,9 @@ package com.haedrian.haedrian.CustomDialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +33,7 @@ public class BitcoinAddressDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.bitcoin_address_dialog);
+        setContentView(R.layout.dialog_bitcoin_address);
 
         ImageView bitcoinQr = (ImageView) findViewById(R.id.dialog_image);
         TextView bitcoinAddress = (TextView) findViewById(R.id.wallet_address);

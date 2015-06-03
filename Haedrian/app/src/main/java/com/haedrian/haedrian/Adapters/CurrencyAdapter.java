@@ -54,7 +54,7 @@ public class CurrencyAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.currency_list_view, null);
+            convertView = inflater.inflate(R.layout.view_currency_list, null);
 
         TextView name = (TextView) convertView.findViewById(R.id.currencyNameText);
         TextView buy = (TextView) convertView.findViewById(R.id.currencyBuyText);

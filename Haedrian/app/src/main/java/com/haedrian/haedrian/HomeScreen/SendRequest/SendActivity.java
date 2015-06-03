@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -187,7 +189,7 @@ public class SendActivity extends ActionBarActivity implements
             e.printStackTrace();
         }
 
-        sendMoney();
+//        sendMoney();
     }
 
     public void sendMoney() {
@@ -196,8 +198,8 @@ public class SendActivity extends ActionBarActivity implements
         JSONObject body = new JSONObject();
         try {
             body.put("receiver", "mentors_international");
-            body.put("amount_local", "45781");
-            body.put("target_address", "adsfajfwoibasdfjaksdj");
+            body.put("amount_local", "0.0001");
+            body.put("target_address", "12UkkQ58ksRXHzHdNzhcy4e6f8JwWGTG3H");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -210,7 +212,12 @@ public class SendActivity extends ActionBarActivity implements
                     public void onResponse(JSONObject response) {
                         try {
                             progressDialog.hide();
-                            returnToPreviousActivitySuccess(response.getString("target"));
+                            Log.v("TEST", response.toString());
+
+                            if (response.getBoolean("success")) {
+                                returnToPreviousActivitySuccess("Successfully sent money to Mentors International!");
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -220,7 +227,7 @@ public class SendActivity extends ActionBarActivity implements
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.hide();
-                Toast.makeText(SendActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.v("TEST", "Error: " + error.getMessage());
             }
         }){
             @Override
@@ -234,6 +241,8 @@ public class SendActivity extends ActionBarActivity implements
                 return params;
             }
         };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);

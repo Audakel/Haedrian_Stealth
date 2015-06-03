@@ -66,7 +66,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 //        setupDrawer();
 
         // Set the adapter for the list view
-//        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_nav_item, mHomeButtons));
+//        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.item_drawer_nav, mHomeButtons));
         // Set the list's click listener
 //        mDrawerList.setOnItemClickListener(this);
 
@@ -110,6 +110,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         // Check if funds have been requested of user
         checkForRequest(parseId);
     }
+
 
     @Override
     protected void onStart() {

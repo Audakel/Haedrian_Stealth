@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,25 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Adapters.TransactionListAdapter;
+import com.haedrian.haedrian.Application.ApplicationConstants;
+import com.haedrian.haedrian.Application.ApplicationController;
+import com.haedrian.haedrian.Models.TransactionModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 import com.parse.ParseObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TransactionFragment extends Fragment {
@@ -25,8 +40,7 @@ public class TransactionFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ListView transactionList;
-    private List<String> transactions;
-    private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<TransactionModel> transactions;
     private TransactionListAdapter adapter;
     private Context context;
     private TextView noTransactions;
@@ -54,7 +68,7 @@ public class TransactionFragment extends Fragment {
         transactionList = (ListView) rootView.findViewById(R.id.transaction_list);
         noTransactions = (TextView) rootView.findViewById(R.id.no_transaction_textview);
 
-        transactions = new ArrayList<String>();
+        transactions = new ArrayList<>();
 
         this.context = rootView.getContext();
 
@@ -64,13 +78,66 @@ public class TransactionFragment extends Fragment {
     }
 
     private void initializeTransactions() {
+        final String URL = ApplicationConstants.BASE + "history/";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                URL, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            int transactionCount = response.getInt("transaction_count");
+                            if (transactionCount > 0) {
+                                JSONArray transactionArray = response.getJSONArray("transactions");
+                                for (int i = 0; i < transactionArray.length(); i++) {
+                                    JSONObject object = transactionArray.getJSONObject(i);
+                                    TransactionModel transaction = new TransactionModel();
+                                    transaction.setStatus(object.getString("status"));
+                                    transaction.setFeeAmount(object.getString("fee_amount"));
+                                    transaction.setAmount(object.getString("amount"));
+                                    transaction.setDate(object.getString("date"));
+                                    transaction.setEntryType(object.getString("entry_type"));
+                                    transaction.setSender(object.getString("original_sender"));
+                                    transaction.setTarget(object.getString("original_target"));
+
+                                    transactions.add(transaction);
+                                }
+                                setView();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Test", "Error: " + error.toString());
+            }
+
+        }) {
+            @Override
+            public HashMap<String, String> getHeaders() {
+                String token = ApplicationController.getToken();
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                params.put("Content-Type", "application/json;charset=UTF-8");
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void setView() {
         noTransactions.setVisibility(View.GONE);
 
-        for (int i = 0; i < 7; i++) {
-            arrayList.add("5.00");
-        }
-
-        adapter = new TransactionListAdapter(context, R.layout.row_transaction, arrayList);
+        adapter = new TransactionListAdapter(context, R.layout.row_transaction, transactions);
         transactionList.setAdapter(adapter);
         transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,68 +148,4 @@ public class TransactionFragment extends Fragment {
         });
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if(isVisibleToUser)
-//        {
-//
-//            noTransactions.setVisibility(View.GONE);
-//
-//            for (int i = 0; i < 3; i++) {
-//                arrayList.add( i + ".00");
-//            }
-//
-//            adapter = new TransactionListAdapter(context, R.layout.row_transaction, arrayList);
-//            transactionList.setAdapter(adapter);
-//            transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Intent intent = new Intent(context, TransactionDetailsActivity.class);
-//                    startActivity(intent);
-//                }
-//            });
-//
-//
-//
-//                arrayList.clear();
-//
-//                // Get all transactions here
-//                ParseQuery<ParseObject> transactionQuery = new ParseQuery("Transaction");
-//                transactionQuery.whereEqualTo("senderId", parseId);
-//                transactionQuery.findInBackground(new FindCallback<ParseObject>() {
-//                    @Override
-//                    public void done(List<ParseObject> parseObjects, ParseException e) {
-//                        if (e == null) {
-//                            // If it exists
-//                            if (parseObjects.size() > 0) {
-//
-//                                noTransactions.setVisibility(View.GONE);
-//
-//                                for (int i = 0; i < parseObjects.size(); i++) {
-//                                    arrayList.add(parseObjects.get(i));
-//                                }
-//
-//                                adapter = new TransactionListAdapter(context, R.layout.row_transaction, arrayList);
-//                                transactionList.setAdapter(adapter);
-//                                transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                    @Override
-//                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                        Intent intent = new Intent(context, TransactionDetailsActivity.class);
-//                                        startActivity(intent);
-//                                    }
-//                                });
-//                            } else {
-//
-//                            }
-//
-//                        } else {
-//                            Toast.makeText(context, getResources().getString(R.string.msg_error) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//
-//
-//        }
-//    }
 }

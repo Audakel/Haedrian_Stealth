@@ -28,6 +28,7 @@ import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.QrCode.QRCodeEncoder;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +45,6 @@ public class BalanceFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private Button getWalletAddressButton;
     private TextView convertedAmount, bitcoinAmount;
-    private RequestQueue queue;
     private DBHelper db;
 
     private Context context;
@@ -62,7 +62,6 @@ public class BalanceFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_balance, container, false);
 
         context = rootView.getContext();
-        queue = Volley.newRequestQueue(context);
 
         progressDialog = new ProgressDialog(context);
 
@@ -121,6 +120,7 @@ public class BalanceFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.v("TEST", "Wallet-info: " + response.toString());
                         try {
                             setBalance(response.getJSONObject("bitcoin").getString("balance"));
                             initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
@@ -146,13 +146,14 @@ public class BalanceFragment extends Fragment {
                 params.put("Authorization", "Token " + token);
                 params.put("Content-Type", "application/json;charset=UTF-8");
                 params.put("Accept", "application/json");
-
                 return params;
             }
         };
 
-        jsonObjectRequest.setTag(TAG);
-        queue.add(jsonObjectRequest);
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
     public void setBalance(String response) {
@@ -190,7 +191,8 @@ public class BalanceFragment extends Fragment {
             }
         });
 
-        queue.add(currencyRequest);
+        currencyRequest.setRetryPolicy(new TimeoutRetryPolicy());
+        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
     }
 
     public void setConvertedRate(int rate, String bitcoinAmount) {

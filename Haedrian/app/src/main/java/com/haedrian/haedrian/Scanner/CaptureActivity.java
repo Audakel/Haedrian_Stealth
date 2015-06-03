@@ -5,8 +5,6 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.haedrian.haedrian.R;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -96,7 +94,7 @@ public final class CaptureActivity extends ActionBarActivity implements SurfaceH
 
     Window window = getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    setContentView(R.layout.capture);
+    setContentView(R.layout.activity_capture);
 
     hasSurface = false;
     inactivityTimer = new InactivityTimer(this);
@@ -234,7 +232,7 @@ public final class CaptureActivity extends ActionBarActivity implements SurfaceH
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater menuInflater = getMenuInflater();
-//    menuInflater.inflate(R.menu.capture, menu);
+//    menuInflater.inflate(R.menu.activity_capture, menu);
     return super.onCreateOptionsMenu(menu);
   }
 

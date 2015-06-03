@@ -46,6 +46,7 @@ public class ApplicationController extends Application {
         sInstance = this;
         mRequestQueue = Volley.newRequestQueue(this); // 'this' is Context
 
+
         FlurryAgent.setLogEnabled(false);
 
         FlurryAgent.setVersionName(getString(R.string.version));
@@ -102,6 +103,8 @@ public class ApplicationController extends Application {
     public <T> void addToRequestQueue(Request<T> req) {
         // set the default tag if tag is empty
         req.setTag(TAG);
+
+        VolleyLog.d("Adding request to queue: %s", req.getUrl());
 
         getRequestQueue().add(req);
     }

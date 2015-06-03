@@ -123,6 +123,8 @@ public class SendRequestActivity extends ActionBarActivity {
         buttonSend = (Button) findViewById(R.id.buttonSend);
         bitcoinAmount = (TextView) findViewById(R.id.bitcoin_amount);
 
+        errorLayout = (LinearLayout) findViewById(R.id.error_layout);
+
 
     }
 
@@ -242,6 +244,16 @@ public class SendRequestActivity extends ActionBarActivity {
     private void addNumberToDisplay(View selectedButton) {
         Intent intent;
 
+        if (errorLayout.getVisibility() == View.VISIBLE) {
+            errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_fade_out));
+            errorLayout.postOnAnimation(new Runnable() {
+                @Override
+                public void run() {
+                    errorLayout.setVisibility(View.GONE);
+                }
+            });
+        }
+
         switch (selectedButton.getId()) {
             case R.id.button0:
                 setDisplayNumberText("0");
@@ -284,6 +296,12 @@ public class SendRequestActivity extends ActionBarActivity {
                 backspace();
                 return;
             case R.id.buttonSend:
+                if (Double.parseDouble(displayNumber.getText().toString()) <= 0) {
+                    errorLayout.setVisibility(View.VISIBLE);
+                    errorLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
+                    return;
+                }
+
                 intent = new Intent(SendRequestActivity.this, SendActivity.class);
                 intent.putExtra("send_amount", displayNumber.getText().toString());
                 intent.putExtra("send_amount_bitcoin", bitcoinAmount.getText().toString());
@@ -344,7 +362,6 @@ public class SendRequestActivity extends ActionBarActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
                         // Parsing json
                         try {
                             JSONObject currentCurrency = response.getJSONObject("USD");

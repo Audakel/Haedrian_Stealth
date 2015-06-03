@@ -13,8 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,6 +25,7 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +45,9 @@ public class SignupActivity extends ActionBarActivity {
 
     private ArrayList<String> countryNames = new ArrayList<>();
     private ArrayList<String> countryAbbr = new ArrayList<>();
+    private ArrayList<String> countryCodes = new ArrayList<>();
+
+    private TextView countryCodeTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class SignupActivity extends ActionBarActivity {
         phoneNumberET = (EditText) findViewById(R.id.phone_number_edit_text);
         passwordET = (EditText) findViewById(R.id.password_edit_text);
         reenterPasswordET = (EditText) findViewById(R.id.reenter_password_edit_text);
+        countryCodeTV = (TextView) findViewById(R.id.country_code);
 
         countrySpinner = (Spinner) findViewById(R.id.country_spinner);
 
@@ -65,7 +72,18 @@ public class SignupActivity extends ActionBarActivity {
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countryNames);
         countrySpinner.setAdapter(countryAdapter);
         countrySpinner.setSelection(0);
+        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Update country code on the phone number
+                countryCodeTV.setText(countryCodes.get(position));
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         submitButton = (Button) findViewById(R.id.submit_button);
 
@@ -217,6 +235,10 @@ public class SignupActivity extends ActionBarActivity {
             phoneNumberET.setError(getString(R.string.invalid_phone_number));
             return;
         }
+        else
+        {
+            phoneNumber = countryCodes.get(countrySpinner.getSelectedItemPosition()) + phoneNumber;
+        }
 
         /*
          * Password validation
@@ -275,9 +297,10 @@ public class SignupActivity extends ActionBarActivity {
                             if (response.getString("success").equals("true")) {
 
                                 String token = response.getString("token");
+                                ApplicationController.setToken(token);
+                                Log.v("TEST", "Token: " + ApplicationController.getToken());
 
                                 Intent intent = new Intent(SignupActivity.this, PinActivity.class);
-                                intent.putExtra("token", token);
                                 startActivity(intent);
                                 finish();
                             }
@@ -293,10 +316,12 @@ public class SignupActivity extends ActionBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("TEST2", error.getMessage());
+//                Log.v("TEST2", error.getMessage());
 //                Toast.makeText(SignupActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
@@ -310,5 +335,9 @@ public class SignupActivity extends ActionBarActivity {
         countryAbbr.add("");
         countryAbbr.add(getResources().getString(R.string.united_states_abbr));
         countryAbbr.add(getResources().getString(R.string.phillipines_country_code));
+
+        countryCodes.add("");
+        countryCodes.add("+1");
+        countryCodes.add("+63");
     }
 }

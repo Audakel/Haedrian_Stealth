@@ -29,7 +29,7 @@ public class RequestConfirmationDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.request_confirmation_dialog);
+        setContentView(R.layout.dialog_request_confirmation);
 
         cancel = (Button) findViewById(R.id.dialog_request_cancel);
         request = (Button) findViewById(R.id.dialog_request_button);

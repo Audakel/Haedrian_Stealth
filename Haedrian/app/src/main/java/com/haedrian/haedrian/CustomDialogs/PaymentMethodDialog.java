@@ -36,7 +36,7 @@ public class PaymentMethodDialog extends Dialog {
     protected void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.payment_method_dialog);
+        setContentView(R.layout.dialog_payment_method);
 
         paymentMethodList = (ListView) findViewById(R.id.payment_method_list);
 

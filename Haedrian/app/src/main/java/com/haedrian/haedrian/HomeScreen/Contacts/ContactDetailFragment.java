@@ -232,7 +232,7 @@ public class ContactDetailFragment extends Fragment implements
 
         // Inflates the main layout to be used by this fragment
         final View detailView =
-                inflater.inflate(R.layout.contact_detail_fragment, container, false);
+                inflater.inflate(R.layout.fragment_contact_detail, container, false);
 
         // Gets handles to view objects in the layout
         mImageView = (ImageView) detailView.findViewById(R.id.contact_image);
@@ -435,7 +435,7 @@ public class ContactDetailFragment extends Fragment implements
         // Inflates the address layout
         final LinearLayout addressLayout =
                 (LinearLayout) LayoutInflater.from(getActivity()).inflate(
-                        R.layout.contact_detail_item, mDetailsLayout, false);
+                        R.layout.item_contact_detail, mDetailsLayout, false);
 
         // Gets handles to the view objects in the layout
         final TextView headerTextView =

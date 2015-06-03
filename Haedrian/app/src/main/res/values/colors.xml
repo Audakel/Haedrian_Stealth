@@ -39,6 +39,8 @@
     <color name="error_red">#f2dede</color>
     <color name="error_red_text">#a94442</color>
 
+    <color name="success_green">#146930</color>
+
     <!-- QR Scanner Colors -->
     <color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>

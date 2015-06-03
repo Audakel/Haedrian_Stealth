@@ -68,7 +68,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="@string/dummy_amount"
                 android:textColor="@color/grey"/>
 
 
@@ -93,7 +92,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="@string/dummy_amount"
                 android:textColor="@color/grey"/>
 
 
@@ -118,7 +116,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="@string/dummy_amount"
                 android:textColor="@color/grey"/>
 
 
@@ -144,7 +141,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="@string/dummy_amount"
                 android:textColor="@color/grey"
                 android:textStyle="bold"/>
 
@@ -157,6 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/round_blue"
             android:text="@string/payment_instructions"
             android:textColor="@color/white"
@@ -168,28 +165,42 @@
             android:orientation="horizontal"
             android:layout_margin="5dp">
 
+            <LinearLayout
+                android:id="@+id/mark_paid_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mark_in_transaction"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/wallet_activity_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/wallet_activity"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:onClick="onClick"/>
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/mark_as_paid_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_blue"
+                android:background="@drawable/round_green"
                 android:text="@string/mark_as_paid"
                 android:textColor="@color/white"
-                android:onClick="onClick"/>
-
-            <Button
-                android:id="@+id/cancel_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_blue"
-                android:text="@string/cancel"
-                android:textColor="@color/white"
-                android:onClick="onClick"/>
-
+                android:onClick="onClick"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

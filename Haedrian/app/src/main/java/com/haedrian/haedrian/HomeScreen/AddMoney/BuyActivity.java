@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -18,12 +19,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.flurry.android.FlurryAgent;
+import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.ConfirmOrderDialog;
 import com.haedrian.haedrian.CustomDialogs.PaymentMethodDialog;
@@ -34,19 +40,28 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.Locale;
 
 
 public class BuyActivity extends ActionBarActivity {
     private EditText currencyEditText, bitcoinEditText;
-    private TextView amountCurrency;
+    private TextView amountCurrency, currencySign, subtotalTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
     private Spinner methodSpinner;
     private String buyRate = "0";
     private Button submitButton;
-    private TextView currencySign;
     private ArrayList<String> paymentMethods;
+    private RequestQueue queue;
+
+    private Double subtotal = 0.00;
+    private Double haedrianFee = 0.00;
+    private Double paymentMethodFee = 0.00;
+    private Double total = 0.00;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +75,10 @@ public class BuyActivity extends ActionBarActivity {
         Currency currency = Currency.getInstance(Locale.getDefault());
         currencySign.setText(currency.getSymbol());
 
+        progressDialog = new ProgressDialog(this);
+
+        queue = Volley.newRequestQueue(this);
+
         getExchangeRate();
 
         methodSpinner = (Spinner) findViewById(R.id.method_spinner);
@@ -68,17 +87,21 @@ public class BuyActivity extends ActionBarActivity {
         amountCurrency = (TextView) findViewById(R.id.amount_currency);
         submitButton = (Button) findViewById(R.id.submit_button);
 
+        subtotalTV = (TextView) findViewById(R.id.subtotal);
+        haedrianFeeTV = (TextView) findViewById(R.id.haedrian_fee);
+        paymentMethodFeeTV = (TextView) findViewById(R.id.payment_method_fee);
+        totalDueTV = (TextView) findViewById(R.id.total_due);
+
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
+        subtotalTV.setText(currencyFormatter.format(subtotal));
+        haedrianFeeTV.setText(currencyFormatter.format(haedrianFee));
+        paymentMethodFeeTV.setText(currencyFormatter.format(paymentMethodFee));
+        totalDueTV.setText(currencyFormatter.format(total));
+
         paymentMethods = new ArrayList<String>();
-        paymentMethods.add("BDO 24-hour ATM Deposit");
-        paymentMethods.add("BDO Online Banking");
-        paymentMethods.add("BDO over-the-counter deposit");
-        paymentMethods.add("BPI Express Online");
-        paymentMethods.add("BPI over-the-counter deposit");
-        paymentMethods.add("GCash");
-        paymentMethods.add("Globe Share-a-Load");
-        paymentMethods.add("Security Bank");
-        paymentMethods.add("UnionBank of the Philippines");
-        paymentMethods.add("UnionBank of the Philippines Online Banking");
+        getExchangeLocations();
+
 
         currencyEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,7 +112,7 @@ public class BuyActivity extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString() != "") {
+                if ( ! s.toString().equals("")) {
                     try {
                         BigDecimal buyRateDecimal = new BigDecimal(buyRate);
                         BigDecimal amount = new BigDecimal(currencyEditText.getText().toString());
@@ -97,11 +120,13 @@ public class BuyActivity extends ActionBarActivity {
                         if (currencyEditText.isFocused()) {
                             bitcoinEditText.setText(String.valueOf(newAmount));
                         }
+                        setSubtotal(currencyEditText.getText().toString());
                     } catch (Exception e) {
 
                     }
                 }
                 else {
+                    setSubtotal("0");
                     if (currencyEditText.isFocused()) {
                         bitcoinEditText.setText("");
                     }
@@ -118,7 +143,7 @@ public class BuyActivity extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString() != "") {
+                if ( ! s.toString().equals("")) {
                     try {
                         BigDecimal buyRateDecimal = new BigDecimal(buyRate);
                         BigDecimal amount = new BigDecimal(bitcoinEditText.getText().toString());
@@ -126,11 +151,13 @@ public class BuyActivity extends ActionBarActivity {
                         if (bitcoinEditText.isFocused()) {
                             currencyEditText.setText(String.valueOf(newAmount));
                         }
+                        setSubtotal(currencyEditText.getText().toString());
                     } catch (Exception e) {
 
                     }
                 }
                 else {
+                    setSubtotal("0");
                     if (bitcoinEditText.isFocused()) {
                         currencyEditText.setText("");
                     }
@@ -155,7 +182,7 @@ public class BuyActivity extends ActionBarActivity {
                             ArrayAdapter<String> methodsAdapter = new ArrayAdapter<String>(BuyActivity.this, android.R.layout.simple_spinner_item, finalPaymentMethods);
                             methodSpinner.setAdapter(methodsAdapter);
                             methodSpinner.setSelection(position);
-                            setFinancials();
+                            setPaymentMethodFee("3.34");
                             dialog.dismiss();
                         }
                     });
@@ -167,7 +194,17 @@ public class BuyActivity extends ActionBarActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, bitcoinEditText.getText().toString(), currencyEditText.getText().toString());
+                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, totalDueTV.getText().toString(), bitcoinEditText.getText().toString() );
+                if (currencyEditText.getText().toString().equals("") ||  bitcoinEditText.getText().toString().equals("")) {
+                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_enter_buy_amount), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (methodSpinner.getSelectedItemPosition() == 0) {
+                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_payment_method), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 dialog.show();
                 Button confirmButton = dialog.getConfirmButton();
                 confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +213,10 @@ public class BuyActivity extends ActionBarActivity {
                         dialog.dismiss();
                         FlurryAgent.logEvent("User selected this deposit option: " + paymentMethods.get(methodSpinner.getSelectedItemPosition()));
                         Intent intent = new Intent(BuyActivity.this, OrderSummaryActivity.class);
+                        intent.putExtra("buy_amount", subtotal);
+                        intent.putExtra("haedrian_fee", haedrianFee);
+                        intent.putExtra("payment_method_fee", paymentMethodFee);
+                        intent.putExtra("total", total);
                         startActivity(intent);
                     }
                 });
@@ -183,6 +224,7 @@ public class BuyActivity extends ActionBarActivity {
         });
 
     }
+
 
     @Override
     protected void onStart() {
@@ -196,6 +238,72 @@ public class BuyActivity extends ActionBarActivity {
         super.onStop();
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
         FlurryAgent.onEndSession(this);
+    }
+
+    private void getExchangeLocations() {
+
+        final String URL = ApplicationConstants.BASE + "exchanges/";
+
+//        Log.v("TEST", ApplicationController.getToken());
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("type", "ATM transfer");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                URL, body,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            Log.v("TEST", response.toString());
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v("TEST", error.toString());
+                VolleyLog.d("Test", "Error: " + error.toString());
+                progressDialog.dismiss();
+
+            }
+
+        }) {
+            @Override
+            public HashMap<String, String> getHeaders() {
+                String token = ApplicationController.getToken();
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                params.put("Content-Type", "application/json;charset=UTF-8");
+                params.put("Accept", "application/json");
+
+                return params;
+            }
+        };
+
+        queue.add(jsonObjectRequest);
+
+
+        paymentMethods.add("BDO 24-hour ATM Deposit");
+        paymentMethods.add("BDO Online Banking");
+        paymentMethods.add("BDO over-the-counter deposit");
+        paymentMethods.add("BPI Express Online");
+        paymentMethods.add("BPI over-the-counter deposit");
+        paymentMethods.add("GCash");
+        paymentMethods.add("Globe Share-a-Load");
+        paymentMethods.add("Security Bank");
+        paymentMethods.add("UnionBank of the Philippines");
+        paymentMethods.add("UnionBank of the Philippines Online Banking");
     }
 
     private void getExchangeRate() {
@@ -226,10 +334,6 @@ public class BuyActivity extends ActionBarActivity {
         ApplicationController.getInstance().addToRequestQueue(currencyRequest);
     }
 
-    private void setFinancials() {
-
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -255,6 +359,34 @@ public class BuyActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setSubtotal(String subtotalStr) {
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        subtotal = Double.parseDouble(subtotalStr);
+        subtotalTV.setText(currencyFormatter.format(subtotal));
+        setTotal();
+    }
+
+    private void setHaedrianFee(String haedrianFeeStr) {
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        haedrianFee = Double.parseDouble(haedrianFeeStr);
+        haedrianFeeTV.setText(currencyFormatter.format(haedrianFee));
+        setTotal();
+    }
+
+    private void setPaymentMethodFee(String paymentMethodFeeStr) {
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        paymentMethodFee = Double.parseDouble(paymentMethodFeeStr);
+        paymentMethodFeeTV.setText(currencyFormatter.format(paymentMethodFee));
+        setTotal();
+    }
+
+    private void setTotal() {
+        total = subtotal + haedrianFee + paymentMethodFee;
+
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        totalDueTV.setText(currencyFormatter.format(total));
     }
 
 }

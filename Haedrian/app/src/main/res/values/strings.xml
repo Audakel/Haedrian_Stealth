@@ -363,5 +363,11 @@
     <string name="globe_gcash">Globe GCash</string>
     <string name="security_bank">Security Bank</string>
     <string name="union_bank">Union Bank</string>
+    <string name="please_enter_buy_amount">Please enter a buy amount.</string>
+    <string name="please_select_payment_method">Please select payment method.</string>
+    <string name="mark_in_transaction">Mark as paid in the</string>
+    <string name="wallet_activity"><u>Wallet Activity</u></string>
+    <string name="close">Close</string>
+    <string name="enter_amount">Please enter an amount greater than 0 to send</string>
 
 </resources>
