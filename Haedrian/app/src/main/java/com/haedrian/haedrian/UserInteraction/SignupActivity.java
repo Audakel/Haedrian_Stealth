@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.UserInteraction;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -48,6 +49,7 @@ public class SignupActivity extends ActionBarActivity {
     private ArrayList<String> countryCodes = new ArrayList<>();
 
     private TextView countryCodeTV;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,10 @@ public class SignupActivity extends ActionBarActivity {
         setContentView(R.layout.activity_signup);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.dialog_loading));
+        progressDialog.setCancelable(false);
 
         emailET = (EditText) findViewById(R.id.email_edit_text);
         firstNameET = (EditText) findViewById(R.id.first_name_edit_text);
@@ -90,6 +96,7 @@ public class SignupActivity extends ActionBarActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 submitFormData();
             }
         });
@@ -290,22 +297,23 @@ public class SignupActivity extends ActionBarActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
+//                        Log.v("TEST", "Signup: " + response.toString());
                         // {"success":true,"token":"41dd3b67f49511f7e6b95f85686b2882dc875709"}
 
                         try {
-                            Log.v("TEST", response.toString());
                             if (response.getString("success").equals("true")) {
 
                                 String token = response.getString("token");
                                 ApplicationController.setToken(token);
-                                Log.v("TEST", "Token: " + ApplicationController.getToken());
 
+                                progressDialog.hide();
                                 Intent intent = new Intent(SignupActivity.this, PinActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                             else if (response.getString("success").equals("false")) {
                                 String errorMessage = response.getString("error");
+                                progressDialog.hide();
                                 Toast.makeText(SignupActivity.this, getResources().getString(R.string.duplicate_username), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {

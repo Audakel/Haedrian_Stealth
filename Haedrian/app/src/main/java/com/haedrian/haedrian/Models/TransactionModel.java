@@ -1,10 +1,26 @@
 package com.haedrian.haedrian.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Logan on 6/3/2015.
  */
-public class TransactionModel {
-    private String status, feeAmount, amount, date, entryType, sender, target;
+public class TransactionModel implements Parcelable{
+    private String status, feeAmount, amount, date, entryType, sender, target, currency;
+
+    public TransactionModel() {}
+
+    private TransactionModel(Parcel source) {
+        status = source.readString();
+        feeAmount = source.readString();
+        amount = source.readString();
+        date = source.readString();
+        entryType = source.readString();
+        sender = source.readString();
+        target = source.readString();
+        currency = source.readString();
+    }
 
     public String getStatus() {
         return status;
@@ -61,4 +77,38 @@ public class TransactionModel {
     public void setTarget(String target) {
         this.target = target;
     }
+
+    public String getCurrency() { return currency; }
+
+    public void setCurrency(String currency) { this.currency = currency; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(status);
+        dest.writeString(feeAmount);
+        dest.writeString(amount);
+        dest.writeString(date);
+        dest.writeString(entryType);
+        dest.writeString(sender);
+        dest.writeString(target);
+        dest.writeString(currency);
+    }
+
+    public static final Parcelable.Creator<TransactionModel> CREATOR = new Parcelable.Creator<TransactionModel>() {
+
+        @Override
+        public TransactionModel createFromParcel(Parcel source) {
+            return new TransactionModel(source);
+        }
+
+        @Override
+        public TransactionModel[] newArray(int size) {
+            return new TransactionModel[size];
+        }
+    };
 }

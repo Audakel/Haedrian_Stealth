@@ -104,8 +104,15 @@ public class SendActivity extends ActionBarActivity implements
     @Override
     protected void onStop() {
         super.onStop();
+        progressDialog.dismiss();
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
         FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        progressDialog.dismiss();
     }
 
     public static BigDecimal round(float d, int decimalPlace) {
@@ -211,7 +218,7 @@ public class SendActivity extends ActionBarActivity implements
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            progressDialog.hide();
+                            progressDialog.dismiss();
                             Log.v("TEST", response.toString());
 
                             if (response.getBoolean("success")) {
@@ -226,7 +233,7 @@ public class SendActivity extends ActionBarActivity implements
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressDialog.hide();
+                progressDialog.dismiss();
                 Log.v("TEST", "Error: " + error.getMessage());
             }
         }){

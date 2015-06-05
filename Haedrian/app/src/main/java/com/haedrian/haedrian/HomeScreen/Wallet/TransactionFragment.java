@@ -86,6 +86,7 @@ public class TransactionFragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.v("TEST", "history: " + response.toString());
                         try {
                             int transactionCount = response.getInt("transaction_count");
                             if (transactionCount > 0) {
@@ -100,6 +101,7 @@ public class TransactionFragment extends Fragment {
                                     transaction.setEntryType(object.getString("entry_type"));
                                     transaction.setSender(object.getString("original_sender"));
                                     transaction.setTarget(object.getString("original_target"));
+                                    transaction.setCurrency(object.getString("currency"));
 
                                     transactions.add(transaction);
                                 }
@@ -143,6 +145,7 @@ public class TransactionFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, TransactionDetailsActivity.class);
+                intent.putExtra("transaction", transactions.get(position));
                 startActivity(intent);
             }
         });

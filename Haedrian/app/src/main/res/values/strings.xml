@@ -369,5 +369,23 @@
     <string name="wallet_activity"><u>Wallet Activity</u></string>
     <string name="close">Close</string>
     <string name="enter_amount">Please enter an amount greater than 0 to send</string>
+    <string name="outside_address">Outside address</string>
+    <string name="me">Me</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="please_select_outlet">Please select outlet</string>
+    <string name="buyorder_fail">Buy order was not successful. Please try again.</string>
+    <string name="no_method">No Method Selected</string>
+    <string name="no_outlet">No Outlet Selected</string>
 
 </resources>

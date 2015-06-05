@@ -48,6 +48,7 @@ public class TransactionListAdapter extends ArrayAdapter {
             holder = new TransactionDataHolder();
             holder.transactionType = (TextView) row.findViewById(R.id.transaction_type_textview);
             holder.amount = (TextView) row.findViewById(R.id.amount_textview);
+            holder.toFrom = (TextView) row.findViewById(R.id.to_string);
             holder.details = (TextView) row.findViewById(R.id.transaction_details_textview);
             holder.imageType = (ImageView) row.findViewById(R.id.send_request_icon);
 
@@ -62,22 +63,37 @@ public class TransactionListAdapter extends ArrayAdapter {
         if (transactionType.equals("outgoing")) {
             holder.transactionType.setText(context.getResources().getString(R.string.sent_bitcoin));
             holder.imageType.setImageResource(R.drawable.send);
+            holder.toFrom.setText(context.getResources().getString(R.string.to));
+            holder.details.setText(transactions.get(position).getTarget());
         }
         else if (transactionType.equals("incoming")) {
             holder.transactionType.setText(context.getResources().getString(R.string.received_bitcoin));
             holder.imageType.setImageResource(R.drawable.receive);
+            holder.toFrom.setText(context.getResources().getString(R.string.from));
+            String sender = transactions.get(position).getSender();
+            if (sender.equals("null")) {
+                holder.details.setText(context.getResources().getString(R.string.outside_address));
+            }
+            else {
+                holder.details.setText(sender);
+            }
         }
 
-        Double currencyAmount = Double.parseDouble(transactions.get(position).getAmount());
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
-        holder.amount.setText(currencyFormatter.format(currencyAmount));
-//        holder.details.setText();
+        if ( ! transactions.get(position).getCurrency().equals("BTC")) {
+            Double currencyAmount = Double.parseDouble(transactions.get(position).getAmount());
+            NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            holder.amount.setText(currencyFormatter.format(currencyAmount));
+        }
+        else {
+            holder.amount.setText(transactions.get(position).getAmount());
+        }
+
 
         return row;
     }
     static class TransactionDataHolder {
-        TextView transactionType, amount, details;
+        TextView transactionType, amount, details, toFrom;
         ImageView imageType;
     }
 }

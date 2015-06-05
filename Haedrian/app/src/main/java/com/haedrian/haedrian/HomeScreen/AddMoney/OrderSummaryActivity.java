@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.CustomDialogs.BuyInstructionsDialog;
 import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
+import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.R;
 
 import org.w3c.dom.Text;
@@ -29,6 +30,9 @@ public class OrderSummaryActivity extends ActionBarActivity {
     private Double haedrianFee = 0.00;
     private Double paymentMethodFee = 0.00;
     private Double total = 0.00;
+    private String instructions;
+
+    private BuyOrderModel buyOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +52,10 @@ public class OrderSummaryActivity extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            buyAmount = extras.getDouble("buy_amount");
-            haedrianFee = extras.getDouble("haedrian_fee");
-            paymentMethodFee = extras.getDouble("payment_method_fee");
-            total = extras.getDouble("total");
+            buyOrder = extras.getParcelable("buy_order");
+            total = Double.parseDouble(buyOrder.getCurrencyAmount());
+//            paymentMethodFee = Double.parseDouble(buyOrder.getPaymentMethodFee());
+            instructions = buyOrder.getInstructions();
         }
 
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
@@ -118,7 +122,7 @@ public class OrderSummaryActivity extends ActionBarActivity {
     }
 
     private void showPaymentInstructionsDialog() {
-        BuyInstructionsDialog buyInstructionsDialog = new BuyInstructionsDialog(this, "instructions");
+        BuyInstructionsDialog buyInstructionsDialog = new BuyInstructionsDialog(this, instructions);
         buyInstructionsDialog.show();
     }
 }

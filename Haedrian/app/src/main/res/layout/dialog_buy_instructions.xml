@@ -29,18 +29,10 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/instructions"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1.Please deposit the exact total due amount (... PHP) at any BDO branch to the following account:
-		Account name: BETUR INC.
-		Account number: 008178000421
-		Account type: CURRENT"/>
+            android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="2.Once you have deposited the full amount, please mark your order as paid. We will then confirm your payment and release the funds to your account."/>
 
     </LinearLayout>
 

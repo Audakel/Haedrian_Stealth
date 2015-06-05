@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,8 +35,11 @@ import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.ConfirmOrderDialog;
 import com.haedrian.haedrian.CustomDialogs.PaymentMethodDialog;
+import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,11 +55,13 @@ import java.util.Locale;
 public class BuyActivity extends ActionBarActivity {
     private EditText currencyEditText, bitcoinEditText;
     private TextView amountCurrency, currencySign, subtotalTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
-    private Spinner methodSpinner;
+    private Spinner locationSpinner, outletSpinner;
     private String buyRate = "0";
     private Button submitButton;
     private ArrayList<String> paymentMethods;
-    private RequestQueue queue;
+    private ArrayList<String> depositLocations = new ArrayList<>();
+    private ArrayList<ArrayList<String>> outletLocations = new ArrayList<>();
+    private ArrayList<ArrayList<String>> outletIds = new ArrayList<>();
 
     private Double subtotal = 0.00;
     private Double haedrianFee = 0.00;
@@ -76,12 +83,15 @@ public class BuyActivity extends ActionBarActivity {
         currencySign.setText(currency.getSymbol());
 
         progressDialog = new ProgressDialog(this);
-
-        queue = Volley.newRequestQueue(this);
+        progressDialog.setMessage(getString(R.string.dialog_loading));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         getExchangeRate();
+        getExchangeTypes();
 
-        methodSpinner = (Spinner) findViewById(R.id.method_spinner);
+        locationSpinner = (Spinner) findViewById(R.id.method_spinner);
+        outletSpinner = (Spinner) findViewById(R.id.outlet_spinner);
         currencyEditText = (EditText) findViewById(R.id.currency_edittext);
         bitcoinEditText = (EditText) findViewById(R.id.bitcoin_edittext);
         amountCurrency = (TextView) findViewById(R.id.amount_currency);
@@ -100,19 +110,20 @@ public class BuyActivity extends ActionBarActivity {
         totalDueTV.setText(currencyFormatter.format(total));
 
         paymentMethods = new ArrayList<String>();
-        getExchangeLocations();
 
 
         currencyEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ( ! s.toString().equals("")) {
+                if (!s.toString().equals("")) {
                     try {
                         BigDecimal buyRateDecimal = new BigDecimal(buyRate);
                         BigDecimal amount = new BigDecimal(currencyEditText.getText().toString());
@@ -124,8 +135,7 @@ public class BuyActivity extends ActionBarActivity {
                     } catch (Exception e) {
 
                     }
-                }
-                else {
+                } else {
                     setSubtotal("0");
                     if (currencyEditText.isFocused()) {
                         bitcoinEditText.setText("");
@@ -136,14 +146,16 @@ public class BuyActivity extends ActionBarActivity {
 
         bitcoinEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ( ! s.toString().equals("")) {
+                if (!s.toString().equals("")) {
                     try {
                         BigDecimal buyRateDecimal = new BigDecimal(buyRate);
                         BigDecimal amount = new BigDecimal(bitcoinEditText.getText().toString());
@@ -155,8 +167,7 @@ public class BuyActivity extends ActionBarActivity {
                     } catch (Exception e) {
 
                     }
-                }
-                else {
+                } else {
                     setSubtotal("0");
                     if (bitcoinEditText.isFocused()) {
                         currencyEditText.setText("");
@@ -165,43 +176,22 @@ public class BuyActivity extends ActionBarActivity {
             }
         });
 
-        methodSpinner.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // Do API call here to get the methods and the fees from coins.ph
-
-                    // Show dialog
-                    final PaymentMethodDialog dialog = new PaymentMethodDialog(BuyActivity.this, paymentMethods);
-                    dialog.show();
-                    ListView methodListView = dialog.getListView();
-                    final ArrayList<String> finalPaymentMethods = paymentMethods;
-                    methodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            ArrayAdapter<String> methodsAdapter = new ArrayAdapter<String>(BuyActivity.this, android.R.layout.simple_spinner_item, finalPaymentMethods);
-                            methodSpinner.setAdapter(methodsAdapter);
-                            methodSpinner.setSelection(position);
-                            setPaymentMethodFee("3.34");
-                            dialog.dismiss();
-                        }
-                    });
-                }
-                return true;
-            }
-        });
-
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, totalDueTV.getText().toString(), bitcoinEditText.getText().toString() );
-                if (currencyEditText.getText().toString().equals("") ||  bitcoinEditText.getText().toString().equals("")) {
+                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, totalDueTV.getText().toString(), bitcoinEditText.getText().toString());
+                if (currencyEditText.getText().toString().equals("") || bitcoinEditText.getText().toString().equals("")) {
                     Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_enter_buy_amount), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (methodSpinner.getSelectedItemPosition() == 0) {
+                if (locationSpinner.getSelectedItemPosition() == 0) {
                     Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_payment_method), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (outletSpinner.getSelectedItemPosition() == 0) {
+                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_outlet), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -211,20 +201,17 @@ public class BuyActivity extends ActionBarActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        FlurryAgent.logEvent("User selected this deposit option: " + paymentMethods.get(methodSpinner.getSelectedItemPosition()));
-                        Intent intent = new Intent(BuyActivity.this, OrderSummaryActivity.class);
-                        intent.putExtra("buy_amount", subtotal);
-                        intent.putExtra("haedrian_fee", haedrianFee);
-                        intent.putExtra("payment_method_fee", paymentMethodFee);
-                        intent.putExtra("total", total);
-                        startActivity(intent);
+                        String outletId = outletIds.get(locationSpinner.getSelectedItemPosition() - 1).get(outletSpinner.getSelectedItemPosition());
+
+                        progressDialog.show();
+                        // Make buy order
+                        makeBuyOrder(outletId);
                     }
                 });
             }
         });
 
     }
-
 
     @Override
     protected void onStart() {
@@ -236,46 +223,86 @@ public class BuyActivity extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        progressDialog.dismiss();
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
         FlurryAgent.onEndSession(this);
     }
 
-    private void getExchangeLocations() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        progressDialog.dismiss();
+    }
 
-        final String URL = ApplicationConstants.BASE + "exchanges/";
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_buy, menu);
+        return true;
+    }
 
-//        Log.v("TEST", ApplicationController.getToken());
 
-        JSONObject body = new JSONObject();
-        try {
-            body.put("type", "ATM transfer");
-        } catch (JSONException e) {
-            e.printStackTrace();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        } else if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
 
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void getExchangeTypes() {
+        String URL = ApplicationConstants.BASE + "exchange-types/";
+
+        depositLocations.add(0, getString(R.string.no_method));
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                URL, body,
+                URL, null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            JSONArray locations = response.getJSONArray("locations");
+                            for (int i = 0; i < locations.length(); i++) {
+                                depositLocations.add(locations.getJSONObject(i).getString("name"));
+                                JSONArray outlets = locations.getJSONObject(i).getJSONArray("outlets");
+                                ArrayList<String> outlet = new ArrayList<>();
+                                outlet.add(0, getString(R.string.no_outlet));
+                                ArrayList<String> outletId = new ArrayList<>();
+                                outletId.add(0, "");
+                                for (int j = 0; j < outlets.length(); j++) {
+                                    outlet.add(outlets.getJSONArray(j).getString(0));
+                                    outletId.add(outlets.getJSONArray(j).getString(1));
+                                }
+                                outletLocations.add(outlet);
+                                outletIds.add(outletId);
+                            }
+                            progressDialog.hide();
+                            // Get locations
+                            getLocations();
 
-                            Log.v("TEST", response.toString());
-
-                        } catch (Exception e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("TEST", error.toString());
                 VolleyLog.d("Test", "Error: " + error.toString());
-                progressDialog.dismiss();
-
+                progressDialog.hide();
             }
 
         }) {
@@ -286,24 +313,42 @@ public class BuyActivity extends ActionBarActivity {
                 params.put("Authorization", "Token " + token);
                 params.put("Content-Type", "application/json;charset=UTF-8");
                 params.put("Accept", "application/json");
-
                 return params;
             }
         };
 
-        queue.add(jsonObjectRequest);
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
 
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
 
-        paymentMethods.add("BDO 24-hour ATM Deposit");
-        paymentMethods.add("BDO Online Banking");
-        paymentMethods.add("BDO over-the-counter deposit");
-        paymentMethods.add("BPI Express Online");
-        paymentMethods.add("BPI over-the-counter deposit");
-        paymentMethods.add("GCash");
-        paymentMethods.add("Globe Share-a-Load");
-        paymentMethods.add("Security Bank");
-        paymentMethods.add("UnionBank of the Philippines");
-        paymentMethods.add("UnionBank of the Philippines Online Banking");
+    public void getLocations() {
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, depositLocations);
+        locationSpinner.setAdapter(locationAdapter);
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    // Set up outlets here
+                    FlurryAgent.logEvent("User searched for the locations of this bank: " + depositLocations.get(position));
+                    ArrayList<String> tempOutlets = outletLocations.get(position - 1);
+                    Log.v("TEST", "added no-outlet");
+                    getOutlets(tempOutlets);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    public void getOutlets(ArrayList<String> tempOutlets) {
+        progressDialog.hide();
+        ArrayAdapter<String> outletAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tempOutlets);
+        outletSpinner.setAdapter(outletAdapter);
+        outletSpinner.setVisibility(View.VISIBLE);
     }
 
     private void getExchangeRate() {
@@ -334,33 +379,6 @@ public class BuyActivity extends ActionBarActivity {
         ApplicationController.getInstance().addToRequestQueue(currencyRequest);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_buy, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void setSubtotal(String subtotalStr) {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
         subtotal = Double.parseDouble(subtotalStr);
@@ -387,6 +405,83 @@ public class BuyActivity extends ActionBarActivity {
 
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
         totalDueTV.setText(currencyFormatter.format(total));
+    }
+
+    private void makeBuyOrder(String outletId) {
+        String url = ApplicationConstants.BASE + "buy/";
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("currency", "PHP");
+            body.put("currency_amount", currencyEditText.getText().toString());
+            body.put("payment_method", outletId);
+            body.put("target_account_id", "");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url, body,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            Log.v("TEST", "Buyorder: " + response.toString());
+
+                            boolean wasSuccessful = response.getBoolean("success");
+
+                            if (wasSuccessful) {
+
+                                BuyOrderModel buyOrder = new BuyOrderModel();
+                                buyOrder.setStatus(response.getJSONObject("order").getString("status"));
+                                buyOrder.setPaymentOutlet(response.getJSONObject("order").getString("payment_outlet_title"));
+                                buyOrder.setInstructions(response.getJSONObject("order").getString("instructions"));
+                                buyOrder.setBtcAmount(response.getJSONObject("order").getString("btc_amount"));
+                                buyOrder.setCurrencyAmount(response.getJSONObject("order").getString("currency_amount"));
+
+                                progressDialog.hide();
+
+                                FlurryAgent.logEvent("User selected this deposit option: " + outletLocations.get(outletSpinner.getSelectedItemPosition() - 1));
+                                Intent intent = new Intent(BuyActivity.this, OrderSummaryActivity.class);
+                                intent.putExtra("buy_order", buyOrder);
+                                startActivity(intent);
+                            }
+                            else {
+                                progressDialog.hide();
+                                String buyOrderError = response.getJSONArray("errors").getString(0);
+                                Toast.makeText(BuyActivity.this, buyOrderError, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            progressDialog.hide();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.hide();
+                Log.v("TEST", "Error: " + error.getMessage());
+                progressDialog.hide();
+            }
+        }){
+            @Override
+            public HashMap<String, String> getHeaders() {
+                String token = ApplicationController.getToken();
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                params.put("Content-Type", "application/json;charset=UTF-8");
+                params.put("Accept", "application/json");
+
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
 }

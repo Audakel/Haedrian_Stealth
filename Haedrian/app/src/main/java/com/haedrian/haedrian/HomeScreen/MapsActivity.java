@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.SystemClock;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -48,8 +49,11 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MapsActivity extends ActionBarActivity {
 
@@ -65,6 +69,8 @@ public class MapsActivity extends ActionBarActivity {
 
     private ArrayList<String> depositLocations = new ArrayList<>();
     private ArrayList<ArrayList<String>> outletLocations = new ArrayList<>();
+
+    private Map<String, String> outletDictionary;
 
     private final LocationListener locationListener = new LocationListener() {
         @Override
@@ -106,6 +112,9 @@ public class MapsActivity extends ActionBarActivity {
 
         // Get exchange types
         getExchangeTypes();
+
+        outletDictionary = new HashMap<>();
+        fillOutletDictionary();
 
         // Location stuff
         LocationManager locationManager;
@@ -170,7 +179,7 @@ public class MapsActivity extends ActionBarActivity {
                                 JSONArray outlets = locations.getJSONObject(i).getJSONArray("outlets");
                                 ArrayList<String> outlet = new ArrayList<>();
                                 for (int j = 0; j < outlets.length(); j++) {
-                                    outlet.add(outlets.getString(j));
+                                    outlet.add(outlets.getJSONArray(j).getString(0));
                                 }
                                 outletLocations.add(outlet);
                             }
@@ -251,6 +260,12 @@ public class MapsActivity extends ActionBarActivity {
 
     public void getOutletLocations(String outlet) {
         String query = "";
+
+        // Dictionary search for the outlet to map to a google places api readable search query
+        if (outletDictionary.containsKey(outlet)) {
+            query = outletDictionary.get(outlet);
+        }
+
         try {
             query = URLEncoder.encode(outlet, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -418,5 +433,27 @@ public class MapsActivity extends ActionBarActivity {
             }
         }
         long end = SystemClock.uptimeMillis();
+    }
+
+    // This is really dumb but coins.ph doesn't provide us with a good search term to query the google places api with
+    // so we are hardcoding a dictionary with the coins.ph response to a google places api query worthy string
+    public void fillOutletDictionary() {
+        outletDictionary.put("Rcbc (Via Dragonpay)", "rcbx");
+        outletDictionary.put("Security Bank", "Security Bank");
+        outletDictionary.put("Dragonpay Rcbx Deposit", "rcbx");
+        outletDictionary.put("Securitybank Deposit", "Security Bank");
+        outletDictionary.put("Union Deposit", "Union Bank");
+        outletDictionary.put("Bpi Deposit", "bpi");
+        outletDictionary.put("Dragonpay Mbtx Deposit", "Metrobank");
+        outletDictionary.put("Bdo Deposit", "bdo");
+        outletDictionary.put("Dragonpay Cbcx Deposit", "cbcx");
+        outletDictionary.put("Bdo 24 Hour Atm Deposit", "bdo atm");
+        outletDictionary.put("Bdoatm Deposit", "bdo atm");
+        outletDictionary.put("M Lhuillier Epay", "m lhuillier");
+        outletDictionary.put("Lbc Bills Xpress (Via Dragonpay)", "lbc");
+        outletDictionary.put("Mlhuillier Deposit", "m lhuillier");
+        outletDictionary.put("Dragonpay Lbc Deposit", "lbc");
+        outletDictionary.put("Dragonpay Cebp Deposit", "dragonpay");
+        outletDictionary.put("Dragonpay Bayd Deposit", "dragonpay");
     }
 }

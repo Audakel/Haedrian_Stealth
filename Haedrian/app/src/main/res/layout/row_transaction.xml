@@ -64,16 +64,21 @@
                     android:id="@+id/to_string"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="@string/from_to"/>
 
                 <TextView
                     android:id="@+id/transaction_details_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/to_string"
-                    android:layout_marginLeft="10dp"
                     android:text="@string/dummy_transaction_to"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/to_string"
+                    android:layout_toEndOf="@+id/to_string"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginStart="9dp" />
 
 
             </RelativeLayout>

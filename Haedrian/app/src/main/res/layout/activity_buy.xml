@@ -160,6 +160,13 @@
             android:layout_below="@+id/payment_amount_title"
             android:entries="@array/payment_methods" />
 
+        <Spinner
+            android:id="@+id/outlet_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/method_spinner"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 
     <RelativeLayout
