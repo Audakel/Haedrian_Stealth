@@ -1,19 +1,38 @@
 package com.haedrian.haedrian.UserInteraction;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
+import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
+import com.haedrian.haedrian.HomeScreen.AddMoney.OrderSummaryActivity;
+import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -28,13 +47,25 @@ import com.haedrian.haedrian.R;
  */
 public class SettingsActivity extends ActionBarActivity {
 
+    private ProgressDialog progressDialog;
+    private TextView nameTV, usernameTV, emailTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.dialog_loading));
+        progressDialog.show();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        nameTV = (TextView) findViewById(R.id.name);
+        usernameTV = (TextView) findViewById(R.id.username);
+        emailTV = (TextView) findViewById(R.id.email);
+
+        getUserInformation();
 
     }
 
@@ -84,9 +115,72 @@ public class SettingsActivity extends ActionBarActivity {
                 Intent intent1 = new Intent(this, Help.class);
                 startActivity(intent1);
                 break;
+            case R.id.privacy_policy_container:
+                String url = "https://haedrian.io/privacy-policy/";
+                Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                intent2.setData(Uri.parse(url));
+                startActivity(intent2);
+                break;
+            case R.id.terms_of_service_container:
+                String url2 = "https://haedrian.io/tos/";
+                Intent intent3 = new Intent(Intent.ACTION_VIEW);
+                intent3.setData(Uri.parse(url2));
+                startActivity(intent3);
+                break;
             default:
                 break;
         }
+    }
+
+    private void getUserInformation() {
+        String url = ApplicationConstants.BASE + "id/";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            String name = response.getString("first_name") + " " + response.getString("last_name");
+                            String username = response.getString("user");
+                            String email = response.getString("email");
+
+                            nameTV.setText(name);
+                            usernameTV.setText(username);
+                            emailTV.setText(email);
+
+                            progressDialog.dismiss();
+                        } catch (JSONException e) {
+                            progressDialog.dismiss();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.v("TEST", "Error: " + error.getMessage());
+                progressDialog.dismiss();
+            }
+        }){
+            @Override
+            public HashMap<String, String> getHeaders() {
+                String token = ApplicationController.getToken();
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                params.put("Content-Type", "application/json;charset=UTF-8");
+                params.put("Accept", "application/json");
+
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
     private void signOut() {

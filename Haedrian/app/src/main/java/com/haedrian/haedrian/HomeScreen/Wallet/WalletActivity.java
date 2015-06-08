@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
@@ -61,6 +62,9 @@ import java.util.Locale;
 
 public class WalletActivity extends ActionBarActivity {
 
+    WalletPagerAdapter mWalletPagerAdapter;
+    ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -68,6 +72,13 @@ public class WalletActivity extends ActionBarActivity {
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mWalletPagerAdapter =
+                new WalletPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mWalletPagerAdapter);
 
     }
 
@@ -108,6 +119,41 @@ public class WalletActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class WalletPagerAdapter extends FragmentStatePagerAdapter {
+        public WalletPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return TransactionFragment.newInstance(position + 1);
+                case 1:
+                    return BuySellFragment.newInstance(position + 1);
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getString(R.string.title_section1).toUpperCase(l);
+                case 1:
+                    return getString(R.string.title_section2).toUpperCase(l);
+            }
+            return null;
+        }
     }
 }
 

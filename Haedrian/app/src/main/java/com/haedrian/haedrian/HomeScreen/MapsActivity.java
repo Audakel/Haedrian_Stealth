@@ -164,7 +164,7 @@ public class MapsActivity extends ActionBarActivity {
 //    }
 
     public void getExchangeTypes() {
-        String URL = ApplicationConstants.BASE + "exchange-types/";
+        String URL = ApplicationConstants.BASE + "exchanges/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 URL, null,
@@ -179,7 +179,7 @@ public class MapsActivity extends ActionBarActivity {
                                 JSONArray outlets = locations.getJSONObject(i).getJSONArray("outlets");
                                 ArrayList<String> outlet = new ArrayList<>();
                                 for (int j = 0; j < outlets.length(); j++) {
-                                    outlet.add(outlets.getJSONArray(j).getString(0));
+                                    outlet.add(outlets.getJSONObject(j).getString("name"));
                                 }
                                 outletLocations.add(outlet);
                             }

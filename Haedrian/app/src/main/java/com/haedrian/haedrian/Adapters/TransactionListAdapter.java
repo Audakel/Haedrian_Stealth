@@ -42,7 +42,7 @@ public class TransactionListAdapter extends ArrayAdapter {
         View row = convertView;
         TransactionDataHolder holder = null;
 
-        if(row == null) {
+        if (row == null) {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(resource, parent, false);
             holder = new TransactionDataHolder();

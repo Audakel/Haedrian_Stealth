@@ -62,6 +62,7 @@ public class BuyActivity extends ActionBarActivity {
     private ArrayList<String> depositLocations = new ArrayList<>();
     private ArrayList<ArrayList<String>> outletLocations = new ArrayList<>();
     private ArrayList<ArrayList<String>> outletIds = new ArrayList<>();
+    private ArrayList<ArrayList<String>> fees = new ArrayList<>();
 
     private Double subtotal = 0.00;
     private Double haedrianFee = 0.00;
@@ -261,7 +262,7 @@ public class BuyActivity extends ActionBarActivity {
     }
 
     public void getExchangeTypes() {
-        String URL = ApplicationConstants.BASE + "exchange-types/";
+        String URL = ApplicationConstants.BASE + "exchanges/";
 
         depositLocations.add(0, getString(R.string.no_method));
 
@@ -280,10 +281,19 @@ public class BuyActivity extends ActionBarActivity {
                                 outlet.add(0, getString(R.string.no_outlet));
                                 ArrayList<String> outletId = new ArrayList<>();
                                 outletId.add(0, "");
+                                ArrayList<String> fee = new ArrayList<>();
+                                fee.add(0,"");
                                 for (int j = 0; j < outlets.length(); j++) {
-                                    outlet.add(outlets.getJSONArray(j).getString(0));
-                                    outletId.add(outlets.getJSONArray(j).getString(1));
+                                    outlet.add(outlets.getJSONObject(j).getString("name"));
+                                    outletId.add(outlets.getJSONObject(j).getString("id"));
+                                    if (outlets.getJSONObject(j).has("fee_info")) {
+                                        fee.add(outlets.getJSONObject(j).getJSONObject("fee_info").getString("fee_amount"));
+                                    }
+                                    else {
+                                        fee.add("0.00");
+                                    }
                                 }
+                                fees.add(fee);
                                 outletLocations.add(outlet);
                                 outletIds.add(outletId);
                             }
@@ -293,6 +303,7 @@ public class BuyActivity extends ActionBarActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progressDialog.hide();
                         }
 
 
@@ -303,6 +314,7 @@ public class BuyActivity extends ActionBarActivity {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Test", "Error: " + error.toString());
                 progressDialog.hide();
+                Log.v("TEST", error.toString());
             }
 
         }) {
@@ -333,7 +345,6 @@ public class BuyActivity extends ActionBarActivity {
                     // Set up outlets here
                     FlurryAgent.logEvent("User searched for the locations of this bank: " + depositLocations.get(position));
                     ArrayList<String> tempOutlets = outletLocations.get(position - 1);
-                    Log.v("TEST", "added no-outlet");
                     getOutlets(tempOutlets);
                 }
             }
@@ -349,6 +360,21 @@ public class BuyActivity extends ActionBarActivity {
         ArrayAdapter<String> outletAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tempOutlets);
         outletSpinner.setAdapter(outletAdapter);
         outletSpinner.setVisibility(View.VISIBLE);
+        outletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    String fee = fees.get(locationSpinner.getSelectedItemPosition() - 1).get(position);
+                    Log.v("TEST", "fee: " + fee);
+                    setPaymentMethodFee(fee);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void getExchangeRate() {
@@ -359,7 +385,6 @@ public class BuyActivity extends ActionBarActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
                         // Parsing json
                         try {
                             JSONObject currentCurrency = response.getJSONObject("USD");
@@ -440,17 +465,24 @@ public class BuyActivity extends ActionBarActivity {
                                 buyOrder.setInstructions(response.getJSONObject("order").getString("instructions"));
                                 buyOrder.setBtcAmount(response.getJSONObject("order").getString("btc_amount"));
                                 buyOrder.setCurrencyAmount(response.getJSONObject("order").getString("currency_amount"));
+                                buyOrder.setPaymentMethodFee(paymentMethodFee.toString());
 
                                 progressDialog.hide();
 
-                                FlurryAgent.logEvent("User selected this deposit option: " + outletLocations.get(outletSpinner.getSelectedItemPosition() - 1));
+//                                FlurryAgent.logEvent("User selected this deposit option: " + outletLocations.get(outletSpinner.getSelectedItemPosition() - 1));
                                 Intent intent = new Intent(BuyActivity.this, OrderSummaryActivity.class);
                                 intent.putExtra("buy_order", buyOrder);
                                 startActivity(intent);
                             }
                             else {
                                 progressDialog.hide();
-                                String buyOrderError = response.getJSONArray("errors").getString(0);
+                                String buyOrderError = "";
+                                if (response.has("errors")) {
+                                    buyOrderError = response.getJSONArray("errors").getString(0);
+                                }
+                                else if (response.has("error")) {
+                                    buyOrderError = response.getJSONArray("error").getString(0);
+                                }
                                 Toast.makeText(BuyActivity.this, buyOrderError, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {

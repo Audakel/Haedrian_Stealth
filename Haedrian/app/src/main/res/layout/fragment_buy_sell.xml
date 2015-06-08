@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lightgrey"
+    tools:context="com.haedrian.haedrian.HomeScreen.Wallet.BuySellFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/buy_orders"
+        android:textSize="20sp"
+        android:textColor="@color/grey" />
+
+    <TextView
+        android:id="@+id/no_buyorder_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_buy_orders"
+        android:layout_margin="16dp"
+        android:layout_gravity="center"/>
+
+    <ListView
+        android:id="@+id/buyorder_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

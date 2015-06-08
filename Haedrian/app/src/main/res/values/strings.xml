@@ -18,8 +18,8 @@
     <string name="project_location">Project Location</string>
     <string name="project_duration">Funding Duration</string>
     <string name="project_goal">Funding Goal</string>
-    <string name="title_section1">Balance</string>
-    <string name="title_section2">Transaction History</string>
+    <string name="title_section1">Send/Receive</string>
+    <string name="title_section2">Buy Orders</string>
     <string name="category_prompt">Select Category</string>
     <string name="next">Next</string>
     <string name="back">Back</string>
@@ -34,7 +34,7 @@
     <string name="create_new_project">Create New Project</string>
     <string name="created_projects">My projects</string>
     <string name="my_name">John Doe</string>
-    <string name="location">Santo Domingo, Domincan Republic</string>
+    <string name="location">Location:</string>
     <string name="amount_funded">25% funded</string>
     <string name="amount_pledged">$33.54 pledged</string>
 
@@ -387,5 +387,15 @@
     <string name="buyorder_fail">Buy order was not successful. Please try again.</string>
     <string name="no_method">No Method Selected</string>
     <string name="no_outlet">No Outlet Selected</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="username_title">Username</string>
+    <string name="buy_orders">Buy Orders</string>
+    <string name="no_buy_orders">You have not made any buy orders yet!</string>
+    <string name="dummy_buyorder_status">Escrow Expired.</string>
+    <string name="buyorder_buy">Buy</string>
+    <string name="title_activity_buy_order_verify">BuyOrderVerifyActivity</string>
+    <string name="order_time">Order Time:</string>
+    <string name="expiration_date">Expiration Date:</string>
 
 </resources>

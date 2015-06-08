@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,8 +55,10 @@ public class OrderSummaryActivity extends ActionBarActivity {
         if (extras != null) {
             buyOrder = extras.getParcelable("buy_order");
             total = Double.parseDouble(buyOrder.getCurrencyAmount());
-//            paymentMethodFee = Double.parseDouble(buyOrder.getPaymentMethodFee());
+            paymentMethodFee = Double.parseDouble(buyOrder.getPaymentMethodFee());
+            buyAmount = total - paymentMethodFee;
             instructions = buyOrder.getInstructions();
+            Log.v("TEST", "instructions: " + instructions);
         }
 
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
