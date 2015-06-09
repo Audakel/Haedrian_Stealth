@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.haedrian.haedrian.Models.BuyOrderHistory;
+import com.haedrian.haedrian.Models.BuyOrderHistoryModel;
 import com.haedrian.haedrian.R;
 
 import java.text.NumberFormat;
@@ -22,10 +22,10 @@ public class BuyOrderListAdapter extends ArrayAdapter {
 
     private Context context;
     private int resource;
-    private ArrayList<BuyOrderHistory> buyOrders;
+    private ArrayList<BuyOrderHistoryModel> buyOrders;
 
 
-    public BuyOrderListAdapter(Context context, int resource, ArrayList<BuyOrderHistory> buyOrders) {
+    public BuyOrderListAdapter(Context context, int resource, ArrayList<BuyOrderHistoryModel> buyOrders) {
         super(context, resource, buyOrders);
 
         this.context = context;

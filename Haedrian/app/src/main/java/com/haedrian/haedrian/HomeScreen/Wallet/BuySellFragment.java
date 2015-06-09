@@ -3,7 +3,6 @@ package com.haedrian.haedrian.HomeScreen.Wallet;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +17,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Adapters.BuyOrderListAdapter;
-import com.haedrian.haedrian.Adapters.TransactionListAdapter;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
-import com.haedrian.haedrian.Models.BuyOrderHistory;
-import com.haedrian.haedrian.Models.TransactionModel;
+import com.haedrian.haedrian.HomeScreen.AddMoney.BuyOrderVerifyActivity;
+import com.haedrian.haedrian.Models.BuyOrderHistoryModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
@@ -32,14 +30,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class BuySellFragment extends android.support.v4.app.Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ListView buyOrderList;
-    private ArrayList<BuyOrderHistory> buyOrders;
+    private ArrayList<BuyOrderHistoryModel> buyOrders;
     private BuyOrderListAdapter adapter;
     private Context context;
     private TextView noBuyOrders;
@@ -83,24 +80,26 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "buy-history: " + response.toString());
                         try {
-                            int transactionCount = response.getInt("transaction_count");
-                            if (transactionCount > 0) {
-                                JSONArray transactionArray = response.getJSONArray("transactions");
-                                for (int i = 0; i < transactionArray.length(); i++) {
-                                    JSONObject object = transactionArray.getJSONObject(i);
-                                    BuyOrderHistory buyOrder = new BuyOrderHistory();
-                                    buyOrder.setStatus(object.getString("status"));
-                                    buyOrder.setOutletTitle(object.getString("outlet_title"));
-                                    buyOrder.setCreatedAt(object.getString("created_at"));
-                                    buyOrder.setExchangeRate(object.getString("exchange_rate"));
-                                    buyOrder.setInstructions(object.getString("instructions"));
-                                    buyOrder.setExpirationTime(object.getString("expiration_time"));
-                                    buyOrder.setBtcAmount(object.getString("btc_amount"));
-                                    buyOrder.setCurrencyAmount(object.getString("currency_amount"));
+                            if (response.getBoolean("success")) {
+                                int transactionCount = response.getInt("transaction_count");
+                                if (transactionCount > 0) {
+                                    JSONArray transactionArray = response.getJSONArray("transactions");
+                                    for (int i = 0; i < transactionArray.length(); i++) {
+                                        JSONObject object = transactionArray.getJSONObject(i);
+                                        BuyOrderHistoryModel buyOrder = new BuyOrderHistoryModel();
+                                        buyOrder.setStatus(object.getString("status"));
+                                        buyOrder.setOutletTitle(object.getString("outlet_title"));
+                                        buyOrder.setCreatedAt(object.getString("created_at"));
+                                        buyOrder.setExchangeRate(object.getString("exchange_rate"));
+                                        buyOrder.setInstructions(object.getString("instructions"));
+                                        buyOrder.setExpirationTime(object.getString("expiration_time"));
+                                        buyOrder.setBtcAmount(object.getString("btc_amount"));
+                                        buyOrder.setCurrencyAmount(object.getString("currency_amount"));
 
-                                    buyOrders.add(buyOrder);
+                                        buyOrders.add(buyOrder);
+                                    }
+                                    setView();
                                 }
-                                setView();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -139,7 +138,9 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
         buyOrderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(context, BuyOrderVerifyActivity.class);
+                intent.putExtra("buy_order", buyOrders.get(position));
+                startActivity(intent);
             }
         });
     }
