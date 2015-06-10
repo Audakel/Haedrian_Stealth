@@ -27,6 +27,7 @@ import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.HomeScreen.SendRequest.SendRequestActivity;
 import com.haedrian.haedrian.UserInteraction.LoginActivity;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.UserInteraction.SettingsActivity;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -70,6 +71,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         // Set the list's click listener
 //        mDrawerList.setOnItemClickListener(this);
 
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         // After login, set up shared preferences to store the current users ID globally
         final SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);

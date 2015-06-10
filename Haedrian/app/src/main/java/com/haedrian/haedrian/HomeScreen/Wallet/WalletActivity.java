@@ -40,12 +40,14 @@ import com.android.volley.toolbox.Volley;
 import com.flurry.android.FlurryAgent;
 import com.google.zxing.WriterException;
 import com.haedrian.haedrian.Adapters.TransactionListAdapter;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
 import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.QrCode.QRCodeEncoder;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -73,8 +75,13 @@ public class WalletActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mWalletPagerAdapter =
-                new WalletPagerAdapter(getSupportFragmentManager());
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        mWalletPagerAdapter = new WalletPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -95,6 +102,8 @@ public class WalletActivity extends ActionBarActivity {
         FlurryAgent.onEndSession(this);
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
     }
+
+
 
         @Override
     public boolean onCreateOptionsMenu(Menu menu) {

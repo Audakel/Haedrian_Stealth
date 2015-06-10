@@ -136,4 +136,20 @@ public class BuyOrderHistoryModel implements Parcelable {
             return new BuyOrderHistoryModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "BuyOrderHistoryModel{" +
+                "id='" + id + '\'' +
+                ", status='" + status + '\'' +
+                ", outletTitle='" + outletTitle + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", exchangeRate='" + exchangeRate + '\'' +
+                ", instructions='" + instructions + '\'' +
+                ", expirationTime='" + expirationTime + '\'' +
+                ", paidTime='" + paidTime + '\'' +
+                ", btcAmount='" + btcAmount + '\'' +
+                ", currencyAmount='" + currencyAmount + '\'' +
+                '}';
+    }
 }

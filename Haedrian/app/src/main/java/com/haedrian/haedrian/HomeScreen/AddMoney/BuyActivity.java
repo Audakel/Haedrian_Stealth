@@ -37,6 +37,7 @@ import com.haedrian.haedrian.CustomDialogs.ConfirmOrderDialog;
 import com.haedrian.haedrian.CustomDialogs.PaymentMethodDialog;
 import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONArray;
@@ -111,6 +112,12 @@ public class BuyActivity extends ActionBarActivity {
         totalDueTV.setText(currencyFormatter.format(total));
 
         paymentMethods = new ArrayList<String>();
+
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
 
         currencyEditText.addTextChangedListener(new TextWatcher() {
@@ -378,30 +385,77 @@ public class BuyActivity extends ActionBarActivity {
     }
 
     private void getExchangeRate() {
-        final String TAG = "exchange_rate";
-        // Creating volley request obj
-        String url = "https://blockchain.info/ticker";
-        JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Parsing json
-                        try {
-                            JSONObject currentCurrency = response.getJSONObject("USD");
-                            amountCurrency.setText(currentCurrency.getString("buy"));
-                            buyRate = currentCurrency.getString("buy");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+        if (Locale.getDefault().equals(Locale.US)) {
+            final String TAG = "exchange_rate";
+            // Creating volley request obj
+            String url = "https://blockchain.info/ticker";
+            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // Parsing json
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("USD");
+                                amountCurrency.setText(currentCurrency.getString("buy"));
+                                buyRate = currentCurrency.getString("buy");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-            }
-        });
-        // Adding request to request queue
-        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                }
+            });
+            // Adding request to request queue
+            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+        }
+        else if (Locale.getDefault().getLanguage().equals("fil")) {
+            final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                    URL, null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.v("TEST", "exchange-rate: " + response.toString());
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("market");
+                                amountCurrency.setText(currentCurrency.getString("ask"));
+                                buyRate = currentCurrency.getString("ask");
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Test", "Error: " + error.toString());
+                    progressDialog.dismiss();
+
+                }
+
+            }) {
+                @Override
+                public HashMap<String, String> getHeaders() {
+                    String token = ApplicationController.getToken();
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("Authorization", "Token " + token);
+                    params.put("Content-Type", "application/json;charset=UTF-8");
+                    params.put("Accept", "application/json");
+                    return params;
+                }
+            };
+
+            jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+            // Adds request to the request queue
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        }
     }
 
     private void setSubtotal(String subtotalStr) {

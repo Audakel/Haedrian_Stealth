@@ -18,14 +18,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
+import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +39,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,7 +57,6 @@ public class SendRequestActivity extends ActionBarActivity {
     private RequestQueue queue;
     private TextView bitcoinAmount, currencySign;
     private int currentBitcoinPriceBuy = 0;
-    private int currentBitcoinPriceSell = 0;
     private static final int REQUEST_CODE = 1;
 
     // Data for all views
@@ -64,6 +68,12 @@ public class SendRequestActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
         context = getApplication();
+
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         currencySign = (TextView) findViewById(R.id.currency_sign);
 
@@ -306,7 +316,6 @@ public class SendRequestActivity extends ActionBarActivity {
                 intent.putExtra("send_amount", displayNumber.getText().toString());
                 intent.putExtra("send_amount_bitcoin", bitcoinAmount.getText().toString());
                 intent.putExtra("bitcoin_buy", currentBitcoinPriceBuy);
-                intent.putExtra("bitcoin_sell", currentBitcoinPriceSell);
                 startActivityForResult(intent, REQUEST_CODE);
                 clear();
                 return;
@@ -356,31 +365,77 @@ public class SendRequestActivity extends ActionBarActivity {
 
     // ================ Helper functions ================
     private void getCurrencyInfo() {
-        // Creating volley request obj
-        String url = "https://blockchain.info/ticker";
-        JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Parsing json
-                        try {
-                            JSONObject currentCurrency = response.getJSONObject("USD");
-                            currentBitcoinPriceBuy = currentCurrency.getInt("buy");
-                            currentBitcoinPriceSell = currentCurrency.getInt("sell");
-                            getConvertedRateInstantly(displayNumber.getText().toString());
-                            updateDisplay();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+        if (Locale.getDefault().equals(Locale.US)) {
+            // Creating volley request obj
+            String url = "https://blockchain.info/ticker";
+            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // Parsing json
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("USD");
+                                currentBitcoinPriceBuy = currentCurrency.getInt("buy");
+                                getConvertedRateInstantly(displayNumber.getText().toString());
+                                updateDisplay();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-            }
-        });
-        // Adding request to request queue
-        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                }
+            });
+            // Adding request to request queue
+            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+        }
+        else if (Locale.getDefault().getLanguage().equals("fil")) {
+            final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                    URL, null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.v("TEST", "exchange-rate: " + response.toString());
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("market");
+                                currentBitcoinPriceBuy = currentCurrency.getInt("ask");
+                                getConvertedRateInstantly(displayNumber.getText().toString());
+                                updateDisplay();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Test", "Error: " + error.toString());
+
+                }
+
+            }) {
+                @Override
+                public HashMap<String, String> getHeaders() {
+                    String token = ApplicationController.getToken();
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("Authorization", "Token " + token);
+                    params.put("Content-Type", "application/json;charset=UTF-8");
+                    params.put("Accept", "application/json");
+                    return params;
+                }
+            };
+
+            jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+            // Adds request to the request queue
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        }
     }
 
     public void getConvertedRateInstantly(String sendAmount) {

@@ -87,6 +87,7 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
                                     for (int i = 0; i < transactionArray.length(); i++) {
                                         JSONObject object = transactionArray.getJSONObject(i);
                                         BuyOrderHistoryModel buyOrder = new BuyOrderHistoryModel();
+                                        buyOrder.setId(object.getString("id"));
                                         buyOrder.setStatus(object.getString("status"));
                                         buyOrder.setOutletTitle(object.getString("outlet_title"));
                                         buyOrder.setCreatedAt(object.getString("created_at"));

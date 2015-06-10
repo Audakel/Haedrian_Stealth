@@ -2,6 +2,7 @@ package com.haedrian.haedrian.HomeScreen;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Criteria;
 import android.location.Location;
@@ -39,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONArray;
@@ -98,6 +100,12 @@ public class MapsActivity extends ActionBarActivity {
 
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         latLngs = new ArrayList<>();
         titles = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,12 +20,14 @@ import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Models.BuyOrderHistoryModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,6 +51,12 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
             buyOrder = extras.getParcelable("buy_order");
         }
 
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         buyOrderTV = (TextView) findViewById(R.id.buy_order_title);
         statusTV = (TextView) findViewById(R.id.status);
         amountTV = (TextView) findViewById(R.id.amount);
@@ -55,18 +64,34 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
         expirationDateTV = (TextView) findViewById(R.id.expiration_date);
         locationTV = (TextView) findViewById(R.id.location);
 
+//        Log.v("TEST", "buyorder: " + buyOrder.toString());
+
         buyOrderTV.setText(getString(R.string.buy_order) + buyOrder.getId());
-        statusTV.setText(buyOrder.getStatus());
-        amountTV.setText(buyOrder.getCurrencyAmount());
+
+        String buyOrderStatusTemp = buyOrder.getStatus();
+        String buyOrderStatus = "";
+        String[] parts = buyOrderStatusTemp.split("_");
+        for (int i = 0; i < parts.length; i++) {
+            buyOrderStatus += parts[i].toUpperCase() + " ";
+        }
+        statusTV.setText(buyOrderStatus);
+
+        Double currencyAmount = Double.parseDouble(buyOrder.getCurrencyAmount());
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        amountTV.setText(currencyFormatter.format(currencyAmount));
+
 
         Calendar cal = Calendar.getInstance(Locale.getDefault());
-        cal.setTimeInMillis(Long.parseLong(buyOrder.getCreatedAt()));
-        String orderTime = DateFormat.format("HH:mm:ss MM-dd-yyyy", cal).toString();
+        String orderTime = getString(R.string.not_available);
+        if ( ! buyOrder.getCreatedAt().equals("null")) {
+            cal.setTimeInMillis(Long.parseLong(buyOrder.getCreatedAt()));
+            orderTime = DateFormat.format("MM-dd-yyyy HH:mm", cal).toString();
+        }
 
         orderTimeTV.setText(orderTime);
 
         cal.setTimeInMillis(Long.parseLong(buyOrder.getExpirationTime()));
-        String expirationTime = DateFormat.format("HH:mm:ss MM-dd-yyyy", cal).toString();
+        String expirationTime = DateFormat.format("MM-dd-yyyy HH:mm", cal).toString();
         expirationDateTV.setText(expirationTime);
         locationTV.setText(buyOrder.getOutletTitle());
     }
@@ -107,15 +132,7 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
     }
 
     private void verifyPayment() {
-        final String URL = ApplicationConstants.BASE + "buy/";
-
-        try {
-            JSONObject body = new JSONObject();
-            body.put("id", buyOrder.getId());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        final String URL = ApplicationConstants.BASE + "buy/?order_id=" + buyOrder.getId();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
                 URL, null,

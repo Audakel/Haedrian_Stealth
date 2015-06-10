@@ -14,6 +14,8 @@ import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.haedrian.haedrian.R;
 import com.parse.Parse;
 
+import java.util.Locale;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -124,6 +126,18 @@ public class ApplicationController extends Application {
     public static String getToken() { return token; }
 
     public static void setToken(String userToken) { token = userToken; }
+
+    public static String getExchangeRate() {
+
+        if (Locale.getDefault().equals(Locale.ENGLISH)) {
+            
+        }
+        else if (Locale.getDefault().getLanguage().equals("fil")) {
+
+        }
+
+        return "";
+    }
 
 
 }

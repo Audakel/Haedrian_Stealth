@@ -112,8 +112,6 @@ public class BalanceFragment extends Fragment {
     public void initializeWallet() {
         final String URL = ApplicationConstants.BASE + "wallet-info/";
 
-//        Log.v("TEST", ApplicationController.getToken());
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 URL, null,
                 new Response.Listener<JSONObject>() {
@@ -168,31 +166,80 @@ public class BalanceFragment extends Fragment {
     }
 
     public void getConvertedRate(String bitcoinAmount) {
-        final String url = "https://blockchain.info/ticker";
 
         final String amount = bitcoinAmount;
-        JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONObject currentCurrency = response.getJSONObject("USD");
-                            int last = currentCurrency.getInt("last");
-                            setConvertedRate(last, amount);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Error", "Error: " + error.getMessage());
-                progressDialog.dismiss();
-            }
-        });
+        if (Locale.getDefault().equals(Locale.US)) {
+            final String url = "https://blockchain.info/ticker";
 
-        currencyRequest.setRetryPolicy(new TimeoutRetryPolicy());
-        ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("USD");
+                                int last = currentCurrency.getInt("last");
+                                setConvertedRate(last, amount);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Error", "Error: " + error.getMessage());
+                    progressDialog.dismiss();
+                }
+            });
+
+            currencyRequest.setRetryPolicy(new TimeoutRetryPolicy());
+            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
+
+        }
+        else if (Locale.getDefault().getLanguage().equals("fil")) {
+            final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                    URL, null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.v("TEST", "exchange-rate: " + response.toString());
+                            try {
+                                JSONObject currentCurrency = response.getJSONObject("market");
+                                int last = currentCurrency.getInt("ask");
+                                setConvertedRate(last, amount);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Test", "Error: " + error.toString());
+                    progressDialog.dismiss();
+
+                }
+
+            }) {
+                @Override
+                public HashMap<String, String> getHeaders() {
+                    String token = ApplicationController.getToken();
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("Authorization", "Token " + token);
+                    params.put("Content-Type", "application/json;charset=UTF-8");
+                    params.put("Accept", "application/json");
+                    return params;
+                }
+            };
+
+            jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+
+            // Adds request to the request queue
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        }
     }
 
     public void setConvertedRate(int rate, String bitcoinAmount) {

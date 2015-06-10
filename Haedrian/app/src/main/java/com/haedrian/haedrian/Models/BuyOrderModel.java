@@ -98,4 +98,16 @@ public class BuyOrderModel implements Parcelable {
             return new BuyOrderModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "BuyOrderModel{" +
+                "status='" + status + '\'' +
+                ", paymentOutlet='" + paymentOutlet + '\'' +
+                ", instructions='" + instructions + '\'' +
+                ", btcAmount='" + btcAmount + '\'' +
+                ", currencyAmount='" + currencyAmount + '\'' +
+                ", paymentMethodFee='" + paymentMethodFee + '\'' +
+                '}';
+    }
 }

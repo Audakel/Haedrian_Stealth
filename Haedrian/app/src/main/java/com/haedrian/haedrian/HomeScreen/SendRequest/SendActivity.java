@@ -33,6 +33,7 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONException;
@@ -66,6 +67,12 @@ public class SendActivity extends ActionBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
+
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         sendAmount = getIntent().getStringExtra("send_amount");
         sendAmountBitcoin = getIntent().getStringExtra("send_amount_bitcoin");
