@@ -133,12 +133,12 @@
         <activity
             android:name=".HomeScreen.AddMoney.BuyActivity"
             android:label="@string/title_activity_buy"
-            android:parentActivityName=".HomeScreen.HomeActivity" >
+            android:parentActivityName=".HomeScreen.AddMoney.BuyOptions" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity" />
+                android:value=".HomeScreen.AddMoney.BuyOptions" />
         </activity>
         <activity
             android:name=".HomeScreen.SendRequest.SendActivity"
@@ -341,6 +341,27 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeScreen.Wallet.WalletActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.AddMoney.BuyOptions"
+            android:label="@string/title_activity_buy_options"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.AddMoney.GroupBuyActivity"
+            android:label="@string/title_activity_group_buy"
+            android:parentActivityName=".HomeScreen.AddMoney.BuyOptions"
+            android:windowSoftInputMode="adjustPan">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.AddMoney.BuyOptions" />
         </activity>
     </application>
 

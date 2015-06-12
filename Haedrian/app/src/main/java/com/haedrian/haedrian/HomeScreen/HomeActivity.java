@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity;
+import com.haedrian.haedrian.HomeScreen.AddMoney.BuyOptions;
 import com.haedrian.haedrian.UserInteraction.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
@@ -77,41 +78,41 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             finish();
         }
 
-        // After login, set up shared preferences to store the current users ID globally
-        final SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
-        int userId = sp.getInt("user_id", -1);
-        parseId = sp.getString("parse_id", "");
-        final DBHelper db = new DBHelper(this);
-
-        // No user is currently set
-        if (userId == -1) {
-
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-            query.getInBackground(parseId, new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
-                    if (e == null) {
-                        user = new UserModel();
-                        user.setParseId(object.getObjectId());
-                        user.setFirstName(object.getString("firstName"));
-                        user.setLastName(object.getString("lastName"));
-                        user.setUsername(object.getString("username"));
-                        user.setEmail(object.getString("email"));
-                        user.setPhoneNumber(object.getString("phoneNumber"));
-
-                        UserModel newUser = db.getUsersTable().insert(user);
-
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putInt("user_id", newUser.getId());
-                        editor.commit();
-                    } else {
-                        // something went wrong
-                    }
-                }
-            });
-        } else {
-
-            user = db.getUsersTable().query("_id", "=", "1");
-        }
+//        // After login, set up shared preferences to store the current users ID globally
+//        final SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+//        int userId = sp.getInt("user_id", -1);
+//        parseId = sp.getString("parse_id", "");
+//        final DBHelper db = new DBHelper(this);
+//
+//        // No user is currently set
+//        if (userId == -1) {
+//
+//            ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+//            query.getInBackground(parseId, new GetCallback<ParseObject>() {
+//                public void done(ParseObject object, ParseException e) {
+//                    if (e == null) {
+//                        user = new UserModel();
+//                        user.setParseId(object.getObjectId());
+//                        user.setFirstName(object.getString("firstName"));
+//                        user.setLastName(object.getString("lastName"));
+//                        user.setUsername(object.getString("username"));
+//                        user.setEmail(object.getString("email"));
+//                        user.setPhoneNumber(object.getString("phoneNumber"));
+//
+//                        UserModel newUser = db.getUsersTable().insert(user);
+//
+//                        SharedPreferences.Editor editor = sp.edit();
+//                        editor.putInt("user_id", newUser.getString());
+//                        editor.commit();
+//                    } else {
+//                        // something went wrong
+//                    }
+//                }
+//            });
+//        } else {
+//
+//            user = db.getUsersTable().query("_id", "=", "1");
+//        }
 
         // Check if funds have been requested of user
         checkForRequest(parseId);
@@ -397,10 +398,9 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 startActivity(intent, options4.toBundle());
                 return;
             case R.id.buy:
-                intent = new Intent(this, BuyActivity.class);
+                intent = new Intent(this, BuyOptions.class);
                 ActivityOptions options6 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
-                intent.putExtra("parse_id", parseId);
                 startActivity(intent, options6.toBundle());
                 return;
             default:

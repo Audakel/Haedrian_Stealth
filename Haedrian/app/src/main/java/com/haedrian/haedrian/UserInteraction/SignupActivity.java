@@ -90,6 +90,7 @@ public class SignupActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Update country code on the phone number
+                countryCodeTV.setVisibility(View.VISIBLE);
                 countryCodeTV.setText(countryCodes.get(position));
             }
 
@@ -118,6 +119,7 @@ public class SignupActivity extends ActionBarActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     microfinanceIdContainer.setVisibility(View.VISIBLE);
+                    microfinanceIdET.setText(microfinanceInstitutions.get(position) + " " + getString(R.string.id));
                 }
                 else {
                     microfinanceIdContainer.setVisibility(View.GONE);
@@ -303,8 +305,8 @@ public class SignupActivity extends ActionBarActivity {
             return;
         }
 
-        if ( ! password.matches(".*\\d+.*")) {
-            passwordET.setError(getString(R.string.no_number_password));
+        if ( ! password.matches(".*\\d+[a-zA-Z]+.*")) {
+            passwordET.setError(getString(R.string.password_char_number));
             progressDialog.dismiss();
             return;
         }
@@ -402,7 +404,7 @@ public class SignupActivity extends ActionBarActivity {
     }
 
     private void fillMicrofinanceInfo() {
-        microfinanceInstitutions.add(getString(R.string.none));
+        microfinanceInstitutions.add(getString(R.string.microfinance_institution));
         microfinanceInstitutions.add(getString(R.string.mentors_international));
 
         microfinanceAbbr.add("");

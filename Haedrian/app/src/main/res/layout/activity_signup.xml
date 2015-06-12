@@ -1,63 +1,70 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/lightgrey"
     tools:context="com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore.GetCreditScoreActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:padding="5dp"-->
+        <!--android:background="@drawable/round_white" >-->
+
+
         <LinearLayout
             android:id="@+id/formContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:gravity="center"
-                android:layout_height="fill_parent">
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    />
-            </RelativeLayout>
+            android:layout_gravity="fill"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="15dp"
+            android:background="@drawable/round_white">
+
 
             <LinearLayout style="@style/fieldContainer">
 
                 <LinearLayout style="@style/fieldContainer">
-                    <TextView
-                        style="@style/formLabel"
-                        android:text="@string/username"/>
+                    <!--<TextView-->
+                        <!--style="@style/formLabel"-->
+                        <!--android:text="@string/username"/>-->
                     <EditText
                         android:tag="middle_name"
                         android:id="@+id/username_edit_text"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:hint="@string/username"
+                        android:background="@drawable/bg_edittext"/>
                 </LinearLayout>
 
                 <LinearLayout style="@style/fieldContainer">
-                    <TextView
-                        android:text="@string/email_required"
-                        style="@style/formLabel" />
+                    <!--<TextView-->
+                        <!--android:text="@string/email_required"-->
+                        <!--style="@style/formLabel" />-->
                     <EditText
                         android:id="@+id/email_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="textEmailAddress" />
+                        android:hint="@string/email_required"
+                        android:inputType="textEmailAddress"
+                        android:background="@drawable/bg_edittext"/>
                 </LinearLayout>
 
-                <LinearLayout style="@style/fieldContainer">
-                    <TextView
-                        android:text="@string/country_required"
-                        style="@style/formLabel" />
+                <LinearLayout
+                    style="@style/fieldContainer"
+                    android:background="@drawable/bg_edittext">
+                    <!--<TextView-->
+                        <!--android:text="@string/country_required"-->
+                        <!--style="@style/formLabel" />-->
                     <Spinner
                         android:id="@+id/country_spinner"
                         android:layout_width="match_parent"
@@ -65,39 +72,37 @@
                         android:spinnerMode="dropdown"/>
                 </LinearLayout>
 
-            </LinearLayout>
 
+                <!--<LinearLayout style="@style/fieldContainer">-->
 
-            <!--<LinearLayout style="@style/fieldContainer">-->
+                    <!--<TextView-->
+                        <!--style="@style/formLabel"-->
+                        <!--android:text="@string/first_name"/>-->
 
-                <!--<TextView-->
-                    <!--style="@style/formLabel"-->
-                    <!--android:text="@string/first_name"/>-->
+                    <!--<EditText-->
+                        <!--android:id="@+id/first_name_edit_text"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:inputType="textCapWords"/>-->
+                <!--</LinearLayout>-->
+                <!--<LinearLayout style="@style/fieldContainer">-->
 
-                <!--<EditText-->
-                    <!--android:id="@+id/first_name_edit_text"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:inputType="textCapWords"/>-->
-            <!--</LinearLayout>-->
-            <!--<LinearLayout style="@style/fieldContainer">-->
+                    <!--<TextView-->
+                        <!--style="@style/formLabel"-->
+                        <!--android:text="@string/last_name"/>-->
 
-                <!--<TextView-->
-                    <!--style="@style/formLabel"-->
-                    <!--android:text="@string/last_name"/>-->
-
-                <!--<EditText-->
-                    <!--android:id="@+id/last_name_edit_text"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:inputType="textCapWords" />-->
-            <!--</LinearLayout>-->
+                    <!--<EditText-->
+                        <!--android:id="@+id/last_name_edit_text"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:inputType="textCapWords" />-->
+                <!--</LinearLayout>-->
 
             <LinearLayout style="@style/fieldContainer">
 
-                <TextView
-                    style="@style/formLabel"
-                    android:text="@string/phone_number"/>
+                <!--<TextView-->
+                    <!--style="@style/formLabel"-->
+                    <!--android:text="@string/phone_number"/>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,9 +113,11 @@
                         android:id="@+id/country_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:text="+1"/>
+                        android:text="+1"
+                        android:visibility="gone"/>
 
                     <EditText
                         android:id="@+id/phone_number_edit_text"
@@ -118,7 +125,9 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="phone"
-                        android:layout_weight="77.70" />
+                        android:layout_weight="77.70"
+                        android:hint="@string/phone_number"
+                        android:background="@drawable/bg_edittext"/>
 
                 </LinearLayout>
 
@@ -126,42 +135,48 @@
 
             <LinearLayout style="@style/fieldContainer">
 
-                <TextView
-                    style="@style/formLabel"
-                    android:text="@string/password"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password_requirements"/>
+                <!--<TextView-->
+                    <!--style="@style/formLabel"-->
+                    <!--android:text="@string/password"/>-->
 
                 <EditText
                     android:id="@+id/password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:hint="@string/password"
+                    android:background="@drawable/bg_edittext"/>
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/password_requirements"/>-->
             </LinearLayout>
 
             <LinearLayout style="@style/fieldContainer">
 
-                <TextView
-                    style="@style/formLabel"
-                    android:text="@string/reenter_password"/>
+                <!--<TextView-->
+                    <!--style="@style/formLabel"-->
+                    <!--android:text="@string/reenter_password"/>-->
 
                 <EditText
                     android:id="@+id/reenter_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:hint="@string/reenter_password"
+                    android:background="@drawable/bg_edittext"/>
             </LinearLayout>
 
-            <LinearLayout style="@style/fieldContainer">
+            <LinearLayout
+                style="@style/fieldContainer"
+                android:background="@drawable/bg_edittext">
 
-                <TextView
-                    style="@style/formLabel"
-                    android:text="@string/microfinance_institution"/>
+                <!--<TextView-->
+                    <!--style="@style/formLabel"-->
+                    <!--android:text="@string/microfinance_institution"/>-->
 
                 <Spinner
                     android:id="@+id/microfinance_institution"
@@ -176,14 +191,16 @@
                 style="@style/fieldContainer"
                 android:visibility="gone">
 
-                <TextView
-                    style="@style/formLabel"
-                    android:text="@string/microfinance_id"/>
+                <!--<TextView-->
+                    <!--style="@style/formLabel"-->
+                    <!--android:text="@string/microfinance_id"/>-->
 
                 <EditText
                     android:id="@+id/microfinance_id"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="@string/microfinance_id"
+                    android:background="@drawable/bg_edittext"/>
 
             </LinearLayout>
 
@@ -197,7 +214,8 @@
                 android:text="@string/submit"
                 android:textColor="@color/white"/>
 
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    <!--</LinearLayout>-->
+</ScrollView>
 

@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,6 +58,7 @@ public class SendActivity extends ActionBarActivity implements
     private BigDecimal sendAmountNumber, sendAmountBitcoinNumber;
     private int bitcoinBuy, bitcoinSell;
     private ProgressDialog progressDialog;
+    private CheckBox checkbox;
 
     private static final int START_SCANNER_REQUEST = 1;
 
@@ -81,6 +85,7 @@ public class SendActivity extends ActionBarActivity implements
 
         toET = (EditText) findViewById(R.id.to_edittext);
         noteET = (EditText) findViewById(R.id.note_edittext);
+        checkbox = (CheckBox) findViewById(R.id.checkbox);
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
@@ -98,6 +103,19 @@ public class SendActivity extends ActionBarActivity implements
 
         ContactsListFragment mContactsListFragment = (ContactsListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.contact_list);
+
+
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    toET.setText(getString(R.string.mentors_international_handle));
+                }
+                else {
+                    toET.setText("");
+                }
+            }
+        });
 
     }
 
@@ -349,5 +367,23 @@ public class SendActivity extends ActionBarActivity implements
     @Override
     public void onSelectionCleared() {
 
+    }
+
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.your_mfi_container:
+                if (checkbox.isChecked()) {
+                    checkbox.setChecked(false);
+                    toET.setText("");
+                }
+                else {
+                    checkbox.setChecked(true);
+                    toET.setText(getString(R.string.mentors_international_handle));
+                    toET.setSelection(toET.getText().length());
+                }
+                break;
+        }
     }
 }

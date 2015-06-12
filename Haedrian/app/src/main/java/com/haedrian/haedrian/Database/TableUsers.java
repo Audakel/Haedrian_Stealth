@@ -78,7 +78,7 @@ public class TableUsers {
         Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
 
         if (cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
+            user.setId(cursor.getString(0));
         }
 
         db.close();
@@ -140,7 +140,7 @@ public class TableUsers {
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
+            user.setId(cursor.getString(0));
             user.setParseId(cursor.getString(1));
             user.setUsername(cursor.getString(2));
             user.setFirstName(cursor.getString(3));

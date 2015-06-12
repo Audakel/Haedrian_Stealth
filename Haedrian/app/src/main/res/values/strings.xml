@@ -86,7 +86,7 @@
     <string name="create_wallet">Create Wallet</string>
     <string name="import_wallet">Import Wallet</string>
     <string name="title_activity_create_wallet">Create Wallet</string>
-    <string name="password">Password*</string>
+    <string name="password">Password*\n<font size="12">(Minimum 8 characters and 1 number)</font></string>
     <string name="password_requirements">(Minimum 8 characters and 1 number)</string>
     <string name="title_activity_import_wallet">Import Wallet</string>
     <string name="title_activity_capture">Capture</string>
@@ -339,7 +339,7 @@
     <string name="united_states_abbr">US</string>
     <string name="country_required">Country*</string>
     <string name="country_code_required">Please select a country!</string>
-    <string name="country_spinner_hint">Please select a country</string>
+    <string name="country_spinner_hint">Please select a country*</string>
     <string name="duplicate_username">Username already taken. Please choose a different one.</string>
     <string name="invalid_password">This password is invalid</string>
     <string name="invalid_email">Email address is invalid</string>
@@ -405,5 +405,16 @@
     <string name="none">None</string>
     <string name="mentors_international">Mentors International</string>
     <string name="no_mfi_id">Please enter a microfinance institution ID</string>
+    <string name="title_activity_buy_options">Buy Options</string>
+    <string name="individual">As Individual</string>
+    <string name="group">As Group</string>
+    <string name="how_to_add">How would you like to add money to your wallet?</string>
+    <string name="title_activity_group_buy">GroupBuyActivity</string>
+    <string name="group_member">Group Member</string>
+    <string name="dummy_name">Jorge</string>
+    <string name="id">ID</string>
+    <string name="password_char_number">Password needs at least 1 number and 1 character!</string>
+    <string name="your_microfinance_institutions">Your Microfinance Institutions</string>
+    <string name="mentors_international_handle">mentors_international</string>
 
 </resources>
