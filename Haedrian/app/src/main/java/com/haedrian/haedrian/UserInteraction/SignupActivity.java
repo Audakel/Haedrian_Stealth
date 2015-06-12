@@ -119,7 +119,7 @@ public class SignupActivity extends ActionBarActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     microfinanceIdContainer.setVisibility(View.VISIBLE);
-                    microfinanceIdET.setText(microfinanceInstitutions.get(position) + " " + getString(R.string.id));
+                    microfinanceIdET.setHint(microfinanceInstitutions.get(position) + " " + getString(R.string.id) + "*");
                 }
                 else {
                     microfinanceIdContainer.setVisibility(View.GONE);
@@ -305,7 +305,7 @@ public class SignupActivity extends ActionBarActivity {
             return;
         }
 
-        if ( ! password.matches(".*\\d+[a-zA-Z]+.*")) {
+        if ( ! password.matches("^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$")) {
             passwordET.setError(getString(R.string.password_char_number));
             progressDialog.dismiss();
             return;

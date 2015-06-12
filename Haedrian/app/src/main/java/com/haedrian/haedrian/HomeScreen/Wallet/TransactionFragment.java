@@ -88,24 +88,26 @@ public class TransactionFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "history: " + response.toString());
                         try {
-                            int transactionCount = response.getInt("transaction_count");
-                            if (transactionCount > 0) {
-                                JSONArray transactionArray = response.getJSONArray("transactions");
-                                for (int i = 0; i < transactionArray.length(); i++) {
-                                    JSONObject object = transactionArray.getJSONObject(i);
-                                    TransactionModel transaction = new TransactionModel();
-                                    transaction.setStatus(object.getString("status"));
-                                    transaction.setFeeAmount(object.getString("fee_amount"));
-                                    transaction.setAmount(object.getString("amount"));
-                                    transaction.setDate(object.getString("date"));
-                                    transaction.setEntryType(object.getString("entry_type"));
-                                    transaction.setSender(object.getString("original_sender"));
-                                    transaction.setTarget(object.getString("original_target"));
-                                    transaction.setCurrency(object.getString("currency"));
+                            if (response.getBoolean("success")) {
+                                int transactionCount = response.getInt("transaction_count");
+                                if (transactionCount > 0) {
+                                    JSONArray transactionArray = response.getJSONArray("transactions");
+                                    for (int i = 0; i < transactionArray.length(); i++) {
+                                        JSONObject object = transactionArray.getJSONObject(i);
+                                        TransactionModel transaction = new TransactionModel();
+                                        transaction.setStatus(object.getString("status"));
+                                        transaction.setFeeAmount(object.getString("fee_amount"));
+                                        transaction.setAmount(object.getString("amount"));
+                                        transaction.setDate(object.getString("date"));
+                                        transaction.setEntryType(object.getString("entry_type"));
+                                        transaction.setSender(object.getString("original_sender"));
+                                        transaction.setTarget(object.getString("original_target"));
+                                        transaction.setCurrency(object.getString("currency"));
 
-                                    transactions.add(transaction);
+                                        transactions.add(transaction);
+                                    }
+                                    setView();
                                 }
-                                setView();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

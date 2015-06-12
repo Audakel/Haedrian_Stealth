@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,6 +40,8 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
 
     private TextView buyOrderTV, statusTV, amountTV, orderTimeTV, expirationDateTV, locationTV;
     private BuyOrderHistoryModel buyOrder;
+    private ProgressDialog progressDialog;
+    private Button markAsPaidButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,9 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
         setContentView(R.layout.activity_buy_order_verify);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.dialog_loading));
 
         Bundle extras = getIntent().getExtras();
 
@@ -64,7 +72,11 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
         expirationDateTV = (TextView) findViewById(R.id.expiration_date);
         locationTV = (TextView) findViewById(R.id.location);
 
-//        Log.v("TEST", "buyorder: " + buyOrder.toString());
+        markAsPaidButton = (Button) findViewById(R.id.mark_as_paid_button);
+
+        if (buyOrder.getStatus().equals("paid_pending_confirmation")) {
+            markAsPaidButton.setVisibility(View.GONE);
+        }
 
         buyOrderTV.setText(getString(R.string.buy_order) + buyOrder.getId());
 
@@ -124,6 +136,7 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
 
         switch (id) {
             case R.id.mark_as_paid_button:
+                progressDialog.show();
                 verifyPayment();
                 break;
             default:
@@ -141,12 +154,16 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "buy-verify: " + response.toString());
+                        progressDialog.dismiss();
+
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Test", "Error: " + error.toString());
+                progressDialog.dismiss();
+                Toast.makeText(BuyOrderVerifyActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT);
             }
 
         }) {

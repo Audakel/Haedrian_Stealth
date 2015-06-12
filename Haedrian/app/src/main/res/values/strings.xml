@@ -396,7 +396,7 @@
     <string name="no_buy_orders">You have not made any buy orders yet!</string>
     <string name="dummy_buyorder_status">Escrow Expired.</string>
     <string name="buyorder_buy">Buy</string>
-    <string name="title_activity_buy_order_verify">BuyOrderVerifyActivity</string>
+    <string name="title_activity_buy_order_verify">Buy Order Verification</string>
     <string name="order_time">Order Time:</string>
     <string name="expiration_date">Expiration Date:</string>
     <string name="not_available">Not Available</string>
@@ -416,5 +416,6 @@
     <string name="password_char_number">Password needs at least 1 number and 1 character!</string>
     <string name="your_microfinance_institutions">Your Microfinance Institutions</string>
     <string name="mentors_international_handle">mentors_international</string>
+    <string name="try_again_later_error">There was an error. Please try again later.</string>
 
 </resources>

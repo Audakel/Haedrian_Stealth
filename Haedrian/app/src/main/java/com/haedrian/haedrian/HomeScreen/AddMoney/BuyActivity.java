@@ -280,6 +280,7 @@ public class BuyActivity extends ActionBarActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.v("TEST", "Exchanges: " + response.toString());
                             JSONArray locations = response.getJSONArray("locations");
                             for (int i = 0; i < locations.length(); i++) {
                                 depositLocations.add(locations.getJSONObject(i).getString("name"));

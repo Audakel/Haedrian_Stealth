@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,17 +30,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
+import com.google.gson.JsonArray;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.Contacts.ContactsListFragment;
 import com.haedrian.haedrian.CustomDialogs.SendConfirmationDialog;
 import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.HomeScreen.Wallet.TransactionDetailsActivity;
+import com.haedrian.haedrian.Models.TransactionModel;
 import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +65,7 @@ public class SendActivity extends ActionBarActivity implements
     private int bitcoinBuy, bitcoinSell;
     private ProgressDialog progressDialog;
     private CheckBox checkbox;
+    private Menu menu;
 
     private static final int START_SCANNER_REQUEST = 1;
 
@@ -86,6 +93,26 @@ public class SendActivity extends ActionBarActivity implements
         toET = (EditText) findViewById(R.id.to_edittext);
         noteET = (EditText) findViewById(R.id.note_edittext);
         checkbox = (CheckBox) findViewById(R.id.checkbox);
+
+        toET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (toET.length() > 0) {
+                    menu.getItem(0).setEnabled(true);
+                    menu.getItem(0).setIcon(R.drawable.ic_action_send_now);
+                }
+                else {
+                    menu.getItem(0).setEnabled(false);
+                    menu.getItem(0).setIcon(R.drawable.ic_action_send_now_disabled);
+                }
+            }
+        });
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         int userId = sp.getInt("user_id", -1);
@@ -149,7 +176,9 @@ public class SendActivity extends ActionBarActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_request, menu);
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_send, menu);
+        menu.getItem(0).setEnabled(false);
         return true;
     }
 
@@ -229,9 +258,10 @@ public class SendActivity extends ActionBarActivity implements
 
         JSONObject body = new JSONObject();
         try {
-            body.put("receiver", "mentors_international");
+            body.put("receiver", toET.getText().toString());
             body.put("amount_local", "0.0001");
             body.put("target_address", "12UkkQ58ksRXHzHdNzhcy4e6f8JwWGTG3H");
+            body.put("note", noteET.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -242,12 +272,26 @@ public class SendActivity extends ActionBarActivity implements
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.v("TEST", "send: " + response.toString());
                         try {
                             progressDialog.dismiss();
                             Log.v("TEST", response.toString());
 
                             if (response.getBoolean("success")) {
-                                returnToPreviousActivitySuccess("Successfully sent money to Mentors International!");
+                                TransactionModel transaction = new TransactionModel();
+                                transaction.setStatus(response.getString("status"));
+                                transaction.setCurrency(response.getString("currency"));
+                                transaction.setAmount(response.getString("amount"));
+                                transaction.setTarget(response.getString("target"));
+                                transaction.setFeeAmount(response.getString("fee"));
+
+                                Intent intent = new Intent(SendActivity.this, TransactionDetailsActivity.class);
+                                intent.putExtra("transaction", transaction);
+                                startActivity(intent);
+                            }
+                            else {
+                                JSONArray errors = response.getJSONObject("error").getJSONArray("non_field_errors");
+                                Toast.makeText(SendActivity.this, errors.get(0).toString(), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {

@@ -224,7 +224,7 @@ public class SendRequestActivity extends ActionBarActivity {
 
         int displayLength = displayNumber.getText().length();
 
-        if (displayLength < 8) {
+        if (displayLength < 10) {
             if ( ! displayNumber.getText().toString().equals(".")) {
 
                 if (displayNumber.getText().toString().equals("0")) {
