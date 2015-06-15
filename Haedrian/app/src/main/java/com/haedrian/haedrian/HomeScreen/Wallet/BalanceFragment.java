@@ -3,6 +3,8 @@ package com.haedrian.haedrian.HomeScreen.Wallet;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -109,7 +111,35 @@ public class BalanceFragment extends Fragment {
 
     }
 
-    public void initializeWallet() {
+    private void initializeWallet() {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getNetworkInfo(0);
+
+            if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
+                initializeWalletNetwork();
+            }
+            else {
+                netInfo = cm.getNetworkInfo(1);
+
+                if(netInfo != null && netInfo.getState()== NetworkInfo.State.CONNECTED){
+                    initializeWalletNetwork();
+                }
+                else {
+                    initializeWalletCached();
+                }
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeWalletCached() {
+        JSONObject response = ApplicationController.getCachedJSON("wallet-info");
+    }
+
+    private void initializeWalletNetwork() {
         final String URL = ApplicationConstants.BASE + "wallet-info/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -119,6 +149,7 @@ public class BalanceFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "Wallet-info: " + response.toString());
+                        ApplicationController.cacheJSON(response, "wallet-info");
                         try {
                             setBalance(response.getJSONObject("bitcoin").getString("balance"));
                             initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
@@ -138,7 +169,7 @@ public class BalanceFragment extends Fragment {
 
         }) {
             @Override
-             public HashMap<String, String> getHeaders() {
+            public HashMap<String, String> getHeaders() {
                 String token = ApplicationController.getToken();
                 HashMap<String, String> params = new HashMap<>();
                 params.put("Authorization", "Token " + token);
@@ -153,6 +184,8 @@ public class BalanceFragment extends Fragment {
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
+
+
 
     public void setBalance(String response) {
 
@@ -248,9 +281,9 @@ public class BalanceFragment extends Fragment {
         Double newAmount = Double.parseDouble(String.valueOf(conversion));
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         // To strip out the currency symbol
-        DecimalFormatSymbols symbols = ((DecimalFormat)format).getDecimalFormatSymbols();
+        DecimalFormatSymbols symbols = ((DecimalFormat) format).getDecimalFormatSymbols();
         symbols.setCurrencySymbol("");
-        ((DecimalFormat)format).setDecimalFormatSymbols(symbols);
+        ((DecimalFormat) format).setDecimalFormatSymbols(symbols);
 
         String formattedAmount = format.format(newAmount).replaceAll(" ", "");
 

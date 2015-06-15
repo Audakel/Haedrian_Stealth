@@ -219,6 +219,23 @@ public class BuyActivity extends ActionBarActivity {
             }
         });
 
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            currencyEditText.setText(extras.getString("total"));
+            try {
+                BigDecimal buyRateDecimal = new BigDecimal(buyRate);
+                BigDecimal amount = new BigDecimal(currencyEditText.getText().toString());
+                BigDecimal newAmount = amount.divide(buyRateDecimal, 6, RoundingMode.HALF_UP);
+                if (currencyEditText.isFocused()) {
+                    bitcoinEditText.setText(String.valueOf(newAmount));
+                }
+                setSubtotal(currencyEditText.getText().toString());
+            } catch (Exception e) {
+
+            }
+        }
+
     }
 
     @Override

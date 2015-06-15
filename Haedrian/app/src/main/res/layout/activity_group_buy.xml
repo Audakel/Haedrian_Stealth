@@ -39,6 +39,30 @@
         android:layout_below="@+id/title_container"
         android:descendantFocusability="beforeDescendants"/>
 
+    <LinearLayout
+        android:id="@+id/total_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_button"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:text="@string/group_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:text="@string/buy_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/submit_button"
         android:layout_width="match_parent"

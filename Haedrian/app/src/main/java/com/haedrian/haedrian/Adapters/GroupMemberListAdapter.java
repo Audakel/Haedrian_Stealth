@@ -2,7 +2,9 @@ package com.haedrian.haedrian.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,13 +13,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.haedrian.haedrian.CustomDialogs.GroupMemberDialog;
+import com.haedrian.haedrian.HomeScreen.AddMoney.GroupBuyActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
+import com.lenddo.sdk.models.User;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by Logan on 6/11/2015.
@@ -36,7 +45,21 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public int getCount() {
+        return groupMembers.size();
+    }
+
+    @Override
+    public UserModel getItem(int pos) {
+        return groupMembers.get(pos);
+    }
+
+    public ArrayList<UserModel> getUsers() {
+        return groupMembers;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
         GroupMemberRowHolder holder = null;
 
@@ -46,6 +69,7 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
             holder = new GroupMemberRowHolder();
             holder.memberName = (TextView) row.findViewById(R.id.member_name);
             holder.memberAmount = (EditText) row.findViewById(R.id.member_amount);
+            holder.currencySign = (TextView) row.findViewById(R.id.currency_sign);
 
             row.setTag(holder);
         }
@@ -58,16 +82,30 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
         underlinedName.setSpan(new UnderlineSpan(), 0, underlinedName.length(), 0);
         holder.memberName.setText(underlinedName);
 
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        holder.currencySign.setText(currency.getSymbol());
+
         final int positionFinal = position;
-        holder.memberAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        holder.memberName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if ( ! hasFocus) {
-                    Log.v("TEST", "HERE");
-                    final EditText memberAmount = (EditText) v;
-                    if ( ! memberAmount.getText().toString().equals("")) {
-                        groupMembers.get(positionFinal).setAmount(Long.parseLong(memberAmount.getText().toString()));
-                    }
+            public void onClick(View v) {
+                GroupMemberDialog dialog = new GroupMemberDialog(context, groupMembers.get(position));
+                dialog.show();
+            }
+        });
+
+        holder.memberAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    groupMembers.get(position).setAmount(Long.parseLong(s.toString()));
                 }
             }
         });
@@ -76,7 +114,7 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
     }
 
     static class GroupMemberRowHolder {
-        TextView memberName;
+        TextView memberName, currencySign;
         EditText memberAmount;
     }
 

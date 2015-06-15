@@ -14,6 +14,16 @@ import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.haedrian.haedrian.R;
 import com.parse.Parse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Locale;
 
 import javax.crypto.Cipher;
@@ -32,6 +42,7 @@ public class ApplicationController extends Application {
     private RequestQueue mRequestQueue;
     private boolean loggedIn;
     private static String token = "";
+    private static File cacheDir;
 
     /**
      * @return ApplicationController singleton instance
@@ -59,6 +70,7 @@ public class ApplicationController extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "QdakXDOx8Ta6W4g2kfdWkGyN0CS9CjxppjirJnqN", "CyXcvlXI1I0qfxAdhoYT0dlnHpNn0RSn5NoS1CB3");
 
+        cacheDir = getCacheDir();
     }
 
     private void checkedLoggedInState() {
@@ -140,4 +152,28 @@ public class ApplicationController extends Application {
     }
 
 
+    public static void cacheJSON(JSONObject response, String name) {
+        try {
+            ObjectOutput out = new ObjectOutputStream(new FileOutputStream(new File(cacheDir, name) + "cacheFile.srl"));
+            out.writeObject(response);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getCachedJSON(String name) {
+        JSONObject cachedResponse = new JSONObject();
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File(cacheDir, name) + "cacheFile.srl"));
+            cachedResponse = (JSONObject) in.readObject();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return cachedResponse;
+    }
 }

@@ -417,5 +417,8 @@
     <string name="your_microfinance_institutions">Your Microfinance Institutions</string>
     <string name="mentors_international_handle">mentors_international</string>
     <string name="try_again_later_error">There was an error. Please try again later.</string>
+    <string name="phone_number_dialog">Phone Number:</string>
+    <string name="id_dialog">Identification:</string>
+    <string name="about_to_submit_group">You are about to submit a group buy order of</string>
 
 </resources>
