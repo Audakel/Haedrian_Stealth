@@ -15,6 +15,7 @@ import com.haedrian.haedrian.R;
 import com.parse.Parse;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -155,7 +156,7 @@ public class ApplicationController extends Application {
     public static void cacheJSON(JSONObject response, String name) {
         try {
             ObjectOutput out = new ObjectOutputStream(new FileOutputStream(new File(cacheDir, name) + "cacheFile.srl"));
-            out.writeObject(response);
+            out.writeObject(response.toString());
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,11 +167,14 @@ public class ApplicationController extends Application {
         JSONObject cachedResponse = new JSONObject();
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File(cacheDir, name) + "cacheFile.srl"));
-            cachedResponse = (JSONObject) in.readObject();
+            String jsonSerialized = (String) in.readObject();
+            cachedResponse = new JSONObject(jsonSerialized);
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 

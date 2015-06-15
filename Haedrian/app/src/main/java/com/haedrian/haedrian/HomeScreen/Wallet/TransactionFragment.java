@@ -2,6 +2,8 @@ package com.haedrian.haedrian.HomeScreen.Wallet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -78,6 +80,30 @@ public class TransactionFragment extends Fragment {
     }
 
     private void initializeTransactions() {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getNetworkInfo(0);
+
+            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                initializeTransactionsNetwork();
+            }
+            else {
+                netInfo = cm.getNetworkInfo(1);
+
+                if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
+                    initializeTransactionsNetwork();
+                }
+                else {
+                    initializeTransactionsCached();
+                }
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeTransactionsNetwork() {
         final String URL = ApplicationConstants.BASE + "history/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -87,6 +113,7 @@ public class TransactionFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "history: " + response.toString());
+                        ApplicationController.cacheJSON(response, "history");
                         try {
                             if (response.getBoolean("success")) {
                                 int transactionCount = response.getInt("transaction_count");
@@ -95,6 +122,7 @@ public class TransactionFragment extends Fragment {
                                     for (int i = 0; i < transactionArray.length(); i++) {
                                         JSONObject object = transactionArray.getJSONObject(i);
                                         TransactionModel transaction = new TransactionModel();
+                                        transaction.setId(object.getString("id"));
                                         transaction.setStatus(object.getString("status"));
                                         transaction.setFeeAmount(object.getString("fee_amount"));
                                         transaction.setAmount(object.getString("amount"));
@@ -136,6 +164,35 @@ public class TransactionFragment extends Fragment {
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void initializeTransactionsCached() {
+        JSONObject response = ApplicationController.getCachedJSON("history");
+        try {
+            if (response.getBoolean("success")) {
+                int transactionCount = response.getInt("transaction_count");
+                if (transactionCount > 0) {
+                    JSONArray transactionArray = response.getJSONArray("transactions");
+                    for (int i = 0; i < transactionArray.length(); i++) {
+                        JSONObject object = transactionArray.getJSONObject(i);
+                        TransactionModel transaction = new TransactionModel();
+                        transaction.setStatus(object.getString("status"));
+                        transaction.setFeeAmount(object.getString("fee_amount"));
+                        transaction.setAmount(object.getString("amount"));
+                        transaction.setDate(object.getString("date"));
+                        transaction.setEntryType(object.getString("entry_type"));
+                        transaction.setSender(object.getString("original_sender"));
+                        transaction.setTarget(object.getString("original_target"));
+                        transaction.setCurrency(object.getString("currency"));
+
+                        transactions.add(transaction);
+                    }
+                    setView();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setView() {

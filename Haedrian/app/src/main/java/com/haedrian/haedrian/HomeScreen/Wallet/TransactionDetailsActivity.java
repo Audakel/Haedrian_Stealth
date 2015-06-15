@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -12,11 +13,16 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Models.TransactionModel;
 import com.haedrian.haedrian.R;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class TransactionDetailsActivity extends ActionBarActivity {
 
     private TransactionModel transaction;
-    private TextView btcAmount, currencyAmount, fromPerson, toPerson, note, date;
+    private TextView id, btcAmount, currencyAmount, fromPerson, toPerson, note, date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +39,25 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         date = (TextView) findViewById(R.id.date);
         btcAmount = (TextView) findViewById(R.id.btc_amount);
         currencyAmount = (TextView) findViewById(R.id.currency_amount);
+        id = (TextView) findViewById(R.id.transaction_id);
 
         fromPerson = (TextView) findViewById(R.id.from_person);
         toPerson = (TextView) findViewById(R.id.to_person);
         note = (TextView) findViewById(R.id.note);
 
-        String[] dateParts = transaction.getDate().split("T");
-        date.setText(formatDate(dateParts[0]));
+        if (transaction.getDate() != null) {
+            String[] dateParts = transaction.getDate().split("T");
+            Log.v("TEST", "date: " + dateParts[0]);
+            date.setText(formatDate(dateParts[0]));
+        }
+        else {
+            long milli = System.currentTimeMillis();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date tempDate = new Date(milli);
+            String today = sdf.format(tempDate);
+            date.setText(formatDate(today));
+        }
+        id.setText(getString(R.string.transaction_id) + transaction.getId());
         btcAmount.setText(transaction.getAmount());
         if (transaction.getEntryType().equals("incoming")) {
             toPerson.setText(getString(R.string.me));

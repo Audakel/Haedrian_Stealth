@@ -2,6 +2,8 @@ package com.haedrian.haedrian.HomeScreen.Wallet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +72,30 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
     }
 
     private void initializeBuyHistory() {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getNetworkInfo(0);
+
+            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                initializeBuyHistoryNetwork();
+            }
+            else {
+                netInfo = cm.getNetworkInfo(1);
+
+                if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
+                    initializeBuyHistoryNetwork();
+                }
+                else {
+                    initializeBuyHistoryCached();
+                }
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeBuyHistoryNetwork() {
         final String URL = ApplicationConstants.BASE + "buy-history/";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
@@ -79,6 +105,7 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "buy-history: " + response.toString());
+                        ApplicationController.cacheJSON(response, "buy-history");
                         try {
                             if (response.getBoolean("success")) {
                                 int transactionCount = response.getInt("transaction_count");
@@ -129,6 +156,36 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void initializeBuyHistoryCached() {
+        JSONObject response = ApplicationController.getCachedJSON("buy-history");
+        try {
+            if (response.getBoolean("success")) {
+                int transactionCount = response.getInt("transaction_count");
+                if (transactionCount > 0) {
+                    JSONArray transactionArray = response.getJSONArray("transactions");
+                    for (int i = 0; i < transactionArray.length(); i++) {
+                        JSONObject object = transactionArray.getJSONObject(i);
+                        BuyOrderHistoryModel buyOrder = new BuyOrderHistoryModel();
+                        buyOrder.setId(object.getString("id"));
+                        buyOrder.setStatus(object.getString("status"));
+                        buyOrder.setOutletTitle(object.getString("outlet_title"));
+                        buyOrder.setCreatedAt(object.getString("created_at"));
+                        buyOrder.setExchangeRate(object.getString("exchange_rate"));
+                        buyOrder.setInstructions(object.getString("instructions"));
+                        buyOrder.setExpirationTime(object.getString("expiration_time"));
+                        buyOrder.setBtcAmount(object.getString("btc_amount"));
+                        buyOrder.setCurrencyAmount(object.getString("currency_amount"));
+
+                        buyOrders.add(buyOrder);
+                    }
+                    setView();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setView() {

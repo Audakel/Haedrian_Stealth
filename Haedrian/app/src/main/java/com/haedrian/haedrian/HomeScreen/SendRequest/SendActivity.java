@@ -279,11 +279,13 @@ public class SendActivity extends ActionBarActivity implements
 
                             if (response.getBoolean("success")) {
                                 TransactionModel transaction = new TransactionModel();
+                                transaction.setId(response.getString("id"));
                                 transaction.setStatus(response.getString("status"));
                                 transaction.setCurrency(response.getString("currency"));
                                 transaction.setAmount(response.getString("amount"));
                                 transaction.setTarget(response.getString("target"));
                                 transaction.setFeeAmount(response.getString("fee"));
+                                transaction.setEntryType(getString(R.string.outgoing));
 
                                 Intent intent = new Intent(SendActivity.this, TransactionDetailsActivity.class);
                                 intent.putExtra("transaction", transaction);

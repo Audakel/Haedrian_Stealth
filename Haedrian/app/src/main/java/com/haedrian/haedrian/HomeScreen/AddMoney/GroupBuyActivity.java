@@ -58,6 +58,10 @@ public class GroupBuyActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.dialog_loading));
+        progressDialog.show();
+
         groupMemberListView = (ListView) findViewById(R.id.group_members_container);
         submitButton = (Button) findViewById(R.id.submit_button);
 
@@ -73,15 +77,12 @@ public class GroupBuyActivity extends ActionBarActivity {
                 dialog.getConfirmButton().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        progressDialog.show();
                         groupVerify();
                     }
                 });
             }
         });
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.dialog_loading));
-        progressDialog.show();
 
         initializeGroup();
     }
@@ -207,15 +208,18 @@ public class GroupBuyActivity extends ActionBarActivity {
                         Log.v("TEST", ": " + response.toString());
                         try {
                             if (response.getBoolean("success")) {
+                                progressDialog.dismiss();
                                 Intent intent = new Intent(GroupBuyActivity.this, BuyActivity.class);
                                 intent.putExtra("total", getTotal());
                                 startActivity(intent);
                             }
                             else {
+                                progressDialog.dismiss();
                                 Toast.makeText(GroupBuyActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
                             }
                         }
                         catch (JSONException e) {
+                            progressDialog.dismiss();
                             Toast.makeText(GroupBuyActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -223,8 +227,8 @@ public class GroupBuyActivity extends ActionBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Test", "Error: " + error.toString());
                 progressDialog.dismiss();
+                Toast.makeText(GroupBuyActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
             }
 
         }) {

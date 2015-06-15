@@ -7,11 +7,12 @@ import android.os.Parcelable;
  * Created by Logan on 6/3/2015.
  */
 public class TransactionModel implements Parcelable{
-    private String status, feeAmount, amount, date, entryType, sender, target, currency;
+    private String id, status, feeAmount, amount, date, entryType, sender, target, currency;
 
     public TransactionModel() {}
 
     private TransactionModel(Parcel source) {
+        id = source.readString();
         status = source.readString();
         feeAmount = source.readString();
         amount = source.readString();
@@ -21,6 +22,10 @@ public class TransactionModel implements Parcelable{
         target = source.readString();
         currency = source.readString();
     }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public String getStatus() {
         return status;
@@ -89,6 +94,7 @@ public class TransactionModel implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(status);
         dest.writeString(feeAmount);
         dest.writeString(amount);

@@ -420,5 +420,7 @@
     <string name="phone_number_dialog">Phone Number:</string>
     <string name="id_dialog">Identification:</string>
     <string name="about_to_submit_group">You are about to submit a group buy order of</string>
+    <string name="transaction_id">ID #</string>
+    <string name="outgoing">outgoing</string>
 
 </resources>

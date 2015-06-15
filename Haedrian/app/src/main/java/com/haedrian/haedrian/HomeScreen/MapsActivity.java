@@ -196,6 +196,7 @@ public class MapsActivity extends ActionBarActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progressDialog.dismiss();
                         }
 
 
@@ -205,6 +206,7 @@ public class MapsActivity extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Test", "Error: " + error.toString());
+                progressDialog.dismiss();
             }
 
         }) {
@@ -243,7 +245,7 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     public void getOutlets(ArrayList<String> tempOutlets, final int locationPosition) {
-        progressDialog.hide();
+        progressDialog.dismiss();
         ArrayAdapter<String> outletAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tempOutlets);
         outletSpinner.setAdapter(outletAdapter);
         outletSpinner.setVisibility(View.VISIBLE);
@@ -309,6 +311,7 @@ public class MapsActivity extends ActionBarActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progressDialog.dismiss();
                         }
                     }
                 }
@@ -316,6 +319,7 @@ public class MapsActivity extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.v("TEST", volleyError.toString());
+                progressDialog.dismiss();
             }
         }) {
             @Override

@@ -116,13 +116,13 @@ public class BalanceFragment extends Fragment {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
-            if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
+            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
                 initializeWalletNetwork();
             }
             else {
                 netInfo = cm.getNetworkInfo(1);
 
-                if(netInfo != null && netInfo.getState()== NetworkInfo.State.CONNECTED){
+                if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
                     initializeWalletNetwork();
                 }
                 else {
@@ -133,10 +133,6 @@ public class BalanceFragment extends Fragment {
         catch(Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void initializeWalletCached() {
-        JSONObject response = ApplicationController.getCachedJSON("wallet-info");
     }
 
     private void initializeWalletNetwork() {
@@ -151,7 +147,7 @@ public class BalanceFragment extends Fragment {
                         Log.v("TEST", "Wallet-info: " + response.toString());
                         ApplicationController.cacheJSON(response, "wallet-info");
                         try {
-                            setBalance(response.getJSONObject("bitcoin").getString("balance"));
+                            setBalanceNetwork(response.getJSONObject("bitcoin").getString("balance"));
                             initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
 
                         } catch (JSONException e) {
@@ -187,18 +183,18 @@ public class BalanceFragment extends Fragment {
 
 
 
-    public void setBalance(String response) {
+    public void setBalanceNetwork(String response) {
 
         float balance = Float.parseFloat(response);
 
 //        balance = (balance / (float) 100000000);
 
-        getConvertedRate(String.valueOf(balance));
+        getConvertedRateNetwork(String.valueOf(balance));
 
         bitcoinAmount.setText(String.valueOf(balance));
     }
 
-    public void getConvertedRate(String bitcoinAmount) {
+    public void getConvertedRateNetwork(String bitcoinAmount) {
 
         final String amount = bitcoinAmount;
         if (Locale.getDefault().equals(Locale.US)) {
@@ -208,6 +204,7 @@ public class BalanceFragment extends Fragment {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            ApplicationController.cacheJSON(response, "ticker");
                             try {
                                 JSONObject currentCurrency = response.getJSONObject("USD");
                                 int last = currentCurrency.getInt("last");
@@ -238,6 +235,7 @@ public class BalanceFragment extends Fragment {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.v("TEST", "exchange-rate: " + response.toString());
+                            ApplicationController.cacheJSON(response, "ticker");
                             try {
                                 JSONObject currentCurrency = response.getJSONObject("market");
                                 int last = currentCurrency.getInt("ask");
@@ -273,6 +271,45 @@ public class BalanceFragment extends Fragment {
             // Adds request to the request queue
             ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
         }
+    }
+
+    private void initializeWalletCached() {
+        JSONObject response = ApplicationController.getCachedJSON("wallet-info");
+        Log.v("TEST", "cached wallet-info: " + response.toString());
+        try {
+            setBalanceCached(response.getJSONObject("bitcoin").getString("balance"));
+            initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void setBalanceCached(String response) {
+        float balance = Float.parseFloat(response);
+        getConvertedRateCached(String.valueOf(balance));
+        bitcoinAmount.setText(String.valueOf(balance));
+    }
+
+    public void getConvertedRateCached(String bitcoinAmount) {
+        JSONObject response = ApplicationController.getCachedJSON("ticker");
+        Log.v("TEST", "cached ticker: " +  response.toString());
+        JSONObject currentCurrency = null;
+        int last = 0;
+        try {
+            if (Locale.getDefault().equals(Locale.US)) {
+                currentCurrency = response.getJSONObject("USD");
+                last = currentCurrency.getInt("last");
+            }
+            else if (Locale.getDefault().getLanguage().equals("fil")) {
+                currentCurrency = response.getJSONObject("market");
+                last = currentCurrency.getInt("ask");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        setConvertedRate(last, bitcoinAmount);
     }
 
     public void setConvertedRate(int rate, String bitcoinAmount) {
