@@ -36,9 +36,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -117,13 +119,28 @@ public class BalanceFragment extends Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                initializeWalletNetwork();
+
+                // Check if a request was made less than a minute ago
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                    initializeWalletCached();
+                }
+                else {
+                    initializeWalletNetwork();
+                }
             }
             else {
                 netInfo = cm.getNetworkInfo(1);
 
                 if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
-                    initializeWalletNetwork();
+                    // Check if a request was made less than a minute ago
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                    if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                        initializeWalletCached();
+                    }
+                    else {
+                        initializeWalletNetwork();
+                    }
                 }
                 else {
                     initializeWalletCached();
@@ -146,6 +163,7 @@ public class BalanceFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "Wallet-info: " + response.toString());
                         ApplicationController.cacheJSON(response, "wallet-info");
+                        ApplicationController.setBalanceTimestamp(System.currentTimeMillis());
                         try {
                             setBalanceNetwork(response.getJSONObject("bitcoin").getString("balance"));
                             initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));

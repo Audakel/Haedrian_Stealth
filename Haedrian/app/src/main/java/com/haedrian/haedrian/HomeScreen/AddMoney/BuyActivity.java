@@ -69,6 +69,8 @@ public class BuyActivity extends ActionBarActivity {
     private Double haedrianFee = 0.00;
     private Double paymentMethodFee = 0.00;
     private Double total = 0.00;
+    private String groupTotal = "";
+    private String groupRepaymentId = "";
 
     private ProgressDialog progressDialog;
 
@@ -222,18 +224,8 @@ public class BuyActivity extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            currencyEditText.setText(extras.getString("total"));
-            try {
-                BigDecimal buyRateDecimal = new BigDecimal(buyRate);
-                BigDecimal amount = new BigDecimal(currencyEditText.getText().toString());
-                BigDecimal newAmount = amount.divide(buyRateDecimal, 6, RoundingMode.HALF_UP);
-                if (currencyEditText.isFocused()) {
-                    bitcoinEditText.setText(String.valueOf(newAmount));
-                }
-                setSubtotal(currencyEditText.getText().toString());
-            } catch (Exception e) {
-
-            }
+            groupTotal = extras.getString("total");
+            groupRepaymentId = extras.getString("group_repayment_id");
         }
 
     }
@@ -416,6 +408,7 @@ public class BuyActivity extends ActionBarActivity {
                                 JSONObject currentCurrency = response.getJSONObject("USD");
                                 amountCurrency.setText(currentCurrency.getString("buy"));
                                 buyRate = currentCurrency.getString("buy");
+                                setDisplay();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -443,7 +436,7 @@ public class BuyActivity extends ActionBarActivity {
                                 JSONObject currentCurrency = response.getJSONObject("market");
                                 amountCurrency.setText(currentCurrency.getString("ask"));
                                 buyRate = currentCurrency.getString("ask");
-
+                                setDisplay();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -473,6 +466,27 @@ public class BuyActivity extends ActionBarActivity {
 
             // Adds request to the request queue
             ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        }
+    }
+
+    private void setDisplay() {
+        if ( ! groupTotal.equals("")) {
+            // This makes the edit texts not editable so that they don't set the group amount and then change the buy order
+            currencyEditText.setKeyListener(null);
+            currencyEditText.setFocusable(false);
+            bitcoinEditText.setKeyListener(null);
+            bitcoinEditText.setFocusable(false);
+
+            currencyEditText.setText(groupTotal);
+            try {
+                BigDecimal buyRateDecimal = new BigDecimal(buyRate);
+                BigDecimal amount = new BigDecimal(currencyEditText.getText().toString());
+                BigDecimal newAmount = amount.divide(buyRateDecimal, 6, RoundingMode.HALF_UP);
+                bitcoinEditText.setText(String.valueOf(newAmount));
+                setSubtotal(currencyEditText.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -510,9 +524,12 @@ public class BuyActivity extends ActionBarActivity {
         JSONObject body = new JSONObject();
         try {
             body.put("currency", "PHP");
-            body.put("currency_amount", currencyEditText.getText().toString());
+            body.put("amount_local", currencyEditText.getText().toString());
             body.put("payment_method", outletId);
             body.put("target_account_id", "");
+            if ( ! groupRepaymentId.equals("")) {
+                body.put("group_repayment_id", groupRepaymentId);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -538,12 +555,14 @@ public class BuyActivity extends ActionBarActivity {
                                 buyOrder.setBtcAmount(response.getJSONObject("order").getString("btc_amount"));
                                 buyOrder.setCurrencyAmount(response.getJSONObject("order").getString("currency_amount"));
                                 buyOrder.setPaymentMethodFee(paymentMethodFee.toString());
+                                String id = response.getJSONObject("order").getString("id");
 
                                 progressDialog.hide();
 
 //                                FlurryAgent.logEvent("User selected this deposit option: " + outletLocations.get(outletSpinner.getSelectedItemPosition() - 1));
                                 Intent intent = new Intent(BuyActivity.this, OrderSummaryActivity.class);
                                 intent.putExtra("buy_order", buyOrder);
+                                intent.putExtra("id", id);
                                 startActivity(intent);
                             }
                             else {

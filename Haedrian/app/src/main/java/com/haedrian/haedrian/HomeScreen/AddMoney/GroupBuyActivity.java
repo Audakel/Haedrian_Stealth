@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +46,10 @@ public class GroupBuyActivity extends ActionBarActivity {
     private ArrayList<UserModel> groupMembers;
     private ListView groupMemberListView;
     private Button submitButton;
+    private TextView officeNameTV;
+    private LinearLayout officeContainer;
 
-    private String groupId;
+    private String groupId, officeName;
 
     private ProgressDialog progressDialog;
 
@@ -64,6 +67,8 @@ public class GroupBuyActivity extends ActionBarActivity {
 
         groupMemberListView = (ListView) findViewById(R.id.group_members_container);
         submitButton = (Button) findViewById(R.id.submit_button);
+        officeNameTV = (TextView) findViewById(R.id.office_name);
+        officeContainer = (LinearLayout) findViewById(R.id.office_container);
 
         groupMembers = new ArrayList<>();
 
@@ -127,19 +132,23 @@ public class GroupBuyActivity extends ActionBarActivity {
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", ": " + response.toString());
                         try {
-                            JSONArray array = response.getJSONArray("group_members");
-                            groupId = response.getString("group_id");
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                UserModel user = new UserModel();
-                                user.setId(object.getString("id"));
-                                user.setFirstName(object.getString("first_name"));
-                                user.setLastName(object.getString("last_name"));
-                                user.setPhoneNumber(object.getString("phone"));
+                            if (response.getBoolean("success")) {
+                                JSONArray array = response.getJSONArray("group_members");
+                                groupId = response.getString("group_id");
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject object = array.getJSONObject(i);
+                                    UserModel user = new UserModel();
+                                    user.setId(object.getString("mifos_id"));
+                                    user.setFirstName(object.getString("first_name"));
+                                    user.setLastName(object.getString("last_name"));
+                                    user.setPhoneNumber(object.getString("phone"));
 
-                                groupMembers.add(user);
+                                    officeName = response.getString("office");
+
+                                    groupMembers.add(user);
+                                }
+                                setView();
                             }
-                            setView();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -173,6 +182,12 @@ public class GroupBuyActivity extends ActionBarActivity {
     }
 
     private void setView() {
+
+        if (officeName != null) {
+            officeContainer.setVisibility(View.VISIBLE);
+            officeNameTV.setText(officeName);
+        }
+
         adapter = new GroupMemberListAdapter(this, R.layout.row_group_member, groupMembers);
         groupMemberListView.setAdapter(adapter);
         progressDialog.dismiss();
@@ -208,9 +223,13 @@ public class GroupBuyActivity extends ActionBarActivity {
                         Log.v("TEST", ": " + response.toString());
                         try {
                             if (response.getBoolean("success")) {
+
+                                String repaymentId = response.getString("group_repayment_id");
+
                                 progressDialog.dismiss();
                                 Intent intent = new Intent(GroupBuyActivity.this, BuyActivity.class);
                                 intent.putExtra("total", getTotal());
+                                intent.putExtra("group_repayment_id", repaymentId);
                                 startActivity(intent);
                             }
                             else {

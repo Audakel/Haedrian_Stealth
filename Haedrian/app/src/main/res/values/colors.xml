@@ -26,13 +26,17 @@
     <color name="myGrey">#7E7E7E</color>
     <color name="grey">#7E7E7E</color>
 
-    <color name="turquoise">#00BE90</color>
-    <color name="pink">#F05282</color>
+    <!--<color name="turquoise">#00BE90</color>-->
+    <color name="turquoise">#90CAF9</color>
+    <!--<color name="pink">#F05282</color>-->
+    <color name="pink">#3F51B5</color>
     <color name="lightgrey">#E5E6E1</color>
     <color name="yellow">#FEBA4D</color>
     <color name="blue">#4183D1</color>
+    <color name="action_bar_blue">#3F51B5</color>
     <color name="light_blue">#644183D1</color>
-    <color name="purple">#7759B3</color>
+    <!--<color name="purple">#7759B3</color>-->
+    <color name="purple">#3F51B5</color>
     <color name="black">#000000</color>
 
     <color name="error_border">#ebccd1</color>
@@ -55,6 +59,7 @@
     <color name="viewfinder_mask">#60000000</color>
     <color name="transparent">#12000000</color>
     <color name="holo_blue">#FF33B5E5</color>
+
 
 
 </resources>

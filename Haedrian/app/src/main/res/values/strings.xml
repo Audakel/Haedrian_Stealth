@@ -49,7 +49,7 @@
     <string name="btc">BTC</string>
     <string name="currency_code">USD</string>
     <string name="fake_converted_amount">0.00</string>
-    <string name="title_activity_buy">Buy Bitcoin</string>
+    <string name="title_activity_buy">Add Money</string>
     <string name="title_activity_send">Send Money</string>
     <string name="my_people">My People:</string>
     <string name="personal">Personal</string>
@@ -244,7 +244,7 @@
     <string name="title_activity_existing_credit_score">Credit Score</string>
     <string name="title_activity_check_for_credit_score">Credit Score</string>
     <string name="no_transaction">You have not had any transactions yet!</string>
-    <string name="title_activity_maps">Buy/Sell Bitcoin</string>
+    <string name="title_activity_maps">Deposit Locations</string>
     <string name="buy_sell">Buy/Sell Bitcoin</string>
     <string name="find_a_location">Pick a deposit bank to see locations near you!</string>
     <string name="from_to">To:</string>
@@ -272,7 +272,7 @@
     <string name="bitcon_map">Bitcoin Map</string>
     <string name="add_money">Add Money</string>
     <string name="title_activity_cash_in">CashInActivity</string>
-    <string name="buy_amount">Buy Amount</string>
+    <string name="buy_amount">Amount to Add</string>
     <string name="usd">USD</string>
     <string name="payment_method">Payment Method</string>
     <string name="subtotal">Subtotal:</string>
@@ -290,10 +290,11 @@
     <string name="order_summary">Order Summary</string>
     <string name="about_to_buy">You are about to buy</string>
     <string name="dummy_transaction_to">Mentors International</string>
-    <string name="deposit_locations">Money Deposit Locations</string>
+    <string name="deposit_locations">Deposit Locations</string>
     <string name="title_activity_order_summary">Order Summary</string>
     <string name="buy_order">Buy Order #</string>
     <string name="status">Status</string>
+    <string name="status_2">Status:</string>
     <string name="dummy_status">Pending Payment</string>
     <string name="payment_instructions">Payment Instructions</string>
     <string name="mark_as_paid">Mark As Paid</string>
@@ -405,11 +406,11 @@
     <string name="none">None</string>
     <string name="mentors_international">Mentors International</string>
     <string name="no_mfi_id">Please enter a microfinance institution ID</string>
-    <string name="title_activity_buy_options">Buy Options</string>
-    <string name="individual">As Individual</string>
-    <string name="group">As Group</string>
+    <string name="title_activity_buy_options">Add Options</string>
+    <string name="individual">Individual</string>
+    <string name="group">Group</string>
     <string name="how_to_add">How would you like to add money to your wallet?</string>
-    <string name="title_activity_group_buy">GroupBuyActivity</string>
+    <string name="title_activity_group_buy">Group Buy</string>
     <string name="group_member">Group Member</string>
     <string name="dummy_name">Jorge</string>
     <string name="id">ID</string>
@@ -422,5 +423,13 @@
     <string name="about_to_submit_group">You are about to submit a group buy order of</string>
     <string name="transaction_id">ID #</string>
     <string name="outgoing">outgoing</string>
+    <string name="wallet">Wallet</string>
+    <string name="locations">Locations</string>
+    <string name="things_to_do">Things To Do</string>
+    <string name="incoming">Incoming</string>
+    <string name="deposit_method">Deposit Method</string>
+    <string name="outgoing_funds">Outgoing Funds</string>
+    <string name="incoming_funds">Incoming Funds</string>
+    <string name="group_office">Office</string>
 
 </resources>

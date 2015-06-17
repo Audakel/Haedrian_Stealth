@@ -149,7 +149,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/payment_method"
+            android:text="@string/deposit_method"
             android:textColor="@color/blue"
             android:textSize="20sp"/>
 
@@ -484,7 +484,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/round_blue"
-        android:text="@string/buy_bitcoin"
+        android:text="@string/submit"
         android:textColor="@color/white"/>
 
 

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.sql.Timestamp;
 import java.util.Locale;
 
 import javax.crypto.Cipher;
@@ -44,6 +45,9 @@ public class ApplicationController extends Application {
     private boolean loggedIn;
     private static String token = "";
     private static File cacheDir;
+    private static long balanceTimestamp = 0L;
+    private static long buySellTimestamp = 0L;
+    private static long transactionTimestamp = 0L;
 
     /**
      * @return ApplicationController singleton instance
@@ -180,4 +184,29 @@ public class ApplicationController extends Application {
 
         return cachedResponse;
     }
+
+    public static long getBalanceTimestamp() {
+        return balanceTimestamp;
+    }
+
+    public static void setBalanceTimestamp(long balanceTimestampTemp) {
+        balanceTimestamp = balanceTimestampTemp;
+    }
+
+    public static long getBuySellTimestamp() {
+        return buySellTimestamp;
+    }
+
+    public static void setBuySellTimestamp(long buySellTimestampTemp) {
+        buySellTimestamp = buySellTimestampTemp;
+    }
+
+    public static long getTransactionTimestamp() {
+        return transactionTimestamp;
+    }
+
+    public static void setTransactionTimestamp(long transactionTimestampTemp) {
+        transactionTimestamp = transactionTimestampTemp;
+    }
+
 }

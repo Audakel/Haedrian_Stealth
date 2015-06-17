@@ -372,6 +372,8 @@ public class SignupActivity extends ActionBarActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(SignupActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -379,7 +381,9 @@ public class SignupActivity extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 //                Log.v("TEST2", error.getMessage());
-//                Toast.makeText(SignupActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
             }
         });
 

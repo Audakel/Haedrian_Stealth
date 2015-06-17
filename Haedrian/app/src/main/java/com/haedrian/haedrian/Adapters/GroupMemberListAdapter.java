@@ -107,6 +107,9 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
                 if (s.length() > 0) {
                     groupMembers.get(position).setAmount(Long.parseLong(s.toString()));
                 }
+                else {
+                    groupMembers.get(position).setAmount(0L);
+                }
             }
         });
 

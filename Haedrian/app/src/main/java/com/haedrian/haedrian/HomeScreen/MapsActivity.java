@@ -275,9 +275,12 @@ public class MapsActivity extends ActionBarActivity {
         if (outletDictionary.containsKey(outlet)) {
             query = outletDictionary.get(outlet);
         }
+        else {
+            query = outlet;
+        }
 
         try {
-            query = URLEncoder.encode(outlet, "UTF-8");
+            query = URLEncoder.encode(query, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -301,7 +304,7 @@ public class MapsActivity extends ActionBarActivity {
                                 LatLng latLng = new LatLng(lat, lng);
 
                                 String title = object.getString("name");
-                                String description = object.getString("formatted_address");
+                                String description = object.getString("vicinity");
 
                                 latLngs.add(latLng);
                                 titles.add(title);
@@ -455,12 +458,12 @@ public class MapsActivity extends ActionBarActivity {
         outletDictionary.put("Dragonpay Rcbx Deposit", "rcbx");
         outletDictionary.put("Securitybank Deposit", "Security Bank");
         outletDictionary.put("Union Deposit", "Union Bank");
-        outletDictionary.put("Bpi Deposit", "bpi");
+        outletDictionary.put("Bpi Deposit", "bpi deposit");
         outletDictionary.put("Dragonpay Mbtx Deposit", "Metrobank");
-        outletDictionary.put("Bdo Deposit", "bdo");
+        outletDictionary.put("Bdo Deposit", "banco de oro");
         outletDictionary.put("Dragonpay Cbcx Deposit", "cbcx");
         outletDictionary.put("Bdo 24 Hour Atm Deposit", "bdo atm");
-        outletDictionary.put("Bdoatm Deposit", "bdo atm");
+        outletDictionary.put("Bdo Atm Deposit", "bdo atm");
         outletDictionary.put("M Lhuillier Epay", "m lhuillier");
         outletDictionary.put("Lbc Bills Xpress (Via Dragonpay)", "lbc");
         outletDictionary.put("Mlhuillier Deposit", "m lhuillier");

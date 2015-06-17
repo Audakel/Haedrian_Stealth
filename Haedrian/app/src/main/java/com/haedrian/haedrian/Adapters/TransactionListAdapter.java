@@ -61,13 +61,13 @@ public class TransactionListAdapter extends ArrayAdapter {
         String transactionType = transactions.get(position).getEntryType();
 
         if (transactionType.equals("outgoing")) {
-            holder.transactionType.setText(context.getResources().getString(R.string.sent_bitcoin));
+            holder.transactionType.setText(context.getResources().getString(R.string.outgoing_funds));
             holder.imageType.setImageResource(R.drawable.send);
             holder.toFrom.setText(context.getResources().getString(R.string.to));
             holder.details.setText(transactions.get(position).getTarget());
         }
         else if (transactionType.equals("incoming")) {
-            holder.transactionType.setText(context.getResources().getString(R.string.received_bitcoin));
+            holder.transactionType.setText(context.getResources().getString(R.string.incoming_funds));
             holder.imageType.setImageResource(R.drawable.receive);
             holder.toFrom.setText(context.getResources().getString(R.string.from));
             String sender = transactions.get(position).getSender();

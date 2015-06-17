@@ -154,8 +154,26 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "buy-verify: " + response.toString());
-                        progressDialog.dismiss();
-
+                        String status = null;
+                        try {
+                            if (response.getBoolean("success")) {
+                                status = response.getJSONObject("order").getString("status");
+                                if (status.equals("paid_pending_confirmation") || status.equals("escrow_expired")) {
+                                    markAsPaidButton.setVisibility(View.GONE);
+                                }
+                                String buyOrderStatus = "";
+                                String[] parts = status.split("_");
+                                for (int i = 0; i < parts.length; i++) {
+                                    buyOrderStatus += parts[i].toUpperCase() + " ";
+                                }
+                                statusTV.setText(buyOrderStatus);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        finally {
+                            progressDialog.dismiss();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
@@ -163,6 +181,8 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Test", "Error: " + error.toString());
                 progressDialog.dismiss();
+
+
                 Toast.makeText(BuyOrderVerifyActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT);
             }
 

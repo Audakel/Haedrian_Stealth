@@ -85,13 +85,25 @@ public class TransactionFragment extends Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                initializeTransactionsNetwork();
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                    initializeTransactionsCached();
+                }
+                else {
+                    initializeTransactionsNetwork();
+                }
             }
             else {
                 netInfo = cm.getNetworkInfo(1);
 
                 if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
-                    initializeTransactionsNetwork();
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                    if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                        initializeTransactionsCached();
+                    }
+                    else {
+                        initializeTransactionsNetwork();
+                    }
                 }
                 else {
                     initializeTransactionsCached();
@@ -114,6 +126,7 @@ public class TransactionFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "history: " + response.toString());
                         ApplicationController.cacheJSON(response, "history");
+                        ApplicationController.setTransactionTimestamp(System.currentTimeMillis());
                         try {
                             if (response.getBoolean("success")) {
                                 int transactionCount = response.getInt("transaction_count");
@@ -176,6 +189,7 @@ public class TransactionFragment extends Fragment {
                     for (int i = 0; i < transactionArray.length(); i++) {
                         JSONObject object = transactionArray.getJSONObject(i);
                         TransactionModel transaction = new TransactionModel();
+                        transaction.setId(object.getString("id"));
                         transaction.setStatus(object.getString("status"));
                         transaction.setFeeAmount(object.getString("fee_amount"));
                         transaction.setAmount(object.getString("amount"));

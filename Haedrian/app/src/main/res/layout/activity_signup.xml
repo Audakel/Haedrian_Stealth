@@ -42,7 +42,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/username"
                         android:background="@drawable/bg_edittext"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:singleLine="true"/>
                 </LinearLayout>
 
                 <LinearLayout style="@style/fieldContainer">
@@ -58,7 +59,8 @@
                         android:hint="@string/email_required"
                         android:inputType="textEmailAddress"
                         android:background="@drawable/bg_edittext"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:singleLine="true"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -130,7 +132,8 @@
                         android:layout_weight="77.70"
                         android:hint="@string/phone_number"
                         android:background="@drawable/bg_edittext"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:singleLine="true"/>
 
                 </LinearLayout>
 
@@ -150,7 +153,8 @@
                     android:inputType="textPassword"
                     android:hint="@string/password"
                     android:background="@drawable/bg_edittext"
-                    android:maxLines="1"/>
+                    android:maxLines="1"
+                    android:singleLine="true"/>
 
                 <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
@@ -172,7 +176,8 @@
                     android:inputType="textPassword"
                     android:hint="@string/reenter_password"
                     android:background="@drawable/bg_edittext"
-                    android:maxLines="1"/>
+                    android:maxLines="1"
+                    android:singleLine="true"/>
             </LinearLayout>
 
             <LinearLayout
@@ -206,7 +211,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/microfinance_id"
                     android:background="@drawable/bg_edittext"
-                    android:maxLines="1"/>
+                    android:maxLines="1"
+                    android:singleLine="true"/>
 
             </LinearLayout>
 

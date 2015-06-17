@@ -25,7 +25,7 @@ import java.util.Locale;
 public class OrderSummaryActivity extends ActionBarActivity {
 
     private Button paymentInstructionsButton, markAsPaidButton, cancelButton;
-    private TextView buyAmountTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
+    private TextView buyAmountTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV, buyOrderId;
 
     private Double buyAmount = 0.00;
     private Double haedrianFee = 0.00;
@@ -49,6 +49,7 @@ public class OrderSummaryActivity extends ActionBarActivity {
         haedrianFeeTV = (TextView) findViewById(R.id.haedrian_fee);
         paymentMethodFeeTV = (TextView) findViewById(R.id.payment_method_fee);
         totalDueTV = (TextView) findViewById(R.id.total_due);
+        buyOrderId = (TextView) findViewById(R.id.buy_order_id);
 
         Bundle extras = getIntent().getExtras();
 
@@ -58,7 +59,8 @@ public class OrderSummaryActivity extends ActionBarActivity {
             paymentMethodFee = Double.parseDouble(buyOrder.getPaymentMethodFee());
             buyAmount = total - paymentMethodFee;
             instructions = buyOrder.getInstructions();
-            Log.v("TEST", "instructions: " + instructions);
+            String id = getString(R.string.buy_order) + extras.getString("id");
+            buyOrderId.setText(id);
         }
 
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
@@ -100,7 +102,7 @@ public class OrderSummaryActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            onBackPressed();
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 

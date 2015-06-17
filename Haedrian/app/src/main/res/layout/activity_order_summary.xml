@@ -16,7 +16,7 @@
         android:background="@drawable/round_white">
 
         <TextView
-            android:id="@+id/buy_order_title"
+            android:id="@+id/buy_order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -175,7 +175,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/mark_in_transaction"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/wallet_activity_link"
@@ -185,22 +186,11 @@
                     android:text="@string/wallet_activity"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
+                    android:textSize="16sp"
                     android:clickable="true"
                     android:onClick="onClick"/>
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/mark_as_paid_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_green"
-                android:text="@string/mark_as_paid"
-                android:textColor="@color/white"
-                android:onClick="onClick"
-                android:visibility="gone"/>
 
 
         </LinearLayout>

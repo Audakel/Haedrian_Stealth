@@ -77,13 +77,25 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                initializeBuyHistoryNetwork();
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                    initializeBuyHistoryCached();
+                }
+                else {
+                    initializeBuyHistoryNetwork();
+                }
             }
             else {
                 netInfo = cm.getNetworkInfo(1);
 
                 if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
-                    initializeBuyHistoryNetwork();
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                    if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                        initializeBuyHistoryCached();
+                    }
+                    else {
+                        initializeBuyHistoryNetwork();
+                    }
                 }
                 else {
                     initializeBuyHistoryCached();
@@ -106,6 +118,7 @@ public class BuySellFragment extends android.support.v4.app.Fragment {
                     public void onResponse(JSONObject response) {
                         Log.v("TEST", "buy-history: " + response.toString());
                         ApplicationController.cacheJSON(response, "buy-history");
+                        ApplicationController.setTransactionTimestamp(System.currentTimeMillis());
                         try {
                             if (response.getBoolean("success")) {
                                 int transactionCount = response.getInt("transaction_count");

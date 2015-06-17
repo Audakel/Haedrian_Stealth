@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ public class SettingsActivity extends ActionBarActivity {
 
     private ProgressDialog progressDialog;
     private TextView nameTV, usernameTV, emailTV;
+    private LinearLayout nameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class SettingsActivity extends ActionBarActivity {
         nameTV = (TextView) findViewById(R.id.name);
         usernameTV = (TextView) findViewById(R.id.username);
         emailTV = (TextView) findViewById(R.id.email);
+
+        nameLayout = (LinearLayout) findViewById(R.id.name_container);
 
         getUserInformation();
 
@@ -147,7 +151,12 @@ public class SettingsActivity extends ActionBarActivity {
                             String username = response.getString("user");
                             String email = response.getString("email");
 
-                            nameTV.setText(name);
+                            if (name != " " && name != "") {
+                                nameTV.setText(name);
+                            }
+                            else {
+                                nameLayout.setVisibility(View.GONE);
+                            }
                             usernameTV.setText(username);
                             emailTV.setText(email);
 

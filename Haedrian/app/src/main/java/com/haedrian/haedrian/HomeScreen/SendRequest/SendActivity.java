@@ -256,11 +256,20 @@ public class SendActivity extends ActionBarActivity implements
     public void sendMoney() {
         String url = ApplicationConstants.BASE + "send/";
 
+        String currency = "";
+        if (Locale.getDefault().equals(Locale.US)) {
+            currency = "USD";
+        }
+        else if (Locale.getDefault().getLanguage().equals("fil")) {
+            currency = "PHP";
+        }
+
         JSONObject body = new JSONObject();
         try {
             body.put("receiver", toET.getText().toString());
-            body.put("amount_local", "0.0001");
-            body.put("target_address", "12UkkQ58ksRXHzHdNzhcy4e6f8JwWGTG3H");
+            body.put("amount_local", sendAmount);
+            body.put("currency", currency);
+//            body.put("target_address", "");
             body.put("note", noteET.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -292,8 +301,13 @@ public class SendActivity extends ActionBarActivity implements
                                 startActivity(intent);
                             }
                             else {
-                                JSONArray errors = response.getJSONObject("error").getJSONArray("non_field_errors");
-                                Toast.makeText(SendActivity.this, errors.get(0).toString(), Toast.LENGTH_SHORT).show();
+                                JSONArray errors = response.getJSONArray("error");
+                                String error = "";
+                                for (int i = 0; i < errors.length(); i++) {
+                                    error = error + " " + errors.get(i);
+                                }
+
+                                Toast.makeText(SendActivity.this, error, Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -306,6 +320,7 @@ public class SendActivity extends ActionBarActivity implements
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 Log.v("TEST", "Error: " + error.getMessage());
+                Toast.makeText(SendActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

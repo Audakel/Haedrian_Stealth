@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -38,7 +39,8 @@ public class BuyInstructionsDialog extends Dialog {
 
         instructionsTV = (TextView) findViewById(R.id.instructions);
 
-        instructionsTV.setText(Html.fromHtml(instructions));
+        Spanned span = Html.fromHtml(instructions);
+        instructionsTV.setText(span);
 
         closeButton = (Button) findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
