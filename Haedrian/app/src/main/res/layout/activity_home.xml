@@ -6,21 +6,21 @@
     <!--&lt;!&ndash; The main content view &ndash;&gt;-->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@color/lightgrey"
-                  android:orientation="vertical"
-                  android:paddingBottom="@dimen/activity_vertical_margin"
-                  android:paddingLeft="@dimen/activity_horizontal_margin"
-                  android:paddingRight="@dimen/activity_horizontal_margin"
-                  android:paddingTop="@dimen/activity_vertical_margin"
-                  tools:context="com.haedrian.haedrian.HomeScreen.HomeActivity">
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@drawable/concrete_repeating"
+          android:orientation="vertical"
+          android:paddingBottom="@dimen/activity_vertical_margin"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:paddingTop="@dimen/activity_vertical_margin"
+          tools:context="com.haedrian.haedrian.HomeScreen.HomeActivity">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_alignParentTop="true"
@@ -30,13 +30,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/wallet"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:clickable="true"
                     android:onClick="onClick"
                     android:orientation="vertical">
@@ -53,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="@string/wallet"
+                        android:text="@string/my_wallet"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
 
@@ -67,7 +69,8 @@
                 <LinearLayout
                     android:id="@+id/buy"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:onClick="onClick"
@@ -78,7 +81,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/bitcoin"/>
+                        android:background="@drawable/deposit"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -101,12 +104,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/send_request"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:onClick="onClick"
@@ -117,13 +122,14 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/sendgrey"/>
+                        android:background="@drawable/money"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="@string/send_money"
+                        android:text="@string/repay_loan"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
 
@@ -137,7 +143,8 @@
                 <LinearLayout
                     android:id="@+id/bitcoin_map"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:onClick="onClick"
@@ -148,11 +155,12 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/mapgrey"/>
+                        android:background="@drawable/map"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="@string/locations"
                         android:textSize="20sp"
@@ -323,6 +331,6 @@
         <!--android:layout_gravity="start"-->
         <!--android:background="@color/white"-->
         <!--android:choiceMode="singleChoice"-->
-        <!--android:divider="@color/blue"-->
+        <!--android:divider="@color/primary"-->
         <!--android:dividerHeight="0dp"/>-->
 <!--</android.support.v4.widget.DrawerLayout>-->

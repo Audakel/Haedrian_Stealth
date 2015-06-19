@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.Contacts;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.R;
 
 
-public class ContactsActivity extends ActionBarActivity implements
+public class ContactsActivity extends Activity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     String upcCode = "";
@@ -41,7 +42,7 @@ public class ContactsActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_contacts);
 
         // Set up ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         contactsET = (EditText) findViewById(R.id.contact_edit_text);
         resultsLinearLayout = (LinearLayout) findViewById(R.id.results_linear_layout);

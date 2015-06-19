@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.UserInteraction;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ import static com.haedrian.haedrian.R.array;
 import static com.haedrian.haedrian.R.layout;
 
 
-public class CurrencyInfoActivity extends ActionBarActivity {
+public class CurrencyInfoActivity extends Activity {
     private static final String TAG = CurrencyInfoActivity.class.getSimpleName();
     CurrencyAdapter adapter;
     private List<CurrencyModel> currencies = new ArrayList<CurrencyModel>();
@@ -43,7 +44,7 @@ public class CurrencyInfoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_currency_info);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         listView = (ListView) findViewById(R.id.currencyListView);

@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.UserInteraction;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -12,7 +13,7 @@ import com.haedrian.haedrian.R;
 //import com.facebook.Session;
 
 
-public class FacebookLoginActivity extends ActionBarActivity {
+public class FacebookLoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

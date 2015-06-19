@@ -1,9 +1,9 @@
 package com.haedrian.haedrian.UserInteraction;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,13 +32,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class SignupActivity extends ActionBarActivity {
+public class SignupActivity extends Activity {
 
     private EditText emailET, usernameET, phoneNumberET, microfinanceIdET, passwordET, reenterPasswordET;
     private Spinner countrySpinner, microfinanceSpinner;
@@ -61,7 +58,7 @@ public class SignupActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
@@ -408,7 +405,7 @@ public class SignupActivity extends ActionBarActivity {
     }
 
     private void fillMicrofinanceInfo() {
-        microfinanceInstitutions.add(getString(R.string.microfinance_institution));
+        microfinanceInstitutions.add(getString(R.string.microfinance_institution_optional));
         microfinanceInstitutions.add(getString(R.string.mentors_international));
 
         microfinanceAbbr.add("");

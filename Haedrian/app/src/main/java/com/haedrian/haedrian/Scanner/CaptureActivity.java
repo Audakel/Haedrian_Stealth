@@ -5,6 +5,7 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.haedrian.haedrian.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +44,7 @@ import java.util.Map;
  * @author Sean Owen
  * @author Logan Bentley (Modifications made)
  */
-public final class CaptureActivity extends ActionBarActivity implements SurfaceHolder.Callback {
+public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
   private static final String TAG = CaptureActivity.class.getSimpleName();
 
@@ -89,8 +90,8 @@ public final class CaptureActivity extends ActionBarActivity implements SurfaceH
     super.onCreate(icicle);
 
 
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setTitle("");
+    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getActionBar().setTitle("");
 
     Window window = getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

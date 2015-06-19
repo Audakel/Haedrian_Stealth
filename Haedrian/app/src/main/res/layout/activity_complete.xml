@@ -37,7 +37,7 @@ tools:context="com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore.Complet
         android:layout_height="wrap_content"
         android:text="Return To Loan Center"
         android:id="@+id/returnHomeButton"
-        android:background="@color/turquoise" />
+        android:background="@color/primary" />
 
     <TextView
         android:layout_width="wrap_content"

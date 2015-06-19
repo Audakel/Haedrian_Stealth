@@ -96,7 +96,7 @@
     <string name="passwords_dont_match">Passwords don\'t match!</string>
     <string name="note">Note:</string>
     <string name="to_hint">Recipient\'s username</string>
-    <string name="note_hint">Notes</string>
+    <string name="note_hint">Note to attach (optional)</string>
     <string name="action_send">Send Action</string>
     <string name="action_scan">Scan Action</string>
     <string name="sign_up">Sign up</string>
@@ -401,7 +401,8 @@
     <string name="order_time">Order Time:</string>
     <string name="expiration_date">Expiration Date:</string>
     <string name="not_available">Not Available</string>
-    <string name="microfinance_institution">Microfinance Institution (Optional)</string>
+    <string name="microfinance_institution_optional">Microfinance Institution (Optional)</string>
+    <string name="microfinance_institution">Microfinance Institution</string>
     <string name="microfinance_id">Microfinance Institution ID*</string>
     <string name="none">None</string>
     <string name="mentors_international">Mentors International</string>
@@ -431,5 +432,12 @@
     <string name="outgoing_funds">Outgoing Funds</string>
     <string name="incoming_funds">Incoming Funds</string>
     <string name="group_office">Office</string>
+    <string name="repay_loan">Repay Loan</string>
+    <string name="my_wallet">My Wallet</string>
+    <string name="title_activity_repay_loan">Repay Loan</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="pending_group_repayments">Pending group repayments</string>
+    <string name="repay_this_loan">Repay This Loan</string>
+    <string name="amount_hint">0.00</string>
 
 </resources>

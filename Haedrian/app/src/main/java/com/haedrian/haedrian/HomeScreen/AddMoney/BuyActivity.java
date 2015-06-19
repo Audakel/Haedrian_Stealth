@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -53,7 +54,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-public class BuyActivity extends ActionBarActivity {
+public class BuyActivity extends Activity {
     private EditText currencyEditText, bitcoinEditText;
     private TextView amountCurrency, currencySign, subtotalTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
     private Spinner locationSpinner, outletSpinner;
@@ -80,7 +81,7 @@ public class BuyActivity extends ActionBarActivity {
         setContentView(R.layout.activity_buy);
 
         // Set up ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         currencySign = (TextView) findViewById(R.id.currency_sign_buy);
         Currency currency = Currency.getInstance(Locale.getDefault());
@@ -567,14 +568,13 @@ public class BuyActivity extends ActionBarActivity {
                             }
                             else {
                                 progressDialog.hide();
-                                String buyOrderError = "";
-                                if (response.has("errors")) {
-                                    buyOrderError = response.getJSONArray("errors").getString(0);
+                                JSONArray errors = response.getJSONArray("error");
+                                String error = "";
+                                for (int i = 0; i < errors.length(); i++) {
+                                    error = error + " " + errors.get(i);
                                 }
-                                else if (response.has("error")) {
-                                    buyOrderError = response.getJSONArray("error").getString(0);
-                                }
-                                Toast.makeText(BuyActivity.this, buyOrderError, Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(BuyActivity.this, error, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             progressDialog.hide();

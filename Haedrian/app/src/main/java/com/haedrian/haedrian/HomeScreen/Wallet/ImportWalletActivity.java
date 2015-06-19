@@ -15,7 +15,7 @@ import com.haedrian.haedrian.Models.WalletModel;
 import com.haedrian.haedrian.R;
 
 
-public class ImportWalletActivity extends ActionBarActivity {
+public class ImportWalletActivity extends Activity {
 
     private EditText walletAddress;
 

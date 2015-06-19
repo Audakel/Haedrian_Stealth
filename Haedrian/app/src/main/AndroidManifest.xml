@@ -297,7 +297,7 @@
         <activity
             android:name=".HomeScreen.AddMoney.OrderSummaryActivity"
             android:label="@string/title_activity_order_summary"
-            android:parentActivityName=".HomeScreen.HomeActivity">
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
@@ -352,12 +352,16 @@
             android:name=".HomeScreen.AddMoney.GroupBuyActivity"
             android:label="@string/title_activity_group_buy"
             android:parentActivityName=".HomeScreen.AddMoney.BuyOptions"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeScreen.AddMoney.BuyOptions" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.RepayLoanActivity"
+            android:label="@string/title_activity_repay_loan" >
         </activity>
     </application>
 

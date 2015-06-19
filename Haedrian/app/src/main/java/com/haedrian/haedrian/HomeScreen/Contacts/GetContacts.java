@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.HomeScreen.Contacts;
 
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -19,7 +20,7 @@ import com.haedrian.haedrian.util.Utils;
  * FragmentActivity to hold the main {@link ContactsListFragment}. On larger screen devices which
  * can fit two panes also load {@link ContactDetailFragment}.
  */
-public class GetContacts extends ActionBarActivity implements
+public class GetContacts extends Activity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     // Defines a tag for identifying log entries
@@ -53,30 +54,30 @@ public class GetContacts extends ActionBarActivity implements
         // will only happen on pre-HC OS versions as from HC onward search is carried out using
         // an ActionBar SearchView which carries out the search in-line without loading a new
         // Activity.
-        if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
-
-            // Fetch query from intent and notify the fragment that it should display search
-            // results instead of all contacts.
-            String searchQuery = getIntent().getStringExtra(SearchManager.QUERY);
-            ContactsListFragment mContactsListFragment = (ContactsListFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.contact_list);
-
-            // This flag notes that the Activity is doing a search, and so the result will be
-            // search results rather than all contacts. This prevents the Activity and Fragment
-            // from trying to a search on search results.
-            isSearchResultView = true;
-            mContactsListFragment.setSearchQuery(searchQuery);
-
-            // Set special title for search results
-            String title = getString(R.string.contacts_list_search_results_title, searchQuery);
-            setTitle(title);
-        }
-
-        if (isTwoPaneLayout) {
-            // If two pane layout, locate the contact detail fragment
-            mContactDetailFragment = (ContactDetailFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.contact_detail);
-        }
+//        if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+//
+//            // Fetch query from intent and notify the fragment that it should display search
+//            // results instead of all contacts.
+//            String searchQuery = getIntent().getStringExtra(SearchManager.QUERY);
+//            ContactsListFragment mContactsListFragment = (ContactsListFragment)
+//                    getFragmentManager().findFragmentById(R.id.contact_list);
+//
+//            // This flag notes that the Activity is doing a search, and so the result will be
+//            // search results rather than all contacts. This prevents the Activity and Fragment
+//            // from trying to a search on search results.
+//            isSearchResultView = true;
+//            mContactsListFragment.setSearchQuery(searchQuery);
+//
+//            // Set special title for search results
+//            String title = getString(R.string.contacts_list_search_results_title, searchQuery);
+//            setTitle(title);
+//        }
+//
+//        if (isTwoPaneLayout) {
+//            // If two pane layout, locate the contact detail fragment
+//            mContactDetailFragment = (ContactDetailFragment)
+//                    getFragmentManager().findFragmentById(R.id.contact_detail);
+//        }
     }
 
     @Override

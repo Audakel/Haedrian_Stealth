@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="@string/account"
-                android:textColor="@color/blue"
+                android:textColor="@color/primary"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
@@ -151,7 +151,7 @@
                 <!--android:layout_height="wrap_content"-->
                 <!--android:layout_marginBottom="10dp"-->
                 <!--android:text="@string/app"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textStyle="bold"-->
                 <!--android:textSize="20sp"/>-->
 
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="@string/miscellaneous"
-                android:textColor="@color/blue"
+                android:textColor="@color/primary"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 

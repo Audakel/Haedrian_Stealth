@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgrey"
+    android:background="@drawable/concrete_repeating"
     android:orientation="vertical"
     tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity">
 
@@ -24,12 +24,13 @@
             android:layout_marginRight="5dp"
             android:textSize="20sp" />
 
+
         <EditText
             android:id="@+id/to_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/to_hint"
-            android:textColor="@color/blue"
+            android:textColor="@color/primary"
             android:textStyle="bold"/>
 
 
@@ -114,7 +115,7 @@
             android:layout_marginLeft="10dp"
             android:text="@string/mentors_international_handle"
             android:textSize="16sp"
-            android:textColor="@color/blue"/>
+            android:textColor="@color/primary"/>
 
         <CheckBox
             android:id="@+id/checkbox"

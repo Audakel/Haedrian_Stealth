@@ -62,7 +62,7 @@ public class TransactionListAdapter extends ArrayAdapter {
 
         if (transactionType.equals("outgoing")) {
             holder.transactionType.setText(context.getResources().getString(R.string.outgoing_funds));
-            holder.imageType.setImageResource(R.drawable.send);
+            holder.imageType.setImageResource(R.drawable.money);
             holder.toFrom.setText(context.getResources().getString(R.string.to));
             holder.details.setText(transactions.get(position).getTarget());
         }

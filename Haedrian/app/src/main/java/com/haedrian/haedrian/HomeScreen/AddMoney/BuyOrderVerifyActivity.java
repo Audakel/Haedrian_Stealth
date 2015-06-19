@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
@@ -36,7 +37,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class BuyOrderVerifyActivity extends ActionBarActivity {
+public class BuyOrderVerifyActivity extends Activity {
 
     private TextView buyOrderTV, statusTV, amountTV, orderTimeTV, expirationDateTV, locationTV;
     private BuyOrderHistoryModel buyOrder;
@@ -48,7 +49,7 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_order_verify);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));

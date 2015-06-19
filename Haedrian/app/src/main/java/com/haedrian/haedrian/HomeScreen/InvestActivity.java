@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class InvestActivity extends ActionBarActivity {
+public class InvestActivity extends Activity {
 
     private Button trendingButton;
     private ListView categoryList;
@@ -30,7 +31,7 @@ public class InvestActivity extends ActionBarActivity {
         setContentView(R.layout.activity_invest);
 
         // Set up ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         trendingButton = (Button) findViewById(R.id.trending_button);
         categoryList = (ListView) findViewById(R.id.category_list);

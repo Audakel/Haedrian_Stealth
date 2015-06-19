@@ -13,7 +13,7 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
 
-public class CheckForCreditScore extends ActionBarActivity {
+public class CheckForCreditScore extends Activity {
     DBHelper db;
     UserModel user;
     SharedPreferences sp;
@@ -24,7 +24,7 @@ public class CheckForCreditScore extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         // Set up ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.activity_check_for_credit_score);
         db = new DBHelper(this);

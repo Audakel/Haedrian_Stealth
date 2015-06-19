@@ -8,7 +8,7 @@
         android:id="@+id/title_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue">
+        android:background="@color/primary">
 
         <TextView
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:id="@+id/close_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:background="@color/primary"
         android:text="@string/close"
         android:textColor="@color/white"/>
 

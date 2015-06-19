@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -13,7 +14,7 @@ import com.haedrian.haedrian.Adapters.InvestListAdapter;
 import com.haedrian.haedrian.R;
 
 
-public class ProjectsList extends ActionBarActivity {
+public class ProjectsList extends Activity {
 
     private RecyclerView mRecyclerView;
     private InvestListAdapter mInvestListAdapter;
@@ -24,7 +25,7 @@ public class ProjectsList extends ActionBarActivity {
         setContentView(R.layout.activity_projects_list);
 
         // Set up ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mInvestListAdapter = new InvestListAdapter(this);
 

@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -22,7 +23,7 @@ import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectFragm
 import com.haedrian.haedrian.R;
 
 
-public class CreateProjectActivity extends ActionBarActivity
+public class CreateProjectActivity extends Activity
         implements ProjectTitleFragment.OnFragmentInteractionListener,
         ProjectAboutFragment.OnFragmentInteractionListener,
         ProjectCategoryFragment.OnFragmentInteractionListener,

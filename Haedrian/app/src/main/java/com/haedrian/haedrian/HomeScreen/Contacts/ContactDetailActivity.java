@@ -17,10 +17,11 @@
 package com.haedrian.haedrian.HomeScreen.Contacts;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
@@ -32,7 +33,7 @@ import com.haedrian.haedrian.util.Utils;
 /**
  * This class defines a simple FragmentActivity as the parent of {@link ContactDetailFragment}.
  */
-public class ContactDetailActivity extends ActionBarActivity {
+public class ContactDetailActivity extends Activity {
     // Defines a tag for identifying the single fragment that this activity holds
     private static final String TAG = "ContactDetailActivity";
 
@@ -51,7 +52,7 @@ public class ContactDetailActivity extends ActionBarActivity {
             // For OS versions honeycomb and higher use action bar
             if (Utils.hasHoneycomb()) {
                 // Enables action bar "up" navigation
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getActionBar().setDisplayHomeAsUpEnabled(true);
             }
 
             // Fetch the data Uri from the intent provided to this activity
@@ -59,13 +60,13 @@ public class ContactDetailActivity extends ActionBarActivity {
 
             // Checks to see if fragment has already been added, otherwise adds a new
             // ContactDetailFragment with the Uri provided in the intent
-            if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {
-                final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (getFragmentManager().findFragmentByTag(TAG) == null) {
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
 
                 // Adds a newly created ContactDetailFragment that is instantiated with the
                 // data Uri
-                ft.add(android.R.id.content, ContactDetailFragment.newInstance(uri), TAG);
-                ft.commit();
+//                FragmentTransaction add = ft.add(android.R.id.content, ContactDetailFragment.newInstance(uri), TAG);
+//                ft.commit();
             }
         } else {
             // No intent provided, nothing to do so finish()

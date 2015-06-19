@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -40,7 +41,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-public class GetCreditScoreActivity extends ActionBarActivity implements LenddoEventListener {
+public class GetCreditScoreActivity extends Activity implements LenddoEventListener {
 
     private static final String TAG = GetCreditScoreActivity.class.getName();
     private LenddoClient client;
@@ -71,7 +72,7 @@ public class GetCreditScoreActivity extends ActionBarActivity implements LenddoE
         setContentView(R.layout.activity_credit_check);
 
         // Setup ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         LenddoConfig.setTestMode(false);

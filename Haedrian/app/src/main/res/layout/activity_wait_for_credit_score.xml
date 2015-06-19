@@ -20,6 +20,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp"
-        android:background="@color/turquoise" />
+        android:background="@color/accent" />
 
 </RelativeLayout>

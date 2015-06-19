@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.Wallet;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class BuySellFragment extends android.support.v4.app.Fragment {
+public class BuySellFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ListView buyOrderList;

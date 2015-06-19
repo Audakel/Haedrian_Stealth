@@ -20,6 +20,7 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyOptions;
+import com.haedrian.haedrian.HomeScreen.SendRequest.SendActivity;
 import com.haedrian.haedrian.UserInteraction.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.Database.DBHelper;
@@ -39,7 +40,7 @@ import com.parse.ParseQuery;
 import java.util.List;
 
 
-public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class HomeActivity extends Activity implements AdapterView.OnItemClickListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private UserModel user;
@@ -59,8 +60,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_home);
 
         // Set up actionbar
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setHomeButtonEnabled(true);
 
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -268,7 +269,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private void refusePayment(ParseObject requestObject) {
         requestObject.put("fulfillmentStatusId", REFUSED_STATUS);
         requestObject.saveInBackground();
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
     }
 
 //    private void setupDrawer() {
@@ -279,7 +280,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 //             */
 //            public void onDrawerOpened(View drawerView) {
 //                super.onDrawerOpened(drawerView);
-//                getSupportActionBar().setTitle("Haedrian");
+//                getActionBar().setTitle("Haedrian");
 //                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 //            }
 //
@@ -288,7 +289,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 //             */
 //            public void onDrawerClosed(View view) {
 //                super.onDrawerClosed(view);
-//                getSupportActionBar().setTitle("Haedrian");
+//                getActionBar().setTitle("Haedrian");
 //                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 //            }
 //        };
@@ -363,27 +364,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
         switch (view.getId()) {
             case R.id.send_request:
-                intent = new Intent(this, SendRequestActivity.class);
+                intent = new Intent(this, RepayLoanActivity.class);
                 ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options.toBundle());
                 return;
-//            case R.id.add:
-//                intent = new Intent(this, ContactsActivity.class);
-//                ActivityOptions options1 = ActivityOptions.makeScaleUpAnimation(view, 0,
-//                        0, view.getWidth(), view.getHeight());
-//                startActivity(intent, options1.toBundle());
-//                return;
-//            case R.id.projects:
-//                /*For testing  --
-//                intent = new Intent(this, ExistingCreditScoreActivity.class);
-//                intent = new Intent(this, CreditCheckActivity.class);
-//                */
-//                intent = new Intent(this, CheckForCreditScore.class);
-//                ActivityOptions options2 = ActivityOptions.makeScaleUpAnimation(view, 0,
-//                        0, view.getWidth(), view.getHeight());
-//                startActivity(intent, options2.toBundle());
-//                return;
             case R.id.bitcoin_map:
                 intent = new Intent(this, MapsActivity.class);
                 ActivityOptions options5 = ActivityOptions.makeScaleUpAnimation(view, 0,

@@ -17,33 +17,41 @@
     <!--<color name="grey">#7E7E7E</color>-->
 
 
-    <color name="main_color">#FFFFFF</color>
-    <color name="offset_color">#66A182</color>
-    <color name="offset_color_pressed">#3E614F</color>
-    <color name="text_color">#2E4057</color>
-    <color name="action_bar">#66A182</color>
+    <!--<color name="main_color">#FFFFFF</color>-->
+    <!--<color name="offset_color">#66A182</color>-->
+    <!--<color name="offset_color_pressed">#3E614F</color>-->
+    <!--<color name="text_color">#2E4057</color>-->
+    <!--<color name="action_bar">#66A182</color>-->
     <color name="white">#FFFFFF</color>
-    <color name="myGrey">#7E7E7E</color>
+    <!--<color name="myGrey">#7E7E7E</color>-->
     <color name="grey">#7E7E7E</color>
+    <color name="lightgrey">#E5E6E1</color>
+
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="primary_light">#C5CAE9</color>
+
+    <color name="accent">#FFC400</color>
+    <color name="accent_pressed">#FFC400</color>
 
     <!--<color name="turquoise">#00BE90</color>-->
-    <color name="turquoise">#90CAF9</color>
-    <!--<color name="pink">#F05282</color>-->
-    <color name="pink">#3F51B5</color>
-    <color name="lightgrey">#E5E6E1</color>
-    <color name="yellow">#FEBA4D</color>
-    <color name="blue">#4183D1</color>
-    <color name="action_bar_blue">#3F51B5</color>
-    <color name="light_blue">#644183D1</color>
-    <!--<color name="purple">#7759B3</color>-->
-    <color name="purple">#3F51B5</color>
-    <color name="black">#000000</color>
+    <!--<color name="turquoise">#3F51B5</color>-->
+    <!--&lt;!&ndash;<color name="pink">#F05282</color>&ndash;&gt;-->
+    <!--<color name="pink">#3F51B5</color>-->
+    <!--<color name="lightgrey">#E5E6E1</color>-->
+    <!--<color name="yellow">#FEBA4D</color>-->
+    <!--&lt;!&ndash;<color name="blue">#4183D1</color>&ndash;&gt;-->
+    <!--<color name="blue">#2196F3</color>-->
+    <!--<color name="light_blue">#644183D1</color>-->
+    <!--&lt;!&ndash;<color name="purple">#7759B3</color>&ndash;&gt;-->
+    <!--<color name="purple">#3F51B5</color>-->
+    <!--<color name="black">#000000</color>-->
 
     <color name="error_border">#ebccd1</color>
     <color name="error_red">#f2dede</color>
     <color name="error_red_text">#a94442</color>
 
-    <color name="success_green">#146930</color>
+    <!--<color name="success_green">#146930</color>-->
 
     <!-- QR Scanner Colors -->
     <color name="contents_text">#ff000000</color>

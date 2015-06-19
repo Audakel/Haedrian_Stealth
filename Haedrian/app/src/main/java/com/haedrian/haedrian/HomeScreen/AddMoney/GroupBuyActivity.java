@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class GroupBuyActivity extends ActionBarActivity {
+public class GroupBuyActivity extends Activity {
 
     private GroupMemberListAdapter adapter;
     private ArrayList<UserModel> groupMembers;
@@ -59,7 +60,7 @@ public class GroupBuyActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_buy);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));

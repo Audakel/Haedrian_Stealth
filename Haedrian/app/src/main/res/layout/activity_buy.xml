@@ -1,12 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="2dp"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="2dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/concrete_repeating"
+        tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -26,7 +27,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:text="@string/buy_amount"
-            android:textColor="@color/blue"
+            android:textColor="@color/primary"
             android:textSize="20sp"/>
 
         <LinearLayout
@@ -150,7 +151,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:text="@string/deposit_method"
-            android:textColor="@color/blue"
+            android:textColor="@color/primary"
             android:textSize="20sp"/>
 
         <Spinner
@@ -218,7 +219,7 @@
             android:layout_below="@+id/textView15"
             android:layout_marginTop="5dp"
             android:text="@string/total_due"
-            android:textColor="@color/blue"
+            android:textColor="@color/grey"
             android:textSize="14sp"
             android:textStyle="bold"/>
 
@@ -254,7 +255,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/payment_method_fee"
             android:layout_marginTop="5dp"
-            android:textColor="@color/blue"
+            android:textColor="@color/grey"
             android:textStyle="bold"/>
 
     </RelativeLayout>
@@ -284,7 +285,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="1"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"/>-->
 
             <!--<View-->
@@ -292,7 +293,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/button4"-->
@@ -300,7 +301,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="4"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"/>-->
 
             <!--<View-->
@@ -308,7 +309,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/button7"-->
@@ -316,7 +317,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="7"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"/>-->
 
             <!--<View-->
@@ -324,7 +325,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/buttonDot"-->
@@ -332,7 +333,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="."-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"/>-->
         <!--</LinearLayout>-->
 
@@ -349,7 +350,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="2"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
 
@@ -358,7 +359,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/button5"-->
@@ -366,7 +367,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="5"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
 
@@ -375,7 +376,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/button8"-->
@@ -383,7 +384,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="8"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
 
@@ -392,7 +393,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/button0"-->
@@ -400,7 +401,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="0"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
         <!--</LinearLayout>-->
@@ -418,7 +419,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="3"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
 
@@ -427,7 +428,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/button6"-->
@@ -435,7 +436,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="6"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
 
@@ -444,7 +445,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/button9"-->
@@ -452,7 +453,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="9"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
 
@@ -461,7 +462,7 @@
                 <!--android:layout_height="1dp"-->
                 <!--android:layout_marginLeft="6dp"-->
                 <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/blue"/>-->
+                <!--android:background="@color/primary"/>-->
 
             <!--<Button-->
                 <!--android:id="@+id/buttonBack"-->
@@ -469,7 +470,7 @@
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="&lt;x"-->
-                <!--android:textColor="@color/blue"-->
+                <!--android:textColor="@color/primary"-->
                 <!--android:textSize="22sp"-->
                 <!--/>-->
         <!--</LinearLayout>-->

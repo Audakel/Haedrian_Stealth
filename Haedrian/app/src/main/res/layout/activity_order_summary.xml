@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/wallet_activity"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/primary"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:clickable="true"

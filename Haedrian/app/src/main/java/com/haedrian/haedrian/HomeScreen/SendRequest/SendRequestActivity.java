@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.SendRequest;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,7 +46,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class SendRequestActivity extends ActionBarActivity {
+public class SendRequestActivity extends Activity {
     private String TAG = SendRequestActivity.class.getSimpleName();
     private TextView displayNumber;
     private TextView dolarSignView;
@@ -66,7 +67,7 @@ public class SendRequestActivity extends ActionBarActivity {
         setContentView(R.layout.activity_send_request);
         context = getApplication();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (ApplicationController.getToken().equals("")) {
             Intent intent = new Intent(this, PinActivity.class);
@@ -308,9 +309,9 @@ public class SendRequestActivity extends ActionBarActivity {
 
     private void updateFontAttributes() {
         if (displayNumber.getText().toString().equals("0")) {
-            displayNumber.setTextColor(getResources().getColor(R.color.light_blue));
+            displayNumber.setTextColor(getResources().getColor(R.color.primary_light));
         } else {
-            displayNumber.setTextColor(getResources().getColor(R.color.blue));
+            displayNumber.setTextColor(getResources().getColor(R.color.primary));
         }
         switch (displayNumber.length()) {
             case 1:

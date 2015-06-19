@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.Wallet;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
@@ -35,7 +36,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-public class TransactionDetailsActivity extends ActionBarActivity {
+public class TransactionDetailsActivity extends Activity {
 
     private TransactionModel transaction;
     private TextView id, btcAmount, currencyAmount, fromPerson, toPerson, note, date, statusTV;
@@ -46,7 +47,7 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_details);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));

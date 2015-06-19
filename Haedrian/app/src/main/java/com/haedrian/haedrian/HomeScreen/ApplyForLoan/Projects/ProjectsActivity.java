@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -14,7 +15,7 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.R;
 
 
-public class ProjectsActivity extends ActionBarActivity {
+public class ProjectsActivity extends Activity {
 
     private Button createNewProjectButton;
     private ListView createdProjectsList;
@@ -25,7 +26,7 @@ public class ProjectsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_projects);
 
         // Set up ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         createNewProjectButton = (Button) findViewById(R.id.create_new_project_button);
 //        createdProjectsList = (ListView) findViewById(R.id.created_projects_list);

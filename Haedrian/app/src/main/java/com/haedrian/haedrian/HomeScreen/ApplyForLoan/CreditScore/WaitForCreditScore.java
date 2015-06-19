@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectActivity;
 import com.haedrian.haedrian.R;
 
-public class WaitForCreditScore extends ActionBarActivity {
+public class WaitForCreditScore extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

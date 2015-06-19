@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -10,14 +11,14 @@ import android.view.View;
 
 import com.haedrian.haedrian.R;
 
-public class BuyOptions extends ActionBarActivity {
+public class BuyOptions extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_options);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

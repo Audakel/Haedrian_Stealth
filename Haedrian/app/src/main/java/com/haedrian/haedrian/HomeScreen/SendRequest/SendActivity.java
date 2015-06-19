@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class SendActivity extends ActionBarActivity implements
+public class SendActivity extends Activity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     private final String base = "https://blockchain.info/merchant/$guid/payment";
@@ -75,7 +75,7 @@ public class SendActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_send);
 
         // Set up ActionBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
 
@@ -126,10 +126,10 @@ public class SendActivity extends ActionBarActivity implements
         Currency currency = Currency.getInstance(Locale.getDefault());
 
 
-        getSupportActionBar().setTitle(getResources().getString(R.string.send) + " " + currency.getSymbol() + sendAmountNumber.toString());
+        getActionBar().setTitle(getResources().getString(R.string.send) + " " + currency.getSymbol() + sendAmountNumber.toString());
 
-        ContactsListFragment mContactsListFragment = (ContactsListFragment)
-                getSupportFragmentManager().findFragmentById(R.id.contact_list);
+//        ContactsListFragment mContactsListFragment = (ContactsListFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.contact_list);
 
 
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

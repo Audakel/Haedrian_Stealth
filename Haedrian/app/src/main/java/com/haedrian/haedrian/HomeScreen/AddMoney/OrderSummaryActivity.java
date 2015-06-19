@@ -1,5 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -22,7 +23,7 @@ import org.w3c.dom.Text;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class OrderSummaryActivity extends ActionBarActivity {
+public class OrderSummaryActivity extends Activity {
 
     private Button paymentInstructionsButton, markAsPaidButton, cancelButton;
     private TextView buyAmountTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV, buyOrderId;
@@ -40,7 +41,7 @@ public class OrderSummaryActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         paymentInstructionsButton = (Button) findViewById(R.id.payment_instructions_button);
         markAsPaidButton = (Button) findViewById(R.id.mark_as_paid_button);
