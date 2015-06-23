@@ -15,7 +15,7 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.R;
 
 
-public class ProjectsActivity extends Activity {
+public class ProjectsActivity extends ActionBarActivity {
 
     private Button createNewProjectButton;
     private ListView createdProjectsList;
@@ -26,7 +26,7 @@ public class ProjectsActivity extends Activity {
         setContentView(R.layout.activity_projects);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         createNewProjectButton = (Button) findViewById(R.id.create_new_project_button);
 //        createdProjectsList = (ListView) findViewById(R.id.created_projects_list);

@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class RequestActivity extends Activity implements
+public class RequestActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     private final String base = "https://blockchain.info/merchant/$guid/";
@@ -51,7 +51,7 @@ public class RequestActivity extends Activity implements
         setContentView(R.layout.activity_request);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         requestAmount = getIntent().getStringExtra("request_amount");
         requestAmountBitcoin = getIntent().getStringExtra("request_amount_bitcoin");
@@ -71,7 +71,7 @@ public class RequestActivity extends Activity implements
         requestAmountBitcoinNumber = new BigDecimal(requestAmountBitcoin);
 
         Currency currency = Currency.getInstance(Locale.getDefault());
-        getActionBar().setTitle( getResources().getString(R.string.request) + " " + currency.getSymbol() + requestAmountNumber.toString());
+        getSupportActionBar().setTitle( getResources().getString(R.string.request) + " " + currency.getSymbol() + requestAmountNumber.toString());
 
     }
 

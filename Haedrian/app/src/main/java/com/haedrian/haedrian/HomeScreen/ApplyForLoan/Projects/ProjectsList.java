@@ -14,7 +14,7 @@ import com.haedrian.haedrian.Adapters.InvestListAdapter;
 import com.haedrian.haedrian.R;
 
 
-public class ProjectsList extends Activity {
+public class ProjectsList extends ActionBarActivity {
 
     private RecyclerView mRecyclerView;
     private InvestListAdapter mInvestListAdapter;
@@ -25,7 +25,7 @@ public class ProjectsList extends Activity {
         setContentView(R.layout.activity_projects_list);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mInvestListAdapter = new InvestListAdapter(this);
 

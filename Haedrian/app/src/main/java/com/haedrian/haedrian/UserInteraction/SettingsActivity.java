@@ -46,7 +46,7 @@ import java.util.HashMap;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends ActionBarActivity {
 
     private ProgressDialog progressDialog;
     private TextView nameTV, usernameTV, emailTV;
@@ -61,7 +61,7 @@ public class SettingsActivity extends Activity {
         progressDialog.setMessage(getString(R.string.dialog_loading));
         progressDialog.show();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nameTV = (TextView) findViewById(R.id.name);
         usernameTV = (TextView) findViewById(R.id.username);

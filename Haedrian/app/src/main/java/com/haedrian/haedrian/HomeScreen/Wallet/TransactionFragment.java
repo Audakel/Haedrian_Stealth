@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -139,7 +140,8 @@ public class TransactionFragment extends Fragment {
                                         transaction.setStatus(object.getString("status"));
                                         transaction.setFeeAmount(object.getString("fee_amount"));
                                         transaction.setAmount(object.getString("amount"));
-                                        transaction.setDate(object.getString("date"));
+                                        String[] dateParts = object.getString("date").split("T");
+                                        transaction.setDate(formatDate(dateParts[0]));
                                         transaction.setEntryType(object.getString("entry_type"));
                                         transaction.setSender(object.getString("original_sender"));
                                         transaction.setTarget(object.getString("original_target"));
@@ -149,6 +151,10 @@ public class TransactionFragment extends Fragment {
                                     }
                                     setView();
                                 }
+                            }
+                            else {
+                                JSONObject error = response.getJSONObject("error");
+                                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -193,7 +199,8 @@ public class TransactionFragment extends Fragment {
                         transaction.setStatus(object.getString("status"));
                         transaction.setFeeAmount(object.getString("fee_amount"));
                         transaction.setAmount(object.getString("amount"));
-                        transaction.setDate(object.getString("date"));
+                        String[] dateParts = object.getString("date").split("T");
+                        transaction.setDate(formatDate(dateParts[0]));
                         transaction.setEntryType(object.getString("entry_type"));
                         transaction.setSender(object.getString("original_sender"));
                         transaction.setTarget(object.getString("original_target"));
@@ -212,7 +219,20 @@ public class TransactionFragment extends Fragment {
     public void setView() {
         noTransactions.setVisibility(View.GONE);
 
-        adapter = new TransactionListAdapter(context, R.layout.row_transaction, transactions);
+        adapter = new TransactionListAdapter(context);
+        int size = transactions.size();
+        String date = "";
+        for (int i = 0; i < size; i++) {
+            String newDate = transactions.get(i).getDate();
+            if ( ! date.equals(newDate) ) {
+                TransactionModel dateModel = new TransactionModel();
+                dateModel.setDate(newDate);
+                date = transactions.get(i).getDate();
+                adapter.addSectionHeader(dateModel);
+            }
+            adapter.addTransaction(transactions.get(i));
+        }
+
         transactionList.setAdapter(adapter);
         transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -222,6 +242,56 @@ public class TransactionFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public String formatDate(String date) {
+        String[] parts = date.split("-");
+        String year = parts[0];
+        String month = "";
+
+        switch (parts[1]) {
+            case "01":
+                month = getString(R.string.january);
+                break;
+            case "02":
+                month = getString(R.string.february);
+                break;
+            case "03":
+                month = getString(R.string.march);
+                break;
+            case "04":
+                month = getString(R.string.april);
+                break;
+            case "05":
+                month = getString(R.string.may);
+                break;
+            case "06":
+                month = getString(R.string.june);
+                break;
+            case "07":
+                month = getString(R.string.july);
+                break;
+            case "08":
+                month = getString(R.string.august);
+                break;
+            case "09":
+                month = getString(R.string.september);
+                break;
+            case "10":
+                month = getString(R.string.october);
+                break;
+            case "11":
+                month = getString(R.string.november);
+                break;
+            case "12":
+                month = getString(R.string.december);
+                break;
+        }
+
+        int day = Integer.parseInt(parts[2]);
+
+        return month + " " + day + ", " + year;
+
     }
 
 }

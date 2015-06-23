@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class InvestActivity extends Activity {
+public class InvestActivity extends ActionBarActivity {
 
     private Button trendingButton;
     private ListView categoryList;
@@ -31,7 +31,7 @@ public class InvestActivity extends Activity {
         setContentView(R.layout.activity_invest);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         trendingButton = (Button) findViewById(R.id.trending_button);
         categoryList = (ListView) findViewById(R.id.category_list);

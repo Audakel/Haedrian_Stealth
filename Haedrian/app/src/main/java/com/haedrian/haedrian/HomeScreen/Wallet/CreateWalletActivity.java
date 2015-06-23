@@ -40,7 +40,7 @@
 //import static com.android.volley.Request.Method;
 //
 //
-//public class CreateWalletActivity extends Activity {
+//public class CreateWalletActivity extends ActionBarActivity {
 //    private final String TAG = "CANCEL_TAG";
 //    private Button addBankButton;
 //    private EditText addEmailText;

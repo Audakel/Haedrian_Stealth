@@ -439,5 +439,9 @@
     <string name="pending_group_repayments">Pending group repayments</string>
     <string name="repay_this_loan">Repay This Loan</string>
     <string name="amount_hint">0.00</string>
+    <string name="repay_loan_of">Repay loan of</string>
+    <string name="group_payment_of">Group payment of</string>
+    <string name="about_to_add">About to add</string>
+    <string name="to_your_wallet_for">to your wallet for</string>
 
 </resources>

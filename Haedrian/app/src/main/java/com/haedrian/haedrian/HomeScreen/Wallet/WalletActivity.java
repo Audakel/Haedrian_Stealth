@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,7 +20,7 @@ import com.haedrian.haedrian.UserInteraction.PinActivity;
 import java.util.Locale;
 
 
-public class WalletActivity extends Activity {
+public class WalletActivity extends ActionBarActivity {
 
     WalletPagerAdapter mWalletPagerAdapter;
     ViewPager mViewPager;
@@ -30,7 +31,7 @@ public class WalletActivity extends Activity {
         setContentView(R.layout.activity_wallet);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (ApplicationController.getToken().equals("")) {
             Intent intent = new Intent(this, PinActivity.class);
@@ -44,6 +45,16 @@ public class WalletActivity extends Activity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mWalletPagerAdapter);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            boolean fromOrder = extras.getBoolean("from_order", false);
+            if (fromOrder) {
+                mViewPager.setCurrentItem(1);
+            }
+            else {
+                mViewPager.setCurrentItem(0);
+            }
+        }
     }
 
     @Override

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgrey"
+    android:background="@drawable/concrete_repeating"
     tools:context="com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore.GetCreditScoreActivity">
 
     <!--<LinearLayout-->
@@ -23,8 +23,8 @@
             android:layout_gravity="fill"
             android:orientation="vertical"
             android:layout_margin="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:paddingBottom="15dp"
             android:background="@drawable/round_white">
 
@@ -63,18 +63,18 @@
                         android:singleLine="true"/>
                 </LinearLayout>
 
-                <LinearLayout
-                    style="@style/fieldContainer"
-                    android:background="@drawable/bg_edittext">
-                    <!--<TextView-->
-                        <!--android:text="@string/country_required"-->
-                        <!--style="@style/formLabel" />-->
-                    <Spinner
-                        android:id="@+id/country_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
-                </LinearLayout>
+                <!--<LinearLayout-->
+                    <!--style="@style/fieldContainer"-->
+                    <!--android:background="@drawable/bg_edittext">-->
+                    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:text="@string/country_required"&ndash;&gt;-->
+                        <!--&lt;!&ndash;style="@style/formLabel" />&ndash;&gt;-->
+                    <!--<Spinner-->
+                        <!--android:id="@+id/country_spinner"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:spinnerMode="dropdown"/>-->
+                <!--</LinearLayout>-->
 
 
                 <!--<LinearLayout style="@style/fieldContainer">-->
@@ -120,8 +120,7 @@
                         android:layout_marginRight="5dp"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:text="+1"
-                        android:visibility="gone"/>
+                        android:text="+"/>
 
                     <EditText
                         android:id="@+id/phone_number_edit_text"

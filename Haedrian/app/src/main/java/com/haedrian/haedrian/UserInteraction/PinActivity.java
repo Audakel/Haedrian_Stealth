@@ -30,7 +30,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.AbstractExecutorService;
 
-public class PinActivity extends Activity {
+public class PinActivity extends ActionBarActivity {
 
     private String token;
     private int pinState = 0;
@@ -54,7 +54,7 @@ public class PinActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().hide();
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_pin);
 
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);

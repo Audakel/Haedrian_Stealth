@@ -12,43 +12,13 @@
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="75dp" >
+        android:layout_marginBottom="75dp">
 
         <TextView
-            android:id="@+id/dialog_send"
+            android:id="@+id/dialog_confirmation_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/send"/>
-
-        <TextView
-            android:id="@+id/dialog_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dummy_amount"
-            android:layout_marginLeft="5dp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/dialog_to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/to_dialog"
-            android:layout_marginLeft="5dp" />
-
-        <TextView
-            android:id="@+id/dialog_recipient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/recipient"
-            android:layout_marginLeft="5dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/dialog_question_mark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/question_mark"
-            android:layout_marginLeft="2dp" />
+            android:text="Repay loan of $46.0 to Mentors International?"/>
 
     </LinearLayout>
 
@@ -78,13 +48,13 @@
             android:background="@color/white" />
 
         <Button
-            android:id="@+id/dialog_send_button"
+            android:id="@+id/dialog_confirm"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/primary"
-            android:text="@string/send"
+            android:text="@string/confirm"
             android:textColor="@color/white"/>
 
     </LinearLayout>

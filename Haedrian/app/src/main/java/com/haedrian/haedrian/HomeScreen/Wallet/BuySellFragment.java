@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -142,6 +143,10 @@ public class BuySellFragment extends Fragment {
                                     }
                                     setView();
                                 }
+                            }
+                            else {
+                                JSONObject error = response.getJSONObject("error");
+                                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

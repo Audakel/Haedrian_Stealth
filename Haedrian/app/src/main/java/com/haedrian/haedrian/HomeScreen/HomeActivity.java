@@ -40,7 +40,7 @@ import com.parse.ParseQuery;
 import java.util.List;
 
 
-public class HomeActivity extends Activity implements AdapterView.OnItemClickListener {
+public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private UserModel user;
@@ -60,8 +60,8 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         setContentView(R.layout.activity_home);
 
         // Set up actionbar
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-//        getActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -269,7 +269,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
     private void refusePayment(ParseObject requestObject) {
         requestObject.put("fulfillmentStatusId", REFUSED_STATUS);
         requestObject.saveInBackground();
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
 //    private void setupDrawer() {
@@ -280,7 +280,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
 //             */
 //            public void onDrawerOpened(View drawerView) {
 //                super.onDrawerOpened(drawerView);
-//                getActionBar().setTitle("Haedrian");
+//                getSupportActionBar().setTitle("Haedrian");
 //                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 //            }
 //
@@ -289,7 +289,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
 //             */
 //            public void onDrawerClosed(View view) {
 //                super.onDrawerClosed(view);
-//                getActionBar().setTitle("Haedrian");
+//                getSupportActionBar().setTitle("Haedrian");
 //                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 //            }
 //        };

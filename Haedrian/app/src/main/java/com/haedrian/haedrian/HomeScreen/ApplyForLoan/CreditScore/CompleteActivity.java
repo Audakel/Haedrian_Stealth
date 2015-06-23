@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class CompleteActivity extends Activity {
+public class CompleteActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

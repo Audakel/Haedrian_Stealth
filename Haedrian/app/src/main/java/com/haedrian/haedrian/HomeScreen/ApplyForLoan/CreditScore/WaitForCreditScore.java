@@ -13,7 +13,7 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectActivity;
 import com.haedrian.haedrian.R;
 
-public class WaitForCreditScore extends Activity {
+public class WaitForCreditScore extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

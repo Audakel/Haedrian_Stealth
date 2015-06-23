@@ -44,7 +44,7 @@ import java.util.Map;
  * @author Sean Owen
  * @author Logan Bentley (Modifications made)
  */
-public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public final class CaptureActivity extends ActionBarActivity implements SurfaceHolder.Callback {
 
   private static final String TAG = CaptureActivity.class.getSimpleName();
 
@@ -90,8 +90,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     super.onCreate(icicle);
 
 
-    getActionBar().setDisplayHomeAsUpEnabled(true);
-    getActionBar().setTitle("");
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setTitle("");
 
     Window window = getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

@@ -46,7 +46,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class SendRequestActivity extends Activity {
+public class SendRequestActivity extends ActionBarActivity {
     private String TAG = SendRequestActivity.class.getSimpleName();
     private TextView displayNumber;
     private TextView dolarSignView;
@@ -67,7 +67,7 @@ public class SendRequestActivity extends Activity {
         setContentView(R.layout.activity_send_request);
         context = getApplication();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (ApplicationController.getToken().equals("")) {
             Intent intent = new Intent(this, PinActivity.class);

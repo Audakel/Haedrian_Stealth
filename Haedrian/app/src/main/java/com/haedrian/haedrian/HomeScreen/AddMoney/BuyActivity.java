@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-public class BuyActivity extends Activity {
+public class BuyActivity extends ActionBarActivity {
     private EditText currencyEditText, bitcoinEditText;
     private TextView amountCurrency, currencySign, subtotalTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
     private Spinner locationSpinner, outletSpinner;
@@ -81,7 +81,7 @@ public class BuyActivity extends Activity {
         setContentView(R.layout.activity_buy);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         currencySign = (TextView) findViewById(R.id.currency_sign_buy);
         Currency currency = Currency.getInstance(Locale.getDefault());
@@ -190,7 +190,7 @@ public class BuyActivity extends Activity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, totalDueTV.getText().toString(), bitcoinEditText.getText().toString());
+                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, currencyEditText.getText().toString(), bitcoinEditText.getText().toString(), totalDueTV.getText().toString());
                 if (currencyEditText.getText().toString().equals("") || bitcoinEditText.getText().toString().equals("")) {
                     Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_enter_buy_amount), Toast.LENGTH_SHORT).show();
                     return;
@@ -567,14 +567,9 @@ public class BuyActivity extends Activity {
                                 startActivity(intent);
                             }
                             else {
-                                progressDialog.hide();
-                                JSONArray errors = response.getJSONArray("error");
-                                String error = "";
-                                for (int i = 0; i < errors.length(); i++) {
-                                    error = error + " " + errors.get(i);
-                                }
-
-                                Toast.makeText(BuyActivity.this, error, Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                                JSONObject error = response.getJSONObject("error");
+                                Toast.makeText(BuyActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             progressDialog.hide();

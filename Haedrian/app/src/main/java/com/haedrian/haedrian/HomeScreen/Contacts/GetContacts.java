@@ -20,7 +20,7 @@ import com.haedrian.haedrian.util.Utils;
  * FragmentActivity to hold the main {@link ContactsListFragment}. On larger screen devices which
  * can fit two panes also load {@link ContactDetailFragment}.
  */
-public class GetContacts extends Activity implements
+public class GetContacts extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     // Defines a tag for identifying log entries

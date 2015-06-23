@@ -13,7 +13,7 @@ import com.haedrian.haedrian.R;
 //import com.facebook.Session;
 
 
-public class FacebookLoginActivity extends Activity {
+public class FacebookLoginActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

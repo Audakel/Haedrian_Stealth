@@ -24,17 +24,6 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="@string/about_to_buy"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
-
-    <TextView
         android:id="@+id/order_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,7 +11,7 @@ import com.haedrian.haedrian.R;
 import android.app.Activity;
 
 
-public class CanceledActivity extends Activity {
+public class CanceledActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

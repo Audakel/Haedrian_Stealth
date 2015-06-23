@@ -41,7 +41,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-public class GetCreditScoreActivity extends Activity implements LenddoEventListener {
+public class GetCreditScoreActivity extends ActionBarActivity implements LenddoEventListener {
 
     private static final String TAG = GetCreditScoreActivity.class.getName();
     private LenddoClient client;
@@ -72,7 +72,7 @@ public class GetCreditScoreActivity extends Activity implements LenddoEventListe
         setContentView(R.layout.activity_credit_check);
 
         // Setup ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         LenddoConfig.setTestMode(false);

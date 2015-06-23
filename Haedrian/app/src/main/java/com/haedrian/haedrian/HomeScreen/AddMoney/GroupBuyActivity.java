@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class GroupBuyActivity extends Activity {
+public class GroupBuyActivity extends ActionBarActivity {
 
     private GroupMemberListAdapter adapter;
     private ArrayList<UserModel> groupMembers;
@@ -60,7 +60,7 @@ public class GroupBuyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_buy);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
@@ -149,6 +149,11 @@ public class GroupBuyActivity extends Activity {
                                     groupMembers.add(user);
                                 }
                                 setView();
+                            }
+                            else {
+                                progressDialog.dismiss();
+                                JSONObject error = response.getJSONObject("error");
+                                Toast.makeText(GroupBuyActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {

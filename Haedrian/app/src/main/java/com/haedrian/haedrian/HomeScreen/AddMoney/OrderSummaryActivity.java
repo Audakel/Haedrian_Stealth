@@ -23,7 +23,7 @@ import org.w3c.dom.Text;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class OrderSummaryActivity extends Activity {
+public class OrderSummaryActivity extends ActionBarActivity {
 
     private Button paymentInstructionsButton, markAsPaidButton, cancelButton;
     private TextView buyAmountTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV, buyOrderId;
@@ -41,7 +41,7 @@ public class OrderSummaryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         paymentInstructionsButton = (Button) findViewById(R.id.payment_instructions_button);
         markAsPaidButton = (Button) findViewById(R.id.mark_as_paid_button);
@@ -121,6 +121,7 @@ public class OrderSummaryActivity extends Activity {
                 break;
             case R.id.wallet_activity_link:
                 Intent intent = new Intent(this, WalletActivity.class);
+                intent.putExtra("from_order", true);
                 startActivity(intent);
             default:
                 break;

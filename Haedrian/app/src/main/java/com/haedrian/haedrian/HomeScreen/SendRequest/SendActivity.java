@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class SendActivity extends Activity implements
+public class SendActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     private final String base = "https://blockchain.info/merchant/$guid/payment";
@@ -75,7 +75,7 @@ public class SendActivity extends Activity implements
         setContentView(R.layout.activity_send);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
 
@@ -126,7 +126,7 @@ public class SendActivity extends Activity implements
         Currency currency = Currency.getInstance(Locale.getDefault());
 
 
-        getActionBar().setTitle(getResources().getString(R.string.send) + " " + currency.getSymbol() + sendAmountNumber.toString());
+        getSupportActionBar().setTitle(getResources().getString(R.string.send) + " " + currency.getSymbol() + sendAmountNumber.toString());
 
 //        ContactsListFragment mContactsListFragment = (ContactsListFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.contact_list);
@@ -301,13 +301,8 @@ public class SendActivity extends Activity implements
                                 startActivity(intent);
                             }
                             else {
-                                JSONArray errors = response.getJSONArray("error");
-                                String error = "";
-                                for (int i = 0; i < errors.length(); i++) {
-                                    error = error + " " + errors.get(i);
-                                }
-
-                                Toast.makeText(SendActivity.this, error, Toast.LENGTH_SHORT).show();
+                                JSONObject error = response.getJSONObject("error");
+                                Toast.makeText(SendActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {

@@ -3,7 +3,7 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/lightgrey"
+    android:background="@drawable/concrete_repeating"
     tools:context="com.haedrian.haedrian.UserInteraction.PinActivity">
 
 
@@ -326,11 +326,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="@string/sign_out_title"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/primary_light"
+        android:textColor="@color/accent"
         android:clickable="true"
         android:onClick="onClick"/>
 

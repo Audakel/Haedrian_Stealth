@@ -11,14 +11,14 @@ import android.view.View;
 
 import com.haedrian.haedrian.R;
 
-public class BuyOptions extends Activity {
+public class BuyOptions extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_options);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

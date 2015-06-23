@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class BuyOrderVerifyActivity extends Activity {
+public class BuyOrderVerifyActivity extends ActionBarActivity {
 
     private TextView buyOrderTV, statusTV, amountTV, orderTimeTV, expirationDateTV, locationTV;
     private BuyOrderHistoryModel buyOrder;
@@ -49,7 +49,7 @@ public class BuyOrderVerifyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_order_verify);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
@@ -168,6 +168,11 @@ public class BuyOrderVerifyActivity extends Activity {
                                     buyOrderStatus += parts[i].toUpperCase() + " ";
                                 }
                                 statusTV.setText(buyOrderStatus);
+                            }
+                            else {
+                                progressDialog.dismiss();
+                                JSONObject error = response.getJSONObject("error");
+                                Toast.makeText(BuyOrderVerifyActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

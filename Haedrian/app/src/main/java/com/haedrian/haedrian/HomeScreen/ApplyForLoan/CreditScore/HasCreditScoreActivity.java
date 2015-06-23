@@ -36,7 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class HasCreditScoreActivity extends Activity {
+public class HasCreditScoreActivity extends ActionBarActivity {
     Button getCreditScore, updateLoanInfoButton, createProjectButton;
     TextView creditScoreTextView;
     String TAG = "ExistingCreditScoreActivity";
@@ -51,7 +51,7 @@ public class HasCreditScoreActivity extends Activity {
         setContentView(R.layout.activity_existing_credit_score);
 
         // Set up actionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         creditScoreTextView = (TextView) findViewById(R.id.creditScoreTextView);
 

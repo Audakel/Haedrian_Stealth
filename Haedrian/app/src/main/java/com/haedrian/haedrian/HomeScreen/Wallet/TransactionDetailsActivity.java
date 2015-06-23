@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-public class TransactionDetailsActivity extends Activity {
+public class TransactionDetailsActivity extends ActionBarActivity {
 
     private TransactionModel transaction;
     private TextView id, btcAmount, currencyAmount, fromPerson, toPerson, note, date, statusTV;
@@ -47,7 +47,7 @@ public class TransactionDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_details);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
@@ -70,9 +70,10 @@ public class TransactionDetailsActivity extends Activity {
         note = (TextView) findViewById(R.id.note);
 
         if (transaction.getDate() != null) {
-            String[] dateParts = transaction.getDate().split("T");
-            Log.v("TEST", "date: " + dateParts[0]);
-            date.setText(formatDate(dateParts[0]));
+//            String[] dateParts = transaction.getDate().split("T");
+//            Log.v("TEST", "date: " + dateParts[0]);
+//            date.setText(formatDate(dateParts[0]));
+            date.setText(transaction.getDate());
         }
         else {
             long milli = System.currentTimeMillis();

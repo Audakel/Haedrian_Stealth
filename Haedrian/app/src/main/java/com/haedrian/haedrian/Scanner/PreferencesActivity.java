@@ -18,6 +18,7 @@ package com.haedrian.haedrian.Scanner;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * The main settings activity.
@@ -25,7 +26,7 @@ import android.os.Bundle;
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-public final class PreferencesActivity extends Activity {
+public final class PreferencesActivity extends ActionBarActivity {
 
   public static final String KEY_DECODE_1D_PRODUCT = "preferences_decode_1D_product";
   public static final String KEY_DECODE_1D_INDUSTRIAL = "preferences_decode_1D_industrial";

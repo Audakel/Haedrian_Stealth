@@ -10,14 +10,14 @@ import android.view.MenuItem;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.R;
 
-public class Help extends Activity {
+public class Help extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

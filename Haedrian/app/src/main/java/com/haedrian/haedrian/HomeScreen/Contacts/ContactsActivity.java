@@ -23,7 +23,7 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.R;
 
 
-public class ContactsActivity extends Activity implements
+public class ContactsActivity extends ActionBarActivity implements
         ContactsListFragment.OnContactsInteractionListener {
 
     String upcCode = "";
@@ -42,7 +42,7 @@ public class ContactsActivity extends Activity implements
         setContentView(R.layout.activity_contacts);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         contactsET = (EditText) findViewById(R.id.contact_edit_text);
         resultsLinearLayout = (LinearLayout) findViewById(R.id.results_linear_layout);

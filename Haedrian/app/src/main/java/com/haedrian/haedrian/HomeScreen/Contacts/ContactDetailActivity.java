@@ -33,7 +33,7 @@ import com.haedrian.haedrian.util.Utils;
 /**
  * This class defines a simple FragmentActivity as the parent of {@link ContactDetailFragment}.
  */
-public class ContactDetailActivity extends Activity {
+public class ContactDetailActivity extends ActionBarActivity {
     // Defines a tag for identifying the single fragment that this activity holds
     private static final String TAG = "ContactDetailActivity";
 
@@ -52,7 +52,7 @@ public class ContactDetailActivity extends Activity {
             // For OS versions honeycomb and higher use action bar
             if (Utils.hasHoneycomb()) {
                 // Enables action bar "up" navigation
-                getActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
 
             // Fetch the data Uri from the intent provided to this activity

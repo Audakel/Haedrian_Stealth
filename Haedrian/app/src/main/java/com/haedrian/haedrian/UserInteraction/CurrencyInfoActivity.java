@@ -31,7 +31,7 @@ import static com.haedrian.haedrian.R.array;
 import static com.haedrian.haedrian.R.layout;
 
 
-public class CurrencyInfoActivity extends Activity {
+public class CurrencyInfoActivity extends ActionBarActivity {
     private static final String TAG = CurrencyInfoActivity.class.getSimpleName();
     CurrencyAdapter adapter;
     private List<CurrencyModel> currencies = new ArrayList<CurrencyModel>();
@@ -44,7 +44,7 @@ public class CurrencyInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_currency_info);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         listView = (ListView) findViewById(R.id.currencyListView);

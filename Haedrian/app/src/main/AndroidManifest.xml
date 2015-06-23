@@ -361,7 +361,13 @@
         </activity>
         <activity
             android:name=".HomeScreen.RepayLoanActivity"
-            android:label="@string/title_activity_repay_loan" >
+            android:label="@string/title_activity_repay_loan"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
     </application>
 

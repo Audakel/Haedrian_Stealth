@@ -23,7 +23,7 @@ import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.CreateProjectFragm
 import com.haedrian.haedrian.R;
 
 
-public class CreateProjectActivity extends Activity
+public class CreateProjectActivity extends ActionBarActivity
         implements ProjectTitleFragment.OnFragmentInteractionListener,
         ProjectAboutFragment.OnFragmentInteractionListener,
         ProjectCategoryFragment.OnFragmentInteractionListener,

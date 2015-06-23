@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MapsActivity extends Activity {
+public class MapsActivity extends ActionBarActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private double latitude;
@@ -101,7 +101,7 @@ public class MapsActivity extends Activity {
         setContentView(R.layout.activity_maps2);
 
         // Set up ActionBar
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (ApplicationController.getToken().equals("")) {
             Intent intent = new Intent(this, PinActivity.class);
