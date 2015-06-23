@@ -28,8 +28,8 @@ import java.util.TreeSet;
  */
 public class TransactionListAdapter extends BaseAdapter {
 
-    private static final int TYPE_ITEM = 0;
-    private static final int TYPE_SEPARATOR = 1;
+    public static final int TYPE_ITEM = 0;
+    public static final int TYPE_SEPARATOR = 1;
 
     private Context context;
     private ArrayList<TransactionModel> transactions = new ArrayList<>();
@@ -144,6 +144,10 @@ public class TransactionListAdapter extends BaseAdapter {
     @Override
     public int getViewTypeCount() {
         return 2;
+    }
+
+    public int getPosition(int position) {
+        return position - sectionHeader.headSet(position).size();
     }
 
     static class TransactionDataHolder {

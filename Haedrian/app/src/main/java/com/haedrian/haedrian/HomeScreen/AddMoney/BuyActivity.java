@@ -545,9 +545,7 @@ public class BuyActivity extends ActionBarActivity {
                         try {
                             Log.v("TEST", "Buyorder: " + response.toString());
 
-                            boolean wasSuccessful = response.getBoolean("success");
-
-                            if (wasSuccessful) {
+                            if (response.getBoolean("success")) {
 
                                 BuyOrderModel buyOrder = new BuyOrderModel();
                                 buyOrder.setStatus(response.getJSONObject("order").getString("status"));
@@ -568,8 +566,8 @@ public class BuyActivity extends ActionBarActivity {
                             }
                             else {
                                 progressDialog.dismiss();
-                                JSONObject error = response.getJSONObject("error");
-                                Toast.makeText(BuyActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                String error = response.getString("error");
+                                Toast.makeText(BuyActivity.this, error, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             progressDialog.hide();

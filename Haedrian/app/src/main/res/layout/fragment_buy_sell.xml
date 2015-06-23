@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/lightgrey"
+    android:background="@drawable/concrete_repeating"
     tools:context="com.haedrian.haedrian.HomeScreen.Wallet.BuySellFragment">
 
     <TextView
