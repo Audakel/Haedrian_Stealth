@@ -431,7 +431,7 @@
     <string name="deposit_method">Deposit Method</string>
     <string name="outgoing_funds">Outgoing Funds</string>
     <string name="incoming_funds">Incoming Funds</string>
-    <string name="group_office">Office</string>
+    <string name="group_office">Office:</string>
     <string name="repay_loan">Repay Loan</string>
     <string name="my_wallet">My Wallet</string>
     <string name="title_activity_repay_loan">Repay Loan</string>

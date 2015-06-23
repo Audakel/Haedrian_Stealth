@@ -132,7 +132,8 @@ public class BuySellFragment extends Fragment {
                                         buyOrder.setId(object.getString("id"));
                                         buyOrder.setStatus(object.getString("status"));
                                         buyOrder.setOutletTitle(object.getString("outlet_title"));
-                                        buyOrder.setCreatedAt(object.getString("created_at"));
+                                        String createdAt = object.getString("created_at");
+                                        buyOrder.setCreatedAt(createdAt);
                                         buyOrder.setExchangeRate(object.getString("exchange_rate"));
                                         buyOrder.setInstructions(object.getString("instructions"));
                                         buyOrder.setExpirationTime(object.getString("expiration_time"));
@@ -190,7 +191,8 @@ public class BuySellFragment extends Fragment {
                         buyOrder.setId(object.getString("id"));
                         buyOrder.setStatus(object.getString("status"));
                         buyOrder.setOutletTitle(object.getString("outlet_title"));
-                        buyOrder.setCreatedAt(object.getString("created_at"));
+                        String createdAt = object.getString("created_at");
+                        buyOrder.setCreatedAt(createdAt);
                         buyOrder.setExchangeRate(object.getString("exchange_rate"));
                         buyOrder.setInstructions(object.getString("instructions"));
                         buyOrder.setExpirationTime(object.getString("expiration_time"));
@@ -220,6 +222,56 @@ public class BuySellFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public String formatDate(String date) {
+        String[] parts = date.split("-");
+        String year = parts[0];
+        String month = "";
+
+        switch (parts[1]) {
+            case "01":
+                month = getString(R.string.january);
+                break;
+            case "02":
+                month = getString(R.string.february);
+                break;
+            case "03":
+                month = getString(R.string.march);
+                break;
+            case "04":
+                month = getString(R.string.april);
+                break;
+            case "05":
+                month = getString(R.string.may);
+                break;
+            case "06":
+                month = getString(R.string.june);
+                break;
+            case "07":
+                month = getString(R.string.july);
+                break;
+            case "08":
+                month = getString(R.string.august);
+                break;
+            case "09":
+                month = getString(R.string.september);
+                break;
+            case "10":
+                month = getString(R.string.october);
+                break;
+            case "11":
+                month = getString(R.string.november);
+                break;
+            case "12":
+                month = getString(R.string.december);
+                break;
+        }
+
+        int day = Integer.parseInt(parts[2]);
+
+        return month + " " + day + ", " + year;
+
     }
 
 }

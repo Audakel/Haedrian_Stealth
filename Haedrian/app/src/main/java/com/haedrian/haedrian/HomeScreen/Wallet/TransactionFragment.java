@@ -32,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -237,9 +238,11 @@ public class TransactionFragment extends Fragment {
         transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(context, TransactionDetailsActivity.class);
-                intent.putExtra("transaction", transactions.get(position));
-                startActivity(intent);
+                if(adapter.getItemViewType(position) != TransactionListAdapter.TYPE_SEPARATOR) {
+                    Intent intent = new Intent(context, TransactionDetailsActivity.class);
+                    intent.putExtra("transaction", transactions.get(adapter.getPosition(position)));
+                    startActivity(intent);
+                }
             }
         });
     }
