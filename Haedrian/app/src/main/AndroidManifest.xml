@@ -39,7 +39,7 @@
         tools:replace="android:icon,android:theme,android:name" >
         <meta-data
             android:name="lenddoAppId"
-            android:value="55372dff7ec70ec34d9b3ef6" />
+            android:value="554192037ec70ec34d9b3ef9" />
         <meta-data
             android:name="googlePlacesApiKey"
             android:value="@string/google_places_api_key" />
