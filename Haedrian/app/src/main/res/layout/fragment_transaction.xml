@@ -4,7 +4,15 @@
       android:layout_height="match_parent"
       android:background="@color/lightgrey"
       android:orientation="vertical"
-      tools:context="com.haedrian.haedrian.HomeScreen.WalletActivity">
+      tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/transactions"
+        android:textSize="20sp"
+        android:textColor="@color/grey" />
 
     <TextView
         android:id="@+id/no_transaction_textview"
@@ -16,8 +24,8 @@
 
     <ListView
         android:id="@+id/transaction_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>

@@ -44,4 +44,8 @@
         <item>South Korean Won</item>
         <item>New Taiwan Dollar</item>
     </string-array>
+
+    <string-array name="payment_methods">
+        <item>No method selected</item>
+    </string-array>
 </resources>

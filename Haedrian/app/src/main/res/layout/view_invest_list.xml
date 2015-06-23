@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightgrey"
+        android:paddingBottom="15dp">
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/primary"
+            android:text="Fire Wood"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="italic"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/titleView"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/projectImageView"
+                android:layout_width="264dp"
+                android:layout_height="179dp"
+                android:src="@drawable/invest10"
+                />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/raisedView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$125"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/primary"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Amount Raised"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/goalRaisView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$450"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/primary"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/textVeiw18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Goal"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/daysLeftGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/primary"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Days Left"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/locationView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ghana"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/primary"
+                    android:textStyle="italic"/>
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textStyle="italic"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.haedrian.haedrian.LoginActivity"
-    android:background="@color/turquoise">
+    tools:context="com.haedrian.haedrian.UserInteraction.LoginActivity"
+    android:background="@drawable/concrete_repeating">
 
     <!-- Login progress -->
 
@@ -20,22 +20,11 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:textSize="60sp"
-        android:textColor="@color/white"
-        android:textStyle="italic" />
+        android:textColor="@color/primary"
+        android:textStyle="italic"
+        android:layout_marginBottom="50dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/by_haedrian"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:textColor="@color/lightgrey"
-        android:layout_marginBottom="30dp" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -49,10 +38,7 @@
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/turquoise">
+        android:background="@color/lightgrey">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -64,11 +50,11 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
+                android:hint="@string/prompt_username"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:background="@color/lightgrey"
+                android:background="@color/white"
                 android:paddingTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -80,7 +66,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/turquoise"
+                android:background="@color/lightgrey"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
@@ -95,7 +81,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:background="@color/lightgrey"
+                android:background="@color/white"
                 android:paddingTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -116,13 +102,10 @@
         android:layout_height="wrap_content"
         android:text="@string/action_sign_in"
         android:textStyle="bold"
-        android:layout_below="@+id/login_form"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/lightgrey"
+        android:background="@drawable/round_blue"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textColor="@color/turquoise"
+        android:textColor="@color/lightgrey"
         android:layout_marginTop="10dp" />
 
     <TextView
@@ -135,11 +118,8 @@
         android:clickable="true"
         android:onClick="onClick"
         android:gravity="center"
-        android:background="@color/turquoise"
-        android:layout_below="@+id/email_sign_in_button"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:textColor="#ffff" />
+        android:textColor="@color/primary"/>
 
 </LinearLayout>
 

@@ -41,7 +41,7 @@ public class CreatedProjectsListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null)
-            view = inflater.inflate(R.layout.created_projects_row, parent, false);
+            view = inflater.inflate(R.layout.row_created_projects, parent, false);
 
         return view;
     }

@@ -1,12 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="2dp"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.haedrian.haedrian.HomeScreen.BuyActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="2dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/concrete_repeating"
+        tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -25,11 +26,12 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="Buy Amount"
-            android:textColor="@color/turquoise"
+            android:text="@string/buy_amount"
+            android:textColor="@color/primary"
             android:textSize="20sp"/>
 
         <LinearLayout
+            android:id="@+id/conversion_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -39,7 +41,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1">
 
@@ -50,22 +52,27 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="USD"
+                    android:text="@string/usd"
                     android:textSize="14sp"/>
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/currency_edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/textView9"
                     android:layout_toRightOf="@+id/textView9"
                     android:ems="10"
                     android:gravity="right"
-                    android:hint="0.0"
                     android:inputType="numberDecimal"
-                    android:textIsSelectable="true"
                     android:textSize="14sp"/>
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:text="@string/about_equal" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -80,22 +87,48 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="BTC"
+                    android:text="@string/btc"
                     android:textSize="14sp"/>
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/bitcoin_edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/textView10"
                     android:layout_toRightOf="@+id/textView10"
                     android:ems="10"
                     android:gravity="right"
-                    android:hint="0.0"
                     android:inputType="numberDecimal"
-                    android:textIsSelectable="true"
                     android:textSize="14sp"/>
             </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_below="@+id/conversion_container">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/one_btc"/>
+
+            <TextView
+                android:id="@+id/currency_sign_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/amount_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="0.00012"/>
+
         </LinearLayout>
 
     </RelativeLayout>
@@ -111,32 +144,34 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/payment_amount_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="Payment Method"
-            android:textColor="@color/turquoise"
+            android:text="@string/deposit_method"
+            android:textColor="@color/primary"
             android:textSize="20sp"/>
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/method_spinner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView11"
-            android:layout_marginTop="10dp"
-            android:text="BDO 24 hour ATM Deposit"
-            android:textSize="14sp"/>
+            android:layout_below="@+id/payment_amount_title"
+            android:entries="@array/payment_methods" />
 
+        <Spinner
+            android:id="@+id/outlet_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/method_spinner"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout3"
+        android:id="@+id/financial_container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -153,7 +188,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="Subtotal:"
+            android:text="@string/subtotal"
             android:textSize="14sp"/>
 
         <TextView
@@ -163,7 +198,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView13"
-            android:text="Haedrian Cost:"
+            android:text="@string/haedrian_fee"
             android:textSize="14sp"/>
 
         <TextView
@@ -172,7 +207,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView14"
-            android:text="Payment Method Fee:"
+            android:text="@string/payment_method_fee"
             android:textSize="14sp"/>
 
         <TextView
@@ -183,285 +218,275 @@
             android:layout_alignStart="@+id/textView15"
             android:layout_below="@+id/textView15"
             android:layout_marginTop="5dp"
-            android:text="Total Due:"
-            android:textColor="@color/turquoise"
+            android:text="@string/total_due"
+            android:textColor="@color/grey"
             android:textSize="14sp"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/subtotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="0.00"/>
+            android:layout_alignParentTop="true"/>
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/haedrian_fee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView17"
-            android:text="0.00"/>
+            android:layout_below="@+id/subtotal"/>
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/payment_method_fee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView18"
-            android:text="0.00"/>
+            android:layout_below="@+id/haedrian_fee"/>
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/total_due"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView19"
+            android:layout_below="@+id/payment_method_fee"
             android:layout_marginTop="5dp"
-            android:text="0.00"
-            android:textColor="@color/turquoise"
+            android:textColor="@color/grey"
             android:textStyle="bold"/>
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/relativeLayout3"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_white"
+    <!--<LinearLayout-->
+        <!--android:id="@+id/linearLayout2"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@+id/relativeLayout3"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/round_white"-->
+        <!--android:orientation="horizontal">-->
 
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:showDividers="beginning">
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical"-->
+            <!--android:showDividers="beginning">-->
 
 
-            <Button
-                android:id="@+id/button1"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"/>
+            <!--<Button-->
+                <!--android:id="@+id/button1"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="1"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/button4"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"/>
+            <!--<Button-->
+                <!--android:id="@+id/button4"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="4"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/button7"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="7"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"/>
+            <!--<Button-->
+                <!--android:id="@+id/button7"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="7"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/buttonDot"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="."
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"/>
-        </LinearLayout>
+            <!--<Button-->
+                <!--android:id="@+id/buttonDot"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="."-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"/>-->
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:showDividers="beginning">
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical"-->
+            <!--android:showDividers="beginning">-->
 
-            <Button
-                android:id="@+id/button2"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="2"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
+            <!--<Button-->
+                <!--android:id="@+id/button2"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="2"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/button5"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="5"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
+            <!--<Button-->
+                <!--android:id="@+id/button5"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="5"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/button8"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="8"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
+            <!--<Button-->
+                <!--android:id="@+id/button8"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="8"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/button0"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
-        </LinearLayout>
+            <!--<Button-->
+                <!--android:id="@+id/button0"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="0"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:showDividers="beginning">
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical"-->
+            <!--android:showDividers="beginning">-->
 
-            <Button
-                android:id="@+id/button3"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
+            <!--<Button-->
+                <!--android:id="@+id/button3"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="3"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/button6"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="6"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
+            <!--<Button-->
+                <!--android:id="@+id/button6"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="6"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/button9"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="9"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
+            <!--<Button-->
+                <!--android:id="@+id/button9"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="9"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@color/offset_color"/>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="6dp"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:background="@color/primary"/>-->
 
-            <Button
-                android:id="@+id/buttonBack"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="&lt;x"
-                android:textColor="@color/offset_color"
-                android:textSize="22sp"
-                />
-        </LinearLayout>
+            <!--<Button-->
+                <!--android:id="@+id/buttonBack"-->
+                <!--style="?android:attr/borderlessButtonStyle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="&lt;x"-->
+                <!--android:textColor="@color/primary"-->
+                <!--android:textSize="22sp"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <Button
-        android:id="@+id/button19"
+        android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout2"
+        android:layout_below="@+id/financial_container"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-
-        android:background="@color/turquoise"
-        android:bottomLeftRadius="40dp"
-        android:bottomRightRadius="40dp"
-        android:text="Submit"
-        android:textColor="#ffffffff"
-        android:topLeftRadius="40dp"
-        android:topRightRadius="40dp"/>
+        android:background="@drawable/round_blue"
+        android:text="@string/submit"
+        android:textColor="@color/white"/>
 
 
 </RelativeLayout>

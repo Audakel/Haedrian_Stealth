@@ -31,9 +31,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".ApplicationController"
+        android:name=".Application.ApplicationController"
         android:allowBackup="true"
-        android:icon="@drawable/logobird_black"
+        android:icon="@drawable/birdlogo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme,android:name" >
@@ -45,7 +45,7 @@
             android:value="@string/google_places_api_key" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".UserInteraction.LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
@@ -57,14 +57,9 @@
         <activity
             android:name=".HomeScreen.HomeActivity"
             android:label="@string/title_activity_home" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".SendRequestActivity"
+            android:name=".HomeScreen.SendRequest.SendRequestActivity"
             android:label="@string/title_activity_send_request"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -74,7 +69,7 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".HomeScreen.AddActivity"
+            android:name=".HomeScreen.Contacts.ContactsActivity"
             android:label="@string/title_activity_add"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -85,7 +80,7 @@
             >
         </activity>
         <activity
-            android:name=".ProjectsActivity"
+            android:name=".HomeScreen.ApplyForLoan.Projects.ProjectsActivity"
             android:label="@string/title_activity_projects"
             android:parentActivityName=".HomeScreen.HomeActivity"
             android:windowSoftInputMode="adjustPan" >
@@ -106,7 +101,7 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".CreateProjectActivity"
+            android:name=".HomeScreen.ApplyForLoan.Projects.CreateProjectActivity"
             android:label="@string/title_activity_create"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -116,11 +111,17 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:name=".UserInteraction.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".HomeScreen.WalletActivity"
+            android:name=".HomeScreen.Wallet.WalletActivity"
             android:label="@string/title_activity_wallet"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -130,19 +131,19 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".HomeScreen.BuyActivity"
+            android:name=".HomeScreen.AddMoney.BuyActivity"
             android:label="@string/title_activity_buy"
-            android:parentActivityName=".HomeScreen.HomeActivity" >
+            android:parentActivityName=".HomeScreen.AddMoney.BuyOptions" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity" />
+                android:value=".HomeScreen.AddMoney.BuyOptions" />
         </activity>
         <activity
-            android:name=".SendActivity"
+            android:name=".HomeScreen.SendRequest.SendActivity"
             android:label="@string/title_activity_send"
-            android:parentActivityName=".SendRequestActivity" >
+            android:parentActivityName=".HomeScreen.SendRequest.SendRequestActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
@@ -150,7 +151,7 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".ProjectsList"
+            android:name=".HomeScreen.ApplyForLoan.Projects.ProjectsList"
             android:label="@string/title_activity_projects_list"
             android:parentActivityName=".HomeScreen.InvestActivity" >
 
@@ -160,23 +161,9 @@
                 android:value=".HomeScreen.InvestActivity" />
         </activity>
         <activity
-            android:name=".CreateWalletActivity"
-            android:label="@string/title_activity_create_wallet"
-            android:parentActivityName=".HomeScreen.WalletActivity" >
-
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.WalletActivity" />
-        </activity>
-        <activity
-            android:name=".CurrencyInfoActivity"
-            android:label="@string/title_activity_invest_info" >
-        </activity>
-        <activity
-            android:name=".RequestActivity"
-            android:label="@string/title_activity_request"
-            android:parentActivityName=".SendRequestActivity" >
+            android:name=".UserInteraction.CurrencyInfoActivity"
+            android:label="@string/title_activity_currency_info"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
@@ -184,41 +171,51 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".ImportWalletActivity"
-            android:label="@string/title_activity_import_wallet"
-            android:parentActivityName=".HomeScreen.WalletActivity" >
+            android:name=".HomeScreen.SendRequest.RequestActivity"
+            android:label="@string/title_activity_request"
+            android:parentActivityName=".HomeScreen.SendRequest.SendRequestActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.WalletActivity" />
+                android:value=".HomeScreen.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.Wallet.ImportWalletActivity"
+            android:label="@string/title_activity_import_wallet"
+            android:parentActivityName=".HomeScreen.Wallet.WalletActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.Wallet.WalletActivity" />
         </activity>
         <activity
             android:name=".Scanner.CaptureActivity"
             android:label="@string/title_activity_capture"
-            android:parentActivityName=".SendActivity" >
+            android:parentActivityName=".HomeScreen.SendRequest.SendActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SendActivity" />
+                android:value=".HomeScreen.SendRequest.SendActivity" />
         </activity>
         <activity
-            android:name=".GetContacts"
+            android:name=".HomeScreen.Contacts.GetContacts"
             android:label="@string/title_activity_get_contacts" >
         </activity>
         <activity
-            android:name=".ContactDetailActivity"
+            android:name=".HomeScreen.Contacts.ContactDetailActivity"
             android:label="@string/activity_contact_detail"
-            android:parentActivityName=".GetContacts" >
+            android:parentActivityName=".HomeScreen.Contacts.GetContacts" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GetContacts" />
+                android:value=".HomeScreen.Contacts.GetContacts" />
         </activity>
         <activity
-            android:name=".CreditScore.GetCreditScoreActivity"
+            android:name=".HomeScreen.ApplyForLoan.CreditScore.GetCreditScoreActivity"
             android:label="@string/title_activity_credit_check"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -228,23 +225,29 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".CreditScore.CompleteActivity"
+            android:name=".HomeScreen.ApplyForLoan.CreditScore.CompleteActivity"
             android:label="@string/title_activity_complete" >
         </activity>
         <activity
-            android:name=".CreditScore.CanceledActivity"
+            android:name=".HomeScreen.ApplyForLoan.CreditScore.CanceledActivity"
             android:label="@string/title_activity_canceled" >
         </activity>
         <activity
-            android:name=".CreditScore.WaitForCreditScore"
+            android:name=".HomeScreen.ApplyForLoan.CreditScore.WaitForCreditScore"
             android:label="@string/title_activity_wait_for_credit_score" >
         </activity>
         <activity
-            android:name=".SignupActivity"
-            android:label="@string/title_activity_signup" >
+            android:name=".UserInteraction.SignupActivity"
+            android:label="@string/title_activity_signup"
+            android:parentActivityName=".UserInteraction.LoginActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserInteraction.LoginActivity" />
         </activity>
         <activity
-            android:name=".CreditScore.HasCreditScoreActivity"
+            android:name=".HomeScreen.ApplyForLoan.CreditScore.HasCreditScoreActivity"
             android:label="@string/title_activity_existing_credit_score"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -254,7 +257,7 @@
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".CreditScore.CheckForCreditScore"
+            android:name=".HomeScreen.ApplyForLoan.CreditScore.CheckForCreditScore"
             android:label="@string/title_activity_check_for_credit_score"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
@@ -272,8 +275,93 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".HomeScreen.MapsActivity"
             android:label="@string/title_activity_maps"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.Wallet.TransactionDetailsActivity"
+            android:label="@string/title_activity_transaction_details"
+            android:parentActivityName=".HomeScreen.Wallet.WalletActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.Wallet.WalletActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.AddMoney.OrderSummaryActivity"
+            android:label="@string/title_activity_order_summary"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".UserInteraction.PinActivity"
+            android:label="@string/title_activity_pin" >
+        </activity>
+        <activity
+            android:name=".UserInteraction.About"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".UserInteraction.SettingsActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserInteraction.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".UserInteraction.Help"
+            android:label="@string/title_activity_help"
+            android:parentActivityName=".UserInteraction.SettingsActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserInteraction.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.AddMoney.BuyOrderVerifyActivity"
+            android:label="@string/title_activity_buy_order_verify"
+            android:parentActivityName=".HomeScreen.Wallet.WalletActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.Wallet.WalletActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.AddMoney.BuyOptions"
+            android:label="@string/title_activity_buy_options"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.AddMoney.GroupBuyActivity"
+            android:label="@string/title_activity_group_buy"
+            android:parentActivityName=".HomeScreen.AddMoney.BuyOptions"
+            android:windowSoftInputMode="adjustPan" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.AddMoney.BuyOptions" />
+        </activity>
+        <activity
+            android:name=".HomeScreen.RepayLoanActivity"
+            android:label="@string/title_activity_repay_loan"
             android:parentActivityName=".HomeScreen.HomeActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->

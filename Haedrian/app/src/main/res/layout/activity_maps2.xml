@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/concrete_repeating"
     tools:context=".MainActivity" >
 
     <TextView
@@ -10,14 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/find_a_location"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:gravity="center_horizontal"
-        android:layout_margin="16dp"/>
+        android:layout_margin="10dp"/>
+
+    <Spinner
+        android:id="@+id/location_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:spinnerMode="dropdown"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"/>
+
+
+    <Spinner
+        android:id="@+id/outlet_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:spinnerMode="dropdown"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent" android:id="@+id/map"
-        tools:context="com.haedrian.haedrian.MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        tools:context="com.haedrian.haedrian.HomeScreen.MapsActivity"
+        android:name="com.google.android.gms.maps.MapFragment" />
 
 </LinearLayout>

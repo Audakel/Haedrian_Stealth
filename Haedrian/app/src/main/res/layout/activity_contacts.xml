@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    android:background="@color/white" >
+
+
+
+    <LinearLayout
+        android:id="@+id/error_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_round_button_error"
+        android:paddingBottom="10dp"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:textColor="@color/error_red_text"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/contact_edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:hint="@string/contact_search"
+        android:layout_below="@+id/error_layout"
+        android:inputType="textCapWords" />
+
+    <LinearLayout
+        android:id="@+id/results_linear_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal"
+        android:background="@color/primary"
+        android:layout_below="@id/contact_edit_text"
+        android:visibility="gone"  >
+
+        <TextView
+            android:id="@+id/results_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/results"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:focusable="false"
+            android:paddingRight="5dp" />
+        <TextView
+            android:id="@+id/results_number_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:focusable="false" />
+
+
+    </LinearLayout>
+
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/contact_list"
+        android:layout_below="@id/results_linear_layout"
+        android:name="com.haedrian.haedrian.HomeScreen.Contacts.ContactsListFragment"
+        xmlns:android="http://schemas.android.com/apk/res/android"/>
+
+
+</RelativeLayout>

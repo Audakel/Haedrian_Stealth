@@ -2,6 +2,7 @@ package com.haedrian.haedrian.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,14 @@ public class CurrencyAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<CurrencyModel> currencies;
+    private Resources resources;
+
 
     public CurrencyAdapter(Activity activity, List<CurrencyModel> currencies) {
         this.activity = activity;
         this.currencies = currencies;
+
+        resources = activity.getResources();
     }
 
     @Override
@@ -49,7 +54,7 @@ public class CurrencyAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.currency_list_view, null);
+            convertView = inflater.inflate(R.layout.view_currency_list, null);
 
         TextView name = (TextView) convertView.findViewById(R.id.currencyNameText);
         TextView buy = (TextView) convertView.findViewById(R.id.currencyBuyText);
@@ -64,10 +69,10 @@ public class CurrencyAdapter extends BaseAdapter {
         name.setText(currencyModel.getCurrencyName());
 
         // rating
-        buy.setText("Buy: " + String.valueOf(currencyModel.getBuyRate()));
+        buy.setText(resources.getString(R.string.buy)+ " " + String.valueOf(currencyModel.getBuyRate()));
 
         // sell
-        sell.setText("Sell: " + currencyModel.getSellRate());
+        sell.setText(resources.getString(R.string.sell) + " " + currencyModel.getSellRate());
 
         // release year
         symbol.setText(currencyModel.getSymbol());
