@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 
 public class BuyOptions extends ActionBarActivity {
 
@@ -19,6 +21,13 @@ public class BuyOptions extends ActionBarActivity {
         setContentView(R.layout.activity_buy_options);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     @Override

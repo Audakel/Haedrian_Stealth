@@ -144,17 +144,6 @@ public class ApplicationController extends Application {
 
     public static void setToken(String userToken) { token = userToken; }
 
-    public static String getExchangeRate() {
-
-        if (Locale.getDefault().equals(Locale.ENGLISH)) {
-            
-        }
-        else if (Locale.getDefault().getLanguage().equals("fil")) {
-
-        }
-
-        return "";
-    }
 
 
     public static void cacheJSON(JSONObject response, String name) {
@@ -183,6 +172,12 @@ public class ApplicationController extends Application {
         }
 
         return cachedResponse;
+    }
+
+    public static void resetTimestamps() {
+        balanceTimestamp = 0L;
+        buySellTimestamp = 0L;
+        transactionTimestamp = 0L;
     }
 
     public static long getBalanceTimestamp() {

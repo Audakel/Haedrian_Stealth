@@ -342,6 +342,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     private void signOut() {
+        ApplicationController.resetTimestamps();
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
 

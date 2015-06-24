@@ -171,8 +171,8 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
                             }
                             else {
                                 progressDialog.dismiss();
-                                JSONObject error = response.getJSONObject("error");
-                                Toast.makeText(BuyOrderVerifyActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                String error = response.getString("error");
+                                Toast.makeText(BuyOrderVerifyActivity.this, error, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

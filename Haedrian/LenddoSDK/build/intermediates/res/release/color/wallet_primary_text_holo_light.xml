@@ -7,4 +7,4 @@
     <item android:state_selected="true" android:color="@color/wallet_bright_foreground_holo_light"/>
     <item android:color="@color/wallet_bright_foreground_holo_light"/> <!-- not selected -->
 </selector>
-<!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/google-play-services_lib/res/color/wallet_primary_text_holo_light.xml --><!-- From: file:/home/audakel/AndroidStudioProjects/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/exploded-aar/Haedrian/google-play-services_lib/unspecified/res/color/wallet_primary_text_holo_light.xml -->
+<!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/google-play-services_lib/res/color/wallet_primary_text_holo_light.xml --><!-- From: file:/C:/Users/Logan/Documents/haedrian/Haedrian_Stealth/Haedrian/LenddoSDK/build/intermediates/exploded-aar/Haedrian/google-play-services_lib/unspecified/res/color/wallet_primary_text_holo_light.xml -->

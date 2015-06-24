@@ -8,6 +8,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import org.w3c.dom.Text;
 public class BuyInstructionsDialog extends Dialog {
 
     private Button closeButton;
-    private TextView instructionsTV;
+    private WebView instructionsWV;
 
     private String instructions;
 
@@ -37,10 +38,13 @@ public class BuyInstructionsDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_buy_instructions);
 
-        instructionsTV = (TextView) findViewById(R.id.instructions);
+        instructionsWV = (WebView) findViewById(R.id.instructions);
 
-        Spanned span = Html.fromHtml(instructions);
-        instructionsTV.setText(span);
+        String mime = "text/html";
+        String encoding = "utf-8";
+
+        instructionsWV.getSettings().setJavaScriptEnabled(true);
+        instructionsWV.loadDataWithBaseURL(null, instructions, mime, encoding, null );
 
         closeButton = (Button) findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {

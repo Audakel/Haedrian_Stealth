@@ -193,6 +193,7 @@ public class SettingsActivity extends ActionBarActivity {
     }
 
     private void signOut() {
+        ApplicationController.resetTimestamps();
         SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
 

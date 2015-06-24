@@ -323,9 +323,9 @@ public class SignupActivity extends ActionBarActivity {
                                 finish();
                             }
                             else if (response.getString("success").equals("false")) {
-                                String errorMessage = response.getString("error");
+                                String error = response.getString("error");
                                 progressDialog.dismiss();
-                                Toast.makeText(SignupActivity.this, getResources().getString(R.string.duplicate_username), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, error, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

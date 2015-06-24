@@ -160,6 +160,7 @@ public class MapsActivity extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        progressDialog.dismiss();
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
         FlurryAgent.onEndSession(this);
     }
@@ -230,7 +231,6 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     public void getLocations() {
-
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, depositLocations);
         locationSpinner.setAdapter(locationAdapter);
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

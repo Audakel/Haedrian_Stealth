@@ -522,9 +522,17 @@ public class BuyActivity extends ActionBarActivity {
     private void makeBuyOrder(String outletId) {
         String url = ApplicationConstants.BASE + "buy/";
 
+        String currency = "";
+        if (Locale.getDefault().equals(Locale.US)) {
+            currency = "USD";
+        }
+        else if (Locale.getDefault().getLanguage().equals("fil")) {
+            currency = "PHP";
+        }
+
         JSONObject body = new JSONObject();
         try {
-            body.put("currency", "PHP");
+            body.put("currency", currency);
             body.put("amount_local", currencyEditText.getText().toString());
             body.put("payment_method", outletId);
             body.put("target_account_id", "");

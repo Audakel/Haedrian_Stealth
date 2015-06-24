@@ -45,6 +45,10 @@ public class GroupMemberDialog extends Dialog {
         
         String formattedNumber = PhoneNumberUtils.formatNumber(user.getPhoneNumber());
 
+        if (formattedNumber.equals("")) {
+            formattedNumber = getContext().getString(R.string.not_available);
+        }
+
         phoneNumber.setText(formattedNumber);
         id.setText(user.getId());
 

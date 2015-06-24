@@ -30,6 +30,7 @@ import com.haedrian.haedrian.CustomDialogs.GroupVerifyDialog;
 import com.haedrian.haedrian.Models.BuyOrderHistoryModel;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONArray;
@@ -61,6 +62,12 @@ public class GroupBuyActivity extends ActionBarActivity {
         setContentView(R.layout.activity_group_buy);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
