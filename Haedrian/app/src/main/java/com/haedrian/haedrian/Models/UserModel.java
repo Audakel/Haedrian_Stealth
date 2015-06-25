@@ -5,8 +5,8 @@ package com.haedrian.haedrian.Models;
  */
 public class UserModel {
     private int  walletId, creditScore;
-    private String id, parseId, username, firstName, lastName, phoneNumber, email;
-    private Long amount;
+    private String id, parseId, username, firstName, lastName, phoneNumber, email, amount;
+
 
     public UserModel() {
         this.id = "";
@@ -17,7 +17,7 @@ public class UserModel {
         this.lastName = "";
         this.phoneNumber = "";
         this.email = "";
-        this.amount = 0L;
+        this.amount = "0";
     }
 
     public String getId() {
@@ -88,7 +88,7 @@ public class UserModel {
         this.email = email;
     }
 
-    public Long getAmount() { return this.amount; }
+    public String getAmount() { return this.amount; }
 
-    public void setAmount(Long amount) { this.amount = amount; }
+    public void setAmount(String amount) { this.amount = amount; }
 }

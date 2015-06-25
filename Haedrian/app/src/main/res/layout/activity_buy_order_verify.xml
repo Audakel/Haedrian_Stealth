@@ -154,7 +154,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/round_blue"
-            android:text="@string/mark_as_paid"
+            android:text="@string/mark_as_completed"
             android:textColor="@color/white"
             android:onClick="onClick"/>
 

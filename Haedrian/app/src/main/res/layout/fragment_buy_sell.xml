@@ -6,17 +6,33 @@
     android:background="@drawable/concrete_repeating"
     tools:context="com.haedrian.haedrian.HomeScreen.Wallet.BuySellFragment">
 
-    <TextView
-        android:id="@+id/no_buyorder_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/no_buy_orders"
-        android:layout_margin="16dp"
-        android:layout_gravity="center"/>
+    <LinearLayout
+        android:id="@+id/empty_state_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/sadgirl"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/no_buy_orders"
+            android:textSize="16sp"/>
+
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/buyorder_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </LinearLayout>

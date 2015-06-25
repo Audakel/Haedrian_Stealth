@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,7 @@ public class RepayLoanActivity extends ActionBarActivity {
     private Button repayLoanButton;
     private TextView currencySymbol;
     private EditText amountET, noteET;
+    private ScrollView myScrollView;
 
     private ArrayList<String> microfinanceInstitutions = new ArrayList<>();
     private ArrayList<String> paymentAmounts = new ArrayList<>();
@@ -96,6 +98,7 @@ public class RepayLoanActivity extends ActionBarActivity {
         paymentIds.add("");
         paymentAmounts.add("");
 
+        myScrollView = (ScrollView) findViewById(R.id.scrollview);
         microfinanceSpinner = (Spinner) findViewById(R.id.microfinance_spinner);
         groupPaymentsSpinner = (Spinner) findViewById(R.id.group_payments_spinner);
         paymentTypeContainer = (LinearLayout) findViewById(R.id.payment_type_container);
@@ -148,6 +151,9 @@ public class RepayLoanActivity extends ActionBarActivity {
                     paymentTypeContainer.setVisibility(View.VISIBLE);
                     paymentTypeContainer.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_in_bottom));
                 } else {
+                    individualGroup.clearCheck();
+                    amountET.setText("");
+                    noteET.setText("");
                     paymentTypeContainer.setVisibility(View.GONE);
                     individualContainer.setVisibility(View.GONE);
                     groupPaymentsSpinner.setVisibility(View.GONE);
@@ -171,6 +177,8 @@ public class RepayLoanActivity extends ActionBarActivity {
                     individualContainer.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_in_bottom));
 
                 } else if (checkedId == R.id.group) {
+                    amountET.setText("");
+                    noteET.setText("");
                     individualContainer.setVisibility(View.GONE);
                     groupPaymentsSpinner.setVisibility(View.VISIBLE);
                     groupPaymentsSpinner.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_in_bottom));
@@ -206,14 +214,14 @@ public class RepayLoanActivity extends ActionBarActivity {
                 String amount = "";
                 int checkedRadioId = individualGroup.getCheckedRadioButtonId();
                 if (checkedRadioId == R.id.individual) {
-                    amount = amountET.getText().toString();
+                    amount = convertToCurrency(amountET.getText().toString());
                 }
                 else if (checkedRadioId == R.id.group) {
                     amount = paymentAmounts.get(groupPaymentsSpinner.getSelectedItemPosition());
                 }
 
                 String message = getString(R.string.repay_loan_of) + " "
-                        + currency.getSymbol() + amount + " "
+                        + amount + " "
                         + getString(R.string.to_dialog) + " "
                         + microfinanceInstitutions.get(microfinanceSpinner.getSelectedItemPosition()) + "?";
 
@@ -279,10 +287,9 @@ public class RepayLoanActivity extends ActionBarActivity {
                                 int length = payments.length();
                                 for (int i = 0; i < length; i++) {
 
-                                    String paymentAmount = payments.getJSONObject(i).getString("total_payment");
-                                    paymentAmounts.add(paymentAmount);
-                                    Currency currency = Currency.getInstance(Locale.getDefault());
-                                    String paymentMessage = getString(R.string.group_payment_of) + " " + currency.getSymbol() + paymentAmount;
+                                    String formattedAmount = convertToCurrency(payments.getJSONObject(i).getString("total_payment"));
+                                    paymentAmounts.add(formattedAmount);
+                                    String paymentMessage = getString(R.string.group_payment_of) + " " + formattedAmount;
                                     groupPayments.add(paymentMessage);
                                     paymentIds.add(payments.getJSONObject(i).getString("payment_id"));
                                 }
@@ -322,6 +329,16 @@ public class RepayLoanActivity extends ActionBarActivity {
 
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
+
+    private String convertToCurrency(String payment) {
+        Double paymentAmount = Double.parseDouble(payment);
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        // To strip out the currency symbol
+        DecimalFormatSymbols symbols = ((DecimalFormat) format).getDecimalFormatSymbols();
+        ((DecimalFormat) format).setDecimalFormatSymbols(symbols);
+
+        return format.format(paymentAmount).replaceAll(" ", "");
     }
 
     private void sendPayment() {

@@ -16,7 +16,7 @@ public class ApplicationConstants {
     public final static String lenddo_key_scriptId = "55252b62aa96123cde054740";
 
 
-    public static final long ONE_MINUTE = 60 * 1000;
+    public static final long TWENTY_SECONDS = 20 * 1000;
 
 
     public static final String MY_FLURRY_API_KEY = "FS5BYJRV5697D2QS9SDB";

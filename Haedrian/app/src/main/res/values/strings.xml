@@ -215,7 +215,7 @@
 
     <string name="title_activity_form_builder">Form Builder</string>
     <string name="customer_id">Client ID</string>
-    <string name="ellipses">...</string>
+    <string name="ellipses">…</string>
     <string name="employment_start_date">Employment Start Date</string>
     <string name="employment_end_date">Employment end date</string>
     <string name="mother_last_name">Mother Last Name</string>
@@ -248,7 +248,7 @@
     <string name="buy_sell">Buy/Sell Bitcoin</string>
     <string name="find_a_location">Pick a deposit bank to see locations near you!</string>
     <string name="from_to">To:</string>
-    <string name="transaction_type">Request Pending...</string>
+    <string name="transaction_type">Request Pending…</string>
     <string name="title_activity_transaction_details">Transaction Details</string>
     <string name="dummy_date">May 5, 2015</string>
     <string name="dummy_from">Me</string>
@@ -297,7 +297,7 @@
     <string name="status_2">Status:</string>
     <string name="dummy_status">Pending Payment</string>
     <string name="payment_instructions">Payment Instructions</string>
-    <string name="mark_as_paid">Mark As Paid</string>
+    <string name="mark_as_completed">Mark As Completed</string>
     <string name="title_activity_pin">PinActivity</string>
     <string name="create_pin">Create pin</string>
     <string name="prompt_username">Username</string>
@@ -308,10 +308,10 @@
     <string name="btc_for">BTC for</string>
     <string name="short_password">Password is shorter than 8 characters!</string>
     <string name="no_number_password">Password doesn\'t have a number!</string>
-    <string name="creating_wallet">Creating Wallet...</string>
+    <string name="creating_wallet">Creating Wallet…</string>
     <string name="buy">Buy:</string>
     <string name="sell">Sell:</string>
-    <string name="dialog_loading">Loading...</string>
+    <string name="dialog_loading">Loading…</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="please_select">Please Select</string>
@@ -331,12 +331,12 @@
     <string name="username_required">Username is required!</string>
     <string name="sent_bitcoin">Sent Bitcoin</string>
     <string name="received_bitcoin">Received Bitcoin</string>
-    <string name="initializing_wallet">Loading wallet...</string>
-    <string name="login_error_message">An error ocurred. Please try again later.</string>
+    <string name="initializing_wallet">Loading wallet…</string>
+    <string name="login_error_message">An error occurred Please try again later.</string>
     <string name="incorrect_credentials">The credentials were not recognized. Please try again.</string>
     <string name="phone_number_required">Phone number is required!</string>
     <string name="united_states">United States</string>
-    <string name="phillipines">Phillipines</string>
+    <string name="phillipines">Philippines</string>
     <string name="united_states_abbr">US</string>
     <string name="country_required">Country*</string>
     <string name="country_code_required">Please select a country!</string>
@@ -345,7 +345,7 @@
     <string name="invalid_password">This password is invalid</string>
     <string name="invalid_email">Email address is invalid</string>
     <string name="invalid_phone_number">Invalid phone number</string>
-    <string name="invalid_username">Username is not valid</string>
+    <string name="invalid_username">Username is not valid. Must be 3–15 characters long.</string>
     <string name="get_wallet_address">Get Wallet Address</string>
     <string name="dummy_bitcoin_address">1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v</string>
     <string name="transactions">Transactions</string>
@@ -357,7 +357,7 @@
     <string name="picasso_license">Copyright 2013 Square, Inc.  Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at     http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="picasso_title">Picasso</string>
     <string name="volley_title">Volley</string>
-    <string name="volley_license">Copyright (C) 2011 The Android Open Source Project  Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at      http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="volley_license">Copyright © 2011 The Android Open Source Project  Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at      http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="title_activity_help">Help</string>
     <string name="help">For help and support, email</string>
     <string name="get_back_to_you">and we\'ll get back to you as soon as we can!</string>
@@ -368,8 +368,8 @@
     <string name="union_bank">Union Bank</string>
     <string name="please_enter_buy_amount">Please enter a deposit amount.</string>
     <string name="please_select_payment_method">Please select payment method.</string>
-    <string name="mark_in_transaction">Mark as paid in the</string>
-    <string name="wallet_activity"><u>Wallet Activity</u></string>
+    <string name="mark_in_transaction">After you have completed the deposit, mark it as completed here:</string>
+    <string name="wallet_activity"><u>My Wallet</u></string>
     <string name="close">Close</string>
     <string name="enter_amount">Please enter an amount greater than 0 to send</string>
     <string name="outside_address">Outside address</string>
@@ -386,10 +386,10 @@
     <string name="october">October</string>
     <string name="november">November</string>
     <string name="december">December</string>
-    <string name="please_select_outlet">Please select outlet</string>
+    <string name="please_select_location">Please select deposit location</string>
     <string name="buyorder_fail">Deposit was not successful. Please try again.</string>
     <string name="no_method">No Method Selected</string>
-    <string name="no_outlet">No Outlet Selected</string>
+    <string name="no_deposit_location">No Deposit Location Selected</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="username_title">Username</string>
@@ -441,9 +441,11 @@
     <string name="amount_hint">0.00</string>
     <string name="repay_loan_of">Repay loan of</string>
     <string name="group_payment_of">Group payment of</string>
-    <string name="about_to_add">About to add</string>
+    <string name="about_to_deposit">About to deposit</string>
     <string name="to_your_wallet_for">to your wallet for</string>
     <string name="deposit">Deposit</string>
     <string name="loanId">Loan ID</string>
+    <string name="mark_deposits_as_completed">Mark deposits as completed here:</string>
+
 
 </resources>

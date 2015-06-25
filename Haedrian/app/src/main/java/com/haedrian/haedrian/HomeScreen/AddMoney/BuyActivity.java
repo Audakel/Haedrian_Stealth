@@ -1,8 +1,6 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -12,30 +10,24 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.ConfirmOrderDialog;
-import com.haedrian.haedrian.CustomDialogs.PaymentMethodDialog;
 import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
@@ -202,7 +194,7 @@ public class BuyActivity extends ActionBarActivity {
                 }
 
                 if (outletSpinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_outlet), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_location), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -296,7 +288,7 @@ public class BuyActivity extends ActionBarActivity {
                                 depositLocations.add(locations.getJSONObject(i).getString("name"));
                                 JSONArray outlets = locations.getJSONObject(i).getJSONArray("outlets");
                                 ArrayList<String> outlet = new ArrayList<>();
-                                outlet.add(0, getString(R.string.no_outlet));
+                                outlet.add(0, getString(R.string.no_deposit_location));
                                 ArrayList<String> outletId = new ArrayList<>();
                                 outletId.add(0, "");
                                 ArrayList<String> fee = new ArrayList<>();

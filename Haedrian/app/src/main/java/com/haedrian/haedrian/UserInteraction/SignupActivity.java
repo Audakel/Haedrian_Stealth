@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,8 @@ public class SignupActivity extends ActionBarActivity {
     private String countryCode;
     private String country;
 
+    private ScrollView scrollView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,7 @@ public class SignupActivity extends ActionBarActivity {
         progressDialog.setMessage(getString(R.string.dialog_loading));
         progressDialog.setCancelable(false);
 
+        scrollView = (ScrollView) findViewById(R.id.scrollview);
         emailET = (EditText) findViewById(R.id.email_edit_text);
         usernameET = (EditText) findViewById(R.id.username_edit_text);
         phoneNumberET = (EditText) findViewById(R.id.phone_number_edit_text);
@@ -170,6 +174,7 @@ public class SignupActivity extends ActionBarActivity {
             if (appExternalId.equals("")) {
                 microfinanceIdET.setError(getString(R.string.no_mfi_id));
                 progressDialog.dismiss();
+                scrollView.pageScroll(View.FOCUS_UP);
                 return;
             }
         }
@@ -184,6 +189,7 @@ public class SignupActivity extends ActionBarActivity {
 //            Toast.makeText(this, getResources().getString(R.string.username_required), Toast.LENGTH_SHORT).show();
             usernameET.setError(getString(R.string.username_required));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
         Pattern usernamePattern = Pattern.compile("^[a-z0-9_-]{3,15}$");
@@ -191,6 +197,7 @@ public class SignupActivity extends ActionBarActivity {
         if ( ! matcher.matches()) {
             usernameET.setError(getString(R.string.invalid_username));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
 
@@ -203,6 +210,7 @@ public class SignupActivity extends ActionBarActivity {
 //            Toast.makeText(this, getResources().getString(R.string.email_address_required), Toast.LENGTH_SHORT).show();
             emailET.setError(getString(R.string.email_address_required));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
         // Valid email
@@ -211,6 +219,7 @@ public class SignupActivity extends ActionBarActivity {
         if ( ! matcher.matches()) {
             emailET.setError(getString(R.string.invalid_email));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
 
@@ -222,6 +231,7 @@ public class SignupActivity extends ActionBarActivity {
         if (countryCode.equals("")) {
             Toast.makeText(this, getResources().getString(R.string.country_code_required), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
 
@@ -234,6 +244,7 @@ public class SignupActivity extends ActionBarActivity {
 //            Toast.makeText(this, getResources().getString(R.string.phone_number_required), Toast.LENGTH_SHORT).show();
             phoneNumberET.setError(getString(R.string.phone_number_required));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
 
@@ -245,6 +256,7 @@ public class SignupActivity extends ActionBarActivity {
         if ( ! matcher.matches()) {
             phoneNumberET.setError(getString(R.string.invalid_phone_number));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
         else
@@ -261,12 +273,14 @@ public class SignupActivity extends ActionBarActivity {
 //            Toast.makeText(this, getResources().getString(R.string.short_password), Toast.LENGTH_SHORT).show();
             passwordET.setError(getString(R.string.short_password));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
 
         if ( ! password.matches("^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$")) {
             passwordET.setError(getString(R.string.password_char_number));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
 
@@ -275,6 +289,7 @@ public class SignupActivity extends ActionBarActivity {
 //            Toast.makeText(this, getResources().getString(R.string.passwords_dont_match), Toast.LENGTH_SHORT).show();
             reenterPasswordET.setError(getString(R.string.passwords_dont_match));
             progressDialog.dismiss();
+            scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
 

@@ -1,6 +1,5 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -21,13 +19,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Adapters.GroupMemberListAdapter;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.GroupVerifyDialog;
-import com.haedrian.haedrian.Models.BuyOrderHistoryModel;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
@@ -36,11 +32,10 @@ import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class GroupBuyActivity extends ActionBarActivity {
 
@@ -282,9 +277,9 @@ public class GroupBuyActivity extends ActionBarActivity {
     }
 
     public String getTotal() {
-        Long total = 0L;
+        BigDecimal total = new BigDecimal(0);
         for (int i = 0; i < groupMembers.size(); i++) {
-            total += groupMembers.get(i).getAmount();
+            total = total.add(new BigDecimal(groupMembers.get(i).getAmount()));
         }
         return total.toString();
     }

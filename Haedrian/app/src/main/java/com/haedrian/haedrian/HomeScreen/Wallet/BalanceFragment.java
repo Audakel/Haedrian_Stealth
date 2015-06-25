@@ -121,7 +121,7 @@ public class BalanceFragment extends Fragment {
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
 
                 // Check if a request was made less than a minute ago
-                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
                 if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                     initializeWalletCached();
                 }
@@ -134,7 +134,7 @@ public class BalanceFragment extends Fragment {
 
                 if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
                     // Check if a request was made less than a minute ago
-                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
                     if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                         initializeWalletCached();
                     }
