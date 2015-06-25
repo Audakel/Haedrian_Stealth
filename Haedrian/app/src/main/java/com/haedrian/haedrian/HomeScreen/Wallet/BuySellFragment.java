@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,7 @@ public class BuySellFragment extends Fragment {
     private ArrayList<BuyOrderHistoryModel> buyOrders;
     private BuyOrderListAdapter adapter;
     private Context context;
-    private TextView noBuyOrders;
+    private LinearLayout noBuyOrders;
 
     public BuySellFragment() {}
 
@@ -62,7 +63,7 @@ public class BuySellFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_buy_sell, container, false);
 
         buyOrderList = (ListView) rootView.findViewById(R.id.buyorder_list);
-        noBuyOrders = (TextView) rootView.findViewById(R.id.no_buyorder_textview);
+        noBuyOrders = (LinearLayout) rootView.findViewById(R.id.empty_state_container);
 
         buyOrders = new ArrayList<>();
 
@@ -79,7 +80,7 @@ public class BuySellFragment extends Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
                 if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                     initializeBuyHistoryCached();
                 }
@@ -91,7 +92,7 @@ public class BuySellFragment extends Fragment {
                 netInfo = cm.getNetworkInfo(1);
 
                 if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
-                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
                     if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                         initializeBuyHistoryCached();
                     }
@@ -143,6 +144,9 @@ public class BuySellFragment extends Fragment {
                                         buyOrders.add(buyOrder);
                                     }
                                     setView();
+                                }
+                                else {
+                                    noBuyOrders.setVisibility(View.VISIBLE);
                                 }
                             }
                             else {
@@ -203,6 +207,9 @@ public class BuySellFragment extends Fragment {
                     }
                     setView();
                 }
+                else {
+                    noBuyOrders.setVisibility(View.VISIBLE);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -210,7 +217,7 @@ public class BuySellFragment extends Fragment {
     }
 
     public void setView() {
-        noBuyOrders.setVisibility(View.GONE);
+        buyOrderList.setVisibility(View.VISIBLE);
 
         adapter = new BuyOrderListAdapter(context, R.layout.row_buy_order, buyOrders);
         buyOrderList.setAdapter(adapter);

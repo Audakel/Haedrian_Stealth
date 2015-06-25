@@ -105,12 +105,10 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) {
-                    if ( ! s.toString().equals(".") && ! s.toString().equals("")){
-                        groupMembers.get(position).setAmount((long)Double.parseDouble(s.toString()));
-                    }
+                    groupMembers.get(position).setAmount(s.toString());
                 }
                 else {
-                    groupMembers.get(position).setAmount(0L);
+                    groupMembers.get(position).setAmount("0");
                 }
             }
         });

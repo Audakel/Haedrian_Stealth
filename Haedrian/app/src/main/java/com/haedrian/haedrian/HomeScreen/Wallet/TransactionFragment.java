@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +48,7 @@ public class TransactionFragment extends Fragment {
     private ArrayList<TransactionModel> transactions;
     private TransactionListAdapter adapter;
     private Context context;
-    private TextView noTransactions;
+    private LinearLayout noTransactions;
 
     public TransactionFragment() {
     }
@@ -70,7 +71,7 @@ public class TransactionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_transaction, container, false);
 
         transactionList = (ListView) rootView.findViewById(R.id.transaction_list);
-        noTransactions = (TextView) rootView.findViewById(R.id.no_transaction_textview);
+        noTransactions = (LinearLayout) rootView.findViewById(R.id.empty_state_container);
 
         transactions = new ArrayList<>();
 
@@ -87,7 +88,7 @@ public class TransactionFragment extends Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
                 if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                     initializeTransactionsCached();
                 }
@@ -99,7 +100,7 @@ public class TransactionFragment extends Fragment {
                 netInfo = cm.getNetworkInfo(1);
 
                 if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
-                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
                     if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                         initializeTransactionsCached();
                     }
@@ -151,6 +152,9 @@ public class TransactionFragment extends Fragment {
                                         transactions.add(transaction);
                                     }
                                     setView();
+                                }
+                                else {
+                                    noTransactions.setVisibility(View.VISIBLE);
                                 }
                             }
                             else {
@@ -211,6 +215,9 @@ public class TransactionFragment extends Fragment {
                     }
                     setView();
                 }
+                else {
+                    noTransactions.setVisibility(View.VISIBLE);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -218,7 +225,7 @@ public class TransactionFragment extends Fragment {
     }
 
     public void setView() {
-        noTransactions.setVisibility(View.GONE);
+        transactionList.setVisibility(View.VISIBLE);
 
         adapter = new TransactionListAdapter(context);
         int size = transactions.size();

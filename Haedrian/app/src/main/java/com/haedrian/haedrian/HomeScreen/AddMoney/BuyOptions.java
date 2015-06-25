@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.haedrian.haedrian.Application.ApplicationController;
+import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 
@@ -66,6 +67,10 @@ public class BuyOptions extends ActionBarActivity {
                 intent = new Intent(this, GroupBuyActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.my_wallet:
+                intent = new Intent(this, WalletActivity.class);
+                intent.putExtra("from_order", true);
+                startActivity(intent);
             default:
                 break;
         }

@@ -2,7 +2,6 @@ package com.haedrian.haedrian.CustomDialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.Button;
@@ -45,7 +44,7 @@ public class ConfirmOrderDialog extends Dialog {
 
         Currency currency = Currency.getInstance(Locale.getDefault());
 
-        String confirmMessage = context.getString(R.string.about_to_add) + " "
+        String confirmMessage = context.getString(R.string.about_to_deposit) + " "
                 + currency.getSymbol() + currencyAmount + " ("
                 + bitcoinAmount + "BTC) "
                 + context.getString(R.string.to_your_wallet_for)
