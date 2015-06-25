@@ -444,5 +444,6 @@
     <string name="about_to_add">About to add</string>
     <string name="to_your_wallet_for">to your wallet for</string>
     <string name="deposit">Deposit</string>
+    <string name="loanId">Loan ID</string>
 
 </resources>
