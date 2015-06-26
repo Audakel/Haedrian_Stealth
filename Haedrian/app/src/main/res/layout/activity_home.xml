@@ -1,336 +1,327 @@
-<!--<android.support.v4.widget.DrawerLayout-->
-    <!--android:id="@+id/drawer_layout"-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-    <!--&lt;!&ndash; The main content view &ndash;&gt;-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@drawable/concrete_repeating"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/activity_vertical_margin"
+      android:paddingTop="@dimen/activity_vertical_margin"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      tools:context="com.haedrian.haedrian.HomeScreen.HomeActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@drawable/concrete_repeating"
-          android:orientation="vertical"
-          android:paddingBottom="@dimen/activity_vertical_margin"
-          android:paddingLeft="@dimen/activity_horizontal_margin"
-          android:paddingRight="@dimen/activity_horizontal_margin"
-          android:paddingTop="@dimen/activity_vertical_margin"
-          tools:context="com.haedrian.haedrian.HomeScreen.HomeActivity">
-
+    <LinearLayout
+        android:id="@+id/summary_container"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:background="@drawable/round_white" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/round_white"
-            android:orientation="vertical">
+            android:layout_height="fill_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Logan Bentley"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightgrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/wallet"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/wallet_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="$5,555"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary"/>
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/wallet"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/my_wallet"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/wallet_balance_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:text="@string/wallet_balance_title"
+                    android:textStyle="bold"
+                    android:textSize="10sp"
+                    android:textColor="@color/grey"/>
 
-                </LinearLayout>
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/lightgrey"/>
-
-                <LinearLayout
-                    android:id="@+id/buy"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/deposit"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
-                        android:gravity="center"
-                        android:text="@string/add_money"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
 
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightgrey"/>
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightgrey" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/send_request"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/loan_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="$2,341"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary"/>
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/money"/>
+                <TextView
+                    android:id="@+id/loan_balance_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:text="@string/loan_balance_title"
+                    android:textStyle="bold"
+                    android:textSize="10sp"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/repay_loan"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
 
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/lightgrey"/>
-
-                <LinearLayout
-                    android:id="@+id/bitcoin_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/map"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/locations"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
 
             </LinearLayout>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightgrey" />
 
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/days_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="15"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary"/>
+
+                <TextView
+                    android:id="@+id/days_left_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/days_left"
+                    android:textStyle="bold"
+                    android:textSize="10sp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="Actions"/>-->
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" >-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/send_request"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:padding="10dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/round_pink"-->
-                <!--android:clickable="true"-->
-                <!--android:onClick="onClick"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="60dp"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@drawable/sendwhite"/>-->
+    </LinearLayout>
 
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:text="@string/send_money"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="25sp"-->
-                    <!--android:textStyle="bold"/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/summary_container"
+        android:background="@drawable/round_white"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/add"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:padding="10dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_below="@+id/send_request"-->
-                <!--android:background="@drawable/round_yellow"-->
-                <!--android:clickable="true"-->
-                <!--android:onClick="onClick"-->
-                <!--android:orientation="horizontal">-->
-    <!-- -->
-                <!--<ImageView-->
-                    <!--android:layout_width="60dp"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@drawable/ic_action_group"/>-->
-    <!-- -->
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:text="@string/contacts"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="25sp"-->
-                    <!--android:textStyle="bold"/>-->
-    <!-- -->
-    <!-- -->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/projects"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:padding="10dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_below="@+id/send_request"-->
-                <!--android:background="@drawable/round_blue"-->
-                <!--android:clickable="true"-->
-                <!--android:onClick="onClick"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="60dp"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@drawable/ic_action_grow"/>-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:text="@string/apply_for_loan"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="25sp"-->
-                    <!--android:textStyle="bold"/>-->
-
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/bitcoin_map"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:padding="10dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_below="@+id/send_request"-->
-                <!--android:background="@drawable/round_purple"-->
-                <!--android:clickable="true"-->
-                <!--android:onClick="onClick"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="60dp"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@drawable/ic_action_map"/>-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:text="@string/deposit_locations"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="25sp"-->
-                    <!--android:textStyle="bold"/>-->
-
-            <!--</LinearLayout>-->
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/wallet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/haedrian_labs"/>
+                android:clickable="true"
+                android:onClick="onClick"
+                android:orientation="vertical">
 
-        <!--</RelativeLayout>-->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/wallet"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/my_wallet"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightgrey"/>
+
+            <LinearLayout
+                android:id="@+id/buy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/deposit"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center"
+                    android:text="@string/add_money"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightgrey"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/send_request"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/money"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/repay_loan"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightgrey"/>
+
+            <LinearLayout
+                android:id="@+id/bitcoin_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/map"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/locations"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
-    <!--<ListView-->
-        <!--android:id="@+id/left_drawer"-->
-        <!--android:layout_width="170dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:background="@color/white"-->
-        <!--android:choiceMode="singleChoice"-->
-        <!--android:divider="@color/primary"-->
-        <!--android:dividerHeight="0dp"/>-->
-<!--</android.support.v4.widget.DrawerLayout>-->
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="@string/haedrian_labs"/>
+
+
+
+</RelativeLayout>
+

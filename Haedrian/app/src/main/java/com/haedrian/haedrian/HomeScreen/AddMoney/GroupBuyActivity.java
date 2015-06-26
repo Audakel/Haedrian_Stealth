@@ -80,15 +80,22 @@ public class GroupBuyActivity extends ActionBarActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GroupVerifyDialog dialog = new GroupVerifyDialog(GroupBuyActivity.this, getTotal());
-                dialog.show();
-                dialog.getConfirmButton().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        progressDialog.show();
-                        groupVerify();
-                    }
-                });
+                String total = getTotal();
+                if (total.equals("0")) {
+                    Toast.makeText(GroupBuyActivity.this, getString(R.string.please_enter_an_amount), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    GroupVerifyDialog dialog = new GroupVerifyDialog(GroupBuyActivity.this, total);
+                    dialog.show();
+                    dialog.getConfirmButton().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            progressDialog.show();
+                            groupVerify();
+                        }
+                    });
+                }
+
             }
         });
 

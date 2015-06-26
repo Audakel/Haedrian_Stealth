@@ -138,7 +138,9 @@ public class TransactionDetailsActivity extends ActionBarActivity {
             return true;
         }
         else if (id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
+            Intent intent = new Intent(this, WalletActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
             return true;
         }
 

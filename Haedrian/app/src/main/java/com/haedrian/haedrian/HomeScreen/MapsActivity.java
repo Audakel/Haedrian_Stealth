@@ -430,6 +430,11 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     public void drawLocations() {
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .title(getResources().getString(R.string.you))
+                .snippet(""));
+
         long start = SystemClock.uptimeMillis();
         int count = 0;
         Projection projection = mMap.getProjection();

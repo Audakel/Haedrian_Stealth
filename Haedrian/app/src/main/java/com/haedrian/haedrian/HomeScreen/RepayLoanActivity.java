@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -175,6 +176,9 @@ public class RepayLoanActivity extends ActionBarActivity {
                     groupPaymentsSpinner.setVisibility(View.GONE);
                     individualContainer.setVisibility(View.VISIBLE);
                     individualContainer.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_in_bottom));
+                    amountET.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(amountET, InputMethodManager.SHOW_IMPLICIT);
 
                 } else if (checkedId == R.id.group) {
                     amountET.setText("");
@@ -429,6 +433,7 @@ public class RepayLoanActivity extends ActionBarActivity {
                                 Intent intent = new Intent(RepayLoanActivity.this, TransactionDetailsActivity.class);
                                 intent.putExtra("transaction", transaction);
                                 startActivity(intent);
+                                finish();
                             }
                             else {
                                 String error = response.getString("error");
