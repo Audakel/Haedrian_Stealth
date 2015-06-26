@@ -95,6 +95,12 @@ public class TransactionListAdapter extends BaseAdapter {
                 holder.imageType.setImageResource(R.drawable.money);
                 holder.toFrom.setText(context.getResources().getString(R.string.to));
                 holder.details.setText(transactions.get(position).getTarget());
+                // Outgoing text color
+                holder.transactionType.setTextColor(context.getResources().getColor(R.color.primary));
+                holder.amount.setTextColor(context.getResources().getColor(R.color.primary));
+
+
+
             }
             else if (transactionType.equals("incoming")) {
                 holder.transactionType.setText(context.getResources().getString(R.string.incoming_funds));
@@ -107,6 +113,11 @@ public class TransactionListAdapter extends BaseAdapter {
                 else {
                     holder.details.setText(sender);
                 }
+
+                // Incoming text color
+                holder.transactionType.setTextColor(context.getResources().getColor(R.color.grey));
+                holder.amount.setTextColor(context.getResources().getColor(R.color.grey));
+
             }
 
 

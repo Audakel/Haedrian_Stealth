@@ -350,7 +350,10 @@
     <string name="dummy_bitcoin_address">1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v</string>
     <string name="transactions">Transactions</string>
     <string name="title_activity_about">About</string>
-    <string name="haedrian_labs">Made with ❤️️ by Haedrian Labs</string>
+    <string name="made_with">Made with</string>
+    <string name="love">❤</string>
+    <string name="by_haedrian_labs">by Haedrian Labs</string>
+    <string name="haedrian_labs">Haedrian Labs</string>
     <string name="version">Version</string>
     <string name="version_number">1.0.0</string>
     <string name="licenses">Licenses</string>
@@ -450,7 +453,7 @@
     <string name="time_limit">*You will have an hour to deposit this amount into your chosen deposit location. After that hour, the deposit request will expire if not completed.</string>
     <string name="wallet_balance_title">Wallet Balance</string>
     <string name="loan_balance_title">Loan Balance</string>
-    <string name="days_left">Days to Pay Off Loan</string>
+    <string name="days_left">Weeks Left</string>
 
 
 </resources>

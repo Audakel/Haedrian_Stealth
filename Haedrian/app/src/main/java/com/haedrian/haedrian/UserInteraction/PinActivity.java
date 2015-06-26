@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,16 +17,10 @@ import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.AESHelper;
-import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
-import com.haedrian.haedrian.HomeScreen.SendRequest.SendActivity;
 import com.haedrian.haedrian.R;
 import com.squareup.picasso.Picasso;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.AbstractExecutorService;
 
 public class PinActivity extends ActionBarActivity {
 
@@ -241,19 +233,19 @@ public class PinActivity extends ActionBarActivity {
     private void changePinState() {
         switch (pinState) {
             case 0:
-                circle1.setBackgroundResource(R.drawable.circle_filled);
+                circle1.setBackgroundResource(R.drawable.circle_filled1);
                 pinState++;
                 break;
             case 1:
-                circle2.setBackgroundResource(R.drawable.circle_filled);
+                circle2.setBackgroundResource(R.drawable.circle_filled2);
                 pinState++;
                 break;
             case 2:
-                circle3.setBackgroundResource(R.drawable.circle_filled);
+                circle3.setBackgroundResource(R.drawable.circle_filled3);
                 pinState++;
                 break;
             case 3:
-                circle4.setBackgroundResource(R.drawable.circle_filled);
+                circle4.setBackgroundResource(R.drawable.circle_filled4);
                 pinState++;
                 if (currentPinState.equals(State.Create)) {
                     changeState(State.Reenter);

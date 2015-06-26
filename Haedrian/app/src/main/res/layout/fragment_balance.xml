@@ -37,7 +37,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="10dp"
                         android:text="@string/currency_code"
                         android:textColor="@color/white"
                         android:textSize="30sp"
@@ -62,10 +62,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="10dp"
                         android:text="@string/btc"
                         android:textColor="@color/white"
-                        android:textSize="24sp"/>
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/bitcoin_amount"
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/bitcoin_fake_amount"
                         android:textColor="@color/white"
-                        android:textSize="26sp"/>
+                        android:textSize="22sp"/>
 
                 </LinearLayout>
 
@@ -128,7 +128,7 @@
             android:padding="5dp"
             android:background="@drawable/round_accent"
             android:text="@string/get_wallet_address"
-            android:textColor="@color/white"/>
+            android:textColor="@color/grey"/>
 
     </LinearLayout>
 
