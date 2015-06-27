@@ -454,6 +454,15 @@
     <string name="wallet_balance_title">Wallet Balance</string>
     <string name="loan_balance_title">Loan Balance</string>
     <string name="days_left">Weeks Left</string>
+    <string name="title_activity_loan_info">LoanInfoActivity</string>
+    <string name="repay_every">Repay Every</string>
+    <string name="total_repayments">Total Number of Repayments</string>
+    <string name="total_overdue">Total Overdue</string>
+    <string name="loan_description">Loan Description</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="interest_frequency">Interest Frequency</string>
+    <string name="starting_balance">Starting Loan Balance</string>
+    <string name="loan_cost">Total Cost of Loan</string>
 
 
 </resources>

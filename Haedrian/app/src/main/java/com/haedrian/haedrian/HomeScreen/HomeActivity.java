@@ -2,6 +2,7 @@ package com.haedrian.haedrian.HomeScreen;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,29 +15,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
+import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
-import com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyOptions;
-import com.haedrian.haedrian.HomeScreen.SendRequest.SendActivity;
 import com.haedrian.haedrian.UserInteraction.CurrencyInfoActivity;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
-import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
-import com.haedrian.haedrian.HomeScreen.SendRequest.SendRequestActivity;
 import com.haedrian.haedrian.UserInteraction.LoginActivity;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.UserInteraction.SettingsActivity;
+import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -49,6 +58,12 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private final static String REFUSED_STATUS = "10eX5swCo0";
     private final static String FULFILLED_STATUS = "GIidPHawur";
     private ActionBarDrawerToggle mDrawerToggle;
+    private TextView walletBallanceTV, loanBallanceTV, timeLeftTV, usernameTV, timeRepaymentUnit;
+    private ProgressDialog progressDialog;
+
+    // TODO:: Cache this
+    public JSONObject loanInfoJson;
+
 
 
     // Nav Drawer stuff
@@ -58,6 +73,17 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        walletBallanceTV = (TextView) findViewById(R.id.wallet_balance);
+        loanBallanceTV = (TextView) findViewById(R.id.loan_balance);
+        timeLeftTV = (TextView) findViewById(R.id.time_left);
+        usernameTV = (TextView)findViewById(R.id.username);
+        timeRepaymentUnit = (TextView)findViewById(R.id.time_unit_title);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.dialog_loading));
+        progressDialog.show();
+
+        getHomeScreenData();
 
         // Set up actionbar
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -117,6 +143,67 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
         // Check if funds have been requested of user
         checkForRequest(parseId);
+    }
+
+    public void getHomeScreenData() {
+        String url = ApplicationConstants.BASE + "home/";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v("TEST", "homeScreenInfo: " + response.toString());
+                        try {
+                            Log.v("TEST", response.toString());
+                            if (response.getBoolean("success")) {
+                                // Assuming they have only 1 loan for now ~
+                                // TODO:: Fix with asking the user what loan they want to see if > 1
+                                JSONArray loans = response.getJSONArray("loan_info");
+                                JSONObject loan = loans.getJSONObject(0);
+
+                                usernameTV.setText(response.getString("username"));
+                                timeLeftTV.setText(loan.getString("number_of_repayments"));
+                                timeRepaymentUnit.setText(loan.getString("repay_time_unit"));
+
+                                // TODO:: Need to install better CurrencyInstance Backend to support other currencies
+                                NumberFormat format = NumberFormat.getCurrencyInstance();
+                                walletBallanceTV.setText(format.format(response.getDouble("wallet_balance")));
+                                loanBallanceTV.setText(format.format(loan.getDouble("current_balance")));
+
+                                loanInfoJson = loan;
+
+                            }
+                            else {
+                                String error = response.getString("error");
+                                Toast.makeText(HomeActivity.this, error, Toast.LENGTH_SHORT).show();
+                            }
+                            progressDialog.dismiss();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Log.v("TEST", "Error: " + error.getMessage());
+                        Toast.makeText(HomeActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    @Override
+                    public HashMap<String, String> getHeaders() {
+                        String token = ApplicationController.getToken();
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("Authorization", "Token " + token);
+                        params.put("Content-Type", "application/json;charset=UTF-8");
+                        params.put("Accept", "application/json");
+                        return params;
+                    }
+                };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
 
@@ -388,6 +475,19 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 ActivityOptions options6 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options6.toBundle());
+                return;
+
+            case R.id.wallet_balance_view:
+                intent = new Intent(this, WalletActivity.class);
+                ActivityOptions options7 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent, options7.toBundle());
+                return;
+            case R.id.loan_balance_button:
+                intent = new Intent(this, LoanInfoActivity.class);
+                ActivityOptions options8 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent.putExtra("loanInfo", loanInfoJson.toString()), options8.toBundle());
                 return;
             default:
                 return;

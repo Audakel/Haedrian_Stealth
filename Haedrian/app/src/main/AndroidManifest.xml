@@ -369,6 +369,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeScreen.HomeActivity" />
         </activity>
+        <activity
+            android:name=".HomeScreen.LoanInfoActivity"
+            android:label="@string/title_activity_loan_info" >
+        </activity>
     </application>
 
 </manifest>
