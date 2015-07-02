@@ -13,30 +13,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Adapters.TransactionListAdapter;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Models.TransactionModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
-import com.parse.ParseObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class TransactionFragment extends Fragment {
     /**
@@ -88,32 +84,27 @@ public class TransactionFragment extends Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
                 if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                     initializeTransactionsCached();
-                }
-                else {
+                } else {
                     initializeTransactionsNetwork();
                 }
-            }
-            else {
+            } else {
                 netInfo = cm.getNetworkInfo(1);
 
-                if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
-                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
+                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
                     if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                         initializeTransactionsCached();
-                    }
-                    else {
+                    } else {
                         initializeTransactionsNetwork();
                     }
-                }
-                else {
+                } else {
                     initializeTransactionsCached();
                 }
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -121,7 +112,7 @@ public class TransactionFragment extends Fragment {
     private void initializeTransactionsNetwork() {
         final String URL = ApplicationConstants.BASE + "history/";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                 URL, null,
                 new Response.Listener<JSONObject>() {
 
@@ -152,12 +143,10 @@ public class TransactionFragment extends Fragment {
                                         transactions.add(transaction);
                                     }
                                     setView();
-                                }
-                                else {
+                                } else {
                                     noTransactions.setVisibility(View.VISIBLE);
                                 }
-                            }
-                            else {
+                            } else {
                                 JSONObject error = response.getJSONObject("error");
                                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
                             }
@@ -166,6 +155,7 @@ public class TransactionFragment extends Fragment {
                         }
                     }
                 }, new Response.ErrorListener() {
+
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -182,6 +172,8 @@ public class TransactionFragment extends Fragment {
                 params.put("Accept", "application/json");
                 return params;
             }
+
+
         };
 
         jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
@@ -214,8 +206,7 @@ public class TransactionFragment extends Fragment {
                         transactions.add(transaction);
                     }
                     setView();
-                }
-                else {
+                } else {
                     noTransactions.setVisibility(View.VISIBLE);
                 }
             }
@@ -232,7 +223,7 @@ public class TransactionFragment extends Fragment {
         String date = "";
         for (int i = 0; i < size; i++) {
             String newDate = transactions.get(i).getDate();
-            if ( ! date.equals(newDate) ) {
+            if (!date.equals(newDate)) {
                 TransactionModel dateModel = new TransactionModel();
                 dateModel.setDate(newDate);
                 date = transactions.get(i).getDate();
@@ -245,7 +236,7 @@ public class TransactionFragment extends Fragment {
         transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(adapter.getItemViewType(position) != TransactionListAdapter.TYPE_SEPARATOR) {
+                if (adapter.getItemViewType(position) != TransactionListAdapter.TYPE_SEPARATOR) {
                     Intent intent = new Intent(context, TransactionDetailsActivity.class);
                     intent.putExtra("transaction", transactions.get(adapter.getPosition(position)));
                     startActivity(intent);

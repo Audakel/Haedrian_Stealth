@@ -119,16 +119,7 @@ public class TransactionListAdapter extends BaseAdapter {
                 holder.amount.setTextColor(context.getResources().getColor(R.color.grey));
 
             }
-
-
-            if ( ! transactions.get(position).getCurrency().equals("BTC")) {
-                Double currencyAmount = Double.parseDouble(transactions.get(position).getAmount());
-                NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-                holder.amount.setText(currencyFormatter.format(currencyAmount));
-            }
-            else {
-                holder.amount.setText(transactions.get(position).getAmount());
-            }
+            holder.amount.setText(transactions.get(position).getAmount());
         }
         else if (rowType == TYPE_SEPARATOR) {
             holder.date.setText(transactions.get(position).getDate());

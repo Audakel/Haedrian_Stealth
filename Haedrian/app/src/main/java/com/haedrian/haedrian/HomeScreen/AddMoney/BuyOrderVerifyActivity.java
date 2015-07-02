@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Models.BuyOrderHistoryModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
@@ -148,7 +149,7 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
     private void verifyPayment() {
         final String URL = ApplicationConstants.BASE + "buy/?order_id=" + buyOrder.getId();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.PUT,
                 URL, null,
                 new Response.Listener<JSONObject>() {
 

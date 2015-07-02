@@ -40,6 +40,7 @@ import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.RepayConfirmDialog;
 import com.haedrian.haedrian.HomeScreen.Wallet.TransactionDetailsActivity;
 import com.haedrian.haedrian.Models.TransactionModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
@@ -278,7 +279,7 @@ public class RepayLoanActivity extends ActionBarActivity {
         String url = ApplicationConstants.BASE + "group-payment/";
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONObject>() {
 
@@ -410,7 +411,7 @@ public class RepayLoanActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.POST,
                 url, body,
                 new Response.Listener<JSONObject>() {
 

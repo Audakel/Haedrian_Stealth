@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
@@ -317,7 +318,7 @@ public class SignupActivity extends ActionBarActivity {
         // params.get("firstName"); etc......
         String url = ApplicationConstants.BASE + "create/";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.POST,
                 url, jsonBody,
                 new Response.Listener<JSONObject>() {
 

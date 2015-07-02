@@ -25,6 +25,7 @@ import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.GroupVerifyDialog;
 import com.haedrian.haedrian.Models.UserModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
@@ -134,7 +135,7 @@ public class GroupBuyActivity extends ActionBarActivity {
     private void initializeGroup() {
         final String URL = ApplicationConstants.BASE + "group/";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                 URL, null,
                 new Response.Listener<JSONObject>() {
 

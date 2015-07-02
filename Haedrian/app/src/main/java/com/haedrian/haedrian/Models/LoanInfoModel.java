@@ -10,31 +10,52 @@ public class LoanInfoModel {
     private int loanId;
     private int repayEvery;
     private int numberOfRepayments;
-    private double totalEstimatedLoanCost;
+    private String totalEstimatedLoanCost;
+    private String totalEstimatedLoanCostDisplay;
     private String currency;
-    private double totalOverdue;
+    private String totalOverdue;
     private String repayTimeUnit;
     private String loanDescriptor;
-    private double currentBalance;
-    private double interestRate;
+    private String interestRate;
     private String interestFrequency;
-    private double startingBalance;
+    private String startingBalance;
+    private String currentBalance;
+    private String startingBalanceDisplay;
+    private String currentBalanceDisplay;
 
     public LoanInfoModel(JSONObject loanInfo) throws JSONException {
         this.loanId = loanInfo.getInt("loan_id");
         this.repayEvery = loanInfo.getInt("repay_every");
         this.numberOfRepayments = loanInfo.getInt("number_of_repayments");
-        this.totalEstimatedLoanCost = loanInfo.getDouble("total_estimated_loan_cost");
+        this.totalEstimatedLoanCost = loanInfo.getString("total_estimated_loan_cost");
         this.currency = loanInfo.getString("currency");
-        this.totalOverdue = loanInfo.getInt("total_overdue");
+        this.totalOverdue = loanInfo.getString("total_overdue");
         this.repayTimeUnit = loanInfo.getString("repay_time_unit");
         this.loanDescriptor = loanInfo.getString("loan_descriptor");
-        this.currentBalance = loanInfo.getDouble("current_balance");
-        this.interestRate = loanInfo.getDouble("interest_rate");
+        this.currentBalance = loanInfo.getString("current_balance");
+        this.interestRate = loanInfo.getString("interest_rate");
         this.interestFrequency = loanInfo.getString("interest_frequency");
-        this.startingBalance = loanInfo.getDouble("starting_balance");
+        this.startingBalance = loanInfo.getString("starting_balance");
+        this.startingBalanceDisplay = loanInfo.getString("starting_balance_display");
+        this.currentBalanceDisplay = loanInfo.getString("current_balance_display");
+        this.totalEstimatedLoanCostDisplay = loanInfo.getString("total_estimated_loan_cost_display");
     }
 
+    public String getStartingBalanceDisplay() {
+        return startingBalanceDisplay;
+    }
+
+    public void setStartingBalanceDisplay(String startingBalanceDisplay) {
+        this.startingBalanceDisplay = startingBalanceDisplay;
+    }
+
+    public String getCurrentBalanceDisplay() {
+        return currentBalanceDisplay;
+    }
+
+    public void setCurrentBalanceDisplay(String currentBalanceDisplay) {
+        this.currentBalanceDisplay = currentBalanceDisplay;
+    }
 
     public int getLoanId() {
         return loanId;
@@ -60,11 +81,11 @@ public class LoanInfoModel {
         this.numberOfRepayments = numberOfRepayments;
     }
 
-    public double getTotalEstimatedLoanCost() {
+    public String getTotalEstimatedLoanCost() {
         return totalEstimatedLoanCost;
     }
 
-    public void setTotalEstimatedLoanCost(double totalEstimatedLoanCost) {
+    public void setTotalEstimatedLoanCost(String totalEstimatedLoanCost) {
         this.totalEstimatedLoanCost = totalEstimatedLoanCost;
     }
 
@@ -76,11 +97,11 @@ public class LoanInfoModel {
         this.currency = currency;
     }
 
-    public double getTotalOverdue() {
+    public String getTotalOverdue() {
         return totalOverdue;
     }
 
-    public void setTotalOverdue(double totalOverdue) {
+    public void setTotalOverdue(String totalOverdue) {
         this.totalOverdue = totalOverdue;
     }
 
@@ -100,20 +121,20 @@ public class LoanInfoModel {
         this.loanDescriptor = loanDescriptor;
     }
 
-    public double getCurrentBalance() {
+    public String getCurrentBalance() {
         return currentBalance;
     }
 
-    public void setCurrentBalance(double currentBalance) {
+    public void setCurrentBalance(String currentBalance) {
         this.currentBalance = currentBalance;
     }
 
-    public double getInterest_rate() {
+    public String getInterestRate() {
         return interestRate;
     }
 
-    public void setInterest_rate(double interest_rate) {
-        this.interestRate = interest_rate;
+    public void setInterestRate(String interestRate) {
+        this.interestRate = interestRate;
     }
 
     public String getInterestFrequency() {
@@ -124,13 +145,20 @@ public class LoanInfoModel {
         this.interestFrequency = interestFrequency;
     }
 
-    public double getStartingBalance() {
+    public String getStartingBalance() {
         return startingBalance;
     }
 
-    public void setStartingBalance(double startingBalance) {
+    public void setStartingBalance(String startingBalance) {
         this.startingBalance = startingBalance;
     }
 
+    public String getTotalEstimatedLoanCostDisplay() {
+        return totalEstimatedLoanCostDisplay;
+    }
+
+    public void setTotalEstimatedLoanCostDisplay(String totalEstimatedLoanCostDisplay) {
+        this.totalEstimatedLoanCostDisplay = totalEstimatedLoanCostDisplay;
+    }
 
 }

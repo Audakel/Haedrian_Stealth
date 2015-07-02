@@ -4,7 +4,7 @@ package com.haedrian.haedrian.Application;
  * Created by James on 3/21/2015.
  */
 public class ApplicationConstants {
-    public final static String BASE = "https://3ff332a8.ngrok.com/v1/";
+    public final static String BASE = "http://59354b8f.ngrok.com/v1/";
     public final static String lenddo_social_service_secret = "";
     public final static String lenddo_social_service_userid = "";
     public final static String lenddo_product_service_secret = "";
@@ -16,7 +16,7 @@ public class ApplicationConstants {
     public final static String lenddo_key_scriptId = "55252b62aa96123cde054740";
 
 
-    public static final long TWENTY_SECONDS = 20 * 1000;
+    public static final long ONE_MINUTE = 60 * 1000;
 
 
     public static final String MY_FLURRY_API_KEY = "FS5BYJRV5697D2QS9SDB";

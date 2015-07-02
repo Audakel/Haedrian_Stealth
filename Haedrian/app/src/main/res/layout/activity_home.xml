@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Logan Bentley"
+                android:text=":)"
                 android:textStyle="bold"
                 android:textSize="24sp"/>
 
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="$5,555"
+                    android:text="0"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="@color/primary"/>
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="$2,341"
+                    android:text="0"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="@color/primary"/>
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="15"
+                    android:text="0"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="@color/primary"/>

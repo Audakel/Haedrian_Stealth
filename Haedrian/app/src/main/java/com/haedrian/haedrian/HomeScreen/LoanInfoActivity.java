@@ -7,11 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
 import com.haedrian.haedrian.Models.LoanInfoModel;
 import com.haedrian.haedrian.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class LoanInfoActivity extends ActionBarActivity {
     // TODO:: import ButterKnife for view binding https://github.com/JakeWharton/butterknife
@@ -50,19 +57,43 @@ public class LoanInfoActivity extends ActionBarActivity {
         interestFrequency = (TextView) findViewById(R.id.summary_interest_frequency);
         startingBalance = (TextView) findViewById(R.id.summary_starting_balance);
 
-
         loanId.setText(loanInfoModel.getLoanId()+"");
         repayEvery.setText(loanInfoModel.getRepayEvery()+"");
         numberOfRepayments.setText(loanInfoModel.getNumberOfRepayments()+"");
-        totalEstimatedLoanCost.setText(loanInfoModel.getTotalEstimatedLoanCost()+"");
+        totalEstimatedLoanCost.setText(loanInfoModel.getTotalEstimatedLoanCostDisplay()+"");
         totalOverdue.setText(loanInfoModel.getTotalOverdue()+"");
         loanDescriptor.setText(loanInfoModel.getLoanDescriptor());
-        currentBalance.setText(loanInfoModel.getCurrentBalance()+"");
-        interestRate.setText(loanInfoModel.getInterest_rate()+"");
+        interestRate.setText(loanInfoModel.getInterestRate()+"");
         interestFrequency.setText(loanInfoModel.getInterestFrequency()+"");
-        startingBalance.setText(loanInfoModel.getStartingBalance()+"");
+        startingBalance.setText(loanInfoModel.getStartingBalanceDisplay()+"");
+        currentBalance.setText(loanInfoModel.getCurrentBalanceDisplay()+"");
+
+    /*
+        PieChart pieChart = (PieChart) findViewById(R.id.pieChart);
+
+        ArrayList<Entry> yValues = new ArrayList<Entry>();
+        yValues.add(new Entry((float) ((float) loanInfoModel.getStartingBalance() - loanInfoModel.getCurrentBalance()), 1));
+        yValues.add(new Entry((float) loanInfoModel.getCurrentBalance(), 2));
+
+        PieDataSet dataSet = new PieDataSet(yValues, "Loan Repayment");
+        dataSet.setColors(new int[] {getResources().getColor(R.color.primary),
+                getResources().getColor(R.color.accent)});
+
+        ArrayList<String> xValues = new ArrayList<String>();
+        xValues.add("Starting Balance");
+        xValues.add("Current Balance");
+
+        PieData data = new PieData(xValues, dataSet);
+        pieChart.setData(data);
+        pieChart.invalidate();
+
+    */
+
+
+
 
     }
+
 
 
     @Override

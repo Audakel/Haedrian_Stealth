@@ -165,7 +165,30 @@
             android:text="$347.00"
             android:id="@+id/summary_loan_cost"
             android:textColor="@color/primary" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 </RelativeLayout>
 
 
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingBottom="2dp"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+    <!--android:background="@drawable/concrete_repeating"-->
+    <!--tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity">-->
+
+    <!--<com.github.mikephil.charting.charts.PieChart-->
+        <!--android:id="@+id/pieChart"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+<!--</RelativeLayout>-->

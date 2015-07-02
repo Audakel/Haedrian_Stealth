@@ -48,11 +48,13 @@
             android:name=".UserInteraction.LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".HomeScreen.HomeActivity"
@@ -372,6 +374,19 @@
         <activity
             android:name=".HomeScreen.LoanInfoActivity"
             android:label="@string/title_activity_loan_info" >
+        </activity>
+        <activity
+            android:name=".HomeScreen.StartActivity"
+            android:label="@string/title_activity_starter" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".HomeScreen.IntroDemo.Fragments.IntroDemoActivity"
+            android:label="@string/title_activity_demo_login" >
         </activity>
     </application>
 

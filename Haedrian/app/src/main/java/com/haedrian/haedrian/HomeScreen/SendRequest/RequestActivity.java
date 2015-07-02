@@ -22,6 +22,7 @@ import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.Contacts.ContactsListFragment;
 import com.haedrian.haedrian.CustomDialogs.RequestConfirmationDialog;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
 
@@ -163,7 +164,7 @@ public class RequestActivity extends ActionBarActivity implements
     private void requestMoney(Map<String, String> params) {
         String url = ApplicationConstants.BASE + "";
         final Map<String, String> finalParams = params;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.POST,
                 url, null,
                 new Response.Listener<JSONObject>() {
 

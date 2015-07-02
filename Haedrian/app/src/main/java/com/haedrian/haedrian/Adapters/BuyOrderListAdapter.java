@@ -54,10 +54,7 @@ public class BuyOrderListAdapter extends ArrayAdapter {
 
         holder.buyOrderType.setText(context.getString(R.string.buyorder_buy));
 
-        Double currencyAmount = Double.parseDouble(buyOrders.get(position).getCurrencyAmount());
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-
-        holder.buyOrderAmount.setText(currencyFormatter.format(currencyAmount));
+        holder.buyOrderAmount.setText(buyOrders.get(position).getCurrencyAmount());
 
         String buyOrderStatusTemp = buyOrders.get(position).getStatus();
         String buyOrderStatus = "";

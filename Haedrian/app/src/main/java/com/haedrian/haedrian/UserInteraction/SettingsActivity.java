@@ -26,6 +26,7 @@ import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.AddMoney.OrderSummaryActivity;
 import com.haedrian.haedrian.Models.BuyOrderModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
@@ -139,7 +140,7 @@ public class SettingsActivity extends ActionBarActivity {
     private void getUserInformation() {
         String url = ApplicationConstants.BASE + "id/";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONObject>() {
 

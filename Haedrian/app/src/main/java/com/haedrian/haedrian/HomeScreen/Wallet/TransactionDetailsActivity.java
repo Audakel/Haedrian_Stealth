@@ -1,11 +1,9 @@
 package com.haedrian.haedrian.HomeScreen.Wallet;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,12 +18,12 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Models.TransactionModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -74,8 +72,7 @@ public class TransactionDetailsActivity extends ActionBarActivity {
 //            Log.v("TEST", "date: " + dateParts[0]);
 //            date.setText(formatDate(dateParts[0]));
             date.setText(transaction.getDate());
-        }
-        else {
+        } else {
             long milli = System.currentTimeMillis();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date tempDate = new Date(milli);
@@ -87,18 +84,15 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         btcAmount.setText(transaction.getAmount());
         if (transaction.getEntryType().equals("incoming")) {
             toPerson.setText(getString(R.string.me));
-            if (transaction.getSender().equals("null")){
+            if (transaction.getSender().equals("null")) {
                 fromPerson.setText(getString(R.string.outside_address));
-            }
-            else {
+            } else {
                 fromPerson.setText(transaction.getSender());
             }
-        }
-        else {
-            if (transaction.getTarget().equals("null")){
+        } else {
+            if (transaction.getTarget().equals("null")) {
                 toPerson.setText(getString(R.string.outside_address));
-            }
-            else {
+            } else {
                 toPerson.setText(transaction.getTarget());
             }
             fromPerson.setText(getString(R.string.me));
@@ -136,10 +130,9 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if (id == android.R.id.home) {
+        } else if (id == android.R.id.home) {
             Intent intent = new Intent(this, WalletActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             return true;
         }
@@ -227,11 +220,10 @@ public class TransactionDetailsActivity extends ActionBarActivity {
             currencyRequest.setRetryPolicy(new TimeoutRetryPolicy());
             ApplicationController.getInstance().addToRequestQueue(currencyRequest);
 
-        }
-        else if (Locale.getDefault().getLanguage().equals("fil")) {
+        } else if (Locale.getDefault().getLanguage().equals("fil")) {
             final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+            JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                     URL, null,
                     new Response.Listener<JSONObject>() {
 

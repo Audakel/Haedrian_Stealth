@@ -39,6 +39,7 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.HomeScreen.Wallet.TransactionDetailsActivity;
 import com.haedrian.haedrian.Models.TransactionModel;
 import com.haedrian.haedrian.Models.WalletModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
@@ -275,7 +276,7 @@ public class SendActivity extends ActionBarActivity implements
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.POST,
                 url, body,
                 new Response.Listener<JSONObject>() {
 

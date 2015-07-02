@@ -12,22 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.zxing.WriterException;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.BitcoinAddressDialog;
 import com.haedrian.haedrian.Database.DBHelper;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.QrCode.QRCodeEncoder;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
@@ -35,25 +32,20 @@ import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
 public class BalanceFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private final String TAG = "CANCEL_TAG";
     private Button getWalletAddressButton;
     private TextView convertedAmount, bitcoinAmount;
     private DBHelper db;
-
     private Context context;
-    private final String TAG = "CANCEL_TAG";
-
     private ProgressDialog progressDialog;
 
     public BalanceFragment() {
@@ -97,7 +89,6 @@ public class BalanceFragment extends Fragment {
         }
 
 
-
         progressDialog.dismiss();
 
         // Set up dialog stuff with wallet address and bitmap
@@ -119,35 +110,28 @@ public class BalanceFragment extends Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-
                 // Check if a request was made less than a minute ago
-                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
                 if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                     initializeWalletCached();
-                }
-                else {
+                } else {
                     initializeWalletNetwork();
                 }
-            }
-            else {
+            } else {
                 netInfo = cm.getNetworkInfo(1);
-
-                if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
+                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
                     // Check if a request was made less than a minute ago
-                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
                     if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                         initializeWalletCached();
-                    }
-                    else {
+                    } else {
                         initializeWalletNetwork();
                     }
-                }
-                else {
+                } else {
                     initializeWalletCached();
                 }
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -155,7 +139,7 @@ public class BalanceFragment extends Fragment {
     private void initializeWalletNetwork() {
         final String URL = ApplicationConstants.BASE + "wallet-info/";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                 URL, null,
                 new Response.Listener<JSONObject>() {
 
@@ -165,7 +149,12 @@ public class BalanceFragment extends Fragment {
                         ApplicationController.cacheJSON(response, "wallet-info");
                         ApplicationController.setBalanceTimestamp(System.currentTimeMillis());
                         try {
-                            setBalanceNetwork(response.getJSONObject("bitcoin").getString("balance"));
+
+                            // Server is sending properly converted and formated currency amount
+                            // setBalanceNetwork(response.getJSONObject("bitcoin").getString("balance"));
+                            bitcoinAmount.setText(String.valueOf(response.getJSONObject("bitcoin").getString("btc_balance")));
+                            convertedAmount.setText(response.getJSONObject("bitcoin").getString("balance"));
+
                             initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
 
                         } catch (JSONException e) {
@@ -198,7 +187,6 @@ public class BalanceFragment extends Fragment {
         // Adds request to the request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
-
 
 
     public void setBalanceNetwork(String response) {
@@ -242,11 +230,10 @@ public class BalanceFragment extends Fragment {
             currencyRequest.setRetryPolicy(new TimeoutRetryPolicy());
             ApplicationController.getInstance().addToRequestQueue(currencyRequest);
 
-        }
-        else if (Locale.getDefault().getLanguage().equals("fil")) {
+        } else if (Locale.getDefault().getLanguage().equals("fil")) {
             final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+            JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                     URL, null,
                     new Response.Listener<JSONObject>() {
 
@@ -295,7 +282,7 @@ public class BalanceFragment extends Fragment {
         JSONObject response = ApplicationController.getCachedJSON("wallet-info");
         Log.v("TEST", "cached wallet-info: " + response.toString());
         try {
-            setBalanceCached(response.getJSONObject("bitcoin").getString("balance"));
+            bitcoinAmount.setText(response.getJSONObject("bitcoin").getString("balance"));
             initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
 
         } catch (JSONException e) {
@@ -312,15 +299,14 @@ public class BalanceFragment extends Fragment {
 
     public void getConvertedRateCached(String bitcoinAmount) {
         JSONObject response = ApplicationController.getCachedJSON("ticker");
-        Log.v("TEST", "cached ticker: " +  response.toString());
+        Log.v("TEST", "cached ticker: " + response.toString());
         JSONObject currentCurrency = null;
         int last = 0;
         try {
             if (Locale.getDefault().equals(Locale.US)) {
                 currentCurrency = response.getJSONObject("USD");
                 last = currentCurrency.getInt("last");
-            }
-            else if (Locale.getDefault().getLanguage().equals("fil")) {
+            } else if (Locale.getDefault().getLanguage().equals("fil")) {
                 currentCurrency = response.getJSONObject("market");
                 last = currentCurrency.getInt("ask");
             }

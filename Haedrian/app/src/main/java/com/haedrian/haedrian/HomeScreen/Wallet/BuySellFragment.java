@@ -13,19 +13,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.haedrian.haedrian.Adapters.BuyOrderListAdapter;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyOrderVerifyActivity;
 import com.haedrian.haedrian.Models.BuyOrderHistoryModel;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
@@ -46,7 +45,8 @@ public class BuySellFragment extends Fragment {
     private Context context;
     private LinearLayout noBuyOrders;
 
-    public BuySellFragment() {}
+    public BuySellFragment() {
+    }
 
     public static BuySellFragment newInstance(int sectionNumber) {
         BuySellFragment fragment = new BuySellFragment();
@@ -80,32 +80,27 @@ public class BuySellFragment extends Fragment {
             NetworkInfo netInfo = cm.getNetworkInfo(0);
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
                 if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                     initializeBuyHistoryCached();
-                }
-                else {
+                } else {
                     initializeBuyHistoryNetwork();
                 }
-            }
-            else {
+            } else {
                 netInfo = cm.getNetworkInfo(1);
 
-                if(netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED){
-                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.TWENTY_SECONDS;
+                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
                     if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
                         initializeBuyHistoryCached();
-                    }
-                    else {
+                    } else {
                         initializeBuyHistoryNetwork();
                     }
-                }
-                else {
+                } else {
                     initializeBuyHistoryCached();
                 }
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -113,7 +108,7 @@ public class BuySellFragment extends Fragment {
     private void initializeBuyHistoryNetwork() {
         final String URL = ApplicationConstants.BASE + "buy-history/";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                 URL, null,
                 new Response.Listener<JSONObject>() {
 
@@ -144,12 +139,10 @@ public class BuySellFragment extends Fragment {
                                         buyOrders.add(buyOrder);
                                     }
                                     setView();
-                                }
-                                else {
+                                } else {
                                     noBuyOrders.setVisibility(View.VISIBLE);
                                 }
-                            }
-                            else {
+                            } else {
                                 JSONObject error = response.getJSONObject("error");
                                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
                             }
@@ -206,8 +199,7 @@ public class BuySellFragment extends Fragment {
                         buyOrders.add(buyOrder);
                     }
                     setView();
-                }
-                else {
+                } else {
                     noBuyOrders.setVisibility(View.VISIBLE);
                 }
             }

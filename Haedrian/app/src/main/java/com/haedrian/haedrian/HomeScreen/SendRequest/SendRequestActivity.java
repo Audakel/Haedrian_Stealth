@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
+import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
@@ -372,7 +373,7 @@ public class SendRequestActivity extends ActionBarActivity {
         else if (Locale.getDefault().getLanguage().equals("fil")) {
             final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+            JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
                     URL, null,
                     new Response.Listener<JSONObject>() {
 

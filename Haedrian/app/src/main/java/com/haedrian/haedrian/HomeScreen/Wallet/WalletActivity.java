@@ -1,6 +1,5 @@
 package com.haedrian.haedrian.HomeScreen.Wallet;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -50,8 +49,7 @@ public class WalletActivity extends ActionBarActivity {
             boolean fromOrder = extras.getBoolean("from_order", false);
             if (fromOrder) {
                 mViewPager.setCurrentItem(1);
-            }
-            else {
+            } else {
                 mViewPager.setCurrentItem(0);
             }
         }
@@ -72,8 +70,7 @@ public class WalletActivity extends ActionBarActivity {
     }
 
 
-
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_wallet, menu);
