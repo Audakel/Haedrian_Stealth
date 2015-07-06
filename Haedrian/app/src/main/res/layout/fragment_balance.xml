@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/fake_converted_amount"
                         android:textColor="@color/white"
-                        android:textSize="30sp"
+                        android:textSize="32sp"
                         android:textStyle="bold"/>
 
                 </LinearLayout>
@@ -53,20 +53,21 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/btc"
-                        android:textColor="@color/white"
-                        android:textSize="22sp" />
-
-                    <TextView
                         android:id="@+id/bitcoin_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/bitcoin_fake_amount"
                         android:textColor="@color/white"
+                        android:layout_marginRight="10dp"
+
                         android:textSize="22sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btc"
+                        android:textColor="@color/white"
+                        android:textSize="22sp" />
 
                 </LinearLayout>
 

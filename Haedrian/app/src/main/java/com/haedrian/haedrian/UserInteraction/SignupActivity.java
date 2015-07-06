@@ -95,7 +95,8 @@ public class SignupActivity extends ActionBarActivity {
             }
         });
 
-        ArrayAdapter<String> mfiAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, microfinanceInstitutions);
+        ArrayAdapter<String> mfiAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, microfinanceInstitutions);
         microfinanceSpinner.setAdapter(mfiAdapter);
         microfinanceSpinner.setSelection(0);
         microfinanceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -305,7 +306,7 @@ public class SignupActivity extends ActionBarActivity {
 
             if (microfinanceSpinner.getSelectedItemPosition() != 0) {
                 jsonBody.put("application", application);
-                jsonBody.put("app_external_id", appExternalId);
+                jsonBody.put("app_id", appExternalId);
             }
         } catch (JSONException e) {
 
@@ -318,7 +319,7 @@ public class SignupActivity extends ActionBarActivity {
         // params.get("firstName"); etc......
         String url = ApplicationConstants.BASE + "create/";
 
-        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.POST,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url, jsonBody,
                 new Response.Listener<JSONObject>() {
 
@@ -353,7 +354,7 @@ public class SignupActivity extends ActionBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-//                Log.v("TEST2", error.getMessage());
+                Log.v("TEST2", error.getMessage());
                 Toast.makeText(SignupActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 

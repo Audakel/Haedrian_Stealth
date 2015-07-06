@@ -10,12 +10,14 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
+import com.haedrian.haedrian.Application.ApplicationController;
 
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 public class JsonUTF8Request extends JsonRequest<JSONObject> {
     public JsonUTF8Request(int method, String url, JSONObject jsonRequest,
@@ -41,5 +43,14 @@ public class JsonUTF8Request extends JsonRequest<JSONObject> {
         } catch (JSONException je) {
             return Response.error(new ParseError(je));
         }
+    }
+    @Override
+    public HashMap<String, String> getHeaders() {
+        String token = ApplicationController.getToken();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("Authorization", "Token " + token);
+        params.put("Content-Type", "application/json;charset=UTF-8");
+        params.put("Accept", "application/json");
+        return params;
     }
 }

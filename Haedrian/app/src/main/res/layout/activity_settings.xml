@@ -155,19 +155,44 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/loanId"
+                    android:text="@string/curency"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_marginTop="10dp" />
 
-                <TextView
-                    android:id="@+id/loanId"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dummy 23410394"
-                    android:textSize="16sp"
-                    android:textColor="@color/primary"
-                    android:textStyle="italic" />
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:onClick="onClick">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/current"
+                        android:textSize="16sp"
+                        android:textColor="@color/grey"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yen"
+                        android:textSize="16sp"
+                        android:textColor="@color/primary"
+                        android:textStyle="italic"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/chosenCurrency" />
+
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/display_currency_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown" />
 
             </LinearLayout>
 

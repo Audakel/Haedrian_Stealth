@@ -465,7 +465,7 @@ public class BuyActivity extends ActionBarActivity {
 
     private void setDisplay() {
         if ( ! groupTotal.equals("")) {
-            // This makes the edit texts not editable so that they don't set the group amount and then change the buy order
+            // TODO:: This makes the edit texts not editable so that they don't set the group amount and then change the buy order
             currencyEditText.setKeyListener(null);
             currencyEditText.setFocusable(false);
             bitcoinEditText.setKeyListener(null);
@@ -499,15 +499,13 @@ public class BuyActivity extends ActionBarActivity {
     }
 
     private void setPaymentMethodFee(String paymentMethodFeeStr) {
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        paymentMethodFee = Double.parseDouble(paymentMethodFeeStr);
-        paymentMethodFeeTV.setText(currencyFormatter.format(paymentMethodFee));
+        paymentMethodFeeTV.setText(paymentMethodFeeStr);
         setTotal();
     }
 
     private void setTotal() {
         total = subtotal + haedrianFee + paymentMethodFee;
-
+        // TODO:: Get internal currency unicode - use to display with total
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
         totalDueTV.setText(currencyFormatter.format(total));
     }

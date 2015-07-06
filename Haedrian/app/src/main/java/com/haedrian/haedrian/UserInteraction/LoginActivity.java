@@ -114,7 +114,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
 
         Picasso.with(this)
-                .load(R.drawable.logo)
+                .load(R.drawable.bird_clear_background)
                 .centerCrop()
                 .resize(height, height)
                 .into(appLogo);

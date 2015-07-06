@@ -494,6 +494,13 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent.putExtra("loanInfo", loanInfoJson.toString()), options8.toBundle());
                 return;
+
+            case R.id.amount_due:
+                intent = new Intent(this, RepayLoanActivity.class);
+                ActivityOptions options9 = ActivityOptions.makeScaleUpAnimation(view, 0,
+                        0, view.getWidth(), view.getHeight());
+                startActivity(intent, options9.toBundle());
+                return;
             default:
                 return;
         }

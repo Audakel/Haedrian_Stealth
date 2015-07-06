@@ -46,7 +46,7 @@
     <string name="bitcoin_address">Wallet Address:</string>
     <string name="dummy_address">Error: No wallet address found</string>
     <string name="bitcoin_fake_amount">0.0</string>
-    <string name="btc">BTC</string>
+    <string name="btc">(BTC)</string>
     <string name="currency_code">USD</string>
     <string name="fake_converted_amount">0.00</string>
     <string name="title_activity_buy">Deposit</string>
@@ -470,6 +470,18 @@
     <string name="skip">Skip</string>
     <string name="title_activity_demo_login">DemoLoginActivity</string>
     <string name="start">Start now</string>
+    <string name="hello">Why hello there friend</string>
+
+
+    // Currency Symbols
+    <string name="currency_PHP">\u20B1</string>
+    <string name="currency_USD">\u0024</string>
+    <string name="currency_BTC">\u0243</string>
+    <string name="curency">Currency for display</string>
+    <string name="current">Current: </string>
+    <string name="next_payment">Next Repayment In</string>
+    <string name="amount_due">Amount Due:</string>
+    <string name="due_time">Next Repayment In</string>
 
 
 </resources>

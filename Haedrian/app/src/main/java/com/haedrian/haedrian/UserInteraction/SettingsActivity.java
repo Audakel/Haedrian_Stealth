@@ -7,33 +7,35 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
-import com.haedrian.haedrian.HomeScreen.AddMoney.OrderSummaryActivity;
-import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -52,11 +54,17 @@ public class SettingsActivity extends ActionBarActivity {
     private ProgressDialog progressDialog;
     private TextView nameTV, usernameTV, emailTV;
     private LinearLayout nameLayout;
+    private ArrayList<String> displayCurrenciesList = new ArrayList<>();
+    private Spinner displayCurrenciesSpinner;
+    private TextView chosenCurrency;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        getCurrencyInfo();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
@@ -67,11 +75,30 @@ public class SettingsActivity extends ActionBarActivity {
         nameTV = (TextView) findViewById(R.id.name);
         usernameTV = (TextView) findViewById(R.id.username);
         emailTV = (TextView) findViewById(R.id.email);
-
         nameLayout = (LinearLayout) findViewById(R.id.name_container);
+        chosenCurrency = (TextView) findViewById(R.id.chosenCurrency);
+        displayCurrenciesSpinner = (Spinner) findViewById(R.id.display_currency_spinner);
+
+        // Get all the currency choices and put them in to displayCurrenciesList
+
+
+        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, displayCurrenciesList);
+        displayCurrenciesSpinner.setAdapter(currencyAdapter);
+        displayCurrenciesSpinner.setSelection(0);
+
+        displayCurrenciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateCurrencyInfo(displayCurrenciesList.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
 
         getUserInformation();
-
     }
 
     @Override
@@ -211,6 +238,89 @@ public class SettingsActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
+
+    public void getCurrencyInfo() {
+        String url = ApplicationConstants.BASE + "currency/";
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v("TEST", "getCurrencyInfo: " + response.toString());
+                        try {
+                            Log.v("TEST", response.toString());
+                            if (response.getBoolean("success")) {
+                                JSONArray currencies = response.getJSONArray("currencies");
+                                if (currencies != null) {
+                                    for (int i=0;i<currencies.length();i++){
+                                        displayCurrenciesList.add(currencies.get(i).toString());
+                                    }
+                                }
+                            } else {
+                                String error = response.getString("error");
+                                Toast.makeText(SettingsActivity.this, error, Toast.LENGTH_SHORT).show();
+                            }
+                            progressDialog.dismiss();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.v("TEST", "Error: " + error.getMessage());
+                Toast.makeText(SettingsActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+        };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void updateCurrencyInfo(String newCurrency) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("currency", newCurrency);
+        } catch (JSONException e) {}
+
+        String url = ApplicationConstants.BASE + "currency/";
+        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.POST,
+                url, jsonBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v("TEST", "updateCurrencyInfo: " + response.toString());
+                        try {
+                            Log.v("TEST", response.toString());
+                            if (response.getBoolean("success")) {
+                                chosenCurrency.setText((response.getString("new_currency")));
+                            } else {
+                                String error = response.getString("error");
+                                Toast.makeText(SettingsActivity.this, error, Toast.LENGTH_SHORT).show();
+                            }
+                            progressDialog.dismiss();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.v("TEST", "Error: " + error.getMessage());
+                Toast.makeText(SettingsActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+        };
+
+        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
+        // Adds request to the request queue
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+    }
+
 
 
 }
