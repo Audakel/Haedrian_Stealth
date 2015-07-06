@@ -68,26 +68,26 @@ public class LoanInfoActivity extends ActionBarActivity {
         startingBalance.setText(loanInfoModel.getStartingBalanceDisplay()+"");
         currentBalance.setText(loanInfoModel.getCurrentBalanceDisplay()+"");
 
-    /*
+
         PieChart pieChart = (PieChart) findViewById(R.id.pieChart);
 
         ArrayList<Entry> yValues = new ArrayList<Entry>();
         yValues.add(new Entry((float) ((float) loanInfoModel.getStartingBalance() - loanInfoModel.getCurrentBalance()), 1));
         yValues.add(new Entry((float) loanInfoModel.getCurrentBalance(), 2));
 
-        PieDataSet dataSet = new PieDataSet(yValues, "Loan Repayment");
+        PieDataSet dataSet = new PieDataSet(yValues, ""); // Optional title for 2nd parameter
         dataSet.setColors(new int[] {getResources().getColor(R.color.primary),
                 getResources().getColor(R.color.accent)});
 
         ArrayList<String> xValues = new ArrayList<String>();
-        xValues.add("Starting Balance");
-        xValues.add("Current Balance");
+        xValues.add("Paid off Balance");
+        xValues.add("Remaining Balance");
 
         PieData data = new PieData(xValues, dataSet);
         pieChart.setData(data);
         pieChart.invalidate();
 
-    */
+
 
 
 

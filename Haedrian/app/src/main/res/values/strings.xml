@@ -482,6 +482,7 @@
     <string name="next_payment">Next Repayment In</string>
     <string name="amount_due">Amount Due:</string>
     <string name="due_time">Next Repayment In</string>
+    <string name="my_loan">My loan information</string>
 
 
 </resources>
