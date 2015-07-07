@@ -77,13 +77,13 @@ public class BalanceFragment extends Fragment {
         return rootView;
     }
 
-    public void initializeDisplay(String bitcoinAdress) {
+    public void initializeDisplay(String bitcoinAddress) {
 
         // Generate QRCode and then display it
         QRCodeEncoder encoder = new QRCodeEncoder();
         Bitmap qrCodeBitmap = null;
         try {
-            qrCodeBitmap = encoder.encodeAsBitmap(bitcoinAdress, 300);
+            qrCodeBitmap = encoder.encodeAsBitmap(bitcoinAddress, 300);
         } catch (WriterException e) {
             Log.e("ZXing", e.toString());
         }
@@ -92,7 +92,7 @@ public class BalanceFragment extends Fragment {
         progressDialog.dismiss();
 
         // Set up dialog stuff with wallet address and bitmap
-        final String walletAddress = bitcoinAdress;
+        final String walletAddress = bitcoinAddress;
         final Bitmap finalQrCodeBitmap = qrCodeBitmap;
         getWalletAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,9 +149,7 @@ public class BalanceFragment extends Fragment {
                         ApplicationController.cacheJSON(response, "wallet-info");
                         ApplicationController.setBalanceTimestamp(System.currentTimeMillis());
                         try {
-
                             // Server is sending properly converted and formated currency amount
-                            // setBalanceNetwork(response.getJSONObject("bitcoin").getString("balance"));
                             bitcoinAmount.setText(String.valueOf(response.getJSONObject("bitcoin").getString("btc_balance")));
                             convertedAmount.setText(response.getJSONObject("bitcoin").getString("balance"));
 
@@ -188,148 +186,19 @@ public class BalanceFragment extends Fragment {
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
-
-    public void setBalanceNetwork(String response) {
-
-        float balance = Float.parseFloat(response);
-
-//        balance = (balance / (float) 100000000);
-
-        getConvertedRateNetwork(String.valueOf(balance));
-
-        bitcoinAmount.setText(String.valueOf(balance));
-    }
-
-    public void getConvertedRateNetwork(String bitcoinAmount) {
-
-        final String amount = bitcoinAmount;
-        if (Locale.getDefault().equals(Locale.US)) {
-            final String url = "https://blockchain.info/ticker";
-
-            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            ApplicationController.cacheJSON(response, "ticker");
-                            try {
-                                JSONObject currentCurrency = response.getJSONObject("USD");
-                                int last = currentCurrency.getInt("last");
-                                setConvertedRate(last, amount);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d("Error", "Error: " + error.getMessage());
-                    progressDialog.dismiss();
-                }
-            });
-
-            currencyRequest.setRetryPolicy(new TimeoutRetryPolicy());
-            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
-
-        } else if (Locale.getDefault().getLanguage().equals("fil")) {
-            final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
-
-            JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
-                    URL, null,
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.v("TEST", "exchange-rate: " + response.toString());
-                            ApplicationController.cacheJSON(response, "ticker");
-                            try {
-                                JSONObject currentCurrency = response.getJSONObject("market");
-                                int last = currentCurrency.getInt("ask");
-                                setConvertedRate(last, amount);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d("Test", "Error: " + error.toString());
-                    progressDialog.dismiss();
-
-                }
-
-            }) {
-                @Override
-                public HashMap<String, String> getHeaders() {
-                    String token = ApplicationController.getToken();
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put("Authorization", "Token " + token);
-                    params.put("Content-Type", "application/json;charset=UTF-8");
-                    params.put("Accept", "application/json");
-                    return params;
-                }
-            };
-
-            jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
-
-            // Adds request to the request queue
-            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
-        }
-    }
-
     private void initializeWalletCached() {
         JSONObject response = ApplicationController.getCachedJSON("wallet-info");
         Log.v("TEST", "cached wallet-info: " + response.toString());
         try {
-            bitcoinAmount.setText(response.getJSONObject("bitcoin").getString("balance"));
+            // Server is sending properly converted and formated currency amount
+            bitcoinAmount.setText(String.valueOf(response.getJSONObject("bitcoin").getString("btc_balance")));
+            convertedAmount.setText(response.getJSONObject("bitcoin").getString("balance"));
+
             initializeDisplay(response.getJSONObject("bitcoin").getString("blockchain_address"));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-
-    public void setBalanceCached(String response) {
-        float balance = Float.parseFloat(response);
-        getConvertedRateCached(String.valueOf(balance));
-        bitcoinAmount.setText(String.valueOf(balance));
-    }
-
-    public void getConvertedRateCached(String bitcoinAmount) {
-        JSONObject response = ApplicationController.getCachedJSON("ticker");
-        Log.v("TEST", "cached ticker: " + response.toString());
-        JSONObject currentCurrency = null;
-        int last = 0;
-        try {
-            if (Locale.getDefault().equals(Locale.US)) {
-                currentCurrency = response.getJSONObject("USD");
-                last = currentCurrency.getInt("last");
-            } else if (Locale.getDefault().getLanguage().equals("fil")) {
-                currentCurrency = response.getJSONObject("market");
-                last = currentCurrency.getInt("ask");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        setConvertedRate(last, bitcoinAmount);
-    }
-
-    public void setConvertedRate(int rate, String bitcoinAmount) {
-        float conversion = (float) rate * Float.parseFloat(bitcoinAmount);
-
-        Double newAmount = Double.parseDouble(String.valueOf(conversion));
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        // To strip out the currency symbol
-        DecimalFormatSymbols symbols = ((DecimalFormat) format).getDecimalFormatSymbols();
-        symbols.setCurrencySymbol("");
-        ((DecimalFormat) format).setDecimalFormatSymbols(symbols);
-
-        String formattedAmount = format.format(newAmount).replaceAll(" ", "");
-
-        convertedAmount.setText(formattedAmount);
-        progressDialog.dismiss();
     }
 
 }

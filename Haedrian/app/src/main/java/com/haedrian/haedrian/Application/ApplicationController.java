@@ -48,6 +48,7 @@ public class ApplicationController extends Application {
     private static long balanceTimestamp = 0L;
     private static long buySellTimestamp = 0L;
     private static long transactionTimestamp = 0L;
+    private static long homeScreenTimestamp = 0L;
 
     /**
      * @return ApplicationController singleton instance
@@ -178,6 +179,7 @@ public class ApplicationController extends Application {
         balanceTimestamp = 0L;
         buySellTimestamp = 0L;
         transactionTimestamp = 0L;
+        homeScreenTimestamp = 0L;
     }
 
     public static long getBalanceTimestamp() {
@@ -186,6 +188,12 @@ public class ApplicationController extends Application {
 
     public static void setBalanceTimestamp(long balanceTimestampTemp) {
         balanceTimestamp = balanceTimestampTemp;
+    }
+
+    public static long getHomeScreenTimestamp() { return homeScreenTimestamp; }
+
+    public static void setHomeScreenTimestamp(long homeScreenTimestampTemp) {
+        homeScreenTimestamp = homeScreenTimestampTemp;
     }
 
     public static long getBuySellTimestamp() {

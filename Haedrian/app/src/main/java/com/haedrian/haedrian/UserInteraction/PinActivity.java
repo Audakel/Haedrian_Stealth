@@ -335,6 +335,8 @@ public class PinActivity extends ActionBarActivity {
         editor.putString("token", encryptedToken);
         // This is so that it will prompt the user to enter in the pin on app startup
         editor.putString("pin_state", "enter");
+        // This is so that it doesn't open up the onboarding each time
+        editor.putBoolean("first_time", false);
         editor.commit();
     }
 

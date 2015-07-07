@@ -204,7 +204,8 @@ public class TransactionDetailsActivity extends ActionBarActivity {
                             try {
                                 JSONObject currentCurrency = response.getJSONObject("USD");
                                 int last = currentCurrency.getInt("last");
-                                setConvertedRate(last, amount);
+                                currencyAmount.setText(amount);
+                                progressDialog.dismiss();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -234,7 +235,8 @@ public class TransactionDetailsActivity extends ActionBarActivity {
                             try {
                                 JSONObject currentCurrency = response.getJSONObject("market");
                                 int last = currentCurrency.getInt("ask");
-                                setConvertedRate(last, amount);
+                                currencyAmount.setText(amount);
+                                progressDialog.dismiss();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -268,16 +270,4 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         }
     }
 
-    public void setConvertedRate(int rate, String bitcoinAmount) {
-        float conversion = (float) rate * Float.parseFloat(bitcoinAmount);
-
-        Double newAmount = Double.parseDouble(String.valueOf(conversion));
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        DecimalFormatSymbols symbols = ((DecimalFormat) format).getDecimalFormatSymbols();
-
-        String formattedAmount = format.format(newAmount);
-
-        currencyAmount.setText(formattedAmount);
-        progressDialog.dismiss();
-    }
 }

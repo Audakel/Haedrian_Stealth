@@ -454,7 +454,7 @@
     <string name="wallet_balance_title">Wallet Balance</string>
     <string name="loan_balance_title">Loan Balance</string>
     <string name="days_left">Days to Payment</string>
-    <string name="title_activity_loan_info">LoanInfoActivity</string>
+    <string name="title_activity_loan_info">Loan Info</string>
     <string name="repay_every">Repay Every</string>
     <string name="total_repayments">Total Number of Repayments</string>
     <string name="total_overdue">Total Overdue</string>
@@ -463,13 +463,12 @@
     <string name="interest_frequency">Interest Frequency</string>
     <string name="starting_balance">Starting Loan Balance</string>
     <string name="loan_cost">Total Cost of Loan</string>
-    <string name="title_activity_starter">Starter</string>
-    <string name="intro_demo1">Payback microfinace loans right from your phone</string>
-    <string name="intro_demo2">Load your balance at 1,000\'s of locations like banks, ATMs, Pawnshops and more</string>
+    <string name="intro_demo1">Pay back microfinace loans right from your phone</string>
+    <string name="intro_demo2">Load your balance at thousands of locations like banks, ATMs, Pawnshops and more</string>
     <string name="intro_demo3">Send repayments individually or with your group</string>
     <string name="skip">Skip</string>
-    <string name="title_activity_demo_login">DemoLoginActivity</string>
-    <string name="start">Start now</string>
+    <string name="title_activity_demo_login">Curo</string>
+    <string name="start">Get Started</string>
     <string name="hello">Why hello there friend</string>
 
 

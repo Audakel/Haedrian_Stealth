@@ -33,7 +33,7 @@
     <application
         android:name=".Application.ApplicationController"
         android:allowBackup="true"
-        android:icon="@drawable/birdlogo"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme,android:name" >
@@ -49,12 +49,6 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan" >
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".HomeScreen.HomeActivity"
@@ -373,20 +367,23 @@
         </activity>
         <activity
             android:name=".HomeScreen.LoanInfoActivity"
-            android:label="@string/title_activity_loan_info" >
+            android:label="@string/title_activity_loan_info"
+            android:parentActivityName=".HomeScreen.HomeActivity" >
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen.HomeActivity" />
         </activity>
         <activity
-            android:name=".HomeScreen.StartActivity"
-            android:label="@string/title_activity_starter" >
+            android:name=".HomeScreen.IntroDemo.Fragments.IntroDemoActivity"
+            android:label="@string/title_activity_demo_login" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".HomeScreen.IntroDemo.Fragments.IntroDemoActivity"
-            android:label="@string/title_activity_demo_login" >
         </activity>
     </application>
 

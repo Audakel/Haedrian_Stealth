@@ -82,22 +82,6 @@ public class SettingsActivity extends ActionBarActivity {
         // Get all the currency choices and put them in to displayCurrenciesList
 
 
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, displayCurrenciesList);
-        displayCurrenciesSpinner.setAdapter(currencyAdapter);
-        displayCurrenciesSpinner.setSelection(0);
-
-        displayCurrenciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                updateCurrencyInfo(displayCurrenciesList.get(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-
         getUserInformation();
     }
 
@@ -250,12 +234,14 @@ public class SettingsActivity extends ActionBarActivity {
                         try {
                             Log.v("TEST", response.toString());
                             if (response.getBoolean("success")) {
-                                JSONArray currencies = response.getJSONArray("currencies");
-                                if (currencies != null) {
-                                    for (int i=0;i<currencies.length();i++){
+                                if (response.has("currencies")) {
+                                    JSONArray currencies = response.getJSONArray("currencies");
+                                    for (int i = 0; i < currencies.length(); i++){
                                         displayCurrenciesList.add(currencies.get(i).toString());
                                     }
                                 }
+                                setUpSpinner();
+
                             } else {
                                 String error = response.getString("error");
                                 Toast.makeText(SettingsActivity.this, error, Toast.LENGTH_SHORT).show();
@@ -307,13 +293,14 @@ public class SettingsActivity extends ActionBarActivity {
                         }
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                Log.v("TEST", "Error: " + error.getMessage());
-                Toast.makeText(SettingsActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
-            }
-        }) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Log.v("TEST", "Error: " + error.getMessage());
+                        Toast.makeText(SettingsActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                    }
+                })
+            {
         };
 
         jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
@@ -321,6 +308,23 @@ public class SettingsActivity extends ActionBarActivity {
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
+    private void setUpSpinner() {
+
+        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, displayCurrenciesList);
+        displayCurrenciesSpinner.setAdapter(currencyAdapter);
+        displayCurrenciesSpinner.setSelection(0);
+
+        displayCurrenciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateCurrencyInfo(displayCurrenciesList.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
 
 
 }

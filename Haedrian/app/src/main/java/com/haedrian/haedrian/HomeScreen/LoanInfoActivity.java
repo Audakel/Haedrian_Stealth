@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.HomeScreen;
 
 import android.content.Context;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,6 +37,8 @@ public class LoanInfoActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_info);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         String loanInfo = bundle.getString("loanInfo");
@@ -87,19 +90,12 @@ public class LoanInfoActivity extends ActionBarActivity {
         pieChart.setData(data);
         pieChart.invalidate();
 
-
-
-
-
-
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_loan_info, menu);
+//        getMenuInflater().inflate(R.menu.menu_loan_info, menu);
         return true;
     }
 
@@ -111,7 +107,8 @@ public class LoanInfoActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 

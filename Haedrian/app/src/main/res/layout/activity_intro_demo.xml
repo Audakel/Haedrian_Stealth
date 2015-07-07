@@ -1,67 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@drawable/concrete_repeating">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout5">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/bird_clear_background" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/skip"
-            android:id="@+id/skipTV"
-            android:textSize="18sp"
-            android:textStyle="italic"
-            android:background="@android:color/transparent"
-            android:gravity="right"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/grey"
-            />
+        android:layout_alignParentRight="true"
+        android:text="@string/skip"
+        android:id="@+id/skip_button"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/grey" />
 
 
-    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_below="@+id/linearLayout5"
-        android:layout_above="@+id/pageIndicator"
-        android:id="@+id/intro_demo_pager">
+        android:id="@+id/intro_demo_pager" >
 
     </android.support.v4.view.ViewPager>
 
-    <TextView
-        android:id="@+id/pageIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="o o o o"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center" />
-
-    <!--<com.viewpagerindicator.TitlePageIndicator-->
+    <!--<TextView-->
         <!--android:id="@+id/pageIndicator"-->
+        <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="fill_parent" />-->
+        <!--android:text="o o o o"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:gravity="center" />-->
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/pageIndicator"
+        android:layout_height="15dp"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"/>
+
+
+
+
 </RelativeLayout>

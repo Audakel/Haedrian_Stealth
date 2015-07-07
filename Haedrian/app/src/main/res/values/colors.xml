@@ -26,10 +26,10 @@
     <color name="accent_pressed">#FFFF00</color>
 
     <!--Log in pin colors-->
-    <color name="pin1">#FFFF00</color>
-    <color name="pin2">#76FF03</color>
-    <color name="pin3">#FF4081</color>
-    <color name="pin4">#1DE9B6</color>
+    <color name="pin1">#1379A7</color>
+    <color name="pin2">#FFEA00</color>
+    <color name="pin3">#F61C3B</color>
+    <color name="pin4">#8BC34A</color>
 
 
 

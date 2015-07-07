@@ -90,9 +90,7 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
         }
         statusTV.setText(buyOrderStatus);
 
-        Double currencyAmount = Double.parseDouble(buyOrder.getCurrencyAmount());
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        amountTV.setText(currencyFormatter.format(currencyAmount));
+        amountTV.setText(buyOrder.getCurrencyAmount());
 
 
         Calendar cal = Calendar.getInstance(Locale.getDefault());
