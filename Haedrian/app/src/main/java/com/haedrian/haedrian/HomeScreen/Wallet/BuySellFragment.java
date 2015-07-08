@@ -81,7 +81,7 @@ public class BuySellFragment extends Fragment {
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
                 long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
-                if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                if (ApplicationController.getBuySellTimestamp() != 0L && ApplicationController.getBuySellTimestamp() > oneMinuteAgo) {
                     initializeBuyHistoryCached();
                 } else {
                     initializeBuyHistoryNetwork();
@@ -91,7 +91,7 @@ public class BuySellFragment extends Fragment {
 
                 if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
                     long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
-                    if (ApplicationController.getBalanceTimestamp() != 0L && ApplicationController.getBalanceTimestamp() > oneMinuteAgo) {
+                    if (ApplicationController.getBuySellTimestamp() != 0L && ApplicationController.getBuySellTimestamp() > oneMinuteAgo) {
                         initializeBuyHistoryCached();
                     } else {
                         initializeBuyHistoryNetwork();

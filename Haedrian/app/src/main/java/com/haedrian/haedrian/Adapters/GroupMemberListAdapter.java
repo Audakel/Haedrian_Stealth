@@ -3,6 +3,7 @@ package com.haedrian.haedrian.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
@@ -15,10 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.GroupMemberDialog;
 import com.haedrian.haedrian.HomeScreen.AddMoney.GroupBuyActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.util.DecimalDigitsInputFilter;
 import com.lenddo.sdk.models.User;
 
 import org.w3c.dom.Text;
@@ -69,6 +72,7 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
             holder = new GroupMemberRowHolder();
             holder.memberName = (TextView) row.findViewById(R.id.member_name);
             holder.memberAmount = (EditText) row.findViewById(R.id.member_amount);
+            holder.memberAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
             holder.currencySign = (TextView) row.findViewById(R.id.currency_sign);
 
             row.setTag(holder);
@@ -82,8 +86,8 @@ public class GroupMemberListAdapter extends ArrayAdapter<UserModel> {
         underlinedName.setSpan(new UnderlineSpan(), 0, underlinedName.length(), 0);
         holder.memberName.setText(underlinedName);
 
-        Currency currency = Currency.getInstance(Locale.getDefault());
-        holder.currencySign.setText(currency.getSymbol());
+        String currency = ApplicationController.getSetCurrencySign();
+        holder.currencySign.setText(currency);
 
         final int positionFinal = position;
 

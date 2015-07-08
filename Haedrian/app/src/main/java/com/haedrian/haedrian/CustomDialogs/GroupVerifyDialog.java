@@ -8,6 +8,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
 
 import java.util.Currency;
@@ -41,8 +42,8 @@ public class GroupVerifyDialog extends Dialog {
         confirmButton = (Button) findViewById(R.id.confirm_button);
         totalTV = (TextView) findViewById(R.id.order_amount);
 
-        Currency currency = Currency.getInstance(Locale.getDefault());
-        totalTV.setText(currency.getSymbol() + total);
+        String currency = ApplicationController.getSetCurrencySign();
+        totalTV.setText(currency + total);
 
     }
 

@@ -37,8 +37,8 @@ import java.util.Locale;
 public class TransactionDetailsActivity extends ActionBarActivity {
 
     private TransactionModel transaction;
-    private TextView id, btcAmount, currencyAmount, fromPerson, toPerson, note, date, statusTV;
-    private ProgressDialog progressDialog;
+    private TextView id, currencyAmount, fromPerson, toPerson, note, date, statusTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +47,12 @@ public class TransactionDetailsActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.dialog_loading));
-        progressDialog.show();
-
         Intent intent = getIntent();
         if (intent != null) {
             transaction = intent.getParcelableExtra("transaction");
-            getConversion(transaction.getAmount());
         }
 
         date = (TextView) findViewById(R.id.date);
-        btcAmount = (TextView) findViewById(R.id.btc_amount);
         currencyAmount = (TextView) findViewById(R.id.currency_amount);
         id = (TextView) findViewById(R.id.transaction_id);
         statusTV = (TextView) findViewById(R.id.status);
@@ -66,6 +60,9 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         fromPerson = (TextView) findViewById(R.id.from_person);
         toPerson = (TextView) findViewById(R.id.to_person);
         note = (TextView) findViewById(R.id.note);
+
+
+        currencyAmount.setText(transaction.getAmount());
 
         if (transaction.getDate() != null) {
 //            String[] dateParts = transaction.getDate().split("T");
@@ -81,7 +78,6 @@ public class TransactionDetailsActivity extends ActionBarActivity {
         }
         id.setText(getString(R.string.transaction_id) + transaction.getId());
         statusTV.setText(transaction.getStatus().toUpperCase());
-        btcAmount.setText(transaction.getAmount());
         if (transaction.getEntryType().equals("incoming")) {
             toPerson.setText(getString(R.string.me));
             if (transaction.getSender().equals("null")) {
@@ -188,86 +184,6 @@ public class TransactionDetailsActivity extends ActionBarActivity {
 
         return month + " " + day + ", " + year;
 
-    }
-
-    public void getConversion(String bitcoinAmount) {
-
-        final String amount = bitcoinAmount;
-        if (Locale.getDefault().equals(Locale.US)) {
-            final String url = "https://blockchain.info/ticker";
-
-            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            ApplicationController.cacheJSON(response, "ticker");
-                            try {
-                                JSONObject currentCurrency = response.getJSONObject("USD");
-                                int last = currentCurrency.getInt("last");
-                                currencyAmount.setText(amount);
-                                progressDialog.dismiss();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d("Error", "Error: " + error.getMessage());
-                    progressDialog.dismiss();
-                }
-            });
-
-            currencyRequest.setRetryPolicy(new TimeoutRetryPolicy());
-            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
-
-        } else if (Locale.getDefault().getLanguage().equals("fil")) {
-            final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
-
-            JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
-                    URL, null,
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.v("TEST", "exchange-rate: " + response.toString());
-                            ApplicationController.cacheJSON(response, "ticker");
-                            try {
-                                JSONObject currentCurrency = response.getJSONObject("market");
-                                int last = currentCurrency.getInt("ask");
-                                currencyAmount.setText(amount);
-                                progressDialog.dismiss();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d("Test", "Error: " + error.toString());
-                    progressDialog.dismiss();
-
-                }
-
-            }) {
-                @Override
-                public HashMap<String, String> getHeaders() {
-                    String token = ApplicationController.getToken();
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put("Authorization", "Token " + token);
-                    params.put("Content-Type", "application/json;charset=UTF-8");
-                    params.put("Accept", "application/json");
-                    return params;
-                }
-            };
-
-            jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
-
-            // Adds request to the request queue
-            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
-        }
     }
 
 }

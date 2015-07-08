@@ -132,7 +132,7 @@ public class TransactionFragment extends Fragment {
                                         transaction.setId(object.getString("id"));
                                         transaction.setStatus(object.getString("status"));
                                         transaction.setFeeAmount(object.getString("fee_amount"));
-                                        transaction.setAmount(object.getString("amount"));
+                                        transaction.setAmount(object.getString("amount_display"));
                                         String[] dateParts = object.getString("date").split("T");
                                         transaction.setDate(formatDate(dateParts[0]));
                                         transaction.setEntryType(object.getString("entry_type"));

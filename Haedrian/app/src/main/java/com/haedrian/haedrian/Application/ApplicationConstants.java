@@ -17,6 +17,7 @@ public class ApplicationConstants {
 
 
     public static final long ONE_MINUTE = 60 * 1000;
+    public static final long FIVE_MINUTES = 60 * 1000 * 5;
 
 
     public static final String MY_FLURRY_API_KEY = "FS5BYJRV5697D2QS9SDB";

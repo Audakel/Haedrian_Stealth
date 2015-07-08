@@ -28,6 +28,7 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Network.JsonUTF8Request;
+import com.haedrian.haedrian.QrCode.Intents;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
@@ -57,6 +58,7 @@ public class SettingsActivity extends ActionBarActivity {
     private ArrayList<String> displayCurrenciesList = new ArrayList<>();
     private Spinner displayCurrenciesSpinner;
     private TextView chosenCurrency;
+    private SharedPreferences sp;
 
 
     @Override
@@ -81,6 +83,7 @@ public class SettingsActivity extends ActionBarActivity {
 
         // Get all the currency choices and put them in to displayCurrenciesList
 
+        sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
 
         getUserInformation();
     }
@@ -282,7 +285,12 @@ public class SettingsActivity extends ActionBarActivity {
                         try {
                             Log.v("TEST", response.toString());
                             if (response.getBoolean("success")) {
-                                chosenCurrency.setText((response.getString("new_currency")));
+
+                                String newCurrency = response.getString("new_currency");
+                                chosenCurrency.setText(newCurrency);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString("currency", newCurrency);
+                                editor.apply();
                             } else {
                                 String error = response.getString("error");
                                 Toast.makeText(SettingsActivity.this, error, Toast.LENGTH_SHORT).show();
@@ -313,7 +321,18 @@ public class SettingsActivity extends ActionBarActivity {
         ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, displayCurrenciesList);
         displayCurrenciesSpinner.setAdapter(currencyAdapter);
-        displayCurrenciesSpinner.setSelection(0);
+
+        String currency = sp.getString("currency", "USD");
+        int length = displayCurrenciesList.size();
+        int selection = 0;
+        for (int i = 0; i < length; i++) {
+            if (displayCurrenciesList.get(i).equals(currency)) {
+                selection = i;
+            }
+        }
+
+        chosenCurrency.setText(currency);
+        displayCurrenciesSpinner.setSelection(selection);
 
         displayCurrenciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override

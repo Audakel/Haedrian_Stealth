@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +61,9 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
     // TODO:: Cache this
     public JSONObject loanInfoJson;
-    private TextView walletBallanceTV, loanBallanceTV, timeLeftTV, usernameTV, timeRepaymentUnit;
+    private LinearLayout loanInfoContainer, amountDueContainer;
+    private TextView walletBallanceTV, loanBallanceTV, timeLeftTV, usernameTV, timeRepaymentUnit, balanceDueTV;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
     private int moneyBalanceTextSize = 20;
 
@@ -68,11 +75,28 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
         walletBallanceTV = (TextView) findViewById(R.id.wallet_balance);
         loanBallanceTV = (TextView) findViewById(R.id.loan_balance);
         timeLeftTV = (TextView) findViewById(R.id.time_left);
         usernameTV = (TextView) findViewById(R.id.username);
         timeRepaymentUnit = (TextView) findViewById(R.id.time_unit_title);
+        balanceDueTV = (TextView) findViewById(R.id.balance_due);
+
+        loanInfoContainer = (LinearLayout) findViewById(R.id.loan_info_container);
+        amountDueContainer = (LinearLayout) findViewById(R.id.amount_due_container);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary_light, R.color.primary, R.color.primary_dark);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh() {
+                ApplicationController.setHomeScreenTimestamp(0L);
+                getHomeScreenData();
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
@@ -95,7 +119,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
             if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
                 // Check if a request was made less than a minute ago
-                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.FIVE_MINUTES;
                 if (ApplicationController.getHomeScreenTimestamp() != 0L && ApplicationController.getHomeScreenTimestamp() > oneMinuteAgo) {
                     getHomeScreenDataCached();
                 } else {
@@ -105,7 +129,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 netInfo = cm.getNetworkInfo(1);
                 if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
                     // Check if a request was made less than a minute ago
-                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.ONE_MINUTE;
+                    long oneMinuteAgo = System.currentTimeMillis() - ApplicationConstants.FIVE_MINUTES;
                     if (ApplicationController.getHomeScreenTimestamp() != 0L && ApplicationController.getHomeScreenTimestamp() > oneMinuteAgo) {
                         getHomeScreenDataCached();
                     } else {
@@ -144,9 +168,10 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                                 if (loans.length() > 0) {
                                     JSONObject loan = loans.getJSONObject(0);
 
-                                    timeLeftTV.setText("4");
-//                                timeLeftTV.setText(loan.getString("number_of_repayments"));
-//                                timeRepaymentUnit.setText(loan.getString("repay_time_unit"));
+                                    JSONObject nextRepaymentInfo = response.getJSONObject("next_repayment_info");
+
+                                    timeLeftTV.setText(String.valueOf(calculateTimeDifference(nextRepaymentInfo.getString("date"))));
+                                    balanceDueTV.setText(nextRepaymentInfo.getString("amount_display"));
 
                                     // TODO:: Need to install better CurrencyInstance Backend to support other currencies
                                     walletBallanceTV.setText((response.getString("wallet_balance")));
@@ -163,18 +188,21 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
                                     loanInfoJson = loan;
+                                    loanInfoContainer.setVisibility(View.VISIBLE);
+                                    amountDueContainer.setVisibility(View.VISIBLE);
                                 }
-                                else {
-
-                                }
+                                swipeRefreshLayout.setRefreshing(false);
                                 progressDialog.dismiss();
                             } else {
+                                swipeRefreshLayout.setRefreshing(false);
                                 progressDialog.dismiss();
                                 String error = response.getString("error");
                                 Toast.makeText(HomeActivity.this, error, Toast.LENGTH_SHORT).show();
                             }
+                            swipeRefreshLayout.setRefreshing(false);
                             progressDialog.dismiss();
                         } catch (JSONException e) {
+                            swipeRefreshLayout.setRefreshing(false);
                             progressDialog.dismiss();
                             e.printStackTrace();
                         }
@@ -182,6 +210,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                swipeRefreshLayout.setRefreshing(false);
                 progressDialog.dismiss();
                 Log.v("TEST", "Error: " + error.getMessage());
                 Toast.makeText(HomeActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
@@ -210,34 +239,41 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
             // Assuming they have only 1 loan for now ~
             // TODO:: Fix with asking the user what loan they want to see if > 1
             JSONArray loans = response.getJSONArray("loan_info");
-            JSONObject loan = loans.getJSONObject(0);
 
             usernameTV.setText(response.getString("username"));
-            timeLeftTV.setText("4");
-//                                timeLeftTV.setText(loan.getString("number_of_repayments"));
-//                                timeRepaymentUnit.setText(loan.getString("repay_time_unit"));
 
-            // TODO:: Need to install better CurrencyInstance Backend to support other currencies
-            walletBallanceTV.setText((response.getString("wallet_balance")));
-            loanBallanceTV.setText((loan.getString("current_balance_display")));
+            if (loans.length() > 0) {
 
-            // Decide font size
-            if (loanBallanceTV.getText().length() > 8 ||
-                    walletBallanceTV.getText().length() > 8)
-            {
-                moneyBalanceTextSize = 18;
+                JSONObject loan = loans.getJSONObject(0);
+                JSONObject nextRepaymentInfo = response.getJSONObject("next_repayment_info");
+
+                timeLeftTV.setText(String.valueOf(calculateTimeDifference(nextRepaymentInfo.getString("date"))));
+                balanceDueTV.setText(nextRepaymentInfo.getString("amount_display"));
+
+                // TODO:: Need to install better CurrencyInstance Backend to support other currencies
+                walletBallanceTV.setText((response.getString("wallet_balance")));
+                loanBallanceTV.setText((loan.getString("current_balance_display")));
+
+                // Decide font size
+                if (loanBallanceTV.getText().length() > 8 ||
+                        walletBallanceTV.getText().length() > 8) {
+                    moneyBalanceTextSize = 18;
+                }
+                walletBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
+                loanBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
+                timeLeftTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
+
+
+                loanInfoJson = loan;
+                loanInfoContainer.setVisibility(View.VISIBLE);
+                amountDueContainer.setVisibility(View.VISIBLE);
             }
-            walletBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
-            loanBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
-            timeLeftTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
-
-
-            loanInfoJson = loan;
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        swipeRefreshLayout.setRefreshing(false);
         progressDialog.dismiss();
     }
 
@@ -340,12 +376,13 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent.putExtra("loanInfo", loanInfoJson.toString()), options8.toBundle());
                 return;
-
-            case R.id.amount_due:
+            case R.id.amount_due_container:
                 intent = new Intent(this, RepayLoanActivity.class);
                 ActivityOptions options9 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options9.toBundle());
+                return;
+            case R.id.days_to_payment_container:
                 return;
             default:
                 return;
@@ -375,4 +412,14 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         }
 
     }
+
+    private int calculateTimeDifference(String date) {
+        LocalDate dateTime = new LocalDate(date);
+        LocalDate today = LocalDate.now();
+
+        int days = Days.daysBetween(today, dateTime).getDays();
+
+        return days;
+    }
+
 }

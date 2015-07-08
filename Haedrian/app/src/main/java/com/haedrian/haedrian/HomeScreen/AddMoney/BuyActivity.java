@@ -1,11 +1,14 @@
 package com.haedrian.haedrian.HomeScreen.AddMoney;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +35,7 @@ import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
+import com.haedrian.haedrian.util.DecimalDigitsInputFilter;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONArray;
@@ -40,6 +44,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -48,11 +53,9 @@ import java.util.Locale;
 
 
 public class BuyActivity extends ActionBarActivity {
-    private EditText currencyEditText, bitcoinEditText;
-    private TextView amountCurrency, currencySign, subtotalTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
+    private EditText currencyEditText;
+    private TextView currencySign, subtotalTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
     private Spinner locationSpinner, outletSpinner;
-    private String buyRate = "0";
-    private Button submitButton;
     private ArrayList<String> paymentMethods;
     private ArrayList<String> depositLocations = new ArrayList<>();
     private ArrayList<ArrayList<String>> outletLocations = new ArrayList<>();
@@ -65,6 +68,7 @@ public class BuyActivity extends ActionBarActivity {
     private Double total = 0.00;
     private String groupTotal = "";
     private String groupRepaymentId = "";
+    private String currency;
 
     private ProgressDialog progressDialog;
 
@@ -76,36 +80,37 @@ public class BuyActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        currencySign = (TextView) findViewById(R.id.currency_sign_buy);
-        Currency currency = Currency.getInstance(Locale.getDefault());
-        currencySign.setText(currency.getSymbol());
+        currency = ApplicationController.getSetCurrencySign();
+
+        currencySign = (TextView) findViewById(R.id.currency_sign);
+        currencySign.setText(currency);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        getExchangeRate();
+        setDisplay();
         getExchangeTypes();
 
         locationSpinner = (Spinner) findViewById(R.id.method_spinner);
         outletSpinner = (Spinner) findViewById(R.id.outlet_spinner);
-        currencyEditText = (EditText) findViewById(R.id.currency_edittext);
-        bitcoinEditText = (EditText) findViewById(R.id.bitcoin_edittext);
-        amountCurrency = (TextView) findViewById(R.id.amount_currency);
-        submitButton = (Button) findViewById(R.id.submit_button);
+        currencyEditText = (EditText) findViewById(R.id.amount_currency);
+        currencyEditText.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
+
+        Button submitButton = (Button) findViewById(R.id.submit_button);
 
         subtotalTV = (TextView) findViewById(R.id.subtotal);
         haedrianFeeTV = (TextView) findViewById(R.id.haedrian_fee);
         paymentMethodFeeTV = (TextView) findViewById(R.id.payment_method_fee);
         totalDueTV = (TextView) findViewById(R.id.total_due);
 
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
-        subtotalTV.setText(currencyFormatter.format(subtotal));
-        haedrianFeeTV.setText(currencyFormatter.format(haedrianFee));
-        paymentMethodFeeTV.setText(currencyFormatter.format(paymentMethodFee));
-        totalDueTV.setText(currencyFormatter.format(total));
+        subtotalTV.setText(currency + decimalFormat.format(subtotal));
+        haedrianFeeTV.setText(currency + decimalFormat.format(haedrianFee));
+        paymentMethodFeeTV.setText(currency + decimalFormat.format(paymentMethodFee));
+        totalDueTV.setText(currency + decimalFormat.format(total));
 
         paymentMethods = new ArrayList<String>();
 
@@ -128,63 +133,19 @@ public class BuyActivity extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!s.toString().equals("")) {
-                    try {
-                        BigDecimal buyRateDecimal = new BigDecimal(buyRate);
-                        BigDecimal amount = new BigDecimal(currencyEditText.getText().toString());
-                        BigDecimal newAmount = amount.divide(buyRateDecimal, 6, RoundingMode.HALF_UP);
-                        if (currencyEditText.isFocused()) {
-                            bitcoinEditText.setText(String.valueOf(newAmount));
-                        }
-                        setSubtotal(currencyEditText.getText().toString());
-                    } catch (Exception e) {
-
-                    }
+                    setSubtotal(currencyEditText.getText().toString());
                 } else {
                     setSubtotal("0");
-                    if (currencyEditText.isFocused()) {
-                        bitcoinEditText.setText("");
-                    }
                 }
             }
         });
 
-        bitcoinEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!s.toString().equals("")) {
-                    try {
-                        BigDecimal buyRateDecimal = new BigDecimal(buyRate);
-                        BigDecimal amount = new BigDecimal(bitcoinEditText.getText().toString());
-                        BigDecimal newAmount = amount.multiply(buyRateDecimal);
-                        if (bitcoinEditText.isFocused()) {
-                            currencyEditText.setText(String.valueOf(newAmount));
-                        }
-                        setSubtotal(currencyEditText.getText().toString());
-                    } catch (Exception e) {
-
-                    }
-                } else {
-                    setSubtotal("0");
-                    if (bitcoinEditText.isFocused()) {
-                        currencyEditText.setText("");
-                    }
-                }
-            }
-        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, currencyEditText.getText().toString(), bitcoinEditText.getText().toString(), totalDueTV.getText().toString());
-                if (currencyEditText.getText().toString().equals("") || bitcoinEditText.getText().toString().equals("")) {
+                final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, currencyEditText.getText().toString(), totalDueTV.getText().toString());
+                if (currencyEditText.getText().toString().equals("")) {
                     Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_enter_buy_amount), Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -388,95 +349,14 @@ public class BuyActivity extends ActionBarActivity {
         });
     }
 
-    private void getExchangeRate() {
-        if (Locale.getDefault().equals(Locale.US)) {
-            final String TAG = "exchange_rate";
-            // Creating volley request obj
-            String url = "https://blockchain.info/ticker";
-            JsonObjectRequest currencyRequest = new JsonObjectRequest(url, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // Parsing json
-                            try {
-                                JSONObject currentCurrency = response.getJSONObject("USD");
-                                amountCurrency.setText(currentCurrency.getString("buy"));
-                                buyRate = currentCurrency.getString("buy");
-                                setDisplay();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                }
-            });
-            // Adding request to request queue
-            ApplicationController.getInstance().addToRequestQueue(currencyRequest);
-        }
-        else if (Locale.getDefault().getLanguage().equals("fil")) {
-            final String URL = ApplicationConstants.BASE + "exchange-rate/?currency=PHP";
-
-            JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
-                    URL, null,
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.v("TEST", "exchange-rate: " + response.toString());
-                            try {
-                                JSONObject currentCurrency = response.getJSONObject("market");
-                                amountCurrency.setText(currentCurrency.getString("ask"));
-                                buyRate = currentCurrency.getString("ask");
-                                setDisplay();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d("Test", "Error: " + error.toString());
-                    progressDialog.dismiss();
-
-                }
-
-            }) {
-                @Override
-                public HashMap<String, String> getHeaders() {
-                    String token = ApplicationController.getToken();
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put("Authorization", "Token " + token);
-                    params.put("Content-Type", "application/json;charset=UTF-8");
-                    params.put("Accept", "application/json");
-                    return params;
-                }
-            };
-
-            jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
-
-            // Adds request to the request queue
-            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
-        }
-    }
-
     private void setDisplay() {
         if ( ! groupTotal.equals("")) {
             // TODO:: This makes the edit texts not editable so that they don't set the group amount and then change the buy order
             currencyEditText.setKeyListener(null);
             currencyEditText.setFocusable(false);
-            bitcoinEditText.setKeyListener(null);
-            bitcoinEditText.setFocusable(false);
 
             currencyEditText.setText(groupTotal);
             try {
-                BigDecimal buyRateDecimal = new BigDecimal(buyRate);
-                BigDecimal amount = new BigDecimal(currencyEditText.getText().toString());
-                BigDecimal newAmount = amount.divide(buyRateDecimal, 6, RoundingMode.HALF_UP);
-                bitcoinEditText.setText(String.valueOf(newAmount));
                 setSubtotal(currencyEditText.getText().toString());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -485,41 +365,38 @@ public class BuyActivity extends ActionBarActivity {
     }
 
     private void setSubtotal(String subtotalStr) {
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         subtotal = Double.parseDouble(subtotalStr);
-        subtotalTV.setText(currencyFormatter.format(subtotal));
+        subtotalTV.setText(currency + decimalFormat.format(subtotal));
         setTotal();
     }
 
     private void setHaedrianFee(String haedrianFeeStr) {
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         haedrianFee = Double.parseDouble(haedrianFeeStr);
-        haedrianFeeTV.setText(currencyFormatter.format(haedrianFee));
+        haedrianFeeTV.setText(currency + decimalFormat.format(haedrianFee));
         setTotal();
     }
 
     private void setPaymentMethodFee(String paymentMethodFeeStr) {
-        paymentMethodFeeTV.setText(paymentMethodFeeStr);
+        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+        paymentMethodFeeStr = paymentMethodFeeStr.substring(1, paymentMethodFeeStr.length());
+        paymentMethodFee = Double.parseDouble(paymentMethodFeeStr);
+        paymentMethodFeeTV.setText(currency + decimalFormat.format(paymentMethodFee));
         setTotal();
     }
 
     private void setTotal() {
         total = subtotal + haedrianFee + paymentMethodFee;
         // TODO:: Get internal currency unicode - use to display with total
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        totalDueTV.setText(currencyFormatter.format(total));
+        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+        totalDueTV.setText(currency + decimalFormat.format(total));
     }
 
     private void makeBuyOrder(String outletId) {
         String url = ApplicationConstants.BASE + "buy/";
 
-        String currency = "";
-        if (Locale.getDefault().equals(Locale.US)) {
-            currency = "USD";
-        }
-        else if (Locale.getDefault().getLanguage().equals("fil")) {
-            currency = "PHP";
-        }
+        String currency = ApplicationController.getSetCurrency();
 
         JSONObject body = new JSONObject();
         try {

@@ -31,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/created_projects"
-            android:textColor="@color/black"
             android:textSize="22dp"/>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -58,14 +57,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/project_title_hint"
-                    android:textColor="@color/black"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/my_name"
-                    android:textColor="@color/black"/>
+                    android:text="@string/my_name"/>
 
                 <TextView
                     android:layout_width="wrap_content"

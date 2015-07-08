@@ -1,7 +1,9 @@
 package com.haedrian.haedrian.Application;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
@@ -13,6 +15,8 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.haedrian.haedrian.R;
 import com.parse.Parse;
+
+import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.sql.Timestamp;
+import java.util.Currency;
 import java.util.Locale;
 
 import javax.crypto.Cipher;
@@ -49,6 +54,10 @@ public class ApplicationController extends Application {
     private static long buySellTimestamp = 0L;
     private static long transactionTimestamp = 0L;
     private static long homeScreenTimestamp = 0L;
+    private static SharedPreferences sp;
+
+    private static String currencyUS;
+    private static String currencyPHP;
 
     /**
      * @return ApplicationController singleton instance
@@ -63,18 +72,31 @@ public class ApplicationController extends Application {
 
         // initialize the singleton
         sInstance = this;
-        mRequestQueue = Volley.newRequestQueue(this); // 'this' is Context
+        mRequestQueue = Volley.newRequestQueue(this); // 'this' is Contex
 
+        JodaTimeAndroid.init(this);
 
         FlurryAgent.setLogEnabled(false);
 
         FlurryAgent.setVersionName(getString(R.string.version));
         FlurryAgent.init(this, ApplicationConstants.MY_FLURRY_API_KEY);
 
-        //Parse setup
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "QdakXDOx8Ta6W4g2kfdWkGyN0CS9CjxppjirJnqN", "CyXcvlXI1I0qfxAdhoYT0dlnHpNn0RSn5NoS1CB3");
+        // Set up default currency
+        sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        if (Locale.getDefault().equals(Locale.US)) {
+            editor.putString("currency", "USD");
+        }
+        else if (Locale.getDefault().getLanguage().equals("fil")) {
+            editor.putString("currency", "PHP");
+        }
+
+        currencyUS = getResources().getString(R.string.currency_USD);
+        currencyPHP = getResources().getString(R.string.currency_PHP);
+
+
+        editor.apply();
 
         cacheDir = getCacheDir();
     }
@@ -211,5 +233,22 @@ public class ApplicationController extends Application {
     public static void setTransactionTimestamp(long transactionTimestampTemp) {
         transactionTimestamp = transactionTimestampTemp;
     }
+
+    public static String getSetCurrency() {
+        return sp.getString("currency", Currency.getInstance(Locale.getDefault()).getCurrencyCode());
+    }
+
+    public static String getSetCurrencySign() {
+        if (sp.getString("currency", "").equals("USD")) {
+            return currencyUS;
+        }
+        else if (sp.getString("currency", "").equals("PHP")) {
+            return currencyPHP;
+        }
+        else {
+            return "";
+        }
+    }
+
 
 }

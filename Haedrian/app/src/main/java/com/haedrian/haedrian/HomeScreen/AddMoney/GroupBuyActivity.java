@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,8 @@ public class GroupBuyActivity extends ActionBarActivity {
     private ListView groupMemberListView;
     private Button submitButton;
     private TextView officeNameTV;
-    private LinearLayout officeContainer;
+    private LinearLayout emptyContainer, officeContainer;
+    private RelativeLayout groupContainer;
 
     private String groupId, officeName;
 
@@ -73,6 +75,9 @@ public class GroupBuyActivity extends ActionBarActivity {
         submitButton = (Button) findViewById(R.id.submit_button);
         officeNameTV = (TextView) findViewById(R.id.office_name);
         officeContainer = (LinearLayout) findViewById(R.id.office_container);
+
+        emptyContainer = (LinearLayout) findViewById(R.id.empty_state_container);
+        groupContainer = (RelativeLayout) findViewById(R.id.group_container);
 
         groupMembers = new ArrayList<>();
 
@@ -145,20 +150,26 @@ public class GroupBuyActivity extends ActionBarActivity {
                         try {
                             if (response.getBoolean("success")) {
                                 JSONArray array = response.getJSONArray("group_members");
-                                groupId = response.getString("group_id");
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject object = array.getJSONObject(i);
-                                    UserModel user = new UserModel();
-                                    user.setId(object.getString("mifos_id"));
-                                    user.setFirstName(object.getString("first_name"));
-                                    user.setLastName(object.getString("last_name"));
-                                    user.setPhoneNumber(object.getString("phone"));
+                                if (array.length() > 0) {
+                                    groupId = response.getString("group_id");
+                                    for (int i = 0; i < array.length(); i++) {
+                                        JSONObject object = array.getJSONObject(i);
+                                        UserModel user = new UserModel();
+                                        user.setId(object.getString("mifos_id"));
+                                        user.setFirstName(object.getString("first_name"));
+                                        user.setLastName(object.getString("last_name"));
+                                        user.setPhoneNumber(object.getString("phone"));
 
-                                    officeName = response.getString("office");
+                                        officeName = response.getString("office");
 
-                                    groupMembers.add(user);
+                                        groupMembers.add(user);
+                                    }
+                                    setView();
                                 }
-                                setView();
+                                else {
+                                    emptyContainer.setVisibility(View.VISIBLE);
+                                    groupContainer.setVisibility(View.GONE);
+                                }
                             }
                             else {
                                 progressDialog.dismiss();
@@ -167,6 +178,8 @@ public class GroupBuyActivity extends ActionBarActivity {
                             }
 
                         } catch (JSONException e) {
+                            emptyContainer.setVisibility(View.VISIBLE);
+                            groupContainer.setVisibility(View.GONE);
                             e.printStackTrace();
                             progressDialog.dismiss();
                         }

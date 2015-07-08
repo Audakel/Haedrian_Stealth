@@ -12,13 +12,13 @@
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="75dp">
+        android:layout_marginBottom="75dp" >
 
         <TextView
             android:id="@+id/dialog_confirmation_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repay loan of $46.0 to Mentors International?"/>
+            android:gravity="center" />
 
     </LinearLayout>
 

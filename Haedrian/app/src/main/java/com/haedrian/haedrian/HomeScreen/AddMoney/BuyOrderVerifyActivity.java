@@ -167,6 +167,7 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
                                     buyOrderStatus += parts[i].toUpperCase() + " ";
                                 }
                                 statusTV.setText(buyOrderStatus);
+                                ApplicationController.setBuySellTimestamp(0L);
                             }
                             else {
                                 progressDialog.dismiss();

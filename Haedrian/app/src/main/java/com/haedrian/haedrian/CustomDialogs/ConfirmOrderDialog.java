@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
 
 import java.util.Currency;
@@ -17,19 +18,18 @@ import java.util.Locale;
  */
 public class ConfirmOrderDialog extends Dialog {
 
-    private String currencyAmount, bitcoinAmount, totalAmount;
+    private String currencyAmount, totalAmount;
     private Context context;
 
     private TextView orderDetails;
     private Button confirmButton;
 
 
-    public ConfirmOrderDialog(Context context, String currencyAmount, String bitcoinAmount, String totalAmount) {
+    public ConfirmOrderDialog(Context context, String currencyAmount, String totalAmount) {
         super(context);
 
         this.context = context;
         this.currencyAmount = currencyAmount;
-        this.bitcoinAmount = bitcoinAmount;
         this.totalAmount = totalAmount;
     }
 
@@ -42,11 +42,10 @@ public class ConfirmOrderDialog extends Dialog {
         orderDetails = (TextView) findViewById(R.id.order_details);
         confirmButton = (Button) findViewById(R.id.confirm_button);
 
-        Currency currency = Currency.getInstance(Locale.getDefault());
+        String currency = ApplicationController.getSetCurrencySign();
 
         String confirmMessage = context.getString(R.string.about_to_deposit) + " "
-                + currency.getSymbol() + currencyAmount + " ("
-                + bitcoinAmount + "BTC) "
+                + currency + currencyAmount + " "
                 + context.getString(R.string.to_your_wallet_for)
                 + " " + totalAmount + ".";
 

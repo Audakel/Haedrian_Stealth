@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -43,6 +44,7 @@ import com.haedrian.haedrian.Models.TransactionModel;
 import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
+import com.haedrian.haedrian.util.DecimalDigitsInputFilter;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
 import org.json.JSONArray;
@@ -72,6 +74,8 @@ public class RepayLoanActivity extends ActionBarActivity {
     private ArrayList<String> groupPayments = new ArrayList<>();
     private ArrayList<String> paymentIds = new ArrayList<>();
 
+    private String currency;
+
 
     private ProgressDialog progressDialog;
 
@@ -86,6 +90,8 @@ public class RepayLoanActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }
+
+        currency = ApplicationController.getSetCurrencySign();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
@@ -109,6 +115,8 @@ public class RepayLoanActivity extends ActionBarActivity {
         repayLoanButton = (Button) findViewById(R.id.repay_loan_button);
         currencySymbol = (TextView) findViewById(R.id.currency_sign);
         amountET = (EditText) findViewById(R.id.amount_currency);
+        amountET.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(7,2)});
+
         noteET = (EditText) findViewById(R.id.note);
 
         amountET.addTextChangedListener(new TextWatcher() {
@@ -138,9 +146,7 @@ public class RepayLoanActivity extends ActionBarActivity {
             }
         });
 
-        final Currency currency = Currency.getInstance(Locale.getDefault());
-        currencySymbol.setText(currency.getSymbol());
-
+        currencySymbol.setText(currency);
 
         ArrayAdapter<String> mfiAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, microfinanceInstitutions);
         microfinanceSpinner.setAdapter(mfiAdapter);
@@ -338,12 +344,8 @@ public class RepayLoanActivity extends ActionBarActivity {
 
     private String convertToCurrency(String payment) {
         Double paymentAmount = Double.parseDouble(payment);
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        // To strip out the currency symbol
-        DecimalFormatSymbols symbols = ((DecimalFormat) format).getDecimalFormatSymbols();
-        ((DecimalFormat) format).setDecimalFormatSymbols(symbols);
-
-        return format.format(paymentAmount).replaceAll(" ", "");
+        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+        return currency + decimalFormat.format(paymentAmount);
     }
 
     private void sendPayment() {
