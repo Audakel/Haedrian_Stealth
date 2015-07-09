@@ -42,8 +42,7 @@
             <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/invest1"/>
+                android:layout_marginTop="20dp"/>
 
 
             <LinearLayout

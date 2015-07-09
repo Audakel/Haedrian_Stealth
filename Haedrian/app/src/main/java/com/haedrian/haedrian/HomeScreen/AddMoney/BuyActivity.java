@@ -80,6 +80,12 @@ public class BuyActivity extends ActionBarActivity {
         // Set up ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         currency = ApplicationController.getSetCurrencySign();
 
         currencySign = (TextView) findViewById(R.id.currency_sign);
@@ -114,11 +120,6 @@ public class BuyActivity extends ActionBarActivity {
 
         paymentMethods = new ArrayList<String>();
 
-        if (ApplicationController.getToken().equals("")) {
-            Intent intent = new Intent(this, PinActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
 
         currencyEditText.addTextChangedListener(new TextWatcher() {
@@ -146,17 +147,17 @@ public class BuyActivity extends ActionBarActivity {
             public void onClick(View v) {
                 final ConfirmOrderDialog dialog = new ConfirmOrderDialog(BuyActivity.this, currencyEditText.getText().toString(), totalDueTV.getText().toString());
                 if (currencyEditText.getText().toString().equals("")) {
-                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_enter_buy_amount), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_enter_buy_amount), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (locationSpinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_payment_method), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_payment_method), Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (outletSpinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_location), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BuyActivity.this, getResources().getString(R.string.please_select_location), Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -180,6 +181,9 @@ public class BuyActivity extends ActionBarActivity {
 
         if (extras != null) {
             groupTotal = extras.getString("total");
+            // Prefill the amount edit text and make it non editable
+            currencyEditText.setText(groupTotal);
+            currencyEditText.setKeyListener(null);
             groupRepaymentId = extras.getString("group_repayment_id");
         }
 
@@ -365,10 +369,12 @@ public class BuyActivity extends ActionBarActivity {
     }
 
     private void setSubtotal(String subtotalStr) {
-        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-        subtotal = Double.parseDouble(subtotalStr);
-        subtotalTV.setText(currency + decimalFormat.format(subtotal));
-        setTotal();
+        if ( ! subtotalStr.equals("") && ! subtotalStr.equals(".")) {
+            DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+            subtotal = Double.parseDouble(subtotalStr);
+            subtotalTV.setText(currency + decimalFormat.format(subtotal));
+            setTotal();
+        }
     }
 
     private void setHaedrianFee(String haedrianFeeStr) {
@@ -429,7 +435,9 @@ public class BuyActivity extends ActionBarActivity {
                                 buyOrder.setInstructions(response.getJSONObject("order").getString("instructions"));
                                 buyOrder.setBtcAmount(response.getJSONObject("order").getString("btc_amount"));
                                 buyOrder.setCurrencyAmount(response.getJSONObject("order").getString("currency_amount"));
-                                buyOrder.setPaymentMethodFee(paymentMethodFee.toString());
+                                buyOrder.setPaymentMethodFee(paymentMethodFeeTV.getText().toString());
+                                buyOrder.setAmount(subtotalTV.getText().toString());
+                                buyOrder.setHaedrianFee(haedrianFeeTV.getText().toString());
                                 String id = response.getJSONObject("order").getString("id");
 
                                 progressDialog.hide();
@@ -443,7 +451,7 @@ public class BuyActivity extends ActionBarActivity {
                             else {
                                 progressDialog.dismiss();
                                 String error = response.getString("error");
-                                Toast.makeText(BuyActivity.this, error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BuyActivity.this, error, Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             progressDialog.hide();

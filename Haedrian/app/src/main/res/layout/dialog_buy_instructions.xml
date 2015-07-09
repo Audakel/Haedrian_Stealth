@@ -1,48 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
 
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
     <LinearLayout
-        android:id="@+id/title_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary">
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/title_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/payment_instructions"
-            android:gravity="center"
-            android:textSize="22sp"
+            android:background="@color/primary">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/payment_instructions"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <WebView
+                android:id="@+id/instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/close_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:text="@string/close"
             android:textColor="@color/white"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/text_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:orientation="vertical">
-
-        <WebView
-            android:id="@+id/instructions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/close_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary"
-        android:text="@string/close"
-        android:textColor="@color/white"/>
-
-</LinearLayout>
+</ScrollView>

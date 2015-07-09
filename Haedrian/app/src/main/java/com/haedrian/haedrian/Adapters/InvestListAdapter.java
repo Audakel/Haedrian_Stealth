@@ -37,14 +37,7 @@ public class InvestListAdapter extends RecyclerView.Adapter<InvestListAdapter.My
             int mFundingGoal = ProjectContent.fundingGoal[i];
             int mCurrentAmountRaised = ProjectContent.currentAmountRaised[i];
             int mdaysLeft = ProjectContent.daysLeft[i];
-            int mDrawableImage = ProjectContent.projectImage[i];
 
-            InvestProjectObject newProject = new InvestProjectObject(
-                    mProjectTitle, mPersonName, mLocation, mProjectDescription,
-                    mFundingGoal, mCurrentAmountRaised, mdaysLeft, mDrawableImage
-            );
-
-            listOfProjects.add(newProject);
         }
     }
 

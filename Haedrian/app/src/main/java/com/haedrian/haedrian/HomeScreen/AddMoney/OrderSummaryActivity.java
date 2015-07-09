@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.BuyInstructionsDialog;
 import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
 import com.haedrian.haedrian.Models.BuyOrderModel;
@@ -25,14 +26,9 @@ import java.util.Locale;
 
 public class OrderSummaryActivity extends ActionBarActivity {
 
-    private Button paymentInstructionsButton, markAsPaidButton, cancelButton;
-    private TextView buyAmountTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV, buyOrderId;
+    private TextView amountTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV, buyOrderId;
 
-    private Double buyAmount = 0.00;
-    private Double haedrianFee = 0.00;
-    private Double paymentMethodFee = 0.00;
-    private Double total = 0.00;
-    private String instructions;
+    private String instructions, total, paymentMethodFee, haedrianFee;
 
     private BuyOrderModel buyOrder;
 
@@ -43,10 +39,7 @@ public class OrderSummaryActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        paymentInstructionsButton = (Button) findViewById(R.id.payment_instructions_button);
-        markAsPaidButton = (Button) findViewById(R.id.mark_as_paid_button);
-
-        buyAmountTV = (TextView) findViewById(R.id.amount);
+        amountTV = (TextView) findViewById(R.id.amount);
         haedrianFeeTV = (TextView) findViewById(R.id.haedrian_fee);
         paymentMethodFeeTV = (TextView) findViewById(R.id.payment_method_fee);
         totalDueTV = (TextView) findViewById(R.id.total_due);
@@ -56,21 +49,16 @@ public class OrderSummaryActivity extends ActionBarActivity {
 
         if (extras != null) {
             buyOrder = extras.getParcelable("buy_order");
-            total = Double.parseDouble(buyOrder.getCurrencyAmount());
-            paymentMethodFee = Double.parseDouble(buyOrder.getPaymentMethodFee());
-            buyAmount = total - paymentMethodFee;
+
+            haedrianFeeTV.setText(buyOrder.getHaedrianFee());
+            paymentMethodFeeTV.setText(buyOrder.getPaymentMethodFee());
+            totalDueTV.setText(buyOrder.getCurrencyAmount());
+            amountTV.setText(buyOrder.getAmount());
+
             instructions = buyOrder.getInstructions();
             String id = getString(R.string.buy_order) + extras.getString("id");
             buyOrderId.setText(id);
         }
-
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-
-        buyAmountTV.setText(currencyFormatter.format(buyAmount));
-        haedrianFeeTV.setText(currencyFormatter.format(haedrianFee));
-        paymentMethodFeeTV.setText(currencyFormatter.format(paymentMethodFee));
-        totalDueTV.setText(currencyFormatter.format(total));
-
     }
 
     @Override

@@ -66,8 +66,6 @@ public class SettingsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        getCurrencyInfo();
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.dialog_loading));
         progressDialog.show();
@@ -166,6 +164,14 @@ public class SettingsActivity extends ActionBarActivity {
                             String username = response.getString("user");
                             String email = response.getString("email");
 
+                            if (response.has("currencies")) {
+                                JSONArray currencies = response.getJSONArray("currencies");
+                                for (int i = 0; i < currencies.length(); i++){
+                                    displayCurrenciesList.add(currencies.get(i).toString());
+                                }
+                            }
+                            setUpSpinner();
+
                             if (name != " " && name != "") {
                                 nameTV.setText(name);
                             }
@@ -226,49 +232,6 @@ public class SettingsActivity extends ActionBarActivity {
         finish();
     }
 
-    public void getCurrencyInfo() {
-        String url = ApplicationConstants.BASE + "currency/";
-        JsonUTF8Request jsonObjectRequest = new JsonUTF8Request(Request.Method.GET,
-                url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.v("TEST", "getCurrencyInfo: " + response.toString());
-                        try {
-                            Log.v("TEST", response.toString());
-                            if (response.getBoolean("success")) {
-                                if (response.has("currencies")) {
-                                    JSONArray currencies = response.getJSONArray("currencies");
-                                    for (int i = 0; i < currencies.length(); i++){
-                                        displayCurrenciesList.add(currencies.get(i).toString());
-                                    }
-                                }
-                                setUpSpinner();
-
-                            } else {
-                                String error = response.getString("error");
-                                Toast.makeText(SettingsActivity.this, error, Toast.LENGTH_SHORT).show();
-                            }
-                            progressDialog.dismiss();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                Log.v("TEST", "Error: " + error.getMessage());
-                Toast.makeText(SettingsActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-        };
-
-        jsonObjectRequest.setRetryPolicy(new TimeoutRetryPolicy());
-        // Adds request to the request queue
-        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
-    }
-
     public void updateCurrencyInfo(String newCurrency) {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -291,6 +254,8 @@ public class SettingsActivity extends ActionBarActivity {
                                 SharedPreferences.Editor editor = sp.edit();
                                 editor.putString("currency", newCurrency);
                                 editor.apply();
+
+                                ApplicationController.setHomeScreenTimestamp(0L);
                             } else {
                                 String error = response.getString("error");
                                 Toast.makeText(SettingsActivity.this, error, Toast.LENGTH_SHORT).show();

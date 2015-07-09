@@ -59,7 +59,6 @@ import java.util.List;
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
-    // TODO:: Cache this
     public JSONObject loanInfoJson;
     private LinearLayout loanInfoContainer, amountDueContainer;
     private TextView walletBallanceTV, loanBallanceTV, timeLeftTV, usernameTV, timeRepaymentUnit, balanceDueTV;
@@ -213,7 +212,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 swipeRefreshLayout.setRefreshing(false);
                 progressDialog.dismiss();
                 Log.v("TEST", "Error: " + error.getMessage());
-                Toast.makeText(HomeActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, getString(R.string.could_not_refresh), Toast.LENGTH_SHORT).show();
+                getHomeScreenDataCached();
             }
         }) {
             @Override

@@ -71,7 +71,7 @@ public class TransactionDetailsActivity extends ActionBarActivity {
             date.setText(transaction.getDate());
         } else {
             long milli = System.currentTimeMillis();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             Date tempDate = new Date(milli);
             String today = sdf.format(tempDate);
             date.setText(formatDate(today));

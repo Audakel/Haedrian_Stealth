@@ -10,7 +10,7 @@ import com.haedrian.haedrian.CustomDialogs.BuyInstructionsDialog;
  */
 public class BuyOrderModel implements Parcelable {
 
-    private String status, paymentOutlet, instructions, btcAmount, currencyAmount,paymentMethodFee;
+    private String status, paymentOutlet, instructions, btcAmount, currencyAmount, paymentMethodFee, haedrianFee, amount;
 
     public BuyOrderModel() { }
 
@@ -21,6 +21,8 @@ public class BuyOrderModel implements Parcelable {
         btcAmount = source.readString();
         currencyAmount = source.readString();
         paymentMethodFee = source.readString();
+        haedrianFee = source.readString();
+        amount = source.readString();
     }
 
     public String getStatus() {
@@ -71,6 +73,20 @@ public class BuyOrderModel implements Parcelable {
         this.paymentMethodFee = paymentMethodFee;
     }
 
+    public String getHaedrianFee() {
+        return haedrianFee;
+    }
+
+    public void setHaedrianFee(String haedrianFee) {
+        this.haedrianFee = haedrianFee;
+    }
+
+    public String getAmount() { return this.amount; }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -84,6 +100,8 @@ public class BuyOrderModel implements Parcelable {
         dest.writeString(btcAmount);
         dest.writeString(currencyAmount);
         dest.writeString(paymentMethodFee);
+        dest.writeString(haedrianFee);
+        dest.writeString(amount);
     }
 
     public static final Parcelable.Creator<BuyOrderModel> CREATOR = new Parcelable.Creator<BuyOrderModel>() {
@@ -110,4 +128,5 @@ public class BuyOrderModel implements Parcelable {
                 ", paymentMethodFee='" + paymentMethodFee + '\'' +
                 '}';
     }
+
 }

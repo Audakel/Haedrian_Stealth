@@ -1,8 +1,10 @@
 package com.haedrian.haedrian.HomeScreen;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Criteria;
@@ -29,6 +31,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.flurry.android.FlurryAgent;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -93,7 +97,7 @@ public class MapsActivity extends ActionBarActivity {
         @Override
         public void onProviderDisabled(String provider) {
         }
-    };
+    };;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,12 +124,6 @@ public class MapsActivity extends ActionBarActivity {
         progressDialog.setMessage(getString(R.string.dialog_loading));
         progressDialog.show();
 
-        // Get exchange types
-        getExchangeTypes();
-
-        outletDictionary = new HashMap<>();
-        fillOutletDictionary();
-
         // Location stuff
         LocationManager locationManager;
         String svcName = Context.LOCATION_SERVICE;
@@ -142,10 +140,34 @@ public class MapsActivity extends ActionBarActivity {
 
         String provider = locationManager.getBestProvider(criteria, true);
 
-        Location l = locationManager.getLastKnownLocation(provider);
-        updateWithNewLocation(l);
+        if (provider != null) {
 
-        locationManager.requestLocationUpdates(provider, 200, 10, locationListener);
+            Location l = locationManager.getLastKnownLocation(provider);
+            updateWithNewLocation(l);
+
+            locationManager.requestLocationUpdates(provider, 200, 10, locationListener);
+
+            // Get exchange types
+            getExchangeTypes();
+
+            outletDictionary = new HashMap<>();
+            fillOutletDictionary();
+        }
+        else {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle(getString(R.string.gps_not_enabled));
+            alertDialog.setMessage(getString(R.string.enable_gps));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent gpsOptionsIntent = new Intent(
+                                    android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(gpsOptionsIntent);
+                        }
+                    });
+            alertDialog.show();
+
+        }
 
         setUpMapIfNeeded();
     }
@@ -257,7 +279,9 @@ public class MapsActivity extends ActionBarActivity {
                 latLngs.clear();
                 titles.clear();
                 descriptions.clear();
-                mMap.clear();
+                if (mMap != null) {
+                    mMap.clear();
+                }
                 String outlet = outletLocations.get(locationPosition).get(position);
                 FlurryAgent.logEvent("User searched for this outlet:" + outlet);
                 getOutletLocations(outlet);

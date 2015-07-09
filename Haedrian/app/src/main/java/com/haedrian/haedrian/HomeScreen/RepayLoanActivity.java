@@ -259,6 +259,19 @@ public class RepayLoanActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        progressDialog.dismiss();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        progressDialog.dismiss();
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_repay_loan, menu);
@@ -307,11 +320,13 @@ public class RepayLoanActivity extends ActionBarActivity {
                                 progressDialog.dismiss();
                             }
                             else {
+                                progressDialog.dismiss();
                                 JSONObject error = response.getJSONObject("error");
                                 Toast.makeText(RepayLoanActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
+                            progressDialog.dismiss();
                             e.printStackTrace();
                         }
                     }
@@ -432,6 +447,8 @@ public class RepayLoanActivity extends ActionBarActivity {
                                 transaction.setTarget(response.getString("target"));
                                 transaction.setFeeAmount(response.getString("fee"));
                                 transaction.setEntryType(getString(R.string.outgoing));
+
+                                ApplicationController.setHomeScreenTimestamp(0L);
 
                                 Intent intent = new Intent(RepayLoanActivity.this, TransactionDetailsActivity.class);
                                 intent.putExtra("transaction", transaction);

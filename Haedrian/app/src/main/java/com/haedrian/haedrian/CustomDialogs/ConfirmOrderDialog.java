@@ -47,7 +47,7 @@ public class ConfirmOrderDialog extends Dialog {
         String confirmMessage = context.getString(R.string.about_to_deposit) + " "
                 + currency + currencyAmount + " "
                 + context.getString(R.string.to_your_wallet_for)
-                + " " + totalAmount + ".";
+                + " " + totalAmount;
 
         orderDetails.setText(confirmMessage);
 

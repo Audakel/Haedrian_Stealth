@@ -33,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -92,18 +93,19 @@ public class BuyOrderVerifyActivity extends ActionBarActivity {
 
         amountTV.setText(buyOrder.getCurrencyAmount());
 
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss", Locale.getDefault());
 
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         String orderTime = getString(R.string.not_available);
         if ( ! buyOrder.getCreatedAt().equals("null")) {
-            cal.setTimeInMillis(Long.parseLong(buyOrder.getCreatedAt()));
-            orderTime = DateFormat.format("MM-dd-yyyy HH:mm", cal).toString();
+            cal.setTimeInMillis(Long.parseLong(buyOrder.getCreatedAt()) * 1000);
+            orderTime = formatter.format(cal.getTime());
         }
 
         orderTimeTV.setText(orderTime);
 
-        cal.setTimeInMillis(Long.parseLong(buyOrder.getExpirationTime()));
-        String expirationTime = DateFormat.format("MM-dd-yyyy HH:mm", cal).toString();
+        cal.setTimeInMillis(Long.parseLong(buyOrder.getExpirationTime()) * 1000);
+        String expirationTime = formatter.format(cal.getTime());
         expirationDateTV.setText(expirationTime);
         locationTV.setText(buyOrder.getOutletTitle());
     }

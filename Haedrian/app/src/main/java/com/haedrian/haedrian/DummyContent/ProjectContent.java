@@ -95,20 +95,6 @@ public class ProjectContent {
 
     };
 
-    public static int[] projectImage = {
-            R.drawable.invest1,
-            R.drawable.invest2,
-            R.drawable.invest3,
-            R.drawable.invest4,
-            R.drawable.invest5,
-            R.drawable.invest6,
-            R.drawable.invest7,
-            R.drawable.invest8,
-            R.drawable.invest9,
-            R.drawable.invest10,
-            R.drawable.invest11,
-    };
-
     public static int[] daysLeft = {
             45, 23, 12, 10, 8, 19, 14, 22, 26, 11, 6
     };

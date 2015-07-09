@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.NavUtils;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -189,13 +190,13 @@ public class SignupActivity extends ActionBarActivity {
          */
 
         if (username.equals("")) {
-//            Toast.makeText(this, getResources().getString(R.string.username_required), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, getResources().getString(R.string.username_required), Toast.LENGTH_LONG).show();
             usernameET.setError(getString(R.string.username_required));
             progressDialog.dismiss();
             scrollView.pageScroll(View.FOCUS_UP);
             return;
         }
-        Pattern usernamePattern = Pattern.compile("^[a-z0-9_-]{3,15}$");
+        Pattern usernamePattern = Pattern.compile("^[a-z0-9_-]{3,30}$");
         matcher = usernamePattern.matcher(username);
         if ( ! matcher.matches()) {
             usernameET.setError(getString(R.string.invalid_username));
@@ -210,7 +211,7 @@ public class SignupActivity extends ActionBarActivity {
 
         // Empty password
         if (email.equals("")) {
-//            Toast.makeText(this, getResources().getString(R.string.email_address_required), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, getResources().getString(R.string.email_address_required), Toast.LENGTH_LONG).show();
             emailET.setError(getString(R.string.email_address_required));
             progressDialog.dismiss();
             scrollView.pageScroll(View.FOCUS_UP);
@@ -232,7 +233,7 @@ public class SignupActivity extends ActionBarActivity {
 
         // Just makes sure that something was selected
         if (countryCode.equals("")) {
-            Toast.makeText(this, getResources().getString(R.string.country_code_required), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.country_code_required), Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
             scrollView.pageScroll(View.FOCUS_UP);
             return;
@@ -244,7 +245,7 @@ public class SignupActivity extends ActionBarActivity {
 
         // Not empty
         if (phoneNumber.equals("")) {
-//            Toast.makeText(this, getResources().getString(R.string.phone_number_required), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, getResources().getString(R.string.phone_number_required), Toast.LENGTH_LONG).show();
             phoneNumberET.setError(getString(R.string.phone_number_required));
             progressDialog.dismiss();
             scrollView.pageScroll(View.FOCUS_UP);
@@ -253,18 +254,12 @@ public class SignupActivity extends ActionBarActivity {
 
         phoneNumber = phoneNumber.replaceAll("[^\\d]", "");
         phoneNumberET.setText(phoneNumber);
-        // Only numbers
-        Pattern numberPattern = Pattern.compile("^[0-9]*$");
-        matcher = numberPattern.matcher(phoneNumber);
-        if ( ! matcher.matches()) {
+        phoneNumber = countryCode + phoneNumber;
+        if ( ! PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)) {
             phoneNumberET.setError(getString(R.string.invalid_phone_number));
             progressDialog.dismiss();
             scrollView.pageScroll(View.FOCUS_UP);
             return;
-        }
-        else
-        {
-            phoneNumber = countryCode + phoneNumber;
         }
 
         /*
@@ -273,7 +268,7 @@ public class SignupActivity extends ActionBarActivity {
 
         // Short password
         if (password.length() < 8) {
-//            Toast.makeText(this, getResources().getString(R.string.short_password), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, getResources().getString(R.string.short_password), Toast.LENGTH_LONG).show();
             passwordET.setError(getString(R.string.short_password));
             progressDialog.dismiss();
             scrollView.pageScroll(View.FOCUS_UP);
@@ -289,7 +284,7 @@ public class SignupActivity extends ActionBarActivity {
 
         // Not matching password
         if ( ! password.equals(reenterPasswordET.getText().toString())) {
-//            Toast.makeText(this, getResources().getString(R.string.passwords_dont_match), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, getResources().getString(R.string.passwords_dont_match), Toast.LENGTH_LONG).show();
             reenterPasswordET.setError(getString(R.string.passwords_dont_match));
             progressDialog.dismiss();
             scrollView.pageScroll(View.FOCUS_UP);
@@ -343,11 +338,11 @@ public class SignupActivity extends ActionBarActivity {
                             else if (response.getString("success").equals("false")) {
                                 String error = response.getString("error");
                                 progressDialog.dismiss();
-                                Toast.makeText(SignupActivity.this, error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, error, Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(SignupActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         }
                     }
@@ -355,8 +350,7 @@ public class SignupActivity extends ActionBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("TEST2", error.getMessage());
-                Toast.makeText(SignupActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
 
             }

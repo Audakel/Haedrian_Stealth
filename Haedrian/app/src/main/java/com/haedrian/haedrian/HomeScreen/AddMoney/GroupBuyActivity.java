@@ -243,6 +243,8 @@ public class GroupBuyActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
+        Log.v("TEST", body.toString());
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 URL, body,
                 new Response.Listener<JSONObject>() {

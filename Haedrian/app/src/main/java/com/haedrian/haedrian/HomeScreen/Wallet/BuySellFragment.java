@@ -128,8 +128,7 @@ public class BuySellFragment extends Fragment {
                                         buyOrder.setId(object.getString("id"));
                                         buyOrder.setStatus(object.getString("status"));
                                         buyOrder.setOutletTitle(object.getString("outlet_title"));
-                                        String createdAt = object.getString("created_at");
-                                        buyOrder.setCreatedAt(createdAt);
+                                        buyOrder.setCreatedAt(object.getString("created_at"));
                                         buyOrder.setExchangeRate(object.getString("exchange_rate"));
                                         buyOrder.setInstructions(object.getString("instructions"));
                                         buyOrder.setExpirationTime(object.getString("expiration_time"));

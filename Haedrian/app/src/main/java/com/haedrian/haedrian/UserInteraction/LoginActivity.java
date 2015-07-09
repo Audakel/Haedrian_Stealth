@@ -64,6 +64,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
-        SharedPreferences sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
+        sp = getSharedPreferences("haedrian_prefs", Activity.MODE_PRIVATE);
         String pinStateValue = sp.getString("pin_state", "");
 
         // If there is no overallPinstate then have them enter a new one
@@ -94,6 +95,10 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         });
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        if ( ! "".equals(sp.getString("last_username", ""))) {
+            mEmailView.setText(sp.getString("last_username", ""));
+            mPasswordView.requestFocus();
+        }
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -111,7 +116,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         float density  = getResources().getDisplayMetrics().density;
 
         int height = Math.round((outMetrics.heightPixels / density) / 3);
-
 
         Picasso.with(this)
                 .load(R.drawable.bird_clear_background)
@@ -195,7 +199,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-    private void login(String username, String password) {
+    private void login(final String username, String password) {
         String token = "";
 
         // Creating volley request obj
@@ -217,6 +221,11 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                             String token = response.getString("token");
                             if ( ! token.equals("")) {
                                 ApplicationController.setToken(token);
+
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString("last_username", username);
+                                editor.commit();
+
                                 Intent intent = new Intent(LoginActivity.this, PinActivity.class);
                                 startActivity(intent);
                                 finish();

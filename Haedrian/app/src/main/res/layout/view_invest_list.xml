@@ -36,9 +36,7 @@
             <ImageView
                 android:id="@+id/projectImageView"
                 android:layout_width="264dp"
-                android:layout_height="179dp"
-                android:src="@drawable/invest10"
-                />
+                android:layout_height="179dp"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
