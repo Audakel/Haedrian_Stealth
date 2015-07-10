@@ -99,16 +99,13 @@
     <orderEntry type="library" exported="" name="google-play-services" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="FlurryAnalytics-5.5.0" level="project" />
-    <orderEntry type="library" exported="" name="Parse-1.8.2" level="project" />
     <orderEntry type="library" exported="" name="android.joda-2.8.1" level="project" />
     <orderEntry type="library" exported="" name="core-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.2.0" level="project" />
     <orderEntry type="library" exported="" name="MPAndroidChart-v2.1.0" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.3.2" level="project" />
-    <orderEntry type="library" exported="" name="lenddosdk" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="okio-1.2.0" level="project" />
-    <orderEntry type="library" exported="" name="lenddodata" level="project" />
     <orderEntry type="module" module-name="google-play-services_lib" exported="" />
   </component>
 </module>

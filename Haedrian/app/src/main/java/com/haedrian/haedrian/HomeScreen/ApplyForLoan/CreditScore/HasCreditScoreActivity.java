@@ -24,7 +24,6 @@ import com.haedrian.haedrian.Database.DBHelper;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
-import com.parse.codec.binary.Base64;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,14 +63,7 @@ public class HasCreditScoreActivity extends ActionBarActivity {
             }
         });
 
-        updateLoanInfoButton = (Button) findViewById(R.id.updateLoanInfoButton);
-        updateLoanInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GetCreditScoreActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         getCreditScore = (Button) findViewById(R.id.checkCreditScoreButton);
         getCreditScore.setOnClickListener(new View.OnClickListener() {
@@ -161,8 +153,7 @@ public class HasCreditScoreActivity extends ActionBarActivity {
                 + dateFormat.toString() + newLine
                 + path;
 
-        byte[] bytesEncoded = Base64.encodeBase64(encrypt(requestString).getBytes());
-        String finalAuthorizationString = prefixId + bytesEncoded;
+
 
     }
 

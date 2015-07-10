@@ -229,17 +229,6 @@
                 android:value=".HomeScreen.Contacts.GetContacts" />
         </activity>
         <activity
-            android:name=".HomeScreen.ApplyForLoan.CreditScore.GetCreditScoreActivity"
-            android:label="@string/title_activity_credit_check"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".HomeScreen.HomeActivity" >
-
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen.HomeActivity" />
-        </activity>
-        <activity
             android:name=".HomeScreen.ApplyForLoan.CreditScore.CompleteActivity"
             android:label="@string/title_activity_complete"
             android:screenOrientation="portrait" >

@@ -22,7 +22,6 @@ import com.haedrian.haedrian.HomeScreen.AddMoney.GroupBuyActivity;
 import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.util.DecimalDigitsInputFilter;
-import com.lenddo.sdk.models.User;
 
 import org.w3c.dom.Text;
 

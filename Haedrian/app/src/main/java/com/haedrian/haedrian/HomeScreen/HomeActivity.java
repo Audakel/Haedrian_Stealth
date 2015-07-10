@@ -42,10 +42,6 @@ import com.haedrian.haedrian.UserInteraction.LoginActivity;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.UserInteraction.SettingsActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;

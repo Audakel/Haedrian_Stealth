@@ -50,9 +50,7 @@ public class CheckForCreditScore extends ActionBarActivity {
             finish();
         }
         else {
-            intent = new Intent(this, GetCreditScoreActivity.class);
-            startActivity(intent);
-            finish();
+
         }
     }
 

@@ -14,7 +14,6 @@ import com.android.volley.toolbox.Volley;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.HomeScreen.HomeActivity;
 import com.haedrian.haedrian.R;
-import com.parse.Parse;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 

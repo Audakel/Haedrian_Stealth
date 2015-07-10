@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.haedrian.haedrian.Models.TransactionModel;
 import com.haedrian.haedrian.R;
-import com.parse.ParseObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
