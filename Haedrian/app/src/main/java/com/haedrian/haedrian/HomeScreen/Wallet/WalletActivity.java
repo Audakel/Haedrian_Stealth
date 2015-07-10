@@ -21,8 +21,8 @@ import java.util.Locale;
 
 public class WalletActivity extends ActionBarActivity {
 
-    WalletPagerAdapter mWalletPagerAdapter;
-    ViewPager mViewPager;
+    private WalletPagerAdapter mWalletPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -43,6 +43,7 @@ public class WalletActivity extends ActionBarActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mWalletPagerAdapter);
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -67,6 +68,11 @@ public class WalletActivity extends ActionBarActivity {
         super.onStop();
         FlurryAgent.onEndSession(this);
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
 

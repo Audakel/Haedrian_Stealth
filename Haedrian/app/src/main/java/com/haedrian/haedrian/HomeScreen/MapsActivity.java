@@ -187,6 +187,12 @@ public class MapsActivity extends ActionBarActivity {
         FlurryAgent.onEndSession(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpMapIfNeeded();
+    }
+
 //    private void fillLocationInfo() {
 //       depositLocations.add(getString(R.string.bdo));
 //       depositLocations.add(getString(R.string.bpi));
@@ -369,11 +375,7 @@ public class MapsActivity extends ActionBarActivity {
         ApplicationController.getInstance().addToRequestQueue(locationsRequest);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -141,6 +141,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         FlurryAgent.onEndSession(this);
     }
 
+
     public void onClick(View view) {
         if (view.getId() == R.id.sign_up_button) {
             Intent intent = new Intent(this, SignupActivity.class);

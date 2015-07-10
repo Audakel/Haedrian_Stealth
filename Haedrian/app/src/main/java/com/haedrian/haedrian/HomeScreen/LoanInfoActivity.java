@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.HomeScreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,13 +9,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Models.LoanInfoModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +80,7 @@ public class LoanInfoActivity extends ActionBarActivity {
 
         ArrayList<Entry> yValues = new ArrayList<Entry>();
         yValues.add(new Entry((float) ((float) loanInfoModel.getStartingBalance() - loanInfoModel.getCurrentBalance()), 1));
-        yValues.add(new Entry((float) loanInfoModel.getCurrentBalance(), 2));
+        yValues.add(new Entry((float) ((float) loanInfoModel.getCurrentBalance() + loanInfoModel.getTotalEstimatedLoanCost()), 2));
 
         PieDataSet dataSet = new PieDataSet(yValues, ""); // Optional title for 2nd parameter
         dataSet.setColors(new int[] {getResources().getColor(R.color.primary),
@@ -90,6 +94,25 @@ public class LoanInfoActivity extends ActionBarActivity {
         pieChart.setData(data);
         pieChart.invalidate();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+        FlurryAgent.logEvent(this.getClass().getName() + " opened.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.logEvent(this.getClass().getName() + " closed.");
+        FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.haedrian.haedrian.UserInteraction;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -73,6 +74,22 @@ public class CurrencyInfoActivity extends ActionBarActivity {
         super.onStop();
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
         FlurryAgent.onEndSession(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ApplicationController.setToken("");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (ApplicationController.getToken().equals("")) {
+            Intent intent = new Intent(this, PinActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 

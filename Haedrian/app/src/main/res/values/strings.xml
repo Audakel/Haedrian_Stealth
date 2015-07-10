@@ -489,6 +489,7 @@
     <string name="message">Message:</string>
     <string name="enable_gps">Enable GPS?</string>
     <string name="gps_not_enabled">GPS is not enabled</string>
+    <string name="total_interest">Total Interest</string>
 
 
 </resources>

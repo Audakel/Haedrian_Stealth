@@ -18,6 +18,7 @@ import com.haedrian.haedrian.CustomDialogs.BuyInstructionsDialog;
 import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
 import com.haedrian.haedrian.Models.BuyOrderModel;
 import com.haedrian.haedrian.R;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 
 import org.w3c.dom.Text;
 
@@ -73,6 +74,11 @@ public class OrderSummaryActivity extends ActionBarActivity {
         super.onStop();
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
         FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override

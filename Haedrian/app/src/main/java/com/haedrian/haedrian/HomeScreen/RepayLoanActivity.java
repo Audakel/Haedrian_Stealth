@@ -75,6 +75,7 @@ public class RepayLoanActivity extends ActionBarActivity {
     private ArrayList<String> paymentIds = new ArrayList<>();
 
     private String currency;
+    private Bundle extras;
 
 
     private ProgressDialog progressDialog;
@@ -160,7 +161,15 @@ public class RepayLoanActivity extends ActionBarActivity {
                     paymentTypeContainer.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.abc_slide_in_bottom));
                 } else {
                     individualGroup.clearCheck();
-                    amountET.setText("");
+                    extras = getIntent().getExtras();
+                    if (extras != null) {
+                        amountET.setText(extras.getString("amount_due", ""));
+                        int length = extras.getString("amount_due").length();
+                        amountET.setSelection(length, length);
+                    }
+                    else {
+                        amountET.setText("");
+                    }
                     noteET.setText("");
                     paymentTypeContainer.setVisibility(View.GONE);
                     individualContainer.setVisibility(View.GONE);
@@ -269,7 +278,6 @@ public class RepayLoanActivity extends ActionBarActivity {
         super.onPause();
         progressDialog.dismiss();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

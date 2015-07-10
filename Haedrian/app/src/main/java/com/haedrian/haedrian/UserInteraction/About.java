@@ -1,6 +1,7 @@
 package com.haedrian.haedrian.UserInteraction;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.flurry.android.FlurryAgent;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
 
 public class About extends ActionBarActivity {

@@ -25,6 +25,7 @@ import com.haedrian.haedrian.CustomDialogs.RequestConfirmationDialog;
 import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.Scanner.CaptureActivity;
+import com.haedrian.haedrian.UserInteraction.PinActivity;
 
 import org.json.JSONObject;
 
@@ -88,6 +89,11 @@ public class RequestActivity extends ActionBarActivity implements
         super.onStop();
         FlurryAgent.logEvent(this.getClass().getName() + " closed.");
         FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     public static BigDecimal round(float d, int decimalPlace) {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Adapters.IntroDemoPager;
+import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.ProjectsActivity;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.LoginActivity;
@@ -97,6 +98,10 @@ public class IntroDemoActivity extends FragmentActivity {
         FlurryAgent.onEndSession(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
 
 }

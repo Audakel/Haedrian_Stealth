@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
+import com.haedrian.haedrian.CustomDialogs.DateDialog;
 import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyOptions;
 import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
@@ -65,6 +66,10 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
     private int moneyBalanceTextSize = 20;
+
+    private String date = "";
+
+    private String nextPaymentAmount;
 
 
     // Nav Drawer stuff
@@ -169,8 +174,10 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
                                     JSONObject nextRepaymentInfo = response.getJSONObject("next_repayment_info");
 
-                                    timeLeftTV.setText(String.valueOf(calculateTimeDifference(nextRepaymentInfo.getString("date"))));
+                                    date = nextRepaymentInfo.getString("date");
+                                    timeLeftTV.setText(String.valueOf(calculateTimeDifference(date)));
                                     balanceDueTV.setText(nextRepaymentInfo.getString("amount_display"));
+                                    nextPaymentAmount = nextRepaymentInfo.getString("amount");
 
                                     // TODO:: Need to install better CurrencyInstance Backend to support other currencies
                                     walletBallanceTV.setText((response.getString("wallet_balance")));
@@ -247,8 +254,10 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 JSONObject loan = loans.getJSONObject(0);
                 JSONObject nextRepaymentInfo = response.getJSONObject("next_repayment_info");
 
-                timeLeftTV.setText(String.valueOf(calculateTimeDifference(nextRepaymentInfo.getString("date"))));
+                date = nextRepaymentInfo.getString("date");
+                timeLeftTV.setText(String.valueOf(calculateTimeDifference(date)));
                 balanceDueTV.setText(nextRepaymentInfo.getString("amount_display"));
+                nextPaymentAmount = nextRepaymentInfo.getString("amount");
 
                 // TODO:: Need to install better CurrencyInstance Backend to support other currencies
                 walletBallanceTV.setText((response.getString("wallet_balance")));
@@ -276,7 +285,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         swipeRefreshLayout.setRefreshing(false);
         progressDialog.dismiss();
     }
-
 
     @Override
     protected void onStart() {
@@ -380,9 +388,12 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 intent = new Intent(this, RepayLoanActivity.class);
                 ActivityOptions options9 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
+                intent.putExtra("amount_due", nextPaymentAmount);
                 startActivity(intent, options9.toBundle());
                 return;
             case R.id.days_to_payment_container:
+                DateDialog dialog = new DateDialog(this, date);
+                dialog.show();
                 return;
             default:
                 return;
