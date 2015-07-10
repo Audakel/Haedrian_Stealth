@@ -449,6 +449,7 @@ public class RepayLoanActivity extends ActionBarActivity {
                                 transaction.setEntryType(getString(R.string.outgoing));
 
                                 ApplicationController.setHomeScreenTimestamp(0L);
+                                ApplicationController.setBalanceTimestamp(0L);
 
                                 Intent intent = new Intent(RepayLoanActivity.this, TransactionDetailsActivity.class);
                                 intent.putExtra("transaction", transaction);
