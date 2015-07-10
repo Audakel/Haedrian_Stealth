@@ -396,10 +396,10 @@ public class MapsActivity extends ActionBarActivity {
 
     private void updateWithNewLocation(Location location) {
         if (location != null) {
-//            latitude = location.getLatitude();
-//            longitude = location.getLongitude();
-            latitude = 14.575426;
-            longitude = 121.084511;
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+//            latitude = 14.575426;
+//            longitude = 121.084511;
             FlurryAgent.logEvent("User/'s Latitude: " + latitude + " User/'s Longitude: " + longitude);
         }
     }

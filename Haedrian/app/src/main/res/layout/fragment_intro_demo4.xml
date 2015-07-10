@@ -33,6 +33,21 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"/>
 
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/start_now_button"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/already_have_an_account"
+            android:background="@drawable/round_blue"
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="15dp"/>
+
+
 
     </RelativeLayout>
 

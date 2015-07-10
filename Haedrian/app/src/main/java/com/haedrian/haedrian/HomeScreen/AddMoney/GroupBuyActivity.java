@@ -117,6 +117,7 @@ public class GroupBuyActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        progressDialog.dismiss();
     }
 
     @Override

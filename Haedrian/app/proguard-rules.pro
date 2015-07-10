@@ -18,6 +18,7 @@
 -dontwarn com.flurry.sdk.ju
 -dontwarn okio.DeflaterSink
 -dontwarn okio.Okio
+-dontwarn com.flurry.sdk.hb
 -assumenosideeffects class android.util.Log {
     public static boolean isLoggable(java.lang.String, int);
     public static int v(...);

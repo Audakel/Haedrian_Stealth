@@ -223,9 +223,12 @@ public class SettingsActivity extends ActionBarActivity {
         editor.putString("pin_state", "");
 
         ApplicationController.setToken("");
+        ApplicationController.setBalanceTimestamp(0L);
+        ApplicationController.setHomeScreenTimestamp(0L);
+        ApplicationController.setTransactionTimestamp(0L);
+        ApplicationController.setBuySellTimestamp(0L);
 
         editor.commit();
-
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

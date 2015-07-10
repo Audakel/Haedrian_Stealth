@@ -17,6 +17,7 @@ ADDED from AndroidManifest.xml:2:1
 		INJECTED from AndroidManifest.xml:0:0
 uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:7:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:21:5
 	android:name
 		ADDED from AndroidManifest.xml:7:22
 uses-permission#android.permission.VIBRATE
@@ -25,28 +26,18 @@ ADDED from AndroidManifest.xml:8:5
 		ADDED from AndroidManifest.xml:8:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from AndroidManifest.xml:9:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:20:5
 	android:name
 		ADDED from AndroidManifest.xml:9:22
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:10:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:22:5
 	android:name
 		ADDED from AndroidManifest.xml:10:22
 uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from AndroidManifest.xml:11:5
 	android:name
 		ADDED from AndroidManifest.xml:11:22
-uses-permission#android.permission.CAMERA
-ADDED from AndroidManifest.xml:12:5
-	android:name
-		ADDED from AndroidManifest.xml:12:22
-uses-permission#android.permission.SEND_SMS
-ADDED from AndroidManifest.xml:13:5
-	android:name
-		ADDED from AndroidManifest.xml:13:22
-uses-permission#android.permission.READ_CONTACTS
-ADDED from AndroidManifest.xml:14:5
-	android:name
-		ADDED from AndroidManifest.xml:14:22
 uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
 ADDED from AndroidManifest.xml:15:5
 	android:name
@@ -65,18 +56,21 @@ ADDED from AndroidManifest.xml:25:5
 		ADDED from AndroidManifest.xml:25:22
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from AndroidManifest.xml:31:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:23:5
 	android:name
 		ADDED from AndroidManifest.xml:31:22
 application
 ADDED from AndroidManifest.xml:33:5
-MERGED from Haedrian:google-play-services_lib:unspecified:26:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:29:5
+MERGED from com.google.android.gms:play-services-base:7.5.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:support-v13:21.0.3:16:5
-MERGED from com.android.support:support-v4:22.0.0:22:5
-MERGED from com.android.support:appcompat-v7:22.0.0:22:5
-MERGED from com.android.support:support-v4:22.0.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.android.support:appcompat-v7:22.2.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:recyclerview-v7:22.0.0:22:5
-MERGED from com.android.support:support-v4:22.0.0:22:5
-MERGED from com.android.support:support-v4:22.0.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from net.danlew:android.joda:2.8.1:11:5
 	android:label
 		ADDED from AndroidManifest.xml:37:9
@@ -340,7 +334,7 @@ ADDED from AndroidManifest.xml:267:9
 		ADDED from AndroidManifest.xml:268:13
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:279:9
-MERGED from Haedrian:google-play-services_lib:unspecified:27:9
+MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 	android:value
 		ADDED from AndroidManifest.xml:281:13
 	android:name
@@ -477,14 +471,16 @@ ADDED from AndroidManifest.xml:408:17
 		ADDED from AndroidManifest.xml:408:27
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
-MERGED from Haedrian:google-play-services_lib:unspecified:22:5
+MERGED from com.google.android.gms:play-services-maps:7.5.0:28:5
+MERGED from com.google.android.gms:play-services-base:7.5.0:18:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:support-v13:21.0.3:15:5
-MERGED from com.android.support:support-v4:22.0.0:20:5
-MERGED from com.android.support:appcompat-v7:22.0.0:20:5
-MERGED from com.android.support:support-v4:22.0.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.android.support:appcompat-v7:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:recyclerview-v7:22.0.0:20:5
-MERGED from com.android.support:support-v4:22.0.0:20:5
-MERGED from com.android.support:support-v4:22.0.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from fr.avianey.com.viewpagerindicator:library:2.4.1:8:5
 MERGED from net.danlew:android.joda:2.8.1:7:5
 	android:targetSdkVersion
@@ -493,6 +489,14 @@ MERGED from net.danlew:android.joda:2.8.1:7:5
 	android:minSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+uses-feature#0x00020000
+ADDED from com.google.android.gms:play-services-maps:7.5.0:24:5
+	android:glEsVersion
+		ADDED from com.google.android.gms:play-services-maps:7.5.0:25:8
+	android:required
+		ADDED from com.google.android.gms:play-services-maps:7.5.0:26:8
+android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
+IMPLIED from AndroidManifest.xml:2:1 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
 activity#android.support.v7.widget.TestActivity
 ADDED from com.android.support:recyclerview-v7:22.0.0:23:9
 	android:label
