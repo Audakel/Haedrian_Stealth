@@ -50,6 +50,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -371,7 +372,6 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options6.toBundle());
                 return;
-
             case R.id.wallet_balance_view:
                 intent = new Intent(this, WalletActivity.class);
                 ActivityOptions options7 = ActivityOptions.makeScaleUpAnimation(view, 0,
@@ -388,7 +388,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 intent = new Intent(this, RepayLoanActivity.class);
                 ActivityOptions options9 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
-                intent.putExtra("amount_due", nextPaymentAmount);
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                intent.putExtra("amount_due", decimalFormat.format(Double.valueOf(nextPaymentAmount)));
                 startActivity(intent, options9.toBundle());
                 return;
             case R.id.days_to_payment_container:

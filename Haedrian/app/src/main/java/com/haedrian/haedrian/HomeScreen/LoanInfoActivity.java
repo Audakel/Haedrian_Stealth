@@ -1,7 +1,5 @@
 package com.haedrian.haedrian.HomeScreen;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,14 +9,11 @@ import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.Models.LoanInfoModel;
 import com.haedrian.haedrian.R;
-import com.haedrian.haedrian.UserInteraction.PinActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,23 +62,28 @@ public class LoanInfoActivity extends ActionBarActivity {
         loanId.setText(loanInfoModel.getLoanId()+"");
         repayEvery.setText(loanInfoModel.getRepayEvery()+"");
         numberOfRepayments.setText(loanInfoModel.getNumberOfRepayments()+"");
-        totalEstimatedLoanCost.setText(loanInfoModel.getTotalEstimatedLoanCostDisplay()+"");
+        totalEstimatedLoanCost.setText(loanInfoModel.getTotalInterestDisplay()+"");
         totalOverdue.setText(loanInfoModel.getTotalOverdue()+"");
         loanDescriptor.setText(loanInfoModel.getLoanDescriptor());
         interestRate.setText(loanInfoModel.getInterestRate()+"");
-        interestFrequency.setText(loanInfoModel.getInterestFrequency()+"");
-        startingBalance.setText(loanInfoModel.getStartingBalanceDisplay()+"");
-        currentBalance.setText(loanInfoModel.getCurrentBalanceDisplay()+"");
+        interestFrequency.setText(loanInfoModel.getInterestFrequency() + "");
+        startingBalance.setText(loanInfoModel.getStartingBalanceDisplay() + "");
+        currentBalance.setText(loanInfoModel.getCurrentBalanceDisplay() + "");
 
 
         PieChart pieChart = (PieChart) findViewById(R.id.pieChart);
 
         ArrayList<Entry> yValues = new ArrayList<Entry>();
-        yValues.add(new Entry((float) ((float) loanInfoModel.getStartingBalance() - loanInfoModel.getCurrentBalance()), 1));
-        yValues.add(new Entry((float) ((float) loanInfoModel.getCurrentBalance() + loanInfoModel.getTotalEstimatedLoanCost()), 2));
+//        What has been paid
+        Double totalLoan = loanInfoModel.getStartingBalance() + loanInfoModel.getTotalInterest();
+        Double amountPaidOff = totalLoan - loanInfoModel.getCurrentBalance();
+        Double remainingBalance = totalLoan - amountPaidOff;
+
+        yValues.add(new Entry(Float.parseFloat(String.valueOf(amountPaidOff)), 1));
+        yValues.add(new Entry(Float.parseFloat(String.valueOf(remainingBalance)), 2));
 
         PieDataSet dataSet = new PieDataSet(yValues, ""); // Optional title for 2nd parameter
-        dataSet.setColors(new int[] {getResources().getColor(R.color.primary),
+        dataSet.setColors(new int[]{getResources().getColor(R.color.primary),
                 getResources().getColor(R.color.accent)});
 
         ArrayList<String> xValues = new ArrayList<String>();

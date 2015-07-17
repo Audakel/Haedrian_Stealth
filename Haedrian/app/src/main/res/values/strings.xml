@@ -277,7 +277,7 @@
     <string name="payment_method">Payment Method</string>
     <string name="subtotal">Subtotal:</string>
     <string name="haedrian_fee">Haedrian Fee:</string>
-    <string name="payment_method_fee">Payment Method Fee:</string>
+    <string name="payment_method_fee">Payment Method Fee*:</string>
     <string name="total_due">Total Due:</string>
     <string name="about_equal">≈</string>
     <string name="one_btc">1 BTC =</string>
@@ -491,6 +491,7 @@
     <string name="gps_not_enabled">GPS is not enabled</string>
     <string name="total_interest">Total Interest</string>
     <string name="already_have_an_account">Already have an account? Sign In</string>
+    <string name="subject_to_fees">*May be subject to deposit fees</string>
 
 
 </resources>

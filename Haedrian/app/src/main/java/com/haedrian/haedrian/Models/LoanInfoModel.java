@@ -10,8 +10,8 @@ public class LoanInfoModel {
     private int loanId;
     private int repayEvery;
     private int numberOfRepayments;
-    private double totalEstimatedLoanCost;
-    private String totalEstimatedLoanCostDisplay;
+    private double totalInterest;
+    private String totalInterestDisplay;
     private String currency;
     private String totalOverdue;
     private String repayTimeUnit;
@@ -27,7 +27,7 @@ public class LoanInfoModel {
         this.loanId = loanInfo.getInt("loan_id");
         this.repayEvery = loanInfo.getInt("repay_every");
         this.numberOfRepayments = loanInfo.getInt("number_of_repayments");
-        this.totalEstimatedLoanCost = loanInfo.getDouble("total_estimated_loan_cost");
+        this.totalInterest = loanInfo.getDouble("total_interest");
         this.currency = loanInfo.getString("currency");
         this.totalOverdue = loanInfo.getString("total_overdue");
         this.repayTimeUnit = loanInfo.getString("repay_time_unit");
@@ -38,7 +38,7 @@ public class LoanInfoModel {
         this.startingBalance = loanInfo.getDouble("starting_balance");
         this.startingBalanceDisplay = loanInfo.getString("starting_balance_display");
         this.currentBalanceDisplay = loanInfo.getString("current_balance_display");
-        this.totalEstimatedLoanCostDisplay = loanInfo.getString("total_estimated_loan_cost_display");
+        this.totalInterestDisplay = loanInfo.getString("total_interest_display");
     }
 
     public int getLoanId() {
@@ -65,20 +65,20 @@ public class LoanInfoModel {
         this.numberOfRepayments = numberOfRepayments;
     }
 
-    public double getTotalEstimatedLoanCost() {
-        return totalEstimatedLoanCost;
+    public double getTotalInterest() {
+        return totalInterest;
     }
 
-    public void setTotalEstimatedLoanCost(double totalEstimatedLoanCost) {
-        this.totalEstimatedLoanCost = totalEstimatedLoanCost;
+    public void setTotalInterest(double totalInterest) {
+        this.totalInterest = totalInterest;
     }
 
-    public String getTotalEstimatedLoanCostDisplay() {
-        return totalEstimatedLoanCostDisplay;
+    public String getTotalInterestDisplay() {
+        return totalInterestDisplay;
     }
 
-    public void setTotalEstimatedLoanCostDisplay(String totalEstimatedLoanCostDisplay) {
-        this.totalEstimatedLoanCostDisplay = totalEstimatedLoanCostDisplay;
+    public void setTotalInterestDisplay(String totalInterestDisplay) {
+        this.totalInterestDisplay = totalInterestDisplay;
     }
 
     public String getCurrency() {

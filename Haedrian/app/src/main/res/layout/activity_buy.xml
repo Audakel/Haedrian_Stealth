@@ -1,453 +1,467 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="2dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="@drawable/concrete_repeating"
-        tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity" >
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/round_white"
-        android:padding="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="2dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/concrete_repeating">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="8dp"
-            android:text="@string/buy_amount"
-            android:textColor="@color/primary"
-            android:textSize="20sp"/>
-
-        <LinearLayout
-            android:id="@+id/conversion_container"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="8dp"
-            android:layout_below="@+id/textView"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true"
+            android:background="@drawable/round_white"
+            android:padding="5dp">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightgrey"/>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="8dp"
+                android:text="@string/buy_amount"
+                android:textColor="@color/primary"
+                android:textSize="20sp"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/conversion_container"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal" >
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="8dp"
+                android:layout_below="@+id/textView"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/currency_sign"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:textSize="30sp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightgrey"/>
 
-                <EditText
-                    android:id="@+id/amount_currency"
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/amount_hint"
-                    android:inputType="numberDecimal"
-                    android:background="@null"
-                    android:textColorHint="@color/lightgrey"
-                    android:textSize="30sp"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/currency_sign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:textSize="30sp"/>
+
+                    <EditText
+                        android:id="@+id/amount_currency"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/amount_hint"
+                        android:inputType="numberDecimal"
+                        android:background="@null"
+                        android:textColorHint="@color/lightgrey"
+                        android:textSize="30sp"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightgrey"/>
+
 
             </LinearLayout>
 
 
-            <View
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
+            android:text="@string/time_limit"
+            android:textSize="12sp"
+            android:layout_below="@+id/relativeLayout" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/note"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_white"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/payment_amount_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/deposit_method"
+                android:textColor="@color/primary"
+                android:textSize="20sp"/>
+
+            <Spinner
+                android:id="@+id/method_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightgrey"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/payment_amount_title"
+                android:entries="@array/payment_methods" />
 
+            <Spinner
+                android:id="@+id/outlet_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/method_spinner"
+                android:visibility="gone"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/note"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
-        android:layout_marginLeft="4dp"
-        android:text="@string/time_limit"
-        android:textSize="12sp"
-        android:layout_below="@+id/relativeLayout" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/note"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_white"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/payment_amount_title"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/financial_container"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/deposit_method"
-            android:textColor="@color/primary"
-            android:textSize="20sp"/>
+            android:layout_below="@+id/relativeLayout2"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_white"
+            android:padding="5dp">
 
-        <Spinner
-            android:id="@+id/method_spinner"
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/subtotal"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView13"
+                android:text="@string/haedrian_fee"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textView14"
+                android:text="@string/payment_method_fee"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView15"
+                android:layout_alignStart="@+id/textView15"
+                android:layout_below="@+id/textView15"
+                android:layout_marginTop="5dp"
+                android:text="@string/total_due"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/subtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"/>
+
+            <TextView
+                android:id="@+id/haedrian_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/subtotal"/>
+
+            <TextView
+                android:id="@+id/payment_method_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/haedrian_fee"/>
+
+            <TextView
+                android:id="@+id/total_due"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/payment_method_fee"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/grey"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/linearLayout2"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_below="@+id/relativeLayout3"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/round_white"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="vertical"-->
+                <!--android:showDividers="beginning">-->
+
+
+                <!--<Button-->
+                    <!--android:id="@+id/button1"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="1"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button4"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="4"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button7"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="7"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/buttonDot"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="."-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="vertical"-->
+                <!--android:showDividers="beginning">-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button2"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="2"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button5"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="5"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button8"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="8"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button0"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="0"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="vertical"-->
+                <!--android:showDividers="beginning">-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button3"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="3"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button6"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="6"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/button9"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="9"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="6dp"-->
+                    <!--android:layout_marginRight="6dp"-->
+                    <!--android:background="@color/primary"/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/buttonBack"-->
+                    <!--style="?android:attr/borderlessButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="&lt;x"-->
+                    <!--android:textColor="@color/primary"-->
+                    <!--android:textSize="22sp"-->
+                    <!--/>-->
+            <!--</LinearLayout>-->
+
+        <!--</LinearLayout>-->
+
+        <Button
+            android:id="@+id/submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/payment_amount_title"
-            android:entries="@array/payment_methods" />
+            android:layout_below="@+id/financial_container"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_blue"
+            android:text="@string/submit"
+            android:textColor="@color/white"/>
 
-        <Spinner
-            android:id="@+id/outlet_spinner"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/method_spinner"
-            android:visibility="gone"/>
+            android:layout_below="@+id/submit_button"
+            android:text="@string/subject_to_fees"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"/>
+
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/financial_container"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/relativeLayout2"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_white"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/subtotal"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView13"
-            android:text="@string/haedrian_fee"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView14"
-            android:text="@string/payment_method_fee"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView15"
-            android:layout_alignStart="@+id/textView15"
-            android:layout_below="@+id/textView15"
-            android:layout_marginTop="5dp"
-            android:text="@string/total_due"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/subtotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"/>
-
-        <TextView
-            android:id="@+id/haedrian_fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/subtotal"/>
-
-        <TextView
-            android:id="@+id/payment_method_fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/haedrian_fee"/>
-
-        <TextView
-            android:id="@+id/total_due"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/payment_method_fee"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/grey"
-            android:textStyle="bold"/>
-
-    </RelativeLayout>
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/linearLayout2"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_below="@+id/relativeLayout3"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:background="@drawable/round_white"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical"-->
-            <!--android:showDividers="beginning">-->
-
-
-            <!--<Button-->
-                <!--android:id="@+id/button1"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="1"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button4"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="4"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button7"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="7"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/buttonDot"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="."-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"/>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical"-->
-            <!--android:showDividers="beginning">-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button2"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="2"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button5"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="5"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button8"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="8"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button0"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="0"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical"-->
-            <!--android:showDividers="beginning">-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button3"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="3"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button6"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="6"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/button9"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="9"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="6dp"-->
-                <!--android:layout_marginRight="6dp"-->
-                <!--android:background="@color/primary"/>-->
-
-            <!--<Button-->
-                <!--android:id="@+id/buttonBack"-->
-                <!--style="?android:attr/borderlessButtonStyle"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="&lt;x"-->
-                <!--android:textColor="@color/primary"-->
-                <!--android:textSize="22sp"-->
-                <!--/>-->
-        <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/financial_container"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_blue"
-        android:text="@string/submit"
-        android:textColor="@color/white"/>
-
-
-</RelativeLayout>
+</ScrollView>
