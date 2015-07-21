@@ -68,7 +68,6 @@ public class IntroDemoActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int position) {
-                Log.v("TEST", "position: " + position);
                 if (position == 3) {
                     skipButton.setVisibility(View.GONE);
                 }

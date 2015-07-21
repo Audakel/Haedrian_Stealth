@@ -4,7 +4,7 @@ package com.haedrian.haedrian.Application;
  * Created by James on 3/21/2015.
  */
 public class ApplicationConstants {
-    public final static String BASE = "https://3928340c.ngrok.com/v1/";
+    public final static String BASE = "https://haedrian.io/v1/";
     public final static String lenddo_social_service_secret = "";
     public final static String lenddo_social_service_userid = "";
     public final static String lenddo_product_service_secret = "";
