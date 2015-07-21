@@ -58,7 +58,7 @@ import java.util.List;
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
     public JSONObject loanInfoJson;
-    private LinearLayout loanInfoContainer, amountDueContainer;
+    private LinearLayout amountDueContainer, walletBalanceView, loanBalanceView, daysToPaymentView;
     private TextView walletBallanceTV, loanBallanceTV, timeLeftTV, usernameTV, timeRepaymentUnit, balanceDueTV;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
@@ -85,8 +85,10 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         timeRepaymentUnit = (TextView) findViewById(R.id.time_unit_title);
         balanceDueTV = (TextView) findViewById(R.id.balance_due);
 
-        loanInfoContainer = (LinearLayout) findViewById(R.id.loan_info_container);
         amountDueContainer = (LinearLayout) findViewById(R.id.amount_due_container);
+        walletBalanceView = (LinearLayout) findViewById(R.id.wallet_balance_view);
+        loanBalanceView = (LinearLayout) findViewById(R.id.loan_balance_button);
+        daysToPaymentView = (LinearLayout) findViewById(R.id.days_to_payment_container);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_light, R.color.primary, R.color.primary_dark);
@@ -191,9 +193,16 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
                                     loanInfoJson = loan;
-                                    loanInfoContainer.setVisibility(View.VISIBLE);
+                                    walletBalanceView.setVisibility(View.VISIBLE);
+                                    loanBalanceView.setVisibility(View.VISIBLE);
+                                    daysToPaymentView.setVisibility(View.VISIBLE);
                                     amountDueContainer.setVisibility(View.VISIBLE);
                                 }
+                                else {
+                                    walletBallanceTV.setText((response.getString("wallet_balance")));
+                                    walletBalanceView.setVisibility(View.VISIBLE);
+                                }
+
                                 swipeRefreshLayout.setRefreshing(false);
                                 progressDialog.dismiss();
                             } else {
@@ -271,8 +280,13 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
                 loanInfoJson = loan;
-                loanInfoContainer.setVisibility(View.VISIBLE);
+                loanBalanceView.setVisibility(View.VISIBLE);
+                daysToPaymentView.setVisibility(View.VISIBLE);
                 amountDueContainer.setVisibility(View.VISIBLE);
+
+            }
+            else {
+                walletBallanceTV.setText(response.getString("wallet_balance"));
             }
 
         } catch (JSONException e) {

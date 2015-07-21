@@ -64,18 +64,18 @@
                         android:singleLine="true"/>
                 </LinearLayout>
 
-                <!--<LinearLayout-->
-                    <!--style="@style/fieldContainer"-->
-                    <!--android:background="@drawable/bg_edittext">-->
-                    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:text="@string/country_required"&ndash;&gt;-->
-                        <!--&lt;!&ndash;style="@style/formLabel" />&ndash;&gt;-->
-                    <!--<Spinner-->
-                        <!--android:id="@+id/country_spinner"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:spinnerMode="dropdown"/>-->
-                <!--</LinearLayout>-->
+                <LinearLayout
+                    style="@style/fieldContainer"
+                    android:background="@drawable/bg_edittext">
+                    <!--<TextView-->
+                        <!--android:text="@string/country_required"-->
+                        <!--style="@style/formLabel" />-->
+                    <Spinner
+                        android:id="@+id/country_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
 
 
                 <!--<LinearLayout style="@style/fieldContainer">-->

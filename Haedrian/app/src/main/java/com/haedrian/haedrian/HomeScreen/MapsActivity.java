@@ -269,8 +269,10 @@ public class MapsActivity extends ActionBarActivity {
                 ArrayList<String> tempOutlets = outletLocations.get(position);
                 getOutlets(tempOutlets, position);
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -353,8 +355,11 @@ public class MapsActivity extends ActionBarActivity {
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.v("TEST", volleyError.toString());
+                volleyError.printStackTrace();
                 progressDialog.dismiss();
+                if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.no_locations), Toast.LENGTH_LONG).show();
+                }
             }
         }) {
             @Override

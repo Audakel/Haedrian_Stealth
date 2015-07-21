@@ -173,6 +173,7 @@ public class GroupBuyActivity extends ActionBarActivity {
                                     setView();
                                 }
                                 else {
+                                    progressDialog.dismiss();
                                     emptyContainer.setVisibility(View.VISIBLE);
                                     groupContainer.setVisibility(View.GONE);
                                 }

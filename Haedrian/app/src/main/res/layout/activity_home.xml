@@ -67,17 +67,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
+                            android:orientation="horizontal">
 
                             <LinearLayout
+                                android:id="@+id/wallet_balance_view"
                                 android:layout_width="fill_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:id="@+id/wallet_balance_view"
-                                android:onClick="onClick">
+                                android:onClick="onClick"
+                                android:visibility="visible">
 
                                 <TextView
                                     android:id="@+id/wallet_balance"
@@ -111,13 +111,14 @@
                                 android:background="@color/lightgrey" />
 
                             <LinearLayout
+                                android:id="@+id/loan_balance_button"
                                 android:layout_width="fill_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:id="@+id/loan_balance_button"
-                                android:onClick="onClick">
+                                android:onClick="onClick"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:id="@+id/loan_balance"
@@ -156,7 +157,8 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical"
                                 android:clickable="true"
-                                android:onClick="onClick">
+                                android:onClick="onClick"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:id="@+id/time_left"

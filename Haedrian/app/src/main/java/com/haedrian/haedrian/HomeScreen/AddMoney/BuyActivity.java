@@ -54,7 +54,7 @@ import java.util.Locale;
 
 public class BuyActivity extends ActionBarActivity {
     private EditText currencyEditText;
-    private TextView currencySign, subtotalTV, haedrianFeeTV, paymentMethodFeeTV, totalDueTV;
+    private TextView currencySign, subtotalTV, coinsPHFeeTV, paymentMethodFeeTV, totalDueTV;
     private Spinner locationSpinner, outletSpinner;
     private ArrayList<String> paymentMethods;
     private ArrayList<String> depositLocations = new ArrayList<>();
@@ -63,7 +63,7 @@ public class BuyActivity extends ActionBarActivity {
     private ArrayList<ArrayList<String>> fees = new ArrayList<>();
 
     private Double subtotal = 0.00;
-    private Double haedrianFee = 0.00;
+    private Double coinsPHFee = 0.00;
     private Double paymentMethodFee = 0.00;
     private Double total = 0.00;
     private String groupTotal = "";
@@ -107,20 +107,18 @@ public class BuyActivity extends ActionBarActivity {
         Button submitButton = (Button) findViewById(R.id.submit_button);
 
         subtotalTV = (TextView) findViewById(R.id.subtotal);
-        haedrianFeeTV = (TextView) findViewById(R.id.haedrian_fee);
+        coinsPHFeeTV = (TextView) findViewById(R.id.haedrian_fee);
         paymentMethodFeeTV = (TextView) findViewById(R.id.payment_method_fee);
         totalDueTV = (TextView) findViewById(R.id.total_due);
 
         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
         subtotalTV.setText(currency + decimalFormat.format(subtotal));
-        haedrianFeeTV.setText(currency + decimalFormat.format(haedrianFee));
+        coinsPHFeeTV.setText(currency + decimalFormat.format(coinsPHFee));
         paymentMethodFeeTV.setText(currency + decimalFormat.format(paymentMethodFee));
         totalDueTV.setText(currency + decimalFormat.format(total));
 
         paymentMethods = new ArrayList<String>();
-
-
 
         currencyEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,7 +132,9 @@ public class BuyActivity extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!s.toString().equals("")) {
-                    setSubtotal(currencyEditText.getText().toString());
+                    String amount = currencyEditText.getText().toString();
+                    setCoinsPHFee(amount);
+                    setSubtotal(amount);
                 } else {
                     setSubtotal("0");
                 }
@@ -377,10 +377,10 @@ public class BuyActivity extends ActionBarActivity {
         }
     }
 
-    private void setHaedrianFee(String haedrianFeeStr) {
+    private void setCoinsPHFee(String coinsPHFeeStr) {
         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-        haedrianFee = Double.parseDouble(haedrianFeeStr);
-        haedrianFeeTV.setText(currency + decimalFormat.format(haedrianFee));
+        coinsPHFee = (Double.parseDouble(coinsPHFeeStr) * (1.0f/100.0f));
+        coinsPHFeeTV.setText(currency + decimalFormat.format(coinsPHFee));
         setTotal();
     }
 
@@ -393,7 +393,7 @@ public class BuyActivity extends ActionBarActivity {
     }
 
     private void setTotal() {
-        total = subtotal + haedrianFee + paymentMethodFee;
+        total = subtotal + coinsPHFee + paymentMethodFee;
         // TODO:: Get internal currency unicode - use to display with total
         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         totalDueTV.setText(currency + decimalFormat.format(total));
@@ -437,7 +437,7 @@ public class BuyActivity extends ActionBarActivity {
                                 buyOrder.setCurrencyAmount(response.getJSONObject("order").getString("currency_amount"));
                                 buyOrder.setPaymentMethodFee(paymentMethodFeeTV.getText().toString());
                                 buyOrder.setAmount(subtotalTV.getText().toString());
-                                buyOrder.setHaedrianFee(haedrianFeeTV.getText().toString());
+                                buyOrder.setHaedrianFee(coinsPHFeeTV.getText().toString());
                                 String id = response.getJSONObject("order").getString("id");
 
                                 progressDialog.hide();

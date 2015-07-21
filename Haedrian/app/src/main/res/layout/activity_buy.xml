@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity" >
+    tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity"
+    android:background="@drawable/concrete_repeating" >
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -10,8 +11,7 @@
             android:paddingBottom="2dp"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/concrete_repeating">
+            android:paddingTop="@dimen/activity_vertical_margin">
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -163,7 +163,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView13"
-                android:text="@string/haedrian_fee"
+                android:text="@string/coins_ph_fee"
                 android:textSize="14sp"/>
 
             <TextView

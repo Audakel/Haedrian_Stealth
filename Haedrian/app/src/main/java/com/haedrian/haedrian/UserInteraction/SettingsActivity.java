@@ -250,19 +250,15 @@ public class SettingsActivity extends ActionBarActivity {
                         Log.v("TEST", "updateCurrencyInfo: " + response.toString());
                         try {
                             Log.v("TEST", response.toString());
-                            if (response.getBoolean("success")) {
 
-                                String newCurrency = response.getString("new_currency");
-                                chosenCurrency.setText(newCurrency);
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.putString("currency", newCurrency);
-                                editor.apply();
+                            String newCurrency = response.getString("new_currency");
+                            chosenCurrency.setText(newCurrency);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("currency", newCurrency);
+                            editor.apply();
 
-                                ApplicationController.setHomeScreenTimestamp(0L);
-                            } else {
-                                String error = response.getString("error");
-                                Toast.makeText(SettingsActivity.this, error, Toast.LENGTH_SHORT).show();
-                            }
+                            ApplicationController.setHomeScreenTimestamp(0L);
+
                             progressDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -272,8 +268,9 @@ public class SettingsActivity extends ActionBarActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Log.v("TEST", "Error: " + error.getMessage());
-                        Toast.makeText(SettingsActivity.this, getString(R.string.try_again_later_error), Toast.LENGTH_SHORT).show();
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.no_locations), Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
             {

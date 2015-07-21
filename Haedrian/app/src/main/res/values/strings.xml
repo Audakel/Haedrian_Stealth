@@ -492,6 +492,8 @@
     <string name="total_interest">Total Interest</string>
     <string name="already_have_an_account">Already have an account? Sign In</string>
     <string name="subject_to_fees">*May be subject to deposit fees</string>
+    <string name="coins_ph_fee">Coins.Ph Fee:</string>
+    <string name="no_locations">No locations of this type found near you</string>
 
 
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.LoginActivity;
@@ -26,7 +27,7 @@ public class IntroDemo4Fragment extends android.support.v4.app.Fragment {
             }
         });
 
-        Button loginButton = (Button) rootView.findViewById(R.id.sign_in_button);
+        TextView loginButton = (TextView) rootView.findViewById(R.id.sign_in_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

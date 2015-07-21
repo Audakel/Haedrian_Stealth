@@ -45,19 +45,21 @@ import java.util.regex.Pattern;
 public class SignupActivity extends ActionBarActivity {
 
     private EditText emailET, usernameET, phoneNumberET, microfinanceIdET, passwordET, reenterPasswordET;
-    private Spinner microfinanceSpinner;
+    private Spinner microfinanceSpinner, countrySpinner;
     private Button submitButton;
     private LinearLayout microfinanceIdContainer;
 
     private ArrayList<String> microfinanceInstitutions = new ArrayList<>();
     private ArrayList<String> microfinanceAbbr = new ArrayList<>();
 
+    private ArrayList<String> countryNames = new ArrayList<>();
+    private ArrayList<String> countryAbbr = new ArrayList<>();
+    private ArrayList<String> countryCodes = new ArrayList<>();
+
     private TextView countryCodeTV;
     private ProgressDialog progressDialog;
 
     private String countryCode;
-    private String country;
-
     private ScrollView scrollView;
 
     @Override
@@ -80,11 +82,29 @@ public class SignupActivity extends ActionBarActivity {
         countryCodeTV = (TextView) findViewById(R.id.country_code);
         microfinanceIdET = (EditText) findViewById(R.id.microfinance_id);
         microfinanceSpinner = (Spinner) findViewById(R.id.microfinance_institution);
+
         microfinanceIdContainer = (LinearLayout) findViewById(R.id.microfinance_id_container);
 
+        countrySpinner = (Spinner) findViewById(R.id.country_spinner);
 
         fillCountryInfo();
         fillMicrofinanceInfo();
+
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countryNames);
+        countrySpinner.setAdapter(countryAdapter);
+        countrySpinner.setSelection(0);
+        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Update country code on the phone number
+                countryCodeTV.setText(countryCodes.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         submitButton = (Button) findViewById(R.id.submit_button);
@@ -169,6 +189,7 @@ public class SignupActivity extends ActionBarActivity {
         String username = usernameET.getText().toString();
         String phoneNumber = phoneNumberET.getText().toString();
         String password = passwordET.getText().toString();
+        countryCode = countryAbbr.get(countrySpinner.getSelectedItemPosition());
 
         String application = "";
         String appExternalId = "";
@@ -254,7 +275,7 @@ public class SignupActivity extends ActionBarActivity {
 
         phoneNumber = phoneNumber.replaceAll("[^\\d]", "");
         phoneNumberET.setText(phoneNumber);
-        phoneNumber = countryCode + phoneNumber;
+        phoneNumber = countryCodes.get(countrySpinner.getSelectedItemPosition()) + phoneNumber;
         if ( ! PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)) {
             phoneNumberET.setError(getString(R.string.invalid_phone_number));
             progressDialog.dismiss();
@@ -297,7 +318,7 @@ public class SignupActivity extends ActionBarActivity {
             jsonBody.put("username", username);
             jsonBody.put("email", email);
             jsonBody.put("phone", String.valueOf(phoneNumber));
-            jsonBody.put("country", country);
+            jsonBody.put("country", countryCode);
             jsonBody.put("password1", password);
 
             if (microfinanceSpinner.getSelectedItemPosition() != 0) {
@@ -363,17 +384,17 @@ public class SignupActivity extends ActionBarActivity {
     }
 
     private void fillCountryInfo() {
+        countryNames.add(getResources().getString(R.string.country_spinner_hint));
+        countryNames.add(getResources().getString(R.string.united_states));
+        countryNames.add(getResources().getString(R.string.phillipines));
 
-        if (Locale.getDefault().equals(Locale.US)) {
-            countryCode = "+1";
-            country = "US";
-        }
-        else if (Locale.getDefault().getLanguage().equals("fil")) {
-            countryCode = "+63";
-            country = "PH";
-        }
-        countryCodeTV.setText(countryCode);
+        countryAbbr.add("");
+        countryAbbr.add(getResources().getString(R.string.united_states_abbr));
+        countryAbbr.add(getResources().getString(R.string.phillipines_country_code));
 
+        countryCodes.add("");
+        countryCodes.add("+1");
+        countryCodes.add("+63");
     }
 
     private void fillMicrofinanceInfo() {
