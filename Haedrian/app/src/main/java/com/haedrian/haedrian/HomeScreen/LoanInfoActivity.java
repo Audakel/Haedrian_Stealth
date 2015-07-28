@@ -60,12 +60,12 @@ public class LoanInfoActivity extends ActionBarActivity {
         startingBalance = (TextView) findViewById(R.id.summary_starting_balance);
 
         loanId.setText(loanInfoModel.getLoanId()+"");
-        repayEvery.setText(loanInfoModel.getRepayEvery()+"");
+        repayEvery.setText(loanInfoModel.getRepayEvery()+ " "+ loanInfoModel.getRepayTimeUnit());
         numberOfRepayments.setText(loanInfoModel.getNumberOfRepayments()+"");
         totalEstimatedLoanCost.setText(loanInfoModel.getTotalInterestDisplay()+"");
         totalOverdue.setText(loanInfoModel.getTotalOverdue()+"");
         loanDescriptor.setText(loanInfoModel.getLoanDescriptor());
-        interestRate.setText(loanInfoModel.getInterestRate()+"");
+        interestRate.setText(loanInfoModel.getInterestRate()+"%");
         interestFrequency.setText(loanInfoModel.getInterestFrequency() + "");
         startingBalance.setText(loanInfoModel.getStartingBalanceDisplay() + "");
         currentBalance.setText(loanInfoModel.getCurrentBalanceDisplay() + "");

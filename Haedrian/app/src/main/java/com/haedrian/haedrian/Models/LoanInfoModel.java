@@ -98,7 +98,27 @@ public class LoanInfoModel {
     }
 
     public String getRepayTimeUnit() {
-        return repayTimeUnit;
+        String mRepayTimeUnit = repayTimeUnit.toLowerCase();
+
+        Boolean pluralTime = "s".equals(mRepayTimeUnit.substring(mRepayTimeUnit.length() - 1));
+
+        if (repayEvery == 1){
+            if (pluralTime){
+                return mRepayTimeUnit.substring(0, mRepayTimeUnit.length()-1);
+            }
+            else{
+                return mRepayTimeUnit;
+            }
+        }
+        else{
+            if (pluralTime){
+                return mRepayTimeUnit;
+            }
+            else{
+                return mRepayTimeUnit + "s";
+            }
+
+        }
     }
 
     public void setRepayTimeUnit(String repayTimeUnit) {

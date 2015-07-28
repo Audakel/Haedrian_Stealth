@@ -457,12 +457,12 @@
     <string name="days_left">Days to Payment</string>
     <string name="title_activity_loan_info">Loan Info</string>
     <string name="repay_every">Repay Every</string>
-    <string name="total_repayments">Total Number of Repayments</string>
+    <string name="total_repayments">Total Repayments</string>
     <string name="total_overdue">Total Overdue</string>
     <string name="loan_description">Loan Description</string>
     <string name="current_balance">Current Balance</string>
     <string name="interest_frequency">Interest Frequency</string>
-    <string name="starting_balance">Starting Loan Balance</string>
+    <string name="starting_balance">Starting Loan</string>
     <string name="loan_cost">Total Cost of Loan</string>
     <string name="intro_demo1">Pay back microfinace loans right from your phone</string>
     <string name="intro_demo2">Load your balance at thousands of locations like banks, ATMs, Pawnshops and more</string>

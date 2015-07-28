@@ -10,8 +10,16 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
 
     <TextView
@@ -19,17 +27,23 @@
         android:layout_height="wrap_content"
         android:text="@string/my_loan"
         android:id="@+id/textView26"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginTop="10dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView"
-        android:layout_weight="1"
         android:layout_margin="16dp">
 
 
@@ -39,157 +53,286 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/loanId"
-            android:id="@+id/textView12"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:id="@+id/summary_loanId"
-            android:textColor="@color/primary" />
+            android:gravity="center_vertical|center_horizontal">
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/repay_every"
-            android:id="@+id/textView17"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"
-            android:id="@+id/summary_repay_every"
-            android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$5.00"
+                    android:id="@+id/summary_total_overdue"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_repayments"
-            android:id="@+id/textView18"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3"
-            android:id="@+id/summary_total_repayments"
-            android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_overdue"
+                    android:id="@+id/textView19"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_overdue"
-            android:id="@+id/textView19"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$5.00"
-            android:id="@+id/summary_total_overdue"
-            android:textColor="@color/primary" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loan_description"
-            android:id="@+id/textView20"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Educational Loan"
-            android:id="@+id/summary_loan_description"
-            android:textColor="@color/primary" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/current_balance"
-            android:id="@+id/textView21"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$5,689.00"
-            android:id="@+id/summary_current_balance"
-            android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:id="@+id/summary_total_repayments"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_repayments"
+                    android:id="@+id/textView18"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+<!---->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/interest_rate"
-            android:id="@+id/textView22"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="17.00%"
-            android:id="@+id/summary_interest_rate"
-            android:textColor="@color/primary" />
+            android:layout_marginTop="15dp"
+            android:gravity="center|center_vertical|center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/interest_frequency"
-            android:id="@+id/textView23"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Per year"
-            android:id="@+id/summary_interest_frequency"
-            android:textColor="@color/primary" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/starting_balance"
-            android:id="@+id/textView24"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$6,000.00"
-            android:id="@+id/summary_starting_balance"
-            android:textColor="@color/primary" />
+                android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_interest"
-            android:id="@+id/textView25"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$347.00"
-            android:id="@+id/summary_loan_cost"
-            android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:id="@+id/summary_loanId"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loanId"
+                    android:id="@+id/textView12"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:id="@+id/summary_repay_every"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/repay_every"
+                    android:id="@+id/textView17"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center|center_vertical|center_horizontal">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Educational Loan"
+                    android:textSize="18sp"
+                    android:id="@+id/summary_loan_description"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loan_description"
+                    android:id="@+id/textView20"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$5,689.00"
+                    android:textSize="18sp"
+                    android:id="@+id/summary_current_balance"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_balance"
+                    android:id="@+id/textView21"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+<!---->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center|center_vertical|center_horizontal">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="17.00%"
+                    android:textSize="18sp"
+                    android:id="@+id/summary_interest_rate"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/interest_rate"
+                    android:id="@+id/textView22"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Per year"
+                    android:textSize="18sp"
+                    android:id="@+id/summary_interest_frequency"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/interest_frequency"
+                    android:id="@+id/textView23"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center|center_vertical|center_horizontal">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$6,000.00"
+                    android:textSize="18sp"
+                    android:id="@+id/summary_starting_balance"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/starting_balance"
+                    android:id="@+id/textView24"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$347.00"
+                    android:textSize="18sp"
+                    android:id="@+id/summary_loan_cost"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_interest"
+                    android:id="@+id/textView25"
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
     </ScrollView>
