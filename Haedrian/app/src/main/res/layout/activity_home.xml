@@ -1,5 +1,6 @@
- <RelativeLayout
+ <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/concrete_repeating">
@@ -12,7 +13,8 @@
         android:layout_marginBottom="8dp">
 
 
-        <ScrollView
+        <com.melnykov.fab.ObservableScrollView
+            android:id="@+id/scroll_view"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:background="@drawable/concrete_repeating">
@@ -195,7 +197,6 @@
                         android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/summary_container"
                         android:id="@+id/nextPayment"
                         android:background="@drawable/round_white"
                         android:layout_marginTop="10dp">
@@ -329,7 +330,7 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
-                                android:id="@+id/send_request"
+                                android:id="@+id/apply"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
@@ -350,7 +351,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
-                                    android:text="@string/repay_loan"
+                                    android:text="@string/apply"
                                     android:textSize="18sp"
                                     android:textStyle="bold"/>
 
@@ -401,7 +402,7 @@
 
             </RelativeLayout>
 
-        </ScrollView>
+        </com.melnykov.fab.ObservableScrollView>
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -411,8 +412,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center_horizontal"
         android:id="@+id/linearLayout6">
 
         <TextView
@@ -439,4 +439,15 @@
             android:id="@+id/textView11" />
     </LinearLayout>
 
-</RelativeLayout>
+     <com.melnykov.fab.FloatingActionButton
+         android:id="@+id/fab"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="bottom|right"
+         android:layout_margin="16dp"
+         android:src="@drawable/ic_action_new"
+         fab:fab_colorNormal="@color/primary"
+         fab:fab_colorPressed="@color/primary_dark"
+         fab:fab_colorRipple="@color/primary_dark" />
+
+</FrameLayout>

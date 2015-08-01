@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import com.haedrian.haedrian.UserInteraction.LoginActivity;
 import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.UserInteraction.SettingsActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
+import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.ObservableScrollView;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -63,6 +66,9 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
     private int moneyBalanceTextSize = 20;
+
+    private ObservableScrollView scrollView;
+    private FloatingActionButton fab;
 
     private String date = "";
 
@@ -89,6 +95,11 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         walletBalanceView = (LinearLayout) findViewById(R.id.wallet_balance_view);
         loanBalanceView = (LinearLayout) findViewById(R.id.loan_balance_button);
         daysToPaymentView = (LinearLayout) findViewById(R.id.days_to_payment_container);
+
+        scrollView = (ObservableScrollView) findViewById(R.id.scroll_view);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.attachToScrollView(scrollView);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_light, R.color.primary, R.color.primary_dark);
@@ -362,8 +373,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         Intent intent;
 
         switch (view.getId()) {
-            case R.id.send_request:
-                intent = new Intent(this, RepayLoanActivity.class);
+            case R.id.apply:
+                intent = new Intent(this, ApplyActivity.class);
                 ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
                 startActivity(intent, options.toBundle());
