@@ -10,9 +10,6 @@ import android.widget.TextView;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.R;
 
-import java.util.Currency;
-import java.util.Locale;
-
 /**
  * Created by Logan on 5/18/2015.
  */
@@ -44,10 +41,8 @@ public class ConfirmOrderDialog extends Dialog {
 
         String currency = ApplicationController.getSetCurrencySign();
 
-        String confirmMessage = context.getString(R.string.about_to_deposit) + " "
-                + currency + currencyAmount + " "
-                + context.getString(R.string.to_your_wallet_for)
-                + " " + totalAmount;
+        String confirmMessage = context.getString(R.string.about_to_deposit) + " " + totalAmount;
+
 
         orderDetails.setText(confirmMessage);
 

@@ -1,6 +1,10 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:tools
+		ADDED from AndroidManifest.xml:3:5
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -8,10 +12,6 @@ ADDED from AndroidManifest.xml:2:1
 	android:versionName
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:tools
-		ADDED from AndroidManifest.xml:3:5
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 	android:versionCode
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
@@ -86,24 +86,24 @@ MERGED from net.danlew:android.joda:2.8.1:11:5
 		ADDED from AndroidManifest.xml:34:9
 meta-data#lenddoAppId
 ADDED from AndroidManifest.xml:40:9
-	android:value
-		ADDED from AndroidManifest.xml:42:13
 	android:name
 		ADDED from AndroidManifest.xml:41:13
+	android:value
+		ADDED from AndroidManifest.xml:42:13
 meta-data#googlePlacesApiKey
 ADDED from AndroidManifest.xml:43:9
-	android:value
-		ADDED from AndroidManifest.xml:45:13
 	android:name
 		ADDED from AndroidManifest.xml:44:13
+	android:value
+		ADDED from AndroidManifest.xml:45:13
 activity#com.haedrian.haedrian.UserInteraction.LoginActivity
 ADDED from AndroidManifest.xml:47:9
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:51:13
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:50:13
 	android:label
 		ADDED from AndroidManifest.xml:49:13
-	android:windowSoftInputMode
-		ADDED from AndroidManifest.xml:51:13
 	android:name
 		ADDED from AndroidManifest.xml:48:13
 activity#com.haedrian.haedrian.HomeScreen.HomeActivity
@@ -126,10 +126,10 @@ ADDED from AndroidManifest.xml:59:9
 		ADDED from AndroidManifest.xml:60:13
 meta-data#android.support.PARENT_ACTIVITY
 ADDED from AndroidManifest.xml:66:13
-	android:value
-		ADDED from AndroidManifest.xml:68:17
 	android:name
 		ADDED from AndroidManifest.xml:67:17
+	android:value
+		ADDED from AndroidManifest.xml:68:17
 activity#com.haedrian.haedrian.HomeScreen.Contacts.ContactsActivity
 ADDED from AndroidManifest.xml:70:9
 	android:screenOrientation
@@ -142,14 +142,14 @@ ADDED from AndroidManifest.xml:70:9
 		ADDED from AndroidManifest.xml:71:13
 activity#com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.ProjectsActivity
 ADDED from AndroidManifest.xml:82:9
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:87:13
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:85:13
 	android:label
 		ADDED from AndroidManifest.xml:84:13
 	android:parentActivityName
 		ADDED from AndroidManifest.xml:86:13
-	android:windowSoftInputMode
-		ADDED from AndroidManifest.xml:87:13
 	android:name
 		ADDED from AndroidManifest.xml:83:13
 activity#com.haedrian.haedrian.HomeScreen.InvestActivity
@@ -335,16 +335,16 @@ ADDED from AndroidManifest.xml:267:9
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:279:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
-	android:value
-		ADDED from AndroidManifest.xml:281:13
 	android:name
 		ADDED from AndroidManifest.xml:280:13
+	android:value
+		ADDED from AndroidManifest.xml:281:13
 meta-data#com.google.android.maps.v2.API_KEY
 ADDED from AndroidManifest.xml:282:9
-	android:value
-		ADDED from AndroidManifest.xml:284:13
 	android:name
 		ADDED from AndroidManifest.xml:283:13
+	android:value
+		ADDED from AndroidManifest.xml:284:13
 activity#com.haedrian.haedrian.HomeScreen.MapsActivity
 ADDED from AndroidManifest.xml:286:9
 	android:screenOrientation
@@ -423,12 +423,12 @@ ADDED from AndroidManifest.xml:356:9
 		ADDED from AndroidManifest.xml:357:13
 activity#com.haedrian.haedrian.HomeScreen.AddMoney.GroupBuyActivity
 ADDED from AndroidManifest.xml:367:9
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:371:13
 	android:label
 		ADDED from AndroidManifest.xml:369:13
 	android:parentActivityName
 		ADDED from AndroidManifest.xml:370:13
-	android:windowSoftInputMode
-		ADDED from AndroidManifest.xml:371:13
 	android:name
 		ADDED from AndroidManifest.xml:368:13
 activity#com.haedrian.haedrian.HomeScreen.RepayLoanActivity
@@ -491,10 +491,10 @@ MERGED from net.danlew:android.joda:2.8.1:7:5
 		INJECTED from AndroidManifest.xml:0:0
 uses-feature#0x00020000
 ADDED from com.google.android.gms:play-services-maps:7.5.0:24:5
-	android:glEsVersion
-		ADDED from com.google.android.gms:play-services-maps:7.5.0:25:8
 	android:required
 		ADDED from com.google.android.gms:play-services-maps:7.5.0:26:8
+	android:glEsVersion
+		ADDED from com.google.android.gms:play-services-maps:7.5.0:25:8
 android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
 IMPLIED from AndroidManifest.xml:2:1 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
 activity#android.support.v7.widget.TestActivity

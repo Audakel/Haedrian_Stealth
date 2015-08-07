@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'HaedrianCuro_v3'
+            keyPassword 'AndroidSaTeCoCeMeBu1'
+            storeFile file('/home/audakel/Downloads/h3_curo.jks')
+            storePassword 'AndroidSaTeCoCeMeBu1'
+        }
+    }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
         applicationId "com.haedrian.haedrian"
         minSdkVersion 16
@@ -28,7 +35,7 @@ repositories {
 }
 
 dependencies {
-//    compile project(':google-play-services_lib')
+    //    compile project(':google-play-services_lib')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services-maps:7.5.0'
     compile 'com.android.support:support-v13:21.0.3'

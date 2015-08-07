@@ -446,7 +446,7 @@
     <string name="repay_loan_of">Repay loan of</string>
     <string name="group_payment_of">Group payment of</string>
     <string name="about_to_deposit">About to deposit</string>
-    <string name="to_your_wallet_for">to your wallet for</string>
+    <string name="to_your_wallet">to your wallet</string>
     <string name="deposit">Deposit</string>
     <string name="loanId">Loan ID</string>
     <string name="mark_deposits_as_completed">Mark deposits as completed here:</string>

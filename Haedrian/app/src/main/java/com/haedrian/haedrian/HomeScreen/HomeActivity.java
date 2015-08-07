@@ -9,10 +9,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -20,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +28,8 @@ import com.flurry.android.FlurryAgent;
 import com.haedrian.haedrian.Application.ApplicationConstants;
 import com.haedrian.haedrian.Application.ApplicationController;
 import com.haedrian.haedrian.CustomDialogs.DateDialog;
-import com.haedrian.haedrian.CustomDialogs.RequestDialog;
 import com.haedrian.haedrian.HomeScreen.AddMoney.BuyOptions;
 import com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity;
-import com.haedrian.haedrian.Models.UserModel;
 import com.haedrian.haedrian.Network.JsonUTF8Request;
 import com.haedrian.haedrian.R;
 import com.haedrian.haedrian.UserInteraction.CurrencyInfoActivity;
@@ -43,7 +38,6 @@ import com.haedrian.haedrian.UserInteraction.PinActivity;
 import com.haedrian.haedrian.UserInteraction.SettingsActivity;
 import com.haedrian.haedrian.util.TimeoutRetryPolicy;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.json.JSONArray;
@@ -52,12 +46,10 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class HomeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
-
-    public JSONObject loanInfoJson;
+    public JSONArray loanInfoJsonArray;
     private LinearLayout amountDueContainer, walletBalanceView, loanBalanceView, daysToPaymentView;
     private TextView walletBallanceTV, loanBallanceTV, timeLeftTV, usernameTV, timeRepaymentUnit, balanceDueTV;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -169,7 +161,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                                 // TODO:: Fix with asking the user what loan they want to see if > 1
                                 JSONArray loans = response.getJSONArray("loan_info");
                                 if (loans.length() > 0) {
-                                    JSONObject loan = loans.getJSONObject(0);
+                                    JSONObject loan = response.getJSONObject("consolidated");
 
                                     JSONObject nextRepaymentInfo = response.getJSONObject("next_repayment_info");
 
@@ -180,7 +172,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
                                     // TODO:: Need to install better CurrencyInstance Backend to support other currencies
                                     walletBallanceTV.setText((response.getString("wallet_balance")));
-                                    loanBallanceTV.setText((loan.getString("current_balance_display")));
+                                    loanBallanceTV.setText((loan.getString("display")));
 
                                     // Decide font size
                                     if (loanBallanceTV.getText().length() > 8 ||
@@ -192,7 +184,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                                     timeLeftTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
 
 
-                                    loanInfoJson = loan;
+                                    loanInfoJsonArray = loans;
                                     walletBalanceView.setVisibility(View.VISIBLE);
                                     loanBalanceView.setVisibility(View.VISIBLE);
                                     daysToPaymentView.setVisibility(View.VISIBLE);
@@ -257,7 +249,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
             if (loans.length() > 0) {
 
-                JSONObject loan = loans.getJSONObject(0);
+                JSONObject loan = response.getJSONObject("consolidated");
                 JSONObject nextRepaymentInfo = response.getJSONObject("next_repayment_info");
 
                 date = nextRepaymentInfo.getString("date");
@@ -267,7 +259,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
 
                 // TODO:: Need to install better CurrencyInstance Backend to support other currencies
                 walletBallanceTV.setText((response.getString("wallet_balance")));
-                loanBallanceTV.setText((loan.getString("current_balance_display")));
+                loanBallanceTV.setText((loan.getString("display")));
 
                 // Decide font size
                 if (loanBallanceTV.getText().length() > 8 ||
@@ -279,7 +271,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 timeLeftTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
 
 
-                loanInfoJson = loan;
+                loanInfoJsonArray = loans;
                 loanBalanceView.setVisibility(View.VISIBLE);
                 daysToPaymentView.setVisibility(View.VISIBLE);
                 amountDueContainer.setVisibility(View.VISIBLE);
@@ -396,7 +388,7 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 intent = new Intent(this, LoanInfoActivity.class);
                 ActivityOptions options8 = ActivityOptions.makeScaleUpAnimation(view, 0,
                         0, view.getWidth(), view.getHeight());
-                startActivity(intent.putExtra("loanInfo", loanInfoJson.toString()), options8.toBundle());
+                startActivity(intent.putExtra("loanInfo", loanInfoJsonArray.toString()), options8.toBundle());
                 return;
             case R.id.amount_due_container:
                 intent = new Intent(this, RepayLoanActivity.class);

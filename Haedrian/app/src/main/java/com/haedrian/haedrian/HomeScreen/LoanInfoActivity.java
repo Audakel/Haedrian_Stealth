@@ -5,6 +5,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
@@ -15,6 +19,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.haedrian.haedrian.Models.LoanInfoModel;
 import com.haedrian.haedrian.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +34,12 @@ public class LoanInfoActivity extends ActionBarActivity {
     private TextView interestRate, interestFrequency;
     private TextView numberOfRepayments, currency;
     private TextView currentBalance, startingBalance;
-    private LoanInfoModel loanInfoModel;
+    private Spinner loanSpinner;
+    private ArrayList<LoanInfoModel> loanIdList = new ArrayList<>();
+    ArrayList<String> loanIdBalance = new ArrayList<>();
+    ArrayAdapter<String> loanIdAdapter;
+    PieChart pieChart;
+
 
 
     @Override
@@ -39,14 +49,22 @@ public class LoanInfoActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         Bundle bundle = getIntent().getExtras();
         String loanInfo = bundle.getString("loanInfo");
 
         try {
-            loanInfoModel = new LoanInfoModel(new JSONObject(loanInfo));
+            JSONArray loanInfoArray = new JSONArray(loanInfo);
+            for (int i = 0; i < loanInfoArray.length(); i++){
+                loanIdList.add(new LoanInfoModel(loanInfoArray.getJSONObject(i)));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        loanSpinner = (Spinner) findViewById(R.id.loanIdSpinner);
+        setLoanIdSpinner();
+
 
         loanId = (TextView) findViewById(R.id.summary_loanId);
         repayEvery = (TextView) findViewById(R.id.summary_repay_every);
@@ -59,6 +77,11 @@ public class LoanInfoActivity extends ActionBarActivity {
         interestFrequency = (TextView) findViewById(R.id.summary_interest_frequency);
         startingBalance = (TextView) findViewById(R.id.summary_starting_balance);
 
+        setInfoGraph(loanIdList.get(0));
+
+    }
+
+    private void setInfoGraph(LoanInfoModel loanInfoModel) {
         loanId.setText(loanInfoModel.getLoanId()+"");
         repayEvery.setText(loanInfoModel.getRepayEvery()+ " "+ loanInfoModel.getRepayTimeUnit());
         numberOfRepayments.setText(loanInfoModel.getNumberOfRepayments()+"");
@@ -71,7 +94,7 @@ public class LoanInfoActivity extends ActionBarActivity {
         currentBalance.setText(loanInfoModel.getCurrentBalanceDisplay() + "");
 
 
-        PieChart pieChart = (PieChart) findViewById(R.id.pieChart);
+        pieChart = (PieChart) findViewById(R.id.pieChart);
 
         ArrayList<Entry> yValues = new ArrayList<Entry>();
 //        What has been paid
@@ -93,7 +116,25 @@ public class LoanInfoActivity extends ActionBarActivity {
         PieData data = new PieData(xValues, dataSet);
         pieChart.setData(data);
         pieChart.invalidate();
+    }
 
+    public void setLoanIdSpinner() {
+        for (LoanInfoModel loan : loanIdList) {
+            loanIdBalance.add("LOAN: " + loan.getLoanDescriptor() + ": " + loan.getCurrentBalanceDisplay());
+        }
+
+        loanIdAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, loanIdBalance);
+        loanSpinner.setAdapter(loanIdAdapter);
+        loanSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setInfoGraph(loanIdList.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     @Override

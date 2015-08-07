@@ -378,6 +378,9 @@ public class BuyActivity extends ActionBarActivity {
     }
 
     private void setCoinsPHFee(String coinsPHFeeStr) {
+        if (coinsPHFeeStr.equals(".")){
+            coinsPHFeeStr = "0.0";
+        }
         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         coinsPHFee = (Double.parseDouble(coinsPHFeeStr) * (1.0f/100.0f));
         coinsPHFeeTV.setText(currency + decimalFormat.format(coinsPHFee));
