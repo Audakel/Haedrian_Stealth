@@ -28,13 +28,13 @@
               android:weightSum="100"
               android:baselineAligned="false">
 
-    <fragment class="com.haedrian.haedrian.HomeScreen.Contacts.ContactsListFragment"
+    <fragment class="com.haedrian.curo.HomeScreen.Contacts.ContactsListFragment"
               android:id="@+id/contact_list"
               android:layout_height="match_parent"
               android:layout_width="0dp"
               android:layout_weight="@integer/contact_list_percent"/>
 
-    <fragment class="com.haedrian.haedrian.HomeScreen.Contacts.ContactDetailFragment"
+    <fragment class="com.haedrian.curo.HomeScreen.Contacts.ContactDetailFragment"
               android:id="@+id/contact_detail"
               android:layout_height="match_parent"
               android:layout_width="0dp"

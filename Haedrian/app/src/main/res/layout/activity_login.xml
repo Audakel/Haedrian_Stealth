@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.haedrian.haedrian.UserInteraction.LoginActivity"
+    tools:context="com.haedrian.curo.UserInteraction.LoginActivity"
     android:id="@+id/login_form"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

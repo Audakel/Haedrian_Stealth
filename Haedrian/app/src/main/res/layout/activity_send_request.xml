@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/concrete_repeating"
-                tools:context="com.haedrian.haedrian.HomeScreen.SendRequest.SendRequestActivity">
+                tools:context="com.haedrian.curo.HomeScreen.SendRequest.SendRequestActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout3"

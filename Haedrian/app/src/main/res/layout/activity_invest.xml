@@ -8,7 +8,7 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.haedrian.haedrian.HomeScreen.InvestActivity">
+              tools:context="com.haedrian.curo.HomeScreen.InvestActivity">
 
     <TableLayout
         android:id="@+id/tableLayout"

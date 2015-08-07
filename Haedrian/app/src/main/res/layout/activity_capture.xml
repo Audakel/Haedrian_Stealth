@@ -8,7 +8,7 @@
         android:layout_height="fill_parent"/>
 	
 
-	<com.haedrian.haedrian.Scanner.ViewfinderView
+	<com.haedrian.curo.Scanner.ViewfinderView
     	android:id="@+id/viewfinder_view"
       	android:layout_width="fill_parent"
       	android:layout_height="fill_parent"

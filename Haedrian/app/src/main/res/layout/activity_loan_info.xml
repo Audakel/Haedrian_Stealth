@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/concrete_repeating"
-    tools:context="com.haedrian.haedrian.HomeScreen.AddMoney.BuyActivity">
+    tools:context="com.haedrian.curo.HomeScreen.AddMoney.BuyActivity">
 
 
     <Spinner

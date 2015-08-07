@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/concrete_repeating"
-    tools:context="com.haedrian.haedrian.HomeScreen.Wallet.BuySellFragment">
+    tools:context="com.haedrian.curo.HomeScreen.Wallet.BuySellFragment">
 
     <LinearLayout
         android:id="@+id/empty_state_container"

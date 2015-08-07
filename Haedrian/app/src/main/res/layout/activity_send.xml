@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/concrete_repeating"
     android:orientation="vertical"
-    tools:context="com.haedrian.haedrian.HomeScreen.Wallet.WalletActivity">
+    tools:context="com.haedrian.curo.HomeScreen.Wallet.WalletActivity">
 
 
     <LinearLayout

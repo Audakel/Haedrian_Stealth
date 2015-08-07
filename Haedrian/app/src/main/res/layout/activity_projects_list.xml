@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/lightgrey"
-              tools:context="com.haedrian.haedrian.HomeScreen.ApplyForLoan.Projects.ProjectsList">
+              tools:context="com.haedrian.curo.HomeScreen.ApplyForLoan.Projects.ProjectsList">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/investListView"

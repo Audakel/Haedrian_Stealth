@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.haedrian.haedrian.HomeScreen.ApplyForLoan.CreditScore.WaitForCreditScore">
+    tools:context="com.haedrian.curo.HomeScreen.ApplyForLoan.CreditScore.WaitForCreditScore">
 
     <TextView android:text="This can take around 5 mins  to finish creating your credit score, so while your waiting why don&apos;t you tell us a little more about your great business idea?" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
