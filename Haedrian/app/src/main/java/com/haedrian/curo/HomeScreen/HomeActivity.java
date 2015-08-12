@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -166,7 +167,10 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                                     JSONObject nextRepaymentInfo = response.getJSONObject("next_repayment_info");
 
                                     date = nextRepaymentInfo.getString("date");
-                                    timeLeftTV.setText(String.valueOf(calculateTimeDifference(date)));
+
+
+
+
                                     balanceDueTV.setText(nextRepaymentInfo.getString("amount_display"));
                                     nextPaymentAmount = nextRepaymentInfo.getString("amount");
 
@@ -181,7 +185,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                                     }
                                     walletBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
                                     loanBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
-                                    timeLeftTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
+
+                                    formatTimeLeft();
 
 
                                     loanInfoJsonArray = loans;
@@ -237,6 +242,21 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 
+    private void formatTimeLeft(){
+        int timeDif = calculateTimeDifference(date);
+        timeLeftTV.setText(String.valueOf(timeDif));
+
+        if (timeDif < 0) {
+            timeLeftTV.setTextColor(Color.RED);
+            timeLeftTV.setText("Late: "+ Math.abs(timeDif));
+        }
+        else {
+            timeLeftTV.setTextColor(getApplicationContext().getResources().getColor(R.color.primary));
+        }
+
+        timeLeftTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
+    }
+
     private void getHomeScreenDataCached() {
         JSONObject response = ApplicationController.getCachedJSON("home");
         Log.v("TEST", "cached home screen: " + response.toString());
@@ -268,7 +288,8 @@ public class HomeActivity extends ActionBarActivity implements AdapterView.OnIte
                 }
                 walletBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
                 loanBallanceTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
-                timeLeftTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, moneyBalanceTextSize);
+
+                formatTimeLeft();
 
 
                 loanInfoJsonArray = loans;

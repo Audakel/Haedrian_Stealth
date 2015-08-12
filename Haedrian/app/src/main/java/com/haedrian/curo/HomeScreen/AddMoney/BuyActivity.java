@@ -375,6 +375,9 @@ public class BuyActivity extends ActionBarActivity {
         }
         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         coinsPHFee = (Double.parseDouble(coinsPHFeeStr) * (1.0f/100.0f));
+        if (coinsPHFee < .01){
+            coinsPHFee = .01;
+        }
         coinsPHFeeTV.setText(currency + decimalFormat.format(coinsPHFee));
         setTotal();
     }

@@ -13,10 +13,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class SignupActivity extends ActionBarActivity {
     private Spinner microfinanceSpinner, countrySpinner;
     private Button submitButton;
     private LinearLayout microfinanceIdContainer;
+    private LinearLayout emailFieldContainer;
 
     private ArrayList<String> microfinanceInstitutions = new ArrayList<>();
     private ArrayList<String> microfinanceAbbr = new ArrayList<>();
@@ -57,6 +60,8 @@ public class SignupActivity extends ActionBarActivity {
 
     private String countryCode;
     private ScrollView scrollView;
+
+    private Switch emailSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +83,10 @@ public class SignupActivity extends ActionBarActivity {
         countryCodeTV = (TextView) findViewById(R.id.country_code);
         microfinanceIdET = (EditText) findViewById(R.id.microfinance_id);
         microfinanceSpinner = (Spinner) findViewById(R.id.microfinance_institution);
+        emailSwitch = (Switch) findViewById(R.id.emailSwitch);
 
         microfinanceIdContainer = (LinearLayout) findViewById(R.id.microfinance_id_container);
+        emailFieldContainer = (LinearLayout) findViewById(R.id.emailInputContainer);
 
         countrySpinner = (Spinner) findViewById(R.id.country_spinner);
 
@@ -133,6 +140,17 @@ public class SignupActivity extends ActionBarActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        emailSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    emailFieldContainer.setVisibility(View.VISIBLE);
+                } else {
+                    emailFieldContainer.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -227,23 +245,24 @@ public class SignupActivity extends ActionBarActivity {
          */
 
         // Empty password
-        if (email.equals("")) {
-//            Toast.makeText(this, getResources().getString(R.string.email_address_required), Toast.LENGTH_LONG).show();
-            emailET.setError(getString(R.string.email_address_required));
-            progressDialog.dismiss();
-            scrollView.pageScroll(View.FOCUS_UP);
-            return;
-        }
-        // Valid email
-        Pattern pattern = Pattern.compile(getString(R.string.email_validation));
-        matcher = pattern.matcher(email);
-        if ( ! matcher.matches()) {
-            emailET.setError(getString(R.string.invalid_email));
-            progressDialog.dismiss();
-            scrollView.pageScroll(View.FOCUS_UP);
-            return;
-        }
+        if (emailSwitch.isChecked()) {
+            if (email.equals("")) {
+                emailET.setError(getString(R.string.email_address_required));
+                progressDialog.dismiss();
+                scrollView.pageScroll(View.FOCUS_UP);
+                return;
+            }
 
+            // Valid email
+            Pattern pattern = Pattern.compile(getString(R.string.email_validation));
+            matcher = pattern.matcher(email);
+            if (!matcher.matches()) {
+                emailET.setError(getString(R.string.invalid_email));
+                progressDialog.dismiss();
+                scrollView.pageScroll(View.FOCUS_UP);
+                return;
+            }
+        }
         /*
          * Country code validation
          */

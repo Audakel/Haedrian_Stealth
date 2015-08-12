@@ -36,6 +36,7 @@
                     <!--<TextView-->
                         <!--style="@style/formLabel"-->
                         <!--android:text="@string/username"/>-->
+
                     <EditText
                         android:tag="middle_name"
                         android:id="@+id/username_edit_text"
@@ -47,7 +48,31 @@
                         android:singleLine="true"/>
                 </LinearLayout>
 
-                <LinearLayout style="@style/fieldContainer">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <Switch
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Do you have an email?      No  "
+                        android:id="@+id/emailSwitch"
+                        android:checked="false"
+                        android:textOff="No"
+                        android:textOn="Yes"
+                        android:textColor="@color/grey" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  Yes"
+                        android:id="@+id/textView9" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/fieldContainer"
+                    android:visibility="gone"
+                    android:id="@+id/emailInputContainer">
                     <!--<TextView-->
                         <!--android:text="@string/email_required"-->
                         <!--style="@style/formLabel" />-->
